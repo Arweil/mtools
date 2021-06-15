@@ -1,0 +1,17 @@
+{
+  "name": "mtools",
+  "version": "1.0.0",
+  "description": "Milk's toolkit",
+  "main": "index.js",
+  "scripts": {
+    "build": ""
+  },
+  "keywords": [
+    "toolkit"
+  ],
+  "author": "Milk",
+  "license": "MIT",
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  }
+}
