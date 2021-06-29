@@ -3,7 +3,7 @@ export interface IBaseSimpleTreeData<T> {
 }
 
 export interface IBaseTreeNode<T> {
-  children: T;
+  children: IBaseTreeNode<T>[];
   [key: string]: any;
 }
 
@@ -49,7 +49,30 @@ function simple2Tree<T extends IBaseSimpleTreeData<T>>(data: {
 function tree2Simple() {
 }
 
+/**
+ * 层序遍历树
+ */
+function levelOrder<T>(tree: IBaseTreeNode<T>) {
+  if (tree === null) {
+    return [];
+  }
+
+  const res = [];
+  let stack = [tree];
+  while (stack.length) {
+    const item = stack.shift();
+    if (item && item.children && item.children.length > 0) {
+      stack = [...stack, ...item.children];
+    }
+
+    item && res.push(item);
+  }
+
+  return res;
+}
+
 export {
   simple2Tree,
   tree2Simple,
+  levelOrder,
 }
