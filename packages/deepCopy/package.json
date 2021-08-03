@@ -1,0 +1,17 @@
+{
+  "name": "deep_copy",
+  "version": "1.0.0",
+  "description": "deep copy for any type",
+  "main": "index.js",
+  "scripts": {
+    "build:babel": "babel src --out-dir lib --extensions '.ts' --source-maps --no-comments",
+    "build:tsc": "tsc --outDir lib",
+    "build": "npm run build:tsc & npm run build:babel"
+  },
+  "keywords": [
+    "tree",
+    "data"
+  ],
+  "author": "Milk",
+  "license": "MIT"
+}

@@ -1,4 +1,4 @@
-import { simple2Tree, levelOrder } from '../src/index';
+import { simple2Tree, levelOrder, forEachTree } from '../src/index';
 
 const simpleData = [
   {
@@ -65,5 +65,35 @@ describe('tree', () => {
       'second level 2',
       'third level 1'
     ]);
+  });
+
+  test('forEachTree', () => {
+    forEachTree(treeData[0], (item) => { item.name = `rename: ${item.name}` })
+    expect(treeData[0]).toEqual({
+      id: 1633,
+      pId: 0,
+      name: 'rename: top level',
+      children: [
+        {
+          id: 1634,
+          pId: 1633,
+          name: 'rename: second level 1',
+          children: [],
+        },
+        {
+          id: 1635,
+          pId: 1633,
+          name: 'rename: second level 2',
+          children: [
+            {
+              id: 1636,
+              pId: 1635,
+              name: 'rename: third level 1',
+              children: [],
+            }
+          ]
+        },
+      ]
+    })
   })
 });

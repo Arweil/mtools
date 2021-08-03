@@ -1,4 +1,4 @@
-export interface IBaseSimpleTreeData<T> {
+export interface IBaseSimpleTreeData {
   [key: string]: any;
 }
 
@@ -10,7 +10,7 @@ export interface IBaseTreeNode<T> {
 /**
  * 简单格式的数据转换为树形结构
  */
-function simple2Tree<T extends IBaseSimpleTreeData<T>>(data: {
+function simple2Tree<T extends IBaseSimpleTreeData>(data: {
   simpleData: T[];
   pIdKey?: string;
   idKey?: string;
@@ -50,7 +50,9 @@ function tree2Simple() {
 }
 
 /**
- * 层序遍历树
+ * 以层序遍历打平树结构
+ * @param tree 
+ * @returns 所有结点的数组
  */
 function levelOrder<T>(tree: IBaseTreeNode<T>) {
   if (tree === null) {
@@ -71,8 +73,31 @@ function levelOrder<T>(tree: IBaseTreeNode<T>) {
   return res;
 }
 
+/**
+ * 遍历树，可以用callback获取，操作每一个结点
+ * @param tree 树
+ * @param callback 执行函数
+ * @returns undefined
+ */
+function forEachTree<T>(
+  tree: IBaseTreeNode<T>,
+  callback: (treeNode: IBaseTreeNode<T>) => void,
+) {
+  if (tree === null) {
+    return;
+  }
+
+  callback(tree);
+  if (tree.children && tree.children.length > 0) {
+    tree.children.forEach(item => {
+      forEachTree(item, callback);
+    });
+  }
+}
+
 export {
   simple2Tree,
   tree2Simple,
   levelOrder,
+  forEachTree,
 }
