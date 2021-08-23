@@ -1,6 +1,6 @@
 {
   "name": "@mtools/isomorphic-utils",
-  "version": "1.0.0",
+  "version": "0.0.1-alpha.0",
   "description": "convert tree data to simple data, or convert simple data to tree data",
   "main": "lib/index.js",
   "scripts": {

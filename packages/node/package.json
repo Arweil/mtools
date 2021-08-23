@@ -1,6 +1,6 @@
 {
   "name": "@mtools/node",
-  "version": "1.0.0",
+  "version": "0.0.1-alpha.0",
   "description": "convert tree data to simple data, or convert simple data to tree data",
   "main": "cjs/index.js",
   "scripts": {
@@ -21,7 +21,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@mtools/isomorphic-utils": "^1.0.0",
+    "@mtools/isomorphic-utils": "^0.0.1-alpha.0",
     "core-js": "3.16.2",
     "ts-lib": "0.0.5"
   },
