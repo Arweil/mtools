@@ -21,6 +21,12 @@
   "publishConfig": {
     "access": "public"
   },
+  "files": [
+    "es/*",
+    "lib/*",
+    "package.json",
+    "README.md"
+  ],
   "dependencies": {
     "@mtools/isomorphic-utils": "^0.0.1-alpha.0",
     "core-js": "3.16.2",
