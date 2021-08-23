@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "allowJs": true,
+    "allowJs": false,
+    "checkJs": false,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "./",
-    "checkJs": true,
-    "declaration": true,
     "downlevelIteration": true,
-    "emitDecoratorMetadata": false,
+    "baseUrl": "./",
+    "declaration": true,
     "emitDeclarationOnly": true,
+    "emitDecoratorMetadata": false,
     "esModuleInterop": true,
     "experimentalDecorators": false,
     "forceConsistentCasingInFileNames": true,
@@ -17,7 +17,7 @@
     "lib": [
       "ESNext"
     ],
-    "module": "ESNext",
+    "module": "UMD",
     "moduleResolution": "Node",
     "noEmitOnError": false,
     "noFallthroughCasesInSwitch": true,
@@ -33,9 +33,10 @@
     "removeComments": true,
     "sourceMap": true,
     "strict": true,
-    "target": "ESNext"
+    "target": "ESNext",
   },
-  "include": [
-    "packages/**/src"
+  "exclude": [
+    "node_modules",
+    "packages/**/__test__"
   ]
 }

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "lerna run test",
-    "build": "lerna run build"
+    "build": "lerna run build",
+    "publish": "npm run test && npm run build && lerna publish"
   },
   "keywords": [
     "toolkit"
@@ -20,6 +21,8 @@
     "@types/jest": "^26.0.23",
     "jest": "^27.0.4",
     "lerna": "^4.0.0",
+    "rollup": "^2.56.2",
+    "ts-node": "^10.2.1",
     "tslib": "^2.3.0",
     "typescript": "^4.3.3"
   }

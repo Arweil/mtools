@@ -3,9 +3,7 @@ module.exports = {
     [
       '@babel/preset-env', {
         targets: {
-          browsers: [
-            "defaults"
-          ]
+          node: 'current',
         }
       },
     ],
