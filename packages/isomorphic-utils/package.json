@@ -3,6 +3,7 @@
   "version": "0.0.1-alpha.0",
   "description": "convert tree data to simple data, or convert simple data to tree data",
   "main": "lib/index.js",
+  "module": "es/index.js",
   "scripts": {
     "test": "jest",
     "clean:lib": "rm -rf lib",
