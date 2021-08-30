@@ -1,1 +1,1 @@
-export * from './tree';
+export * from '@m-tools/isomorphic-utils';

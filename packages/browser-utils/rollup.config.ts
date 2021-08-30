@@ -57,8 +57,8 @@ function fixRealPath(data) {
   const { dir } = data;
   return {
     resolveId(source, importer, options) {
-      if (source === '@mtools/isomorphic-utils') {
-        return { id: `@mtools/isomorphic-utils/${dir}/index`, external: true };
+      if (source === '@m-tools/isomorphic-utils') {
+        return { id: `@m-tools/isomorphic-utils/${dir}/index`, external: true };
       }
 
       return null;

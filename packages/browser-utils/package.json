@@ -4,6 +4,7 @@
   "description": "convert tree data to simple data, or convert simple data to tree data",
   "main": "lib/index.js",
   "module": "es/index.js",
+  "browser": "lib/index.js",
   "scripts": {
     "clean:lib": "rm -rf lib",
     "clean:es": "rm -rf es",
@@ -30,8 +31,7 @@
   ],
   "dependencies": {
     "@m-tools/isomorphic-utils": "^0.0.1-alpha.0",
-    "core-js": "3.16.2",
-    "ts-lib": "0.0.5"
+    "core-js": "3.16.2"
   },
   "devDependencies": {
     "@babel/core": "^7.15.0",

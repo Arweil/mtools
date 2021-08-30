@@ -6,3 +6,4 @@ packages/*/cjs
 
 .npmrc
 lerna-debug.log
+example/*
