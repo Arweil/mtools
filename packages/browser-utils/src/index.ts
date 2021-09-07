@@ -1,1 +1,1 @@
-export * from '@m-tools/isomorphic-utils'
+export * from '@m-tools/isomorphic-utils';

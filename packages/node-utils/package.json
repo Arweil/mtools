@@ -25,6 +25,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "sideEffects": false,
   "dependencies": {
     "@m-tools/isomorphic-utils": "^0.0.1-alpha.0",
     "core-js": "3.16.2"

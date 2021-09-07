@@ -12,8 +12,8 @@
     "build": "npm run clean:lib && npm run clean:es && npm run build:file"
   },
   "keywords": [
-    "tree",
-    "data"
+    "browser",
+    "utils"
   ],
   "author": "Milk",
   "license": "MIT",
@@ -29,6 +29,7 @@
     "package.json",
     "README.md"
   ],
+  "sideEffects": false,
   "dependencies": {
     "@m-tools/isomorphic-utils": "^0.0.1-alpha.0",
     "core-js": "3.16.2"

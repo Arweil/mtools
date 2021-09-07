@@ -31,6 +31,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "sideEffects": false,
   "dependencies": {
     "core-js": "3.16.2"
   },
