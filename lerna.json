@@ -3,5 +3,16 @@
     "packages/*"
   ],
   "npmClient": "npm",
-  "version": "0.0.1-alpha.0"
+  "version": "0.0.1-alpha.0",
+  "changelog": {
+    "repo": "Arweil/mtools",
+    "labels": {
+      "feat": "A new Feature",
+      "fix": "A bug Fix",
+      "docs": "Document only changes",
+      "perf": "A code change that improves performace",
+      "test": "Adding missing tests or correcting existing tests"
+    },
+    "cacheDir": ".changelog"
+  }
 }
