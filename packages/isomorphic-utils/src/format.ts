@@ -1,3 +1,5 @@
+import { isArray, isSet } from "./is";
+
 /**
  * 移除字符串中所有空格
  * @param {string} str 需要处理的字符串
@@ -23,15 +25,38 @@ function makeListToObject<T = any>(arr: T[], key: keyof T, value: keyof T) {
   return obj;
 }
 
-function formatMoney() {}
+/**
+ * 从对象中选择几个key，组成一个新对象返回
+ *
+ * @template T
+ * @param {T} obj
+ * @param {(string[] | Set<string>)} arr
+ * @returns
+ */
+function pickFromObj<T = { [key: string]: any; }>(obj: T, arr: string[] | Set<string>) {
+  const result: T = {} as T;
 
-function resetMoney() {}
+  if (isArray<string>(arr)) {
+    Object.entries(obj).forEach(([key, value]) => {
+      if (arr.includes(key)) {
+        result[key] = value;
+      }
+    });
+  }
 
-function formatBankAccountNum() {}
+  if (isSet<string>(arr)) {
+    Object.entries(obj).forEach(([key, value]) => {
+      if (arr.has(key)) {
+        result[key] = value;
+      }
+    });
+  }
 
-function resetBankAccountNum() {}
+  return result;
+}
 
 export {
   trimAll,
   makeListToObject,
+  pickFromObj,
 }

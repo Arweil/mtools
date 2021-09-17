@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[3],{706:function(t,n,e){"use strict";e.r(n),e.d(n,"default",(function(){return r}));var u=e(0),a=e.n(u),i=e(708);function r(){return a.a.createElement(i.a,{status:"403",title:"403",subTitle:"抱歉，您没有访问此资源的权限"})}}}]);

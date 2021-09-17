@@ -1,4 +1,4 @@
-import { trimAll, makeListToObject } from '../src/format';
+import { trimAll, makeListToObject, pickFromObj } from '../src/format';
 
 describe('cookie', () => {
   test('trimAll', () => {
@@ -14,4 +14,18 @@ describe('cookie', () => {
       codeB: 'nameB',
     });
   });
+
+  test('pickFromObj', () => {
+    expect(pickFromObj({
+      a: 1,
+      b: 2,
+      c: 3,
+      d: 4,
+      e: 5,
+      f: 6,
+    }, ['a', 'c', 'g'])).toEqual({
+      a: 1,
+      c: 3,
+    });
+  })
 });
