@@ -3,7 +3,7 @@
  */
 
 import React, { Suspense } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'malganis/router';
 import ScrollToTop from './ScrollToTop';
 
 function RoutesConf() {

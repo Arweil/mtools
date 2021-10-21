@@ -1,51 +1,37 @@
 import React, { useEffect } from 'react';
-import { inject, observer } from 'mobx-react';
 import { UserStore } from '@/stores/UserStore';
-import AppLayout, { IBaseMenuInfo } from './AppLayout';
-import { SmileOutlined } from '@ant-design/icons';
-import { toJS } from 'mobx';
+import AppLayout from './AppLayout';
+import { inject, observer } from 'malganis/mobx-react';
+import { toJS } from 'malganis/mobx';
 
-const mapIcon: { [key: string]: React.FunctionComponent } = {
-  SmileOutlined: SmileOutlined,
+interface IAppLayoutWrapperProps {
+  store?: {
+    UserStore: UserStore;
+  };
+  children?: React.ReactNode;
 }
 
-export default inject('userStore')(observer(function AppLayoutWrapper(props: {
-  userStore?: UserStore;
-  children?: React.ReactNode;
-}) {
-  const { userStore } = props;
-  const userInfo = userStore && toJS(userStore.userInfo);
-  const menu = userStore && toJS(userStore.menu);
+function AppLayoutWrapper(props: IAppLayoutWrapperProps) {
+  const { UserStore } = props.store!;
+  const userInfo = UserStore && toJS(UserStore.userInfo);
+  const menu = UserStore && toJS(UserStore.menu);
 
   useEffect(() => {
     (async () => {
       try {
-        if (userStore) {
+        if (UserStore) {
           await Promise.all([
-            userStore.setMenu(),
-            userStore.getUserInfo(),
+            UserStore.setMenu(),
+            UserStore.getUserInfo(),
           ]);
         }
       } catch (ex) {
         console.warn(ex);
       }
 
-      return () => {}
+      return () => { }
     })();
   }, []);
-
-  function test(tree: IBaseMenuInfo[]) {
-    if (tree && tree.length > 0) {
-      tree.forEach(treeItem => {
-        treeItem.icon = treeItem.icon && React.createElement(mapIcon[treeItem.icon as string]);
-        if (treeItem && treeItem.children && treeItem.children.length > 0) {
-          test(treeItem.children);
-        }
-      })
-    }
-  }
-
-  menu && test(menu)
 
   return (
     <AppLayout
@@ -66,4 +52,6 @@ export default inject('userStore')(observer(function AppLayoutWrapper(props: {
       {props.children}
     </AppLayout>
   );
-}));
+}
+
+export default inject('store')(observer(AppLayoutWrapper));

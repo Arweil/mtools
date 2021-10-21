@@ -1,0 +1,52 @@
+{
+  "name": "malganis",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./lib/index.js",
+  "browser": "./lib/index.js",
+  "module": "./lib/index.js",
+  "sideEffects": false,
+  "scripts": {
+    "clean:lib": "rm -rf lib",
+    "build:file": "rollup -c rollup.config.ts",
+    "build": "npm run clean:lib && npm run build:file",
+    "example": "jaraxxus start"
+  },
+  "author": "Milk",
+  "license": "MIT",
+  "files": [
+    "lib/*",
+    "dynamic.js",
+    "dynamic.d.ts",
+    "router.js",
+    "router.d.ts",
+    "mobx.js",
+    "mobx.d.ts",
+    "mobx-react.js",
+    "mobx-react.d.ts",
+    "index.js",
+    "package.json",
+    "README.md"
+  ],
+  "dependencies": {
+    "@types/react": "^17.0.21",
+    "@types/react-dom": "^17.0.9",
+    "@types/react-router-dom": "^5.1.9",
+    "core-js": "^3.17.3",
+    "history": "^4.10.1",
+    "mobx": "^6.3.3",
+    "mobx-react": "^7.2.0",
+    "react-router": "^5.2.1",
+    "react-router-dom": "^5.3.0"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17",
+    "react-dom": "^16.8.0 || ^17"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.15.6",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-typescript": "^8.2.5",
+    "rollup": "^2.56.3"
+  }
+}

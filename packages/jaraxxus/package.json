@@ -1,6 +1,6 @@
 {
-  "name": "@m-tools/jaraxxus",
-  "version": "1.0.0",
+  "name": "jaraxxus",
+  "version": "4.0.0",
   "bin": {
     "jaraxxus": "./bin/jaraxxus.js"
   },

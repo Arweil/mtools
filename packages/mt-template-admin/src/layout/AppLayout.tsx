@@ -1,5 +1,5 @@
 import React, { ReactNode, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'malganis/router';
 import {
   Layout, Menu, Dropdown, Avatar,
 } from 'antd';
@@ -29,8 +29,8 @@ export interface IBaseMenuInfo {
 
 export default function AppLayout<IMenuInfo extends IBaseMenuInfo>(props: IAppLayoutProps<IMenuInfo>) {
   const {
- userName, menu, userMenu, setTitle, onMenuItemClick 
-} = props;
+    userName, menu, userMenu, setTitle, onMenuItemClick 
+  } = props;
   const [collapsed, setCollapsed] = useState(false);
 
   function bindMenu(menu?: IBaseMenuInfo) {
@@ -124,7 +124,7 @@ export default function AppLayout<IMenuInfo extends IBaseMenuInfo>(props: IAppLa
             </Dropdown>
           </div>
         </Header>
-        <div style={{ overflowY: 'auto' }}>
+        <div className="content-scroll" style={{ overflowY: 'auto' }}>
           <Content style={{ padding: 12 }}>
             {props.children}
           </Content>

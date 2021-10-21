@@ -1,18 +1,28 @@
 import { IBaseMenuInfo } from '@/layout/AppLayout';
-import { makeAutoObservable, runInAction } from 'mobx';
+import { autorun, makeAutoObservable, runInAction } from 'malganis/mobx';
+import React from 'react';
+import { SmileOutlined } from '@ant-design/icons';
 
-interface IUserInfo {
+const mapIcon: { [key: string]: React.FunctionComponent } = {
+  SmileOutlined: SmileOutlined,
+}
+
+export interface IUserInfo {
   userName: string;
 }
 
-interface IMenuInfo extends IBaseMenuInfo {
+export interface IMenuInfo extends IBaseMenuInfo {
 }
 
 export class UserStore {
-  userInfo: IUserInfo | undefined = undefined;
-  menu: IMenuInfo[] = [] as IMenuInfo[];
+  userInfo: IUserInfo | undefined;
+
+  menu: IMenuInfo[];
 
   constructor() {
+    this.userInfo = undefined;
+    this.menu = [];
+
     makeAutoObservable(this);
   }
 
@@ -37,6 +47,17 @@ export class UserStore {
   modifyPwd() {}
 
   async setMenu() {
+    function test(tree: IBaseMenuInfo[]) {
+      if (tree && tree.length > 0) {
+        tree.forEach(treeItem => {
+          treeItem.icon = treeItem.icon && React.createElement(mapIcon[treeItem.icon as string]);
+          if (treeItem && treeItem.children && treeItem.children.length > 0) {
+            test(treeItem.children);
+          }
+        })
+      }
+    }
+
     const res = await Promise.resolve({
       code: '0',
       result: [{
@@ -64,8 +85,11 @@ export class UserStore {
       }]
     });
 
+    const menu = res.result;
+    test(menu);
+
     runInAction(() => {
-      this.menu = res.result;
+      this.menu = menu;
     });
   }
 }

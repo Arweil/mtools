@@ -4,9 +4,9 @@
  */
 
 import userStore from './UserStore';
-import routerStore from "./RouterStore";
+import routerStore from './RouterStore';
 
 export {
   userStore,
   routerStore,
-}
+};

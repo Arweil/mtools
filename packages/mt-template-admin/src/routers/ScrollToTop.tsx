@@ -1,5 +1,5 @@
 import { PureComponent } from 'react';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'malganis/router';
 
 export interface ScrollToTopProps extends RouteComponentProps {
   selectors?: string;

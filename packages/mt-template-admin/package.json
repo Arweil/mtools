@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "jaraxxus start",
     "build": "jaraxxus build",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx"
   },
   "author": "Milk",
   "license": "MIT",
@@ -21,24 +21,26 @@
   "dependencies": {
     "@m-tools/browser-utils": "^0.0.1-alpha.0",
     "antd": "^4.16.3",
-    "mobx": "^6.3.2",
-    "mobx-react": "^7.2.0",
+    "malganis": "^1.0.0",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-router": "^5.2.0",
-    "react-router-dom": "^5.2.0"
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.14.5",
     "@types/react": "^17.0.11",
     "@types/react-dom": "^17.0.8",
-    "@types/react-router-dom": "^5.1.7",
-    "@typescript-eslint/eslint-plugin": "^4.31.1",
-    "@typescript-eslint/parser": "^4.31.1",
-    "eslint": "^7.30.0",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
+    "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
-    "eslint-config-airbnb-typescript": "^14.0.0",
+    "eslint-config-airbnb-typescript": "^12.3.1",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.26.1",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "jaraxxus": "^4.0.0",
     "react-hot-loader": "^4.13.0",
+    "tslint": "^6.1.3",
     "typescript": "^4.3.5"
   }
 }

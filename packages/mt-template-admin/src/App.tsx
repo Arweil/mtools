@@ -1,27 +1,84 @@
 import React from 'react';
-import { Provider } from 'mobx-react';
 import { ConfigProvider } from 'antd';
-import zhCN from 'antd/lib/locale-provider/zh_CN'; // 语言包
+import zhCN from 'antd/lib/locale-provider/zh_CN';
+import malganis from 'malganis';
+import dynamic from 'malganis/dynamic';
+import {
+  Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'malganis/router';
 import AppLayoutWrapper from '@/layout/AppLayoutWrapper';
-import Root from '@/routers/Root';
-import RoutesConf from '@/routers/RoutesConf';
-import * as store from '@/stores';
-import { simple2Tree } from '@m-tools/browser-utils';
+import { userStore, routerStore } from '@/stores';
+import ScrollToTop from '@/routers/ScrollToTop';
 
-console.log(simple2Tree);
+const app = malganis({
+  historyOptions: {
+    type: 'browser',
+  },
+});
 
-export default function App() {
+app.model(routerStore);
+app.model(userStore);
+
+app.router(({ app: _app, history }) => (
+  <Router history={history}>
+    <Switch>
+      <Route
+        path="/login"
+        component={dynamic({
+          app: _app,
+          component: () => import('@/login'),
+        })}
+      />
+      <AppLayoutWrapper>
+        <ScrollToTop selectors="content-scroll">
+          <Switch>
+            <Route exact path="/">
+              <Redirect to="/" />
+            </Route>
+            <Route
+              path="/demo"
+              component={dynamic({
+                app: _app,
+                component: () => import('@/pages/demo'),
+              })}
+            />
+            <Route
+              path="/500"
+              component={dynamic({
+                app: _app,
+                component: () => import('@/errorPages/Error'),
+              })}
+            />
+            <Route
+              path="/403"
+              component={dynamic({
+                app: _app,
+                component: () => import('@/errorPages/Forbidden'),
+              })}
+            />
+            <Route
+              path="/*"
+              component={dynamic({
+                app: _app,
+                component: () => import('@/errorPages/NotFoundPage'),
+              })}
+            />
+          </Switch>
+        </ScrollToTop>
+      </AppLayoutWrapper>
+    </Switch>
+  </Router>
+));
+
+export default function App(): JSX.Element {
   return (
     <ConfigProvider
       locale={zhCN}
     >
-      <Provider {...store}>
-        <Root>
-          <AppLayoutWrapper>
-            <RoutesConf />
-          </AppLayoutWrapper>
-        </Root>
-      </Provider>
+      {app.start()}
     </ConfigProvider>
-  )
+  );
 }

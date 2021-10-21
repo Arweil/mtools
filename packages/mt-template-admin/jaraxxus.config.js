@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: 'src/index',
+  entry: 'src/index.tsx',
   bundleAnalyzerReport: false,
   devServer: {
     port: 9876,

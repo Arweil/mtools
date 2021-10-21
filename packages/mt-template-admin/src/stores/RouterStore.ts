@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable } from 'malganis/mobx';
 import { Location } from 'history';
 
 const { search, pathname, hash } = window.location;
