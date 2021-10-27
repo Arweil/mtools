@@ -14,9 +14,7 @@
     "importHelpers": true,
     "jsx": "react",
     "noEmitHelpers": true,
-    "lib": [
-      "ESNext"
-    ],
+    "lib": ["dom", "ESNext"],
     "module": "UMD",
     "moduleResolution": "Node",
     "noEmitOnError": false,
@@ -25,18 +23,13 @@
     "noUnusedLocals": true,
     "outDir": "lib",
     "paths": {
-      "@": [
-        "src"
-      ],
+      "@": ["src"]
     },
     "pretty": true,
     "removeComments": true,
     "sourceMap": true,
     "strict": true,
-    "target": "ESNext",
+    "target": "ESNext"
   },
-  "exclude": [
-    "node_modules",
-    "packages/**/__test__"
-  ]
+  "exclude": ["node_modules", "packages/**/__test__"]
 }
