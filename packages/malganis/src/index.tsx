@@ -27,7 +27,7 @@ function render(app: IMalGanisApp, container?: ReactDOM.Container) {
 function malganis<TypeOfStore extends { [key: string]: unknown; }>(options: Partial<IMalGanisOpt> = {}) {
   const app: IMalGanisApp = {
     _store: {},
-    _cacheRouteModalKey: {},
+    _cacheRouteModalKey: [],
   } as IMalGanisApp;
 
   // 默认为 hash history

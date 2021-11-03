@@ -12,6 +12,10 @@ export default function dynamic(params: {
 
   const p = () => new Promise<IReactComponent>((resolve, reject) => {
     Promise.all([component(), ...(models())]).then(([resolvedComponent, ...modelList]) => {
+      app._cacheRouteModalKey.forEach(key => {
+        app.unmodule(key);
+      });
+      app._cacheRouteModalKey = [];
       modelList.forEach(item => {
         // 默认取 default，兼容一个文件写多个 model 的情况
         let modules = item.default || item;

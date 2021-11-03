@@ -23,7 +23,12 @@ module.exports = {
         "@typescript-eslint"
     ],
     "rules": {
+        // https://eslint.org/docs/rules/class-methods-use-this
+        'class-methods-use-this': [0],
         // https://github.com/iamturns/eslint-config-airbnb-typescript/issues/239
         'import/extensions': [0],
+        // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/unbound-method.md
+        // mobx中使用action.bound绑定this，不使用this可以不绑定
+        '@typescript-eslint/unbound-method': [0],
     }
 };

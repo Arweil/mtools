@@ -1,3 +1,3 @@
-import Demo from './Demo';
+import DemoWrapper from './DemoWrapper';
 
-export default Demo;
+export default DemoWrapper;

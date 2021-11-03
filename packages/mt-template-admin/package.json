@@ -19,9 +19,11 @@
     "typescript"
   ],
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "@m-tools/browser-utils": "^0.0.1-alpha.0",
     "antd": "^4.16.3",
     "malganis": "^1.0.0",
+    "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-hot-loader": "^4.13.0"

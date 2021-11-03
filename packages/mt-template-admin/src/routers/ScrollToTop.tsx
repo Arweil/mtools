@@ -7,13 +7,14 @@ export interface ScrollToTopProps extends RouteComponentProps {
 
 class ScrollToTop extends PureComponent<ScrollToTopProps> {
   componentDidUpdate(prevProps: ScrollToTopProps) {
-    if (this.props.location.pathname !== prevProps.location.pathname) {
+    const { location } = this.props;
+    if (location.pathname !== prevProps.location.pathname) {
       window.scrollTo(0, 0);
 
       const { selectors } = this.props;
       if (selectors) {
         const element = document.querySelector(selectors);
-        element && element.scrollTo(0, 0);
+        element?.scrollTo(0, 0);
       } else {
         window.scrollTo(0, 0);
       }
@@ -21,7 +22,8 @@ class ScrollToTop extends PureComponent<ScrollToTopProps> {
   }
 
   render() {
-    return this.props.children;
+    const { children } = this.props;
+    return children;
   }
 }
 

@@ -1,18 +1,19 @@
 import React, { useEffect } from 'react';
-import { UserStore } from '@/stores/UserStore';
-import AppLayout from './AppLayout';
 import { inject, observer } from 'malganis/mobx-react';
 import { toJS } from 'malganis/mobx';
+import { UserStore as UserStoreMbx } from '@/stores/UserStore';
+import AppLayout from './AppLayout';
 
 interface IAppLayoutWrapperProps {
   store?: {
-    UserStore: UserStore;
+    UserStore: UserStoreMbx;
   };
   children?: React.ReactNode;
 }
 
 function AppLayoutWrapper(props: IAppLayoutWrapperProps) {
-  const { UserStore } = props.store!;
+  const { children, store } = props;
+  const { UserStore } = store!;
   const userInfo = UserStore && toJS(UserStore.userInfo);
   const menu = UserStore && toJS(UserStore.menu);
 
@@ -29,16 +30,16 @@ function AppLayoutWrapper(props: IAppLayoutWrapperProps) {
         console.warn(ex);
       }
 
-      return () => { }
-    })();
+      return () => { };
+    })().catch(() => {});
   }, []);
 
   return (
     <AppLayout
       menu={menu || []}
       userName={userInfo && userInfo.userName || ''}
-      setTitle={({ collapsed }) => {
-        return (
+      setTitle={({ collapsed }) => (
+        (
           <div style={{ display: 'flex', height: '100%', alignItems: 'center' }}>
             <div style={{ color: '#fff', fontSize: 20, textAlign: 'center', flex: 1, }}>
               {
@@ -46,12 +47,19 @@ function AppLayoutWrapper(props: IAppLayoutWrapperProps) {
               }
             </div>
           </div>
-        );
-      }}
+        )
+      )}
     >
-      {props.children}
+      {children}
     </AppLayout>
   );
 }
+
+AppLayoutWrapper.defaultProps = {
+  store: {
+    UserStore: {},
+  },
+  children: null,
+};
 
 export default inject('store')(observer(AppLayoutWrapper));
