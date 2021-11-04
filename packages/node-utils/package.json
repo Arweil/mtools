@@ -4,7 +4,7 @@
   "description": "convert tree data to simple data, or convert simple data to tree data",
   "main": "cjs/index.js",
   "scripts": {
-    "clean:cjs": "rm -rf cjs",
+    "clean:cjs": "rimraf cjs",
     "build:file": "rollup -c rollup.config.ts",
     "build": "npm run clean:cjs && npm run build:file"
   },
@@ -35,6 +35,7 @@
     "@babel/preset-env": "^7.15.0",
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-typescript": "^8.2.5",
+    "rimraf": "^3.0.2",
     "rollup": "^2.56.2",
     "typescript": "^4.3.5"
   }
