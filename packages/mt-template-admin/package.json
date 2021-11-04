@@ -18,6 +18,9 @@
     "antd",
     "typescript"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@m-tools/browser-utils": "^0.0.2-alpha.0",
