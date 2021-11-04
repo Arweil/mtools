@@ -7,7 +7,7 @@
   "module": "./lib/index.js",
   "sideEffects": false,
   "scripts": {
-    "clean:lib": "rm -rf lib",
+    "clean:lib": "rimraf lib",
     "build:file": "rollup -c rollup.config.ts",
     "build": "npm run clean:lib && npm run build:file",
     "example": "jaraxxus start"
@@ -47,6 +47,7 @@
     "@babel/preset-env": "^7.15.6",
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-typescript": "^8.2.5",
+    "rimraf": "^3.0.2",
     "rollup": "^2.56.3"
   }
 }
