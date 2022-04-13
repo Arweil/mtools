@@ -1,6 +1,6 @@
 {
   "name": "@m-tools/browser-utils",
-  "version": "0.0.3-alpha.0",
+  "version": "0.0.4-alpha.0",
   "description": "convert tree data to simple data, or convert simple data to tree data",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -32,7 +32,7 @@
   ],
   "sideEffects": false,
   "dependencies": {
-    "@m-tools/isomorphic-utils": "^0.0.3-alpha.0",
+    "@m-tools/isomorphic-utils": "^0.0.4-alpha.0",
     "core-js": "3.16.2"
   },
   "devDependencies": {
