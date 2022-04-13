@@ -6,7 +6,17 @@ import {
 } from 'antd';
 import { InputProps } from 'antd/lib/input';
 
-export default function InputExt(props: InputProps): JSX.Element {
+export interface InputExtProps extends InputProps {
+  readonly?: boolean;
+}
+
+export default function InputExt(props: InputExtProps): JSX.Element {
+  const { readonly, value } = props;
+
+  if (readonly) {
+    return <span style={{ wordWrap: 'break-word' }}>{value || '-'}</span>;
+  }
+
   return (
     <Input
       autoComplete="off"

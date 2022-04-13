@@ -15,10 +15,33 @@ export interface IRadioGroupExtProps extends RadioGroupProps {
     name: string;
     disabled?: boolean;
   }[];
+  readonly?: boolean;
+}
+
+function getValFromCode(
+  code: string | number,
+  dataMap: IRadioGroupExtProps['dataMap'],
+  dataList: IRadioGroupExtProps['dataList'],
+): string {
+  return (dataMap && dataMap[code])
+    || (dataList && dataList.find((item) => item.code === code)?.name)
+    || '-';
 }
 
 export default function RadioGroupExt(props: IRadioGroupExtProps): JSX.Element {
-  const { dataMap = {}, dataList = [], ...resetProps } = props;
+  const {
+    dataMap = {},
+    dataList = [],
+    readonly,
+    ...resetProps
+  } = props;
+
+  if (readonly) {
+    return (
+      <>{getValFromCode(resetProps.value || '', dataMap, dataList)}</>
+    );
+  }
+
   return (
     <RadioGroup {...resetProps}>
       {

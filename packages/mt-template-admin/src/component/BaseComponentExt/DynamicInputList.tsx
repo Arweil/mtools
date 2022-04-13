@@ -28,7 +28,7 @@ export default class DynamicInputList extends PureComponent
     this.onDelete = this.onDelete.bind(this);
   }
 
-  static getDerivedStateFromProps(nextProps: DynamicInputListProps): DynamicInputListState {
+  static getDerivedStateFromProps(nextProps: DynamicInputListProps): DynamicInputListState | null {
     if ('value' in nextProps) {
       return {
         valueList: (nextProps.value && nextProps.value.length) ? nextProps.value : [''],
@@ -67,7 +67,7 @@ export default class DynamicInputList extends PureComponent
   onChange(e: React.ChangeEvent<HTMLInputElement>, index: number): void {
     const { valueList } = this.state;
     const finValueList = [...valueList];
-    finValueList[index] = e.target.value as string;
+    finValueList[index] = e.target.value;
 
     this.setState({
       valueList: finValueList,

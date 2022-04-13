@@ -1,55 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Breadcrumb, PageHeader } from 'antd';
 import { Link, RouteComponentProps, withRouter } from 'malganis/router';
-import type { IBaseMenuInfo } from './AppLayout';
+import { MobXProviderContext, observer } from 'malganis/mobx-react';
+import { UserStore as UserStoreMobx } from '../stores/UserStore';
 
 interface AppBreadcrumbProps extends RouteComponentProps {
-  menu: IBaseMenuInfo[];
+  breadcrumbNameMap: { [path: string]: string };
   specialPages?: string[];
 }
 
-const defaultSpecialPages = ['/403', '/404', '/500'];
+const defaultSpecialPages = ['/', '/403', '/404', '/500'];
 
 /**
  * 创建面包屑导航
- * 菜单需满足格式:
- * [{
- *    url: '/demo',
- *    name: 'demo',
- *    children: [
- *      {
- *        url: '/demo/demoA', // url必须包含父级的url
- *        name: 'demoA'
- *      }, {
- *        url: '/demo/demoB',
- *        name: 'demoB'
- *       }
- *    ]
- * }]
  */
 function AppBreadcrumb(
   props: AppBreadcrumbProps,
 ): JSX.Element | null {
-  const { location, menu, specialPages = defaultSpecialPages } = props;
+  const { location, breadcrumbNameMap, specialPages = defaultSpecialPages } = props;
   const { pathname } = location;
 
-  if (specialPages.includes(pathname)) {
+  if (specialPages.includes(pathname) || Object.keys(breadcrumbNameMap).length === 0) {
     return null;
   }
-
-  const breadcrumbNameMap: { [key: string]: string } = {};
-  function forEachTree(trees: IBaseMenuInfo[]) {
-    trees.forEach((tree) => {
-      if (tree.url && tree.name) {
-        breadcrumbNameMap[tree.url] = tree.name;
-      }
-
-      if (tree.children && tree.children.length > 0) {
-        forEachTree(tree.children);
-      }
-    });
-  }
-  forEachTree(menu);
 
   const pathSnippets = pathname.split('/').filter((i) => i);
   const extraBreadcrumbItems = pathSnippets.map((_, index) => {
@@ -57,7 +30,7 @@ function AppBreadcrumb(
     return (
       <Breadcrumb.Item key={url}>
         {
-          index === 0 ? breadcrumbNameMap[url] : (
+          (index === 0 || index === pathSnippets.length - 1) ? breadcrumbNameMap[url] : (
             <Link to={url}>{breadcrumbNameMap[url]}</Link>
           )
         }
@@ -84,4 +57,19 @@ AppBreadcrumb.defaultProps = {
   specialPages: defaultSpecialPages,
 };
 
-export default withRouter(AppBreadcrumb);
+export default withRouter(observer((props: RouteComponentProps) => {
+  const { store } = useContext(MobXProviderContext);
+  const {
+    UserStore,
+  } = store as {
+    UserStore: UserStoreMobx;
+  };
+
+  return (
+    <AppBreadcrumb
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...props}
+      breadcrumbNameMap={UserStore.mapBreadcrumb}
+    />
+  );
+}));

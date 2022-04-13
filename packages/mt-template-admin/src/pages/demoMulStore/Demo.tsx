@@ -1,10 +1,10 @@
 import { MobXProviderContext, observer } from 'malganis/mobx-react';
 import React, { useContext } from 'react';
 
-function DemoA(): JSX.Element {
+function Demo(): JSX.Element {
   return (
     <div>
-      This is DemoA Page
+      This is DemoMulStore Page
     </div>
   );
 }
@@ -15,6 +15,6 @@ export default observer(() => {
   console.log(context);
 
   return (
-    <DemoA />
+    <Demo />
   );
 });

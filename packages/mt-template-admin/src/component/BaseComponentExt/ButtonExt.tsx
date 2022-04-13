@@ -41,7 +41,8 @@ export default class ButtonExt extends PureComponent<ButtonExtProps, {
     if (isAsyncClick) {
       try {
         await setStateAsync(this, { fetching: true });
-        onClick(event);
+        // eslint-disable-next-line @typescript-eslint/await-thenable
+        await onClick(event);
       } catch (ex) {
         console.warn(ex);
       } finally {
@@ -63,6 +64,7 @@ export default class ButtonExt extends PureComponent<ButtonExtProps, {
       ...restProps
     } = this.props;
     const { fetching } = this.state;
+
     return (
       <Button
         onClick={onClick ? this.onClick : undefined}

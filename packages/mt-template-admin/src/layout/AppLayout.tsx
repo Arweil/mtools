@@ -4,27 +4,25 @@ import {
   Layout, Menu, Dropdown, Avatar,
 } from 'antd';
 import {
-  MenuFoldOutlined, MenuUnfoldOutlined, SettingOutlined, LogoutOutlined, UserOutlined,
+  MenuFoldOutlined, MenuUnfoldOutlined, LogoutOutlined, UserOutlined,
 } from '@ant-design/icons';
+import type { MenuInfo } from 'rc-menu/lib/interface';
 import AppBreadcrumb from './AppBreadcrumb';
 
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
 
-export interface MenuInfo {
-  key: string;
-  keyPath: string[];
-  item: React.ReactInstance;
-  domEvent: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>;
-}
-
 interface IAppLayoutProps<IMenuInfo extends IBaseMenuInfo> {
   menu: IMenuInfo[];
+  openKeys: string[];
+  selectedKeys: string[];
   userName: string;
   userMenu?: (typeof Menu.Item)[];
-  setTitle?: (props: { collapsed: boolean; }) => React.ReactNode;
-  onMenuItemClick?: (info: {}) => void;
   children?: React.ReactNode;
+  setOpenKeys: (openKeys: string[]) => void;
+  setSelectedKeys: (selectedKeys: string[]) => void;
+  setTitle?: (props: { collapsed: boolean; }) => React.ReactNode;
+  onMenuItemClick?: (info: MenuInfo) => void;
 }
 
 export interface IBaseMenuInfo {
@@ -39,16 +37,18 @@ function AppLayout<IMenuInfo extends IBaseMenuInfo>(
   props: IAppLayoutProps<IMenuInfo>,
 ): JSX.Element {
   const {
-    userName, menu, userMenu, setTitle, children, onMenuItemClick,
+    userName,
+    menu,
+    userMenu,
+    children,
+    openKeys,
+    selectedKeys,
+    setOpenKeys,
+    setSelectedKeys,
+    setTitle,
+    onMenuItemClick,
   } = props;
   const [collapsed, setCollapsed] = useState(false);
-  const list = window.location.pathname
-    .split('/')
-    .filter((i) => i);
-  const [openKeys, setOpenKeys] = useState(
-    list.map((item, index) => `/${list.slice(0, index + 1).join('/')}`).slice(0, list.length - 1),
-  );
-  const [selectedKeys, setSelectedKeys] = useState([window.location.pathname]);
 
   function bindMenu(_menu?: IBaseMenuInfo): JSX.Element | null {
     return _menu && Object.keys(_menu).length > 0 ? (
@@ -137,10 +137,6 @@ function AppLayout<IMenuInfo extends IBaseMenuInfo>(
                       ? userMenu.map((item) => item)
                       : (
                         <>
-                          <Menu.Item key="modify">
-                            <SettingOutlined style={{ marginRight: 8 }} />
-                            修改密码
-                          </Menu.Item>
                           <Menu.Item key="logout">
                             <LogoutOutlined style={{ marginRight: 8 }} />
                             退出登录
@@ -160,7 +156,7 @@ function AppLayout<IMenuInfo extends IBaseMenuInfo>(
         </Header>
         <div className="content-scroll" style={{ overflowY: 'auto' }}>
           <Content style={{ padding: 12 }}>
-            <AppBreadcrumb menu={menu} />
+            <AppBreadcrumb />
             {children}
           </Content>
         </div>

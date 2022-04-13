@@ -14,3 +14,13 @@ export function is(params: any): 'Object' | 'Array' | 'Map' | 'Set' | 'Null' | '
   const type = Object.prototype.toString.call(params);
   return type.replace(/(\[object|\]|\s)/g, '');
 }
+
+/**
+ * 根据文件后缀判断是否是一个图片
+ * @param {string} imageName /path/a.jpg
+ * @returns {boolean}
+ */
+export function isImage(imageName: string): boolean {
+  const suffix = imageName.split('.').pop()!.toUpperCase();
+  return ['BMP', 'PNG', 'GIF', 'JPG', 'JPEG', 'SVG', 'WEBP'].includes(suffix);
+}

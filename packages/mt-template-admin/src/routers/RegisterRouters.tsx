@@ -30,24 +30,41 @@ const RegisterRouter = ({ app, history }: {
               <Redirect to="/" />
             </Route>
             <Route
-              path="/demo/demo"
+              path="/Demo/DemoBaseCom/ThirdPage"
               component={dynamic({
                 app,
-                component: () => import('@/pages/demo'),
+                component: () => import('@/pages/demoBaseCom/ThirdPage'),
+              })}
+            />
+            <Route
+              path="/Demo/DemoBaseCom"
+              component={dynamic({
+                app,
+                component: () => import('@/pages/demoBaseCom'),
                 models: () => [
-                  import('@/pages/demo/DemoStore'),
+                  import('@/pages/demoBaseCom/DemoStore'),
                 ],
               })}
             />
             <Route
-              path="/demo/demoA"
+              path="/Demo/DemoMulStore"
               component={dynamic({
                 app,
-                component: () => import('@/pages/demoA'),
+                component: () => import('@/pages/demoMulStore'),
                 models: () => [
-                  import('@/pages/demoA/DemoStoreA'),
-                  import('@/pages/demoA/DemoStoreB'),
+                  import('@/pages/demoMulStore/stores/DemoStoreA'),
+                  import('@/pages/demoMulStore/stores/DemoStoreB'),
                 ],
+                // models: () => [
+                //   import('@/pages/demoMulStore/stores'),
+                // ],
+              })}
+            />
+            <Route
+              path="/Demo/DemoNoStore"
+              component={dynamic({
+                app,
+                component: () => import('@/pages/demoNoStore'),
               })}
             />
             <Route

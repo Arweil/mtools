@@ -1,4 +1,4 @@
-import { is, isArray, isObject, isSet } from '../src/is';
+import { is, isArray, isImage, isObject, isSet } from '../src/is';
 
 describe('is', () => {
   test('is', () => {
@@ -23,5 +23,11 @@ describe('is', () => {
   test('isObject', () => {
     expect(isObject({})).toEqual(true);
     expect(isObject(undefined)).toEqual(false);
+  });
+
+  test('isImage', () => {
+    expect(isImage('a.jpg')).toEqual(true);
+    expect(isImage('a.JPG')).toEqual(true);
+    expect(isImage('b.txt')).toEqual(false);
   });
 });

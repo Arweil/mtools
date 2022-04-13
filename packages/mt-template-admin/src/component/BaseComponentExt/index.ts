@@ -12,6 +12,7 @@ import SelectInput from './SelectInput';
 import SelectSelect from './SelectSelect';
 import RangeNumber from './RangeNumber';
 import RadioGroupExt from './RadioGroupExt';
+import RangePickerExt from './RangePickerExt';
 
 export {
   InputExt,
@@ -28,4 +29,5 @@ export {
   ButtonExt,
   PopconfirmBtn,
   RadioGroupExt,
+  RangePickerExt,
 };

@@ -10,18 +10,28 @@ export default observer(() => {
   const { DemoStore } = store as {
     DemoStore: DemoStoreMobx;
   };
-  const { init, initialValues, loading } = DemoStore;
+  const {
+    init,
+    initialValues,
+    loading,
+    count,
+
+    onAdd,
+    onReset,
+  } = DemoStore;
 
   useEffect(() => {
     init().catch(() => { });
-    return () => {
-    };
+    return () => {};
   }, []);
 
   return (
     <Demo
       initialValues={initialValues}
       loading={loading}
+      count={count}
+      onAdd={onAdd}
+      onReset={onReset}
     />
   );
 });

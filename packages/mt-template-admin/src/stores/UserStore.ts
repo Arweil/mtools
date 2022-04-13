@@ -1,104 +1,173 @@
-import { makeAutoObservable, runInAction } from 'malganis/mobx';
+import { action, makeAutoObservable, runInAction } from 'malganis/mobx';
 import React from 'react';
-import { SmileOutlined } from '@ant-design/icons';
-import { IBaseMenuInfo } from '@/layout/AppLayout';
+import { DollarOutlined } from '@ant-design/icons';
+import { simple2Tree, getFullPath, getSelectedMenu } from '@m-tools/browser-utils';
+
+import type { IBaseMenuInfo } from '@/layout/AppLayout';
 
 const mapIcon: { [key: string]: React.FunctionComponent } = {
-  SmileOutlined,
+  DollarOutlined,
 };
-
-export interface IUserInfo {
-  userName: string;
-}
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IMenuInfo extends IBaseMenuInfo {
+  code: string;
+  id: number;
+  nameZn: string;
+  pId: number;
+  path: string;
+  icon?: string | React.ReactNode;
 }
 
 export class UserStore {
-  userInfo: IUserInfo | undefined;
+  namespace = 'UserStore';
 
-  menu: IMenuInfo[];
+  userInfo: Partial<{ nickname: string }> | undefined; // 用户信息
+
+  menu: IMenuInfo[] = []; // 菜单树状结构
+
+  mapBreadcrumb: { [path: string]: string } = {}; // 匹配面包屑导航
+
+  layoutOpenKeys: string[] = []; // 默认展开的菜单
+
+  layoutSelectedKeys: string[] = []; // 默认选择的菜单项
 
   constructor() {
-    this.userInfo = undefined;
-    this.menu = [];
-
-    makeAutoObservable(this);
+    makeAutoObservable(this, {
+      namespace: false,
+      getBaseInfo: action.bound,
+      setOpenKeys: action.bound,
+      setSelectedKeys: action.bound,
+    });
   }
 
   async login(): Promise<void> {
-    // call @/api restful api
-    const res = await Promise.resolve({ code: '0', result: { userName: 'demo user' } });
+    // fetch
+    const res = await Promise.resolve({ result: { nickname: '未知用户' } });
+
     runInAction(() => {
-      this.userInfo = res.result;
+      this.userInfo = res.result || { nickname: '未知用户' };
     });
   }
 
-  async logout(): Promise<{ code: string; }> {
-    await Promise.resolve({ code: '0' });
+  async logout(): Promise<void> {
+    window.localStorage.clear();
+    // fetch
+    await Promise.resolve({});
   }
 
-  async getUserInfo(): Promise<void> {
-    const res = await Promise.resolve({ code: '0', result: { userName: 'demo user' } });
-    runInAction(() => {
-      this.userInfo = res.result;
-    });
-  }
+  async getBaseInfo(): Promise<void> {
+    try {
+      const [userInfo, menu] = await Promise.all([
+        Promise.resolve({ result: { nickname: '未知用户' } }),
+        Promise.resolve<{ result: IMenuInfo[] }>({
+          result: [
+            {
+              code: 'demo',
+              id: 1,
+              nameZn: 'Demo',
+              pId: 0,
+              path: '/Demo',
+              icon: 'DollarOutlined',
+            },
+            {
+              code: 'demoBaseCom',
+              id: 2,
+              nameZn: 'DemoBaseCom',
+              pId: 1,
+              path: '/Demo/DemoBaseCom',
+            },
+            {
+              code: 'demoMulStore',
+              id: 3,
+              nameZn: 'DemoMulStore',
+              pId: 1,
+              path: '/Demo/DemoMulStore',
+            },
+            {
+              code: 'demoNoStore',
+              id: 4,
+              nameZn: 'DemoNoStore',
+              pId: 1,
+              path: '/Demo/DemoNoStore',
+            },
+            {
+              code: 'errorpage',
+              id: 5,
+              nameZn: 'ErrorPage',
+              pId: 0,
+              path: '/ErrorPage',
+              icon: 'DollarOutlined',
+            },
+            {
+              code: 'errorpage404',
+              id: 6,
+              nameZn: '404',
+              pId: 5,
+              path: '/404',
+            },
+            {
+              code: 'errorpage403',
+              id: 7,
+              nameZn: '403',
+              pId: 5,
+              path: '/403',
+            },
+            {
+              code: 'errorpage500',
+              id: 8,
+              nameZn: '500',
+              pId: 5,
+              path: '/500',
+            },
+          ],
+        }),
+      ]);
 
-  modifyPwd() {}
+      runInAction(() => {
+        this.userInfo = userInfo.result || { nickname: '未知用户' };
+        const menus = menu.result || [];
 
-  async setMenu(): Promise<void> {
-    function test(tree: IBaseMenuInfo[]) {
-      if (tree && tree.length > 0) {
-        tree.forEach((treeItem) => {
-          const { icon, children } = treeItem;
-          treeItem.icon = icon && React.createElement(mapIcon[icon as string]);
-          if (children && children.length > 0) {
-            test(children);
-          }
+        const mapBreadcrumb: { [path: string]: string } = {};
+        const menuKeys: string[] = [];
+        menus.forEach((item) => {
+          mapBreadcrumb[item.path] = item.nameZn;
+          menuKeys.push(item.path);
         });
-      }
+
+        this.mapBreadcrumb = {
+          '/Demo/DemoBaseCom/ThirdPage': '第三级菜单',
+          ...mapBreadcrumb,
+        };
+
+        this.layoutOpenKeys = getFullPath(window.location.pathname);
+
+        this.layoutSelectedKeys = [
+          getSelectedMenu(window.location.pathname, menuKeys),
+        ];
+
+        this.menu = simple2Tree<IMenuInfo>({
+          simpleData: menus.map((menuItem) => ({
+            ...menuItem,
+            url: menuItem.path,
+            name: menuItem.nameZn,
+            icon: menuItem.icon
+              ? React.createElement(mapIcon[menuItem.icon as string])
+              : undefined,
+          })),
+        });
+      });
+    } catch (ex) {
+      console.warn(ex);
     }
+  }
 
-    // call @/api restful api
-    const res = await Promise.resolve({
-      code: '0',
-      result: [{
-        icon: 'SmileOutlined',
-        children: [
-          {
-            url: '/demo/demo',
-            name: 'demo',
-          },
-          {
-            url: '/demo/demoA',
-            name: 'demoA',
-          },
-          {
-            url: '/403',
-            name: '403',
-          },
-          {
-            url: '/404',
-            name: '404',
-          },
-          {
-            url: '/500',
-            name: '500',
-          },
-        ],
-        url: '/demo',
-        name: 'demo',
-      }],
-    });
+  setOpenKeys(openKeys: string[]): void {
+    this.layoutOpenKeys = openKeys;
+  }
 
-    const menu = res.result;
-    test(menu);
-
-    runInAction(() => {
-      this.menu = menu;
-    });
+  setSelectedKeys(selectedKeys: string[]): void {
+    this.layoutSelectedKeys = selectedKeys;
   }
 }
 

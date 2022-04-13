@@ -20,7 +20,9 @@ export type TypeRegisterRouter = (params: { app: IMalGanisApp, history: History 
 
 export interface IMalGanisApp {
   _router: JSX.Element;
-  _store: { [key: string]: unknown };
+  _store: {
+    [key: string]: unknown;
+  };
   _cacheRouteModalKey: string[]; // 通过 dynamic 注入的状态实例
   start: {
     (): JSX.Element;

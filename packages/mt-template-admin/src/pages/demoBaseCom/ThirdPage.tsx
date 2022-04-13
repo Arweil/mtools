@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default function FormExt(): JSX.Element {
+export default function ThirdPage(): JSX.Element {
   return (
     <div>
-      
+      ThirdPage
     </div>
   );
 }

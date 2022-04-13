@@ -1,24 +1,37 @@
 import {
   action,
-  makeObservable,
-  observable,
+  makeAutoObservable,
   runInAction,
 } from 'malganis/mobx';
 
 export class DemoStore {
-  initialValues: { [key: string]: any };
+  namespace = 'DemoStore';
 
-  loading: boolean;
+  initialValues: { [key: string]: any } = {};
+
+  loading = false;
+
+  count = 0;
 
   constructor() {
-    makeObservable(this, {
-      initialValues: observable,
-      loading: observable,
+    makeAutoObservable(this, {
       init: action.bound,
+      onAdd: action.bound,
+      onReset: action.bound,
+      resetStore: action.bound,
     });
+  }
 
-    this.initialValues = {};
-    this.loading = false;
+  get total(): number {
+    return this.count;
+  }
+
+  onAdd(): void {
+    this.count += 1;
+  }
+
+  onReset(): void {
+    this.count = 0;
   }
 
   async init(): Promise<void> {
@@ -42,6 +55,12 @@ export class DemoStore {
         this.loading = false;
       });
     }
+  }
+
+  resetStore(): void {
+    this.initialValues = {};
+    this.loading = false;
+    this.count = 0;
   }
 }
 

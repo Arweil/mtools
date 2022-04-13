@@ -4,6 +4,7 @@ import { createHashHistory, createBrowserHistory, createMemoryHistory } from 'hi
 import type { History, MemoryHistory } from 'history';
 import { Provider } from 'mobx-react';
 import type { IMalGanisApp, IMalGanisOpt } from './type';
+import { isComputedProp, isObservableProp, toJS } from 'mobx';
 
 function getProvider(params: {
   app: IMalGanisApp;
@@ -49,10 +50,35 @@ function malganis<TypeOfStore extends { [key: string]: unknown; }>(options: Part
     app._router = fun({ app, history });
   };
   app.model = function modal(inst: any) {
+    // 在压缩代码后，类名会被混淆，应该使用 namespace 变量
     const namespace: keyof TypeOfStore = inst.namespace || inst.constructor && inst.constructor.name;
+    // 定义初始的 Observable 属性，用于数据还原
+    inst.$$initialStates = {};
+    inst.$$needResetStore = inst.$$needResetStore !== undefined ? (!!inst.$$needResetStore) : true;
+    Object.getOwnPropertyNames(inst).forEach(propName => {
+      if (
+        isObservableProp(inst, propName)
+        && !isComputedProp(inst, propName)
+        && propName !== 'namespace'
+        && propName !== '$$needResetStore'
+      ) {
+        inst.$$initialStates[propName] = toJS(inst[propName]);
+      }
+    });
     app._store[namespace] = inst;
   };
   app.unmodule = function unmodule(namespace: string) {
+    const { $$initialStates, $$needResetStore } = app._store[namespace] as {
+      $$initialStates: { [key: string]: unknown; };
+      $$needResetStore: boolean;
+    };
+    // 如果需要重置
+    if ($$needResetStore) {
+      Object.entries($$initialStates).forEach(([key, value]) => {
+        app._store[namespace][key] = value;
+      });
+    }
+
     Reflect.deleteProperty(app._store, namespace);
   };
 

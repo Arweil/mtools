@@ -20,7 +20,19 @@ export default function dynamic(params: {
         // 默认取 default，兼容一个文件写多个 model 的情况
         let modules = item.default || item;
         if (!Array.isArray(modules)) {
-          modules = [modules];
+          // models: () => [
+          //   import('@/pages/demoMulStore/moduleA'),
+          //   import('@/pages/demoMulStore/moduleB'),
+          // ],
+          if (Object.getOwnPropertySymbols(modules).includes($mobx)) {
+            modules = [modules]
+          } else {
+            // stores: export default { moduleA, moduleB }
+            // models: () => [
+            //   import('@/pages/demoMulStore/stores'),
+            // ],
+            modules = Object.values(modules);
+          }
         }
         modules = modules.filter(m => {
           return Object.getOwnPropertySymbols(m).includes($mobx);

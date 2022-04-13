@@ -1,47 +1,53 @@
-import React, { useEffect } from 'react';
-import { inject, observer } from 'malganis/mobx-react';
-import { toJS } from 'malganis/mobx';
+import React, { useEffect, useContext } from 'react';
+import { MobXProviderContext, observer } from 'malganis/mobx-react';
 import { UserStore as UserStoreMbx } from '@/stores/UserStore';
 import AppLayout from './AppLayout';
 
-interface IAppLayoutWrapperProps {
-  store?: {
-    UserStore: UserStoreMbx;
-  };
-  children?: React.ReactNode;
-}
+export default observer((props: { children?: React.ReactNode; }): JSX.Element => {
+  const { children } = props;
+  const { store } = useContext(MobXProviderContext);
 
-function AppLayoutWrapper(props: IAppLayoutWrapperProps) {
-  const { children, store } = props;
-  const { UserStore } = store!;
-  const userInfo = UserStore && toJS(UserStore.userInfo);
-  const menu = UserStore && toJS(UserStore.menu);
+  const { UserStore } = store as { UserStore: UserStoreMbx };
+
+  const {
+    userInfo,
+    menu,
+    layoutOpenKeys,
+    layoutSelectedKeys,
+  } = UserStore;
 
   useEffect(() => {
-    (async () => {
-      try {
-        if (UserStore) {
-          await Promise.all([
-            UserStore.setMenu(),
-            UserStore.getUserInfo(),
-          ]);
-        }
-      } catch (ex) {
-        console.warn(ex);
+    try {
+      if (UserStore) {
+        UserStore.getBaseInfo().catch(() => { });
       }
+    } catch (ex) {
+      console.warn(ex);
+    }
 
-      return () => { };
-    })().catch(() => {});
+    return () => { };
   }, []);
 
   return (
     <AppLayout
       menu={menu || []}
-      userName={userInfo && userInfo.userName || ''}
+      openKeys={layoutOpenKeys}
+      selectedKeys={layoutSelectedKeys}
+      userName={(userInfo && userInfo.nickname) ? userInfo.nickname : ''}
+      onMenuItemClick={async (menuItem) => {
+        if (menuItem.key === 'logout') {
+          await UserStore.logout();
+        }
+      }}
+      setOpenKeys={UserStore.setOpenKeys}
+      setSelectedKeys={UserStore.setSelectedKeys}
       setTitle={({ collapsed }) => (
         (
           <div style={{ display: 'flex', height: '100%', alignItems: 'center' }}>
-            <div style={{ color: '#fff', fontSize: 20, textAlign: 'center', flex: 1, }}>
+            <div style={{
+              color: '#fff', fontSize: 20, textAlign: 'center', flex: 1,
+            }}
+            >
               {
                 collapsed ? 'Demo' : 'Demo Application'
               }
@@ -53,13 +59,4 @@ function AppLayoutWrapper(props: IAppLayoutWrapperProps) {
       {children}
     </AppLayout>
   );
-}
-
-AppLayoutWrapper.defaultProps = {
-  store: {
-    UserStore: {},
-  },
-  children: null,
-};
-
-export default inject('store')(observer(AppLayoutWrapper));
+});
