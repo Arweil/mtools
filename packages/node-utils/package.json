@@ -15,7 +15,8 @@
   "author": "Milk",
   "license": "MIT",
   "engines": {
-    "node": "8.0.0"
+    "node": ">=10.0.0",
+    "npm": ">=7.0.0"
   },
   "files": [
     "cjs/*",

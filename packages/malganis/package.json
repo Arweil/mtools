@@ -28,6 +28,10 @@
     "package.json",
     "README.md"
   ],
+  "engines": {
+    "node": ">=10.0.0",
+    "npm": ">=7.0.0"
+  },
   "dependencies": {
     "@types/react": "^17.0.21",
     "@types/react-dom": "^17.0.9",
