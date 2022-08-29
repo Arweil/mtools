@@ -1,92 +1,173 @@
-const path = require('path')
-const config = require('../config/index')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const { isString, isArray, isObject, resolveApp, isDevMode } = require('../config/utils');
-const { workerPoolLess, workerPoolSass } = require('./threadLoader');
-const postcssLoadConfig = require('postcss-load-config');
+const config = require('../config');
+const path = require('path');
+const {
+  isString,
+  isArray,
+  isObject,
+  resolveApp,
+  isDevMode
+} = require('../config/utils');
 
-function baseCssLoader ({ cssModules, sourceMap }) {
-  const hasPostcssConfig = (() => {
-    try {
-      return !!postcssLoadConfig.sync();
-    } catch (_error) {
-      return false;
-    }
-  })();
+const cssRegex = /\.css$/;
+const cssModuleRegex = /\.module\.css$/;
+const sassRegex = /\.(scss|sass)$/;
+const sassModuleRegex = /\.module\.(scss|sass)$/;
+const lessRegex = /\.less$/;
+const lessModuleRegex = /\.module\.less$/;
+const localIdentName = config.css.localIdentName || '[name]_[local]_[hash:base64:5]';
 
-  function MakeLoaders (arr) {
-    let result = [
-      // {
-      //   loader: require.resolve('thread-loader'),
-      //   options: arr.includes('sass') ? workerPoolSass : workerPoolLess,
-      // },
-    ];
+// 创建样式配置
+function createStyleLoaderConfig(cssLoaderOptions, preLoaderOptions, preLoader) {
+  const isDevMode = process.env.NODE_ENV !== 'production';
 
-    let obj = {}
-    for (let i = 0, len = arr.length; i < len; i++) {
-      let cnfg = { loader: require.resolve(`${arr[i]}-loader`) }
-      cnfg.options = {
-        sourceMap: !!sourceMap
-      }
-
-      // css-loader 的模块化配置
-      if (arr[i] === 'css' && cssModules) {
-        cnfg.options.modules = cssModules
-      }
-
-      if (arr[i] === 'less') {
-        cnfg.options.lessOptions = {
-          javascriptEnabled: true,
-          modifyVars: config.css.lessModifyVars 
-        };
-      }
-
-      // postcss-loader 配置
-      if (arr[i] === 'postcss' && !hasPostcssConfig) {
-        cnfg.options.ident = 'postcss';
-        cnfg.options.plugins = [
+  const loaders = [{
+      // https://github.com/webpack-contrib/css-loader
+      loader: require.resolve('css-loader'),
+      options: {
+        ...cssLoaderOptions,
+        sourceMap: isDevMode ? true : false,
+      },
+    },
+    {
+      // https://github.com/webpack-contrib/postcss-loader
+      loader: require.resolve('postcss-loader'),
+      options: {
+        sourceMap: isDevMode ? true : false,
+        plugins: () => [
           require('postcss-preset-env')({
             autoprefixer: {
-              flexbox: 'no-2009',
+              flexbox: 'no-2009', // Autoprefixer 将为规范的最终版本和 IE 10 版本添加前缀
             },
             stage: 3,
           }),
           require('postcss-normalize')(),
         ]
       }
+    },
+  ];
 
-      result.push(cnfg);
-    }
+  // 样式以何种方式加载
+  if (isDevMode) {
+    // https://github.com/webpack-contrib/style-loader
+    // 使用style标签
+    loaders.unshift({
+      loader: require.resolve('style-loader'),
+      options: config.css.styleLoaderOptions,
+    });
+  } else {
+    // https://github.com/webpack-contrib/mini-css-extract-plugin
+    // 提取样式为css文件
+    loaders.unshift(MiniCssExtractPlugin.loader);
+  }
 
-    obj.use = result
+  // 样式预处理
+  if (preLoader) {
+    loaders.push({
+      loader: require.resolve(preLoader),
+      options: {
+        ...preLoaderOptions,
+        sourceMap: true,
+      }
+    });
+  }
 
-    // style-loader 放到use数组起始位置
-    if (isDevMode) {
-      obj.use.unshift({
-        loader: require.resolve('style-loader'),
-        options: config.css.loaderOptions.style,
+  return loaders;
+}
+
+function createAllStyleConfig() {
+  const rules = [
+    {
+      test: cssRegex,
+      exclude: cssModuleRegex,
+      use: createStyleLoaderConfig({
+        importLoaders: 1,
+        modules: config.css.cssModules ? {
+          mode: 'local',
+          compileType: 'icss',
+          localIdentName,
+        } : false,
       })
-    } else {
-      obj.use.unshift(MiniCssExtractPlugin.loader)
-    }
+    },
+    {
+      test: cssModuleRegex,
+      use: createStyleLoaderConfig({
+        importLoaders: 1,
+        modules: {
+          mode: 'local',
+          localIdentName,
+        }
+      })
+    },
+    {
+      test: lessRegex,
+      exclude: lessModuleRegex,
+      use: createStyleLoaderConfig({
+        importLoaders: 2,
+        modules: config.css.cssModules ? {
+          mode: 'local',
+          compileType: 'icss',
+          localIdentName,
+        } : false,
+      }, {
+        lessOptions: {
+          javascriptEnabled: true,
+          modifyVars: config.css.lessModifyVars
+        }
+      }, 'less-loader'),
+    },
+    {
+      test: lessModuleRegex,
+      use: createStyleLoaderConfig({
+        importLoaders: 2,
+        modules: {
+          mode: 'local',
+          localIdentName,
+        }
+      }, {
+        lessOptions: {
+          javascriptEnabled: true,
+          modifyVars: config.css.lessModifyVars
+        }
+      }, 'less-loader'),
+    },
+    {
+      test: sassRegex,
+      exclude: sassModuleRegex,
+      use: createStyleLoaderConfig({
+          importLoaders: 2,
+          modules: config.css.cssModules ? {
+            mode: 'local',
+            compileType: 'icss',
+            localIdentName,
+          } : false,
+        },
+        {},
+        'sass-loader'
+      ),
+      sideEffects: true,
+    },
+    {
+      test: sassModuleRegex,
+      use: createStyleLoaderConfig({
+          importLoaders: 2,
+          modules: {
+            mode: 'local',
+            localIdentName,
+          },
+        },
+        {},
+        'sass-loader'
+      ),
+    },
+  ];
 
-    return obj
-  }
-
-  return {
-    // style-loader 用于脚本的提取，关联html
-    // css-loader 可以使脚本直接require *.css文件
-    // less-loader 可以使脚本直接require *.less文件
-    // postcss-loader
-    // 注意loader加载顺序(style, css, postcss, less)，否则会出错
-    css: MakeLoaders(['css', 'postcss']),
-    less: MakeLoaders(['css', 'postcss', 'less']),
-    scss: MakeLoaders(['css', 'postcss', 'sass']),
-  }
+  return rules;
 }
 
 module.exports = {
-  entryHandler (defaultEntry) {
+  createAllStyleConfig,
+  entryHandler(defaultEntry) {
     const filtedEntry = defaultEntry.filter((item) => item);
 
     function resolveModules(entry) {
@@ -95,7 +176,9 @@ module.exports = {
         return {
           [key]: values.map(item => {
             if (item.import) {
-              const deepCopy = { ...item }
+              const deepCopy = {
+                ...item
+              }
               deepCopy.import = resolveApp(item.import);
               return deepCopy;
             } else {
@@ -131,20 +214,7 @@ module.exports = {
 
     return fin;
   },
-  assetsPath (_path) {
-    return path.join(config.assetsDir, _path)
+  assetsPath(_path) {
+    return path.posix.join(config.assetsDir, _path)
   },
-  baseStyleLoader ({ cssModules, sourceMap }) {
-    let arrStyleLoader = ['less', 'scss', 'css'];
-
-    let rules = [];
-
-    for (let i = 0, len = arrStyleLoader.length; i < len; i++) {
-      let config = baseCssLoader({ cssModules, sourceMap })[arrStyleLoader[i]];
-      config.test = new RegExp(`\\.${arrStyleLoader[i]}$`);
-      rules.push(config);
-    }
-
-    return rules;
-  }
 }

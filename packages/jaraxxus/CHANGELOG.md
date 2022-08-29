@@ -1,3 +1,8 @@
+## v4.1.0
+1. 新增了对css module的支持
+2. 支持windows的构建（path.posix）
+3. 移除了对node-sass的依赖，使用dart-sass
+
 ## v4.0.0
 1. 修改仓库地址
 2. 默认 *indexPath* 配置为 *public/index.html*；

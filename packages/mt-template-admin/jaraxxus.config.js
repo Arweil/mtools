@@ -1,5 +1,3 @@
-const path = require('path');
-
 module.exports = {
   entry: 'src/index.tsx',
   bundleAnalyzerReport: false,
@@ -8,7 +6,6 @@ module.exports = {
     open: false,
   },
   css: {
-    sourceMap: true,
     lessModifyVars: require('./theme'),
   },
 };

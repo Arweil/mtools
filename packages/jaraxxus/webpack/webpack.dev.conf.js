@@ -10,6 +10,9 @@ const config = require('../config/index.js')
 const utils = require('./utils.js')
 const { resolveApp, portInUse } = require('../config/utils');
 
+// 设置当前为生产环境
+process.env.NODE_ENV = 'development';
+
 const devConf = merge(baseConf, {
   // 会将 process.env.NODE_ENV 的值设为 development
   // 启用 NamedChunksPlugin 和 NamedModulesPlugin
@@ -27,12 +30,6 @@ const devConf = merge(baseConf, {
     chunkFilename: utils.assetsPath('js/[name].js')
   },
   devtool: 'cheap-module-source-map', // 配置生成Source Maps，选择合适的选项
-  module: {
-    rules: utils.baseStyleLoader({
-      cssModules: config.css.cssModules,
-      sourceMap: config.css.sourceMap,
-    })
-  },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
   ]

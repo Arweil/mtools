@@ -25,12 +25,6 @@ let webpackProdConfig = merge(baseConf, {
     filename: utils.assetsPath('js/[name].[chunkhash:8].js'),
     chunkFilename: utils.assetsPath('js/[name].[chunkhash:8].js')
   },
-  module: {
-    rules: utils.baseStyleLoader({
-      cssModules: config.css.cssModules,
-      sourceMap: config.css.sourceMap,
-    })
-  },
   plugins: [
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({

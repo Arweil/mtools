@@ -80,6 +80,7 @@ const baseConf = {
           name: utils.assetsPath('img/[name].[hash:7].[ext]'),
         }
       },
+      ...utils.createAllStyleConfig(),
       {
         test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
         loader: require.resolve('url-loader'),
