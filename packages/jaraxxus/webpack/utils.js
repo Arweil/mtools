@@ -8,6 +8,7 @@ const {
   resolveApp,
   isDevMode
 } = require('../config/utils');
+const postcssLoadConfig = require('postcss-load-config');
 
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
@@ -17,9 +18,18 @@ const lessRegex = /\.less$/;
 const lessModuleRegex = /\.module\.less$/;
 const localIdentName = config.css.localIdentName || '[name]_[local]_[hash:base64:5]';
 
+const hasPostcssConfig = (() => {
+  try {
+    return !!postcssLoadConfig.sync();
+  } catch (_error) {
+    return false;
+  }
+})();
+
 // 创建样式配置
 function createStyleLoaderConfig(cssLoaderOptions, preLoaderOptions, preLoader) {
   const isDevMode = process.env.NODE_ENV !== 'production';
+  const postcssPX2ViewportConfig = config.css.postcssPX2ViewportConfig;
 
   const loaders = [{
       // https://github.com/webpack-contrib/css-loader
@@ -29,7 +39,18 @@ function createStyleLoaderConfig(cssLoaderOptions, preLoaderOptions, preLoader) 
         sourceMap: isDevMode ? true : false,
       },
     },
-    {
+  ];
+
+  if (hasPostcssConfig) {
+    loaders.push({
+      // https://github.com/webpack-contrib/postcss-loader
+      loader: require.resolve('postcss-loader'),
+      options: {
+        sourceMap: isDevMode ? true : false,
+      }
+    });
+  } else {
+    loaders.push({
       // https://github.com/webpack-contrib/postcss-loader
       loader: require.resolve('postcss-loader'),
       options: {
@@ -42,10 +63,11 @@ function createStyleLoaderConfig(cssLoaderOptions, preLoaderOptions, preLoader) 
             stage: 3,
           }),
           require('postcss-normalize')(),
-        ]
+          postcssPX2ViewportConfig && Object.keys(postcssPX2ViewportConfig).length > 0 ? require('postcss-px-to-viewport')(postcssPX2ViewportConfig) : false
+        ].filter(Boolean)
       }
-    },
-  ];
+    });
+  }
 
   // 样式以何种方式加载
   if (isDevMode) {

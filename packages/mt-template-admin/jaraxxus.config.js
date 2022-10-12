@@ -6,6 +6,5 @@ module.exports = {
     open: false,
   },
   css: {
-    lessModifyVars: require('./theme'),
   },
 };

@@ -4,6 +4,7 @@ const ora = require('ora')
 const chalk = require('chalk');
 const webpackDevServer = require('webpack-dev-server')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 const baseConf = require('./webpack.base.conf.js')
 const config = require('../config/index.js')
@@ -20,8 +21,8 @@ const devConf = merge(baseConf, {
   entry: utils.entryHandler([
     config.needPolyfill ? require.resolve('core-js/stable') : undefined,
     config.needPolyfill ? require.resolve('regenerator-runtime/runtime') : undefined,
-    require.resolve('webpack-dev-server/client') + '?/',
-    require.resolve('webpack/hot/dev-server'),
+    // require.resolve('webpack-dev-server/client') + '?/',
+    // require.resolve('webpack/hot/dev-server'),
   ]),
   output: {
     publicPath: config.publicPath,
@@ -32,6 +33,7 @@ const devConf = merge(baseConf, {
   devtool: 'cheap-module-source-map', // 配置生成Source Maps，选择合适的选项
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
+    new ReactRefreshWebpackPlugin(),
   ]
 })
 

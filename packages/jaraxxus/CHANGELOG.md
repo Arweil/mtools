@@ -1,3 +1,8 @@
+## v4.1.1
+1. 修复了 postcss 配置文件不生效的问题
+2. 新增了 config.css.postcssPX2ViewportConfig 配置 px2viewport 的入口
+3. 使用 react-refresh 替代 react-hot-loader
+
 ## v4.1.0
 1. 新增了对css module的支持
 2. 支持windows的构建（path.posix）

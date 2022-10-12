@@ -8,6 +8,7 @@ import {
 } from '@ant-design/icons';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import AppBreadcrumb from './AppBreadcrumb';
+import styles from './style.module.less';
 
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -96,7 +97,7 @@ function AppLayout<IMenuInfo extends IBaseMenuInfo>(
           height: '100%',
         }}
       >
-        <div style={{ height: 56, backgroundColor: '#002140' }}>
+        <div className={styles.title}>
           {
             setTitle ? setTitle({ collapsed }) : null
           }

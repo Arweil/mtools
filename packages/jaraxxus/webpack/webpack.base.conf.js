@@ -66,7 +66,10 @@ const baseConf = {
                 ],
                 require.resolve('@babel/preset-typescript'),
               ],
-              plugins: [require.resolve("@babel/plugin-transform-runtime")],
+              plugins: [
+                process.env.NODE_ENV === 'development' && require.resolve('react-refresh/babel'),
+                require.resolve("@babel/plugin-transform-runtime")
+              ].filter(Boolean),
               extends: config.babelExtends,
             }
           },
