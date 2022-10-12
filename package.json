@@ -6,8 +6,7 @@
   "scripts": {
     "changelog": "lerna-changelog",
     "test": "lerna run test",
-    "build": "lerna run build",
-    "publish": "npm run test && npm run build && lerna publish"
+    "build": "lerna run build"
   },
   "keywords": [
     "toolkit"
