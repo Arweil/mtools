@@ -3,6 +3,7 @@ packages/*/coverage
 packages/*/lib
 packages/*/es
 packages/*/cjs
+packages/*/dist
 
 .npmrc
 lerna-debug.log

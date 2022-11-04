@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "jaraxxus start",
     "build": "jaraxxus build",
+    "start": "node-service start",
     "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx"
   },
   "author": "Milk",
@@ -24,12 +25,12 @@
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@m-tools/browser-utils": "^0.0.4-alpha.0",
+    "@m-tools/node-service": "^0.0.1",
     "antd": "^4.16.3",
     "malganis": "^2.0.2",
     "moment": "^2.29.1",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-hot-loader": "^4.13.0"
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
