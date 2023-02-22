@@ -29,6 +29,7 @@ function malganis<TypeOfStore extends { [key: string]: unknown; }>(options: Part
   const app: IMalGanisApp = {
     _store: {},
     _cacheRouteModalKey: [],
+    _fetchingComp: null,
   } as IMalGanisApp;
 
   // 默认为 hash history
@@ -45,6 +46,8 @@ function malganis<TypeOfStore extends { [key: string]: unknown; }>(options: Part
       history = createHashHistory(historyOpt);
       break;
   }
+
+  app._fetchingComp = options.fetchingComp;
 
   app.router = function router(fun: (params: { app: IMalGanisApp, history: History  }) => JSX.Element): void {
     app._router = fun({ app, history });

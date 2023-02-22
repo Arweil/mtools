@@ -8,3 +8,7 @@ packages/*/dist
 .npmrc
 lerna-debug.log
 example/*
+
+packages/packer/*
+packages/antd-ext/*
+

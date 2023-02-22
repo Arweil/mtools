@@ -7,6 +7,7 @@ export interface IMalGanisOpt {
     type: 'browser' | 'hash' | 'memory'
   } & BrowserHistoryBuildOptions;
   useReactContextMode: boolean;
+  fetchingComp: React.ReactNode;
 }
 
 export interface IMalGanisModalObj {
@@ -23,6 +24,7 @@ export interface IMalGanisApp {
   _store: {
     [key: string]: unknown;
   };
+  _fetchingComp: React.ReactNode;
   _cacheRouteModalKey: string[]; // 通过 dynamic 注入的状态实例
   start: {
     (): JSX.Element;

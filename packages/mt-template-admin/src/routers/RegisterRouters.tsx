@@ -44,6 +44,7 @@ const RegisterRouter = ({ app, history }: {
                 models: () => [
                   import('@/pages/demoBaseCom/DemoStore'),
                 ],
+                fetchingComp: ('custom fetching loading...'),
               })}
             />
             <Route

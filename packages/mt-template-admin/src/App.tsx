@@ -5,10 +5,15 @@ import malganis from 'malganis';
 import { userStore } from '@/stores';
 import RegisterRouter from './routers';
 
+function LoadingComponent(): React.ReactNode {
+  return 'App Fetching Loading...';
+}
+
 const app = malganis({
   historyOptions: {
     type: 'browser',
   },
+  fetchingComp: LoadingComponent,
 });
 
 app.model(userStore);

@@ -36,6 +36,7 @@ let webpackProdConfig = merge(baseConf, {
     minimizer: [
       new TerserWebpackPlugin({
         terserOptions: {
+          safari10: true,
           format: {
             comments: false,
             ascii_only: true,

@@ -7,8 +7,9 @@ export default function dynamic(params: {
   app: IMalGanisApp;
   models?: () => Array<Promise<any>>;
   component: () => Promise<any>;
+  fetchingComp?: React.ReactNode;
 }) {
-  const { app, models = () => [], component } = params;
+  const { app, models = () => [], component, fetchingComp } = params;
 
   const p = () => new Promise<IReactComponent>((resolve, reject) => {
     Promise.all([component(), ...(models())]).then(([resolvedComponent, ...modelList]) => {
@@ -88,7 +89,9 @@ export default function dynamic(params: {
       const { FinComp } = this.state;
 
       if (!FinComp) {
-        return 'Loading...'
+        const FetchingComponent: React.ReactNode =
+          fetchingComp ? fetchingComp : (app._fetchingComp ? app._fetchingComp : 'Loading...');
+        return FetchingComponent
       }
 
       return React.createElement(FinComp, null);
