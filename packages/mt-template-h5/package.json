@@ -18,7 +18,7 @@
     "typescript"
   ],
   "publishConfig": {
-    "access": "public"
+    "access": "restricted"
   },
   "dependencies": {
     "@m-tools/browser-utils": "^0.0.4-alpha.0",
