@@ -47,6 +47,9 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
         background-color: ${colorGreyL3};
       }
     }
+    &:disabled {
+      background: #FFFFFF;
+    }
   }
 
   &.${prefixCls}-btn-primary {
@@ -62,11 +65,13 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
       &:disabled {
         color: ${colorGreyL1};
         border-color: ${colorGreyL1};
+        background: #FFFFFF;
       }
     }
     &:disabled {
       color: #FFFFFF;
       border-color: ${colorGreyL1};
+      background: ${colorGreyL1};
     }
   }
 `;

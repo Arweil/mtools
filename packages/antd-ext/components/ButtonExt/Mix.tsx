@@ -9,15 +9,20 @@ import {
 } from "./ThemeHermes";
 import classNames from "classnames";
 import { AntdExtGlobalContext } from '../ConfigProviderExt/context';
+import type { Theme } from '../ConfigProviderExt/context';
 import { ConfigProvider } from 'antd';
 
 const { useToken } = theme;
 
-export default function Mix(props: ButtonExtProps) {
+export interface ButtonExtMinixProps extends ButtonExtProps {
+  theme?: Theme;
+}
+
+export default function Minix(props: ButtonExtMinixProps) {
   const { token } = useToken();
   const { themeExt } = useContext(AntdExtGlobalContext);
   const { getPrefixCls } = React.useContext(ConfigProvider.ConfigContext);
-  const { className, ...restProps } = props;
+  const { className, theme: customTheme, ...restProps } = props;
 
   const classes = useMemo(
     () => (
@@ -25,9 +30,9 @@ export default function Mix(props: ButtonExtProps) {
         hermes: classNames(className, [customStyleHermes(token, getPrefixCls())]),
         zeus: classNames(className),
         default: classNames(className),
-      }[themeExt]
+      }[customTheme || themeExt]
     ),
-    [className, token, themeExt]
+    [className, token, customTheme, themeExt]
   );
 
   const Theme = useMemo(() => (
@@ -35,8 +40,8 @@ export default function Mix(props: ButtonExtProps) {
       hermes: ThemeHermes,
       zeus: (props: ThemeProps) => <>{props.children}</>,
       default: (props: ThemeProps) => <>{props.children}</>,
-    }[themeExt]
-  ), [themeExt]);
+    }[customTheme || themeExt]
+  ), [customTheme, themeExt]);
 
   return (
     <Theme>
