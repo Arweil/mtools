@@ -20,6 +20,10 @@ export interface ThemeProps {
 export const customStyle = (token: GlobalToken, prefixCls: string) => css`
   min-width: 74px;
 
+  .${prefixCls}-btn-link {
+    min-width: initial;
+  }
+
   &.${prefixCls}-btn-default {
     &.${prefixCls}-btn-background-ghost {
       &:not(:disabled) {
