@@ -45,9 +45,11 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
     columns,
     dataSource,
     tdTooltip,
-    emptyDesc = '没有查询到对应的结果',
+    emptyDesc = '没有数据',
     loading,
     useSkeleton = false,
+    pagination,
+    rowSelection,
     ...restProps
   } = props;
 
@@ -71,7 +73,6 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
   // 判断是否加载完数据，通过 pre, cur 的loading状态判断
   const hasLoadedData = useMemo(() => {
     if (!curLoadingState && cacheLoadingState.current) {
-      cacheLoadingState.current = curLoadingState;
       return true;
     }
 
@@ -82,7 +83,7 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
   // 数据源内容
   const finDataSource = useMemo(() => {
     // 如果使用骨架屏，需要默认一些数据，以展示骨架屏
-    if (useSkeleton && !(dataSource && dataSource.length > 0) && !hasLoadedData) {
+    if (useSkeleton && !(dataSource && dataSource.length > 0) && !isFirstTimeRendered.current) {
       return new Array(10).fill({ $$mock: true });
     }
 
@@ -122,6 +123,8 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
     }
   }, [curLoadingState, hasData, hasLoadedData]);
 
+  const SkeletonItem = useMemo(() => <Skeleton.Input block style={{ minWidth: "initial", height: 22 }} />, []);
+
   const formattedCols = useMemo(() => {
     if (!columns || columns.length === 0) {
       return columns;
@@ -133,14 +136,14 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
 
       if (!hidden) {
         if (fetching) {
-          restProps.title = <Skeleton.Input block />;
+          restProps.title = SkeletonItem;
         }
 
         cols.push({
           ...restProps,
           render: useDefaultRender ? (value, record, index) => {
             if (fetching) {
-              return <Skeleton.Input block />;
+              return SkeletonItem;
             }
 
             if (render) {
@@ -174,7 +177,7 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
     return cols;
   }, [columns, fetching]);
 
-  const EmptyText = useMemo(() => <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={emptyDesc} />, []);
+  const EmptyText = useMemo(() => <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={emptyDesc} />, [emptyDesc]);
 
   const pager: TablePaginationConfig | false | undefined = useMemo(() => {
     // 如果没有数据，那么返回undefined
@@ -185,31 +188,24 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
       };
     }
 
-    const { pagination } = props;
-
-    // 纯前端分页
-    if (!pagination && finDataSource && finDataSource.length > 10) {
-      return {
-        showQuickJumper: true,
-        showSizeChanger: true,
-        pageSizeOptions: [10, 20, 50, 100],
-        showTotal: () => `共${finDataSource.length}条数据`,
-      }
+    if (pagination === false) {
+      return false;
     }
 
-    // 后端分页
-    if (pagination && pagination.total && pagination.total > 10) {
+    const total = (pagination && pagination.total) || (finDataSource && finDataSource.length) || 0;
+
+    if (total > 10) {
       return {
         showQuickJumper: true,
         showSizeChanger: true,
         pageSizeOptions: [10, 20, 50, 100],
-        showTotal: () => `共${pagination.total}条数据`,
+        showTotal: () => `共${total}条数据`,
         ...pagination,
       }
     }
 
-    return pagination;
-  }, [props.pagination, finDataSource, hasData]);
+    return false;
+  }, [pagination, finDataSource, hasData]);
 
   if (finDataSource && finDataSource.length > 0 || !useSkeleton) {
     return (
@@ -221,10 +217,11 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
           emptyText: EmptyText
         }}
         pagination={pager}
+        rowSelection={fetching && rowSelection ? { renderCell: () => SkeletonItem, columnTitle: SkeletonItem, ...rowSelection } : rowSelection}
         {...restProps}
       />
     )
   }
 
-  return <div className={emptyClass}>没有数据</div>;
+  return <div className={emptyClass}>{emptyDesc}</div>;
 }

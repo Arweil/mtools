@@ -20,7 +20,7 @@ export default function Minix(props: TableExtMinixProps) {
   const { token } = useToken();
   const { themeExt } = useContext(AntdExtGlobalContext);
   const { getPrefixCls } = React.useContext(ConfigProvider.ConfigContext);
-  const { className, theme: customTheme, ...restProps } = props;
+  const { className, theme: customTheme, rowSelection, ...restProps } = props;
 
   const classes = useMemo(
     () => (
@@ -54,11 +54,26 @@ export default function Minix(props: TableExtMinixProps) {
     }[customTheme || themeExt]
   ), [customTheme, themeExt]);
 
+  // rowSelection 默认样式
+  const rowSelectionStyle = useMemo(() => (
+    {
+      hermes: {
+        columnWidth: 48,
+      },
+      zeus: {},
+      default: {},
+    }[customTheme || themeExt]
+  ), [customTheme, themeExt]);
+
   return (
     <Theme>
       <TableExt
         className={classes}
         tdTooltip={toolTipStyle}
+        rowSelection={rowSelection ? {
+          ...rowSelectionStyle,
+          ...rowSelection,
+        } : undefined}
         {...restProps}
       />
     </Theme>

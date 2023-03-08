@@ -172,6 +172,8 @@ export function Theme(props: ThemeProps) {
         token: {
           colorPrimary: colorPrimaryL1,
           borderRadius: 0,
+          controlItemBgActive: '#ffffff',
+          controlItemBgActiveHover: colorGreyL3,
         }
       }}
     >
