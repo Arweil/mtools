@@ -28,6 +28,9 @@ export function getConfig(): NodeServiceConfig {
     proxy: [],
     // 配置 listen 端口
     port: '8080',
+    apis: undefined,
+    CSP: undefined,
+    useCookieEnv: true,
     ...customConfig,
   };
 }

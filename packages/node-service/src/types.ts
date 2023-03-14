@@ -42,5 +42,13 @@ export type NodeServiceConfig = {
   port: string;
   // 部署到 node 环境变量 KEY 名称
   DEPLOY_ENV: string;
-  apis: (app: Express) => void;
+  // 自定义node接口
+  apis?: (app: Express) => void;
+  // Content-Security-Policy 配置
+  // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
+  // https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
+  CSP?: string;
+  // 是否需要注入 _e 到 cookie中判断环境
+  // 目前可以通过 window.$$_e 来获取环境，推荐使用此方法
+  useCookieEnv?: boolean;
 }
