@@ -1,3 +1,6 @@
+## v4.1.3
+1. 修复了 sass 的版本问题，sass 1.49.0 依赖 node8 版本，而 sass 1.49.1 依赖 node12版本
+
 ## v4.1.1
 1. 修复了 postcss 配置文件不生效的问题
 2. 新增了 config.css.postcssPX2ViewportConfig 配置 px2viewport 的入口

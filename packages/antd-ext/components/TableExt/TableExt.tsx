@@ -83,7 +83,7 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
   // 数据源内容
   const finDataSource = useMemo(() => {
     // 如果使用骨架屏，需要默认一些数据，以展示骨架屏
-    if (useSkeleton && !(dataSource && dataSource.length > 0) && !isFirstTimeRendered.current) {
+    if (useSkeleton && !(dataSource && dataSource.length > 0) && !isFirstTimeRendered.current && !hasLoadedData) {
       return new Array(10).fill({ $$mock: true });
     }
 

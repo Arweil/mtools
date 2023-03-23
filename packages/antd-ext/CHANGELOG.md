@@ -1,3 +1,8 @@
+## 0.0.5-alpha.0
+1. 新增了 InputExt 组件，以及他的 hermes 主题
+2. 修复了 TableExt 首屏数据返回空，页面占位数据没清空的BUG
+3. 优化了 TableExt组件、ButtonExt组件，使用 useMapTheme hooks
+
 ## 0.0.4-alpha.0
 1. 修正了 TableExt 组件，以及 hermes 主题的 BUG。包括：空文案的BUG、骨架屏的BUG、分页器的BUG、hermes主题没有覆盖到的样式
 

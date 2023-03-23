@@ -1,45 +1,28 @@
-import React, { useContext, useMemo } from 'react';
-import { ConfigProvider, theme } from 'antd';
-import classNames from 'classnames';
-import { AntdExtGlobalContext, Theme } from '../ConfigProviderExt/context';
+import React, { useMemo } from 'react';
+import { Theme } from '../ConfigProviderExt/context';
 import TableExt from './TableExt';
 import {
   Theme as ThemeHermes,
-  customStyle as customStyleHermes,
-  ThemeProps
-} from "./ThemeHermes";
+  customStyle as customStyleHermes} from "./ThemeHermes";
 import type { TableExtProps } from './TableExt';
-
-const { useToken } = theme;
+import useMapTheme from '../utils/useMapTheme';
 
 export interface TableExtMinixProps extends TableExtProps {
   theme?: Theme;
 }
 
 export default function Minix(props: TableExtMinixProps) {
-  const { token } = useToken();
-  const { themeExt } = useContext(AntdExtGlobalContext);
-  const { getPrefixCls } = React.useContext(ConfigProvider.ConfigContext);
   const { className, theme: customTheme, rowSelection, ...restProps } = props;
-
-  const classes = useMemo(
-    () => (
-      {
-        hermes: classNames(className, [customStyleHermes(token, getPrefixCls())]),
-        zeus: classNames(className),
-        default: classNames(className),
-      }[customTheme || themeExt]
-    ),
-    [className, token, customTheme, themeExt]
-  );
-
-  const Theme = useMemo(() => (
-    {
+  const { classes, ThemeWrapper, globalTheme } = useMapTheme({
+    className,
+    theme: customTheme,
+    themeWrap: {
       hermes: ThemeHermes,
-      zeus: (props: ThemeProps) => <>{props.children}</>,
-      default: (props: ThemeProps) => <>{props.children}</>,
-    }[customTheme || themeExt]
-  ), [customTheme, themeExt]);
+    },
+    emotioncss: {
+      hermes: customStyleHermes,
+    }
+  });
 
   // tooltip 默认样式
   const toolTipStyle = useMemo(() => (
@@ -51,8 +34,8 @@ export default function Minix(props: TableExtMinixProps) {
       },
       zeus: {},
       default: {},
-    }[customTheme || themeExt]
-  ), [customTheme, themeExt]);
+    }[customTheme || globalTheme]
+  ), [customTheme, globalTheme]);
 
   // rowSelection 默认样式
   const rowSelectionStyle = useMemo(() => (
@@ -62,11 +45,11 @@ export default function Minix(props: TableExtMinixProps) {
       },
       zeus: {},
       default: {},
-    }[customTheme || themeExt]
-  ), [customTheme, themeExt]);
+    }[customTheme || globalTheme]
+  ), [customTheme, globalTheme]);
 
   return (
-    <Theme>
+    <ThemeWrapper>
       <TableExt
         className={classes}
         tdTooltip={toolTipStyle}
@@ -76,6 +59,6 @@ export default function Minix(props: TableExtMinixProps) {
         } : undefined}
         {...restProps}
       />
-    </Theme>
+    </ThemeWrapper>
   );
 }
