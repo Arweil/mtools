@@ -1,3 +1,6 @@
+## 0.0.6-alpha.0
+1. 新增了 SelectExt 组件，以及他的 hermes 主题
+
 ## 0.0.5-alpha.0
 1. 新增了 InputExt 组件，以及他的 hermes 主题
 2. 修复了 TableExt 首屏数据返回空，页面占位数据没清空的BUG

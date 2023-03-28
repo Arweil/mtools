@@ -51,13 +51,13 @@ export default function Minix(props: TableExtMinixProps) {
   return (
     <ThemeWrapper>
       <TableExt
-        className={classes}
         tdTooltip={toolTipStyle}
         rowSelection={rowSelection ? {
           ...rowSelectionStyle,
           ...rowSelection,
         } : undefined}
         {...restProps}
+        className={classes}
       />
     </ThemeWrapper>
   );

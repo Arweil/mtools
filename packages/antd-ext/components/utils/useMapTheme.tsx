@@ -24,12 +24,14 @@ export default function useMapTheme(props: MapTheme) {
   const { getPrefixCls } = useContext(ConfigProvider.ConfigContext);
   const { className, theme: customTheme, emotioncss, themeWrap } = props;
 
+  const prefix = useMemo(getPrefixCls, [getPrefixCls]);
+
   const classes = useMemo(
     () => (
       {
-        hermes: classNames(className, [emotioncss && emotioncss.hermes && emotioncss.hermes(token, getPrefixCls())]),
-        zeus: classNames(className, [emotioncss && emotioncss.zeus && emotioncss.zeus(token, getPrefixCls())]),
-        default: classNames(className, [emotioncss && emotioncss.default && emotioncss.default(token, getPrefixCls())]),
+        hermes: classNames(className, [emotioncss && emotioncss.hermes && emotioncss.hermes(token, prefix)]),
+        zeus: classNames(className, [emotioncss && emotioncss.zeus && emotioncss.zeus(token, prefix)]),
+        default: classNames(className, [emotioncss && emotioncss.default && emotioncss.default(token, prefix)]),
       }[customTheme || themeExt]
     ),
     [className, token, customTheme, themeExt]
@@ -50,5 +52,7 @@ export default function useMapTheme(props: MapTheme) {
     ThemeWrapper,
     theme: customTheme,
     globalTheme: themeExt,
+    token,
+    prefix,
   };
 }
