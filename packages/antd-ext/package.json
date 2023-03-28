@@ -1,6 +1,6 @@
 {
   "name": "@m-tools/antd-ext",
-  "version": "0.0.5-alpha.0",
+  "version": "0.0.6-alpha.0",
   "description": "antd extends",
   "module": "es/index.js",
   "types": "es/index.d.ts",
