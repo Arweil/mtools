@@ -77,7 +77,7 @@ export default function SelectExt(props: SelectExtProps) {
     popupClassName,
     tooltip,
     style,
-    dropdownStyle,
+    listHeight,
     ...restProps
   } = props;
 
@@ -106,6 +106,8 @@ export default function SelectExt(props: SelectExtProps) {
 
   const formattedPopupClassName = useMemo(() => classNames(popupClassName, popup), [popupClassName]);
 
+  const formattedListHeight = useMemo(() => listHeight !== undefined ? listHeight : 220, [listHeight]);
+
   return (
     <Select
       allowClear
@@ -115,7 +117,7 @@ export default function SelectExt(props: SelectExtProps) {
       optionLabelProp="relLabel"
       optionFilterProp="relLabel"
       style={{ minWidth: 130, ...style }}
-      dropdownStyle={{ maxHeight: 220, ...dropdownStyle }}
+      listHeight={formattedListHeight}
       {...restProps}
     >
       {children}
