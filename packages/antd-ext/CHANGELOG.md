@@ -1,3 +1,6 @@
+## 0.1.0-alpha.0
+1. 新增了 DrawerExt 组件，以及他的 hermes 主题
+
 ## 0.0.7-alpha.0
 1. 修正了 SelectExt 组件，下拉列表高度属性调整（listHeight）
 
