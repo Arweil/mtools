@@ -1,3 +1,7 @@
+## 0.1.1-alpha.0
+1. 增加了 SelectExt 组件对 fieldNames 的兼容
+2. 修复了一些命名，包括TS的interface名称
+
 ## 0.1.0-alpha.0
 1. 新增了 DrawerExt 组件，以及他的 hermes 主题
 

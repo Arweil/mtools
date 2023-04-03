@@ -51,11 +51,11 @@ export function useSelectExtPopupStyle(data: {
   return popupStyle;
 }
 
-export interface SelectExtMinixProps extends SelectExtProps {
+export interface SelectExtMixinProps extends SelectExtProps {
   theme?: Theme;
 }
 
-export function MixinSelectExt(props: SelectExtMinixProps) {
+export function MixinSelectExt(props: SelectExtMixinProps) {
   const { className, theme, tooltip, popupClassName, ...restProps } = props;
   const { classes, ThemeWrapper, theme: customTheme, globalTheme, token, prefix } = useMapTheme({
     className,

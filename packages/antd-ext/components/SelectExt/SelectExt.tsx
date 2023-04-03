@@ -78,15 +78,18 @@ export default function SelectExt(props: SelectExtProps) {
     tooltip,
     style,
     listHeight,
+    fieldNames,
     ...restProps
   } = props;
 
   const formattedOptions = useMemo(() => {
     if (options && options.length > 0) {
+      const mapLabelName = fieldNames?.label || 'label';
+
       return options.map(item => ({
         ...item,
-        label: React.isValidElement(item.label) ? item.label : (<SelectItemWrapper tooltip={tooltip} disabled={item.disabled}>{item.label}</SelectItemWrapper>) as React.ReactNode,
-        relLabel: item.label,
+        [mapLabelName]: React.isValidElement(item[mapLabelName]) ? item[mapLabelName] : (<SelectItemWrapper tooltip={tooltip} disabled={item.disabled}>{item[mapLabelName]}</SelectItemWrapper>) as React.ReactNode,
+        relLabel: item[mapLabelName],
       }));
     }
 
@@ -102,7 +105,7 @@ export default function SelectExt(props: SelectExtProps) {
     }
 
     return undefined;
-  }, [options, dataMap]);
+  }, [options, dataMap, fieldNames]);
 
   const formattedPopupClassName = useMemo(() => classNames(popupClassName, popup), [popupClassName]);
 
@@ -118,6 +121,7 @@ export default function SelectExt(props: SelectExtProps) {
       optionFilterProp="relLabel"
       style={{ minWidth: 130, ...style }}
       listHeight={formattedListHeight}
+      fieldNames={fieldNames}
       {...restProps}
     >
       {children}

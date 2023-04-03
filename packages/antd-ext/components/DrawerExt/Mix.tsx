@@ -8,11 +8,11 @@ import {
   colorGreyL6
 } from '../theme/hermes';
 
-export interface DrawerExtMinixProps extends DrawerExtProps {
+export interface DrawerExtMixinProps extends DrawerExtProps {
   theme?: Theme;
 }
 
-export default function Minix(props: DrawerExtMinixProps) {
+export default function Mixin(props: DrawerExtMixinProps) {
   const { className, theme: customTheme, headerStyle, footerStyle, ...restProps } = props;
   const { classes, ThemeWrapper, globalTheme } = useMapTheme({
     className,

@@ -7,11 +7,11 @@ import {
 import type { TableExtProps } from './TableExt';
 import useMapTheme from '../utils/useMapTheme';
 
-export interface TableExtMinixProps extends TableExtProps {
+export interface TableExtMixinProps extends TableExtProps {
   theme?: Theme;
 }
 
-export default function Minix(props: TableExtMinixProps) {
+export default function Mixin(props: TableExtMixinProps) {
   const { className, theme: customTheme, rowSelection, ...restProps } = props;
   const { classes, ThemeWrapper, globalTheme } = useMapTheme({
     className,

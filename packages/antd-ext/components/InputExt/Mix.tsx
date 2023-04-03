@@ -14,7 +14,7 @@ import type { InputOutLineExtProps } from './InputOutLineExt';
 import type { PasswordProps, SearchProps, TextAreaProps } from 'antd/es/input';
 import useMapTheme from '../utils/useMapTheme';
 
-export interface InputExtMinixProps extends InputExtProps {
+export interface InputExtMixinProps extends InputExtProps {
   theme?: Theme;
 }
 
@@ -22,7 +22,7 @@ export interface InputExtHOCProps {
   children: (classes: string) => JSX.Element;
 }
 
-function InputExtHOC(props: (InputExtMinixProps | SearchExtMinixProps | TextAreaExtMinixProps) & InputExtHOCProps) {
+function InputExtHOC(props: (InputExtMixinProps | SearchExtMixinProps | TextAreaExtMixinProps) & InputExtHOCProps) {
   const { className, theme, children } = props;
   const { classes, ThemeWrapper } = useMapTheme({
     className,
@@ -42,7 +42,7 @@ function InputExtHOC(props: (InputExtMinixProps | SearchExtMinixProps | TextArea
   );
 }
 
-export function MixinInputExt(props: InputExtMinixProps) {
+export function MixinInputExt(props: InputExtMixinProps) {
   return (
     <InputExtHOC {...props}>
       {
@@ -52,11 +52,11 @@ export function MixinInputExt(props: InputExtMinixProps) {
   )
 }
 
-export interface SearchExtMinixProps extends SearchProps {
+export interface SearchExtMixinProps extends SearchProps {
   theme?: Theme;
 }
 
-MixinInputExt.Search = (props: SearchExtMinixProps) => {
+MixinInputExt.Search = (props: SearchExtMixinProps) => {
   return (
     <InputExtHOC {...props}>
       {
@@ -66,11 +66,11 @@ MixinInputExt.Search = (props: SearchExtMinixProps) => {
   )
 }
 
-export interface TextAreaExtMinixProps extends TextAreaProps {
+export interface TextAreaExtMixinProps extends TextAreaProps {
   theme?: Theme;
 }
 
-MixinInputExt.TextArea = (props: TextAreaExtMinixProps) => {
+MixinInputExt.TextArea = (props: TextAreaExtMixinProps) => {
   return (
     <InputExtHOC {...props}>
       {
@@ -80,11 +80,11 @@ MixinInputExt.TextArea = (props: TextAreaExtMinixProps) => {
   )
 }
 
-export interface PasswordExtMinixProps extends PasswordProps {
+export interface PasswordExtMixinProps extends PasswordProps {
   theme?: Theme;
 }
 
-MixinInputExt.Password = (props: PasswordExtMinixProps) => {
+MixinInputExt.Password = (props: PasswordExtMixinProps) => {
   return (
     <InputExtHOC {...props}>
       {
@@ -94,11 +94,11 @@ MixinInputExt.Password = (props: PasswordExtMinixProps) => {
   )
 }
 
-export interface InputOutLineExtMinixProps extends InputOutLineExtProps {
+export interface InputOutLineExtMixinProps extends InputOutLineExtProps {
   theme?: Theme;
 }
 
-export function MixinInputOutLineExt(props: InputOutLineExtMinixProps) {
+export function MixinInputOutLineExt(props: InputOutLineExtMixinProps) {
   const { className, theme, ...restProps } = props;
   const { classes, ThemeWrapper } = useMapTheme({
     className,

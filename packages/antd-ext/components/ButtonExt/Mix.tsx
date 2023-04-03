@@ -7,11 +7,11 @@ import {
 import type { Theme } from '../ConfigProviderExt/context';
 import useMapTheme from "../utils/useMapTheme";
 
-export interface ButtonExtMinixProps extends ButtonExtProps {
+export interface ButtonExtMixinProps extends ButtonExtProps {
   theme?: Theme;
 }
 
-export default function Minix(props: ButtonExtMinixProps) {
+export default function Mixin(props: ButtonExtMixinProps) {
   const { className, theme, ...restProps } = props;
   const { classes, ThemeWrapper } = useMapTheme({
     className,
