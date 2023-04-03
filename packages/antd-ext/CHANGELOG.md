@@ -1,3 +1,6 @@
+## 0.1.2-alpha.0
+1. 修正了 SelectExt 组件的一些类型问题
+
 ## 0.1.1-alpha.0
 1. 增加了 SelectExt 组件对 fieldNames 的兼容
 2. 修复了一些命名，包括TS的interface名称

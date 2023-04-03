@@ -4,6 +4,7 @@ import type { SelectProps, TooltipProps } from 'antd';
 import NotFound from './img/NotFound';
 import { css } from '@emotion/css';
 import classNames from 'classnames';
+import type { BaseOptionType, DefaultOptionType } from 'antd/es/select';
 
 const empty = css`
   display: flex;
@@ -64,12 +65,16 @@ export function SelectItemWrapper(props: SelectItemWrapperProps): JSX.Element {
   )
 }
 
-export interface SelectExtProps extends SelectProps {
+export type DefaultOptionExtType = Partial<DefaultOptionType> & {
+  relLabel?: React.ReactNode;
+}
+
+export interface SelectExtProps<ValueType = any, OptionType extends BaseOptionType = DefaultOptionExtType> extends SelectProps<ValueType, OptionType> {
   dataMap?: { [key: string | number]: React.ReactNode };
   tooltip?: TooltipProps;
 }
 
-export default function SelectExt(props: SelectExtProps) {
+export default function SelectExt<ValueType = any>(props: SelectExtProps) {
   const {
     dataMap,
     options,
@@ -112,7 +117,7 @@ export default function SelectExt(props: SelectExtProps) {
   const formattedListHeight = useMemo(() => listHeight !== undefined ? listHeight : 220, [listHeight]);
 
   return (
-    <Select
+    <Select<ValueType, DefaultOptionExtType>
       allowClear
       options={formattedOptions}
       notFoundContent={<NotFoundContent />}
