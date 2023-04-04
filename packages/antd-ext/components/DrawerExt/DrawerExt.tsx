@@ -1,6 +1,5 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import {
-  ConfigProvider,
   Drawer,
   Space,
 } from 'antd';
@@ -8,6 +7,7 @@ import type { DrawerProps } from 'antd';
 import ButtonExt from '../ButtonExt/ButtonExt';
 import type { ButtonExtProps } from '../ButtonExt/ButtonExt';
 import { CloseOutlined } from '../icon';
+import { usePrefixCls } from '../utils';
 
 interface _DrawerExtProps extends DrawerProps {
   cancelText?: string;
@@ -34,9 +34,7 @@ export default function DrawerExt(props: DrawerExtProps) {
     ...restProps
   } = props;
 
-  const { getPrefixCls } = React.useContext(ConfigProvider.ConfigContext);
-
-  const prefixCls = useMemo(() => getPrefixCls(), [getPrefixCls]);
+  const { prefixCls, mtPrefixCls } = usePrefixCls();
 
   return (
     <Drawer
@@ -48,7 +46,7 @@ export default function DrawerExt(props: DrawerExtProps) {
       )}
       footerStyle={{ textAlign: 'right', ...footerStyle }}
       extra={(
-        <CloseOutlined className={`${prefixCls}-mt-drawer-close`} onClick={onCancel} />
+        <CloseOutlined className={`${prefixCls}-${mtPrefixCls}-drawer-close`} onClick={onCancel} />
       )}
       {...restProps}
       onClose={onCancel}

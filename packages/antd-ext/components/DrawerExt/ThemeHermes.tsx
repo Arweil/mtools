@@ -3,13 +3,14 @@ import { ConfigProvider } from 'antd';
 import { css } from '@emotion/css';
 import { colorBlackL1, colorBlackL4 } from '../theme/hermes';
 import type { GlobalToken } from 'antd';
+import { mtPrefixCls } from '../utils/config';
 
 export interface ThemeDrawerExtProps {
   children: React.ReactNode;
 }
 
 export const customStyle = (token: GlobalToken, prefixCls: string) => css`
-  .${prefixCls}-mt-drawer-close {
+  .${prefixCls}-${mtPrefixCls}-drawer-close {
     font-size: 14px;
     color: ${colorBlackL4};
   }

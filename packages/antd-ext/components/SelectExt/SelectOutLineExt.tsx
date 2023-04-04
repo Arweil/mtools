@@ -1,8 +1,9 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { Row, Col, ConfigProvider } from 'antd';
+import { Row, Col } from 'antd';
 import { css } from '@emotion/css';
 import SelectExt from './SelectExt';
 import type { SelectExtProps } from './SelectExt';
+import { usePrefixCls } from '../utils';
 
 const style = (prefixCls: string) => css`
   border: 1px solid #D0D3D6;
@@ -55,9 +56,7 @@ export default function SelectOutLineExt(props: SelectOutLineExtProps) {
   const { label, bordered, ...restProps } = props;
   const refSelectOutLine = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState<number>(0);
-  const { getPrefixCls } = React.useContext(ConfigProvider.ConfigContext);
-
-  const prefixCls = useMemo(() => getPrefixCls(), []);
+  const { prefixCls } = usePrefixCls();
   const customClassName = useMemo(() => style(prefixCls), [prefixCls]);
 
   const onDropdownVisibleChange = useCallback((open: boolean) => {

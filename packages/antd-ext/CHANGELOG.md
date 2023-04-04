@@ -1,3 +1,7 @@
+## 0.2.0-alpha.0
+1. 新增了 RangeNumberExt 组件，以及他的 hermes 主题
+2. 优化：新增自定义 hooks：usePrefixCls，用来获取 prefixCls
+
 ## 0.1.2-alpha.0
 1. 修正了 SelectExt 组件的一些类型问题
 
