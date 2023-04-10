@@ -77,7 +77,7 @@ export default function RangeNumberExt(props: RangeNumberExtProps) {
           disabled={disabled}
           placeholder={placeholder && placeholder[0]}
           bordered={false}
-          value={val[0]}
+          value={value !== undefined ? value[0] : val[0]}
           onChange={onBeforeInputNumberChange}
           onBlur={onBlur}
         />
@@ -88,7 +88,7 @@ export default function RangeNumberExt(props: RangeNumberExtProps) {
           disabled={disabled}
           placeholder={placeholder && placeholder[1]}
           bordered={false}
-          value={val[1]}
+          value={value !== undefined ? value[1] : val[1]}
           onChange={onAfterInputNumberChange}
           onBlur={onBlur}
         />

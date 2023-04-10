@@ -43,6 +43,8 @@ export function ThemeHermes(props: ThemeSelectExtProps) {
           controlItemBgActive: colorGreyL4,
           borderRadiusLG: 4,
           borderRadiusSM: 2,
+          colorFillSecondary: colorGreyL4,
+          colorSplit: colorGreyL4,
         }
       }}
     >
