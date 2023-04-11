@@ -1,3 +1,6 @@
+## 0.3.0-alpha.0
+1. 新增了 LayoutExt 组件，以及他的 hermes 主题
+
 ## 0.2.1-alpha.0
 1. 修正了 SelectExt Hermes 主题的多选颜色问题
 2. 修正了 RangeNumberExt 组件的赋值问题

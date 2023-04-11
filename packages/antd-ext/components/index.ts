@@ -5,6 +5,7 @@ import { MixinInputExt as InputExt, MixinInputOutLineExt as InputOutLineExt } fr
 import { MixinSelectExt as SelectExt, MixinSelectOutLineExt as SelectOutLineExt } from './SelectExt';
 import DrawerExt from './DrawerExt';
 import { MixinRangeNumberExt as RangeNumberExt, MixinRangeNumberOutLineExt as RangeNumberOutLineExt } from './RangeNumberExt';
+import LayoutExt from './LayoutExt';
 export * from 'antd';
 import zh_CN from 'antd/locale/zh_CN';
 import en_US from 'antd/locale/en_US';
@@ -21,6 +22,7 @@ export {
   DrawerExt,
   RangeNumberExt,
   RangeNumberOutLineExt,
+  LayoutExt,
 
   Theme,
 }
