@@ -52,14 +52,11 @@ export interface LayoutExtProps<IMenuInfo extends IBaseMenuInfo = IBaseMenuInfo>
   menu: IMenuInfo[];
   openKeys: string[];
   selectedKeys: string[];
-  userName: string;
-  userMenu?: (typeof Menu.Item)[];
   children?: React.ReactNode;
   className?: string;
   setOpenKeys: (openKeys: string[]) => void;
   setSelectedKeys: (selectedKeys: string[]) => void;
   setTitle?: (props: { collapsed: boolean; }) => React.ReactNode;
-  onMenuItemClick?: (info: MenuInfo) => void;
   headerExtra?: React.ReactNode;
   history: any;
 }
@@ -228,7 +225,7 @@ export default function AppLayoutExt<IMenuInfo extends IBaseMenuInfo>(
     return {
       icon: menu.icon,
       ...base,
-      label: <div onClick={() => props.history.push(menu.url)}>{menu.name}</div>,
+      label: menu.children && menu.children.length > 0 ? menu.name : <div onClick={() => props.history.push(menu.url)}>{menu.name}</div>,
     } as MenuItemType;
   }, []);
 
@@ -324,6 +321,7 @@ export default function AppLayoutExt<IMenuInfo extends IBaseMenuInfo>(
                 const ele = simpleMenu.find((_menuItem) => item === _menuItem.url);
                 return (
                   <TabItem
+                    key={ele?.url}
                     activeUrl={selectedKeys.length > 0 ? selectedKeys[0] : ''}
                     url={ele?.url || ''}
                     showRemoveIcon={cachedMenuItems.length > 1 ? true : false}
@@ -339,7 +337,7 @@ export default function AppLayoutExt<IMenuInfo extends IBaseMenuInfo>(
           </div>
           {headerExtra}
         </Header>
-        <Content>
+        <Content style={{ overflow: 'auto' }}>
           {children}
         </Content>
       </Layout>

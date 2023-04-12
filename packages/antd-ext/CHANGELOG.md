@@ -1,3 +1,10 @@
+## 0.3.1-alpha.0
+1. 修正了 LayoutExt 组件的问题
+  a. 内容高度过高的纵向滚动
+  b. 移除了不必要的属性
+  c. TabItem新增了key
+  d. 非Group层级的菜单，且包含子菜单的菜单项移除跳转
+
 ## 0.3.0-alpha.0
 1. 新增了 LayoutExt 组件，以及他的 hermes 主题
 
