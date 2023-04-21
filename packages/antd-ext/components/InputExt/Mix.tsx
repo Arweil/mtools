@@ -22,7 +22,11 @@ export interface InputExtHOCProps {
   children: (classes: string) => JSX.Element;
 }
 
-function InputExtHOC(props: (InputExtMixinProps | SearchExtMixinProps | TextAreaExtMixinProps) & InputExtHOCProps) {
+function InputExtHOC(props: (
+  Omit<InputExtMixinProps, 'children'>
+  | SearchExtMixinProps
+  | Omit<TextAreaExtMixinProps, 'children'>
+  ) & InputExtHOCProps) {
   const { className, theme, children } = props;
   const { classes, ThemeWrapper } = useMapTheme({
     className,

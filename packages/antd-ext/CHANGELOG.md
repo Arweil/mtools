@@ -1,3 +1,19 @@
+## 0.4.0-alpha.0
+1. 升级了antd的版本 5.2.2 到 5.4.3
+2. 新增了 DatePicker 以及他的 hermes 主题
+3. 优化：LayoutExt 新增属性
+  a. needMenuGroup 用于修改菜单一级是否是Group
+  b. headerContent 用于设置headerTabs是否展示，并且可以自定义React节点替换
+4. 暴露出逻辑层组件，命名为 `Base${ComponentName}Ext`;
+  a. BaseButtonExt
+  b. BaseTableExt
+  c. BaseInputExt
+  d. BaseSelectExt
+  e. BaseDrawerExt
+  f. BaseRangeNumberExt
+  g. BaseLayoutExt
+5. 实验性：暴露出来Hermes的颜色，可进行配置
+
 ## 0.3.1-alpha.0
 1. 修正了 LayoutExt 组件的问题
   a. 内容高度过高的纵向滚动

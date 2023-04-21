@@ -13,7 +13,7 @@ export interface ButtonExtMixinProps extends ButtonExtProps {
 
 export default function Mixin(props: ButtonExtMixinProps) {
   const { className, theme, ...restProps } = props;
-  const { classes, ThemeWrapper } = useMapTheme({
+  const { classes, ThemeWrapper, tokenExt } = useMapTheme({
     className,
     theme,
     themeWrap: {
@@ -25,7 +25,7 @@ export default function Mixin(props: ButtonExtMixinProps) {
   });
 
   return (
-    <ThemeWrapper>
+    <ThemeWrapper tokenExt={tokenExt}>
       <ButtonExt className={classes} {...restProps} />
     </ThemeWrapper>
   );

@@ -5,8 +5,7 @@ import {
 import {
   MenuFoldOutlined, MenuUnfoldOutlined, CloseOutlined,
 } from '../icon';
-import type { MenuInfo } from 'antd/node_modules/rc-menu/lib/interface'
-import type { ItemType, MenuItemGroupType, MenuItemType } from 'antd/es/menu/hooks/useItems';
+import type { ItemType, MenuItemGroupType, SubMenuType } from 'antd/es/menu/hooks/useItems';
 import { usePrefixCls } from '../utils';
 import { css } from '@emotion/css';
 import type { GlobalToken } from 'antd';
@@ -59,6 +58,8 @@ export interface LayoutExtProps<IMenuInfo extends IBaseMenuInfo = IBaseMenuInfo>
   setTitle?: (props: { collapsed: boolean; }) => React.ReactNode;
   headerExtra?: React.ReactNode;
   history: any;
+  needMenuGroup?: boolean;
+  headerContent?: ReactNode | false;
 }
 
 export interface IBaseMenuInfo {
@@ -87,6 +88,7 @@ const tabStyle = (token: GlobalToken, prefixCls: string, mtPrefixCls: string) =>
     flex: 1;
     padding: 8px 0;
     overflow: auto;
+    gap: 4px;
   }
 `;
 
@@ -129,6 +131,12 @@ const tabItemActiveStyle = css`
   }
 `;
 
+const popupMenuStyle = (prefixCls: string,) => css`
+  .${prefixCls}-menu-title-content {
+    display: inline-block;
+  }
+`
+
 function TabItem(props: {
   activeUrl: string;
   url: string;
@@ -148,7 +156,7 @@ function TabItem(props: {
     isActive ? tabItemActiveStyle : '',
   ]);
 
-  const _onRemove = useCallback((e) => {
+  const _onRemove: React.MouseEventHandler<HTMLSpanElement> = useCallback((e) => {
     e.stopPropagation();
     onRemove(url);
   }, [onRemove, url]);
@@ -185,6 +193,8 @@ export default function AppLayoutExt<IMenuInfo extends IBaseMenuInfo>(
     openKeys,
     selectedKeys,
     className,
+    needMenuGroup = true,
+    headerContent,
     setOpenKeys,
     setSelectedKeys,
     setTitle,
@@ -223,14 +233,15 @@ export default function AppLayoutExt<IMenuInfo extends IBaseMenuInfo>(
     }
 
     return {
+      popupClassName: popupMenuStyle(prefixCls),
       icon: menu.icon,
       ...base,
       label: menu.children && menu.children.length > 0 ? menu.name : <div onClick={() => props.history.push(menu.url)}>{menu.name}</div>,
-    } as MenuItemType;
+    } as SubMenuType;
   }, []);
 
   const menuItems = useMemo(() => (menu && menu.length > 0
-    ? menu.map((item) => bindMenu({ isGroup: true, menu: item }))
+    ? menu.map((item) => bindMenu({ isGroup: needMenuGroup, menu: item }))
     : undefined), [menu]);
 
   const onCollapse = useCallback(() => {
@@ -244,9 +255,12 @@ export default function AppLayoutExt<IMenuInfo extends IBaseMenuInfo>(
   }, [] as IBaseMenuInfo[]), [menu]);
 
   useEffect(() => {
+    if (headerContent === false) {
+      return;
+    }
     const menuItems: string[] = JSON.parse(window.sessionStorage.getItem('mt-antdext-cached-menu-item') || '[]');
     setCachedMenuItems(menuItems.length > 0 ? menuItems : selectedKeys);
-  }, [selectedKeys])
+  }, [selectedKeys, headerContent])
 
   const onSelect = useCallback((data: { selectedKeys: string[]; }) => {
     const { selectedKeys: _selectedKeys } = data;
@@ -290,7 +304,7 @@ export default function AppLayoutExt<IMenuInfo extends IBaseMenuInfo>(
           height: '100%',
         }}
       >
-        <div style={{ height: token.controlHeight * 2 }}>
+        <div style={{ height: token.controlHeight * 2 }} className={`${prefixCls}-${mtPrefixCls}-sider-header`}>
           {
             setTitle ? setTitle({ collapsed }) : null
           }
@@ -309,32 +323,40 @@ export default function AppLayoutExt<IMenuInfo extends IBaseMenuInfo>(
       </Sider>
       <Layout>
         <Header style={{ backgroundColor: token.colorBgContainer }} className={headerExtraStyle(token, prefixCls)}>
-          <div
-            className={
-              classNames([
-                `${prefixCls}-${mtPrefixCls}-tabs`,
-                tabStyle(token, prefixCls, mtPrefixCls),
-              ])}
-          >
-            {
-              cachedMenuItems.map((item: string) => {
-                const ele = simpleMenu.find((_menuItem) => item === _menuItem.url);
-                return (
-                  <TabItem
-                    key={ele?.url}
-                    activeUrl={selectedKeys.length > 0 ? selectedKeys[0] : ''}
-                    url={ele?.url || ''}
-                    showRemoveIcon={cachedMenuItems.length > 1 ? true : false}
-                    onSelect={(key: string) => onSelect({ selectedKeys: [key] })}
-                    onRemove={(key: string) => onRemove(key)}
-                    history={props.history}
-                  >
-                    {ele?.name}
-                  </TabItem>
-                );
-              })
-            }
-          </div>
+          {
+            headerContent ? (
+              <div>
+                {headerContent}
+              </div>
+            ) : (
+              <div
+                className={
+                  classNames([
+                    `${prefixCls}-${mtPrefixCls}-tabs`,
+                    tabStyle(token, prefixCls, mtPrefixCls),
+                  ])}
+              >
+                {
+                  cachedMenuItems.map((item: string) => {
+                    const ele = simpleMenu.find((_menuItem) => item === _menuItem.url);
+                    return (
+                      <TabItem
+                        key={ele?.url}
+                        activeUrl={selectedKeys.length > 0 ? selectedKeys[0] : ''}
+                        url={ele?.url || ''}
+                        showRemoveIcon={cachedMenuItems.length > 1 ? true : false}
+                        onSelect={(key: string) => onSelect({ selectedKeys: [key] })}
+                        onRemove={(key: string) => onRemove(key)}
+                        history={props.history}
+                      >
+                        {ele?.name}
+                      </TabItem>
+                    );
+                  })
+                }
+              </div>
+            )
+          }
           {headerExtra}
         </Header>
         <Content style={{ overflow: 'auto' }}>

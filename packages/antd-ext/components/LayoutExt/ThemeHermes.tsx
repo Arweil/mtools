@@ -20,18 +20,32 @@ export const customStyleWithLayoutExt = (token: GlobalToken, prefixCls: string) 
     height: 40px;
     color: #8F959E;
   }
+
+  .${prefixCls}-menu-inline .${prefixCls}-menu-sub.${prefixCls}-menu-inline>.${prefixCls}-menu-submenu>.${prefixCls}-menu-submenu-title {
+    height: 40px;
+    line-height: 40px;
+    margin: 0;
+    width: 100%;
+  }
   
   .${prefixCls}-menu-inline, .${prefixCls}-menu-vertical {
-    .${prefixCls}-menu-item {
+    .${prefixCls}-menu-submenu-title, .${prefixCls}-menu-item {
       height: 40px;
       line-height: 40px;
-      margin: 0 auto;
+      margin: 0;
+      width: 100%;
     }
   }
 
   .${prefixCls}-menu {
     .${prefixCls}-menu-title-content {
       transition: initial !important;
+    }
+
+    .${prefixCls}-menu-item-group .${prefixCls}-menu-item-group-list .${prefixCls}-menu-submenu-title {
+      margin: 0;
+      height: 40px;
+      width: 100%;
     }
   }
 
@@ -42,8 +56,16 @@ export const customStyleWithLayoutExt = (token: GlobalToken, prefixCls: string) 
       }
     }
 
+    &.${prefixCls}-menu-inline .${prefixCls}-menu-sub.${prefixCls}-menu-inline {
+      background: initial;
+    }
+
     &:not(.${prefixCls}-menu-horizontal) {
       .${prefixCls}-menu-item:not(.${prefixCls}-menu-item-selected):hover {
+        color: #3370FF;
+      }
+
+      .ant-menu-submenu-title:hover {
         color: #3370FF;
       }
     }

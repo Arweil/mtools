@@ -1,23 +1,11 @@
 import React from "react";
 import { ConfigProvider } from "antd";
 import { css } from "@emotion/css";
-import {
-  colorPrimaryL1,
-  colorPrimaryL2,
-  colorPrimaryL3,
-  colorGreyL1,
-  colorGreyL5,
-  colorBlackL1,
-  colorGreyL3,
-  colorWeakPrimary,
-} from '../theme/hermes';
 import type { GlobalToken } from "antd/es/theme/interface";
+import type { ThemeColor } from "../theme/type";
+import { ThemeProps } from "../utils/useMapTheme";
 
-export interface ThemeProps {
-  children: React.ReactNode;
-}
-
-export const customStyle = (token: GlobalToken, prefixCls: string) => css`
+export const customStyle = (token: GlobalToken, prefixCls: string, tokenExt: Partial<ThemeColor>) => css`
   min-width: 74px;
 
   .${prefixCls}-btn-link {
@@ -27,28 +15,28 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
   &.${prefixCls}-btn-default {
     &.${prefixCls}-btn-background-ghost {
       &:not(:disabled) {
-        color: ${colorBlackL1};
+        color: ${tokenExt.colorBlackL1};
         &:hover {
-          background: #F2F3F5;
+          background: ${tokenExt.colorGreyL5};
         }
         &:active {
-          background: ${colorGreyL3};
+          background: ${tokenExt.colorGreyL3};
         }
       }
       &:disabled {
-        border-color: ${colorGreyL1};
+        border-color: ${tokenExt.colorGreyL1};
       }
     }
     &:not(:disabled) {
       &:hover {
-        color: ${colorBlackL1};
-        border-color: ${colorGreyL1};
-        background-color: ${colorGreyL5};
+        color: ${tokenExt.colorBlackL1};
+        border-color: ${tokenExt.colorGreyL1};
+        background-color: ${tokenExt.colorGreyL5};
       }
       &:active {
-        color: ${colorBlackL1};
-        border-color: ${colorGreyL1};
-        background-color: ${colorGreyL3};
+        color: ${tokenExt.colorBlackL1};
+        border-color: ${tokenExt.colorGreyL1};
+        background-color: ${tokenExt.colorGreyL3};
       }
     }
     &:disabled {
@@ -60,28 +48,35 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
     &.${prefixCls}-btn-background-ghost {
       &:not(:disabled) {
         &:hover {
-          background: ${colorWeakPrimary};
+          background: ${tokenExt.colorWeakPrimary};
         }
         &:active {
           background: rgba(51,112,255,0.16);
         }
       }
       &:disabled {
-        color: ${colorGreyL1};
-        border-color: ${colorGreyL1};
+        color: ${tokenExt.colorGreyL1};
+        border-color: ${tokenExt.colorGreyL1};
         background: #FFFFFF;
       }
     }
     &:disabled {
       color: #FFFFFF;
-      border-color: ${colorGreyL1};
-      background: ${colorGreyL1};
+      border-color: ${tokenExt.colorGreyL1};
+      background: ${tokenExt.colorGreyL1};
     }
   }
 `;
 
 export function Theme(props: ThemeProps) {
-  const { children } = props;
+  const { children, tokenExt } = props;
+  const {
+    colorPrimaryL1,
+    colorPrimaryL2,
+    colorPrimaryL3,
+    colorGreyL1,
+    colorBlackL1,
+  } = tokenExt || {};
 
   return (
     <ConfigProvider

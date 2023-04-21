@@ -1,3 +1,4 @@
 import { MixinSelectExt, MixinSelectOutLineExt } from "./Mix";
+import BaseSelectExt from './SelectExt';
 
-export { MixinSelectExt, MixinSelectOutLineExt };
+export { MixinSelectExt, MixinSelectOutLineExt, BaseSelectExt };
