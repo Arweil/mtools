@@ -1,43 +1,15 @@
 import React, { useMemo } from 'react';
 import { Select, Typography } from 'antd';
 import type { SelectProps, TooltipProps } from 'antd';
-import NotFound from './img/NotFound';
 import { css } from '@emotion/css';
 import classNames from 'classnames';
 import type { BaseOptionType, DefaultOptionType } from 'antd/es/select';
-
-const empty = css`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-`
-
-const emptyImg = css`
-  width: 100px;
-  height: 58px;
-  margin: 18px auto 8px;
-`;
-
-const emptyText = css`
-  color: #BFBFBF;
-  font-size: 12px;
-  line-height: 18px;
-`;
+import NotFoundContent from '../NotFoundContent';
 
 const popup = css`
   min-height: 148px;
 `;
 
-export function NotFoundContent() {
-  return (
-    <div className={empty}>
-      <div className={emptyImg}>
-        <NotFound />
-      </div>
-      <div className={emptyText}>暂无内容</div>
-    </div>
-  )
-}
 
 export interface SelectItemWrapperProps {
   children?: React.ReactNode;

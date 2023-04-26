@@ -1,3 +1,7 @@
+## 0.5.0-alpha.0
+1. 新增了 CascaderExt 级联，目前只暴露了 BaseCascaderExt 逻辑层组件
+2. 修正了 TableExt 的 hermes 主题的 ConfigProvider，只对 Table 有作用
+
 ## 0.4.0-alpha.0
 1. 升级了antd的版本 5.2.2 到 5.4.3
 2. 新增了 DatePicker 以及他的 hermes 主题

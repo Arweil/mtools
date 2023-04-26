@@ -169,12 +169,14 @@ export function Theme(props: ThemeProps) {
   return (
     <ConfigProvider
       theme={{
-        token: {
-          colorPrimary: colorPrimaryL1,
-          borderRadius: 0,
-          controlItemBgActive: '#ffffff',
-          controlItemBgActiveHover: colorGreyL3,
-        }
+        components: {
+          Table: {
+            colorPrimary: colorPrimaryL1,
+            borderRadiusLG: 0,
+            controlItemBgActive: '#ffffff',
+            controlItemBgActiveHover: colorGreyL3,
+          }
+        },
       }}
     >
       {props.children}

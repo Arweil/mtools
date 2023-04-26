@@ -7,6 +7,7 @@ import DrawerExt, { BaseDrawerExt } from './DrawerExt';
 import { MixinRangeNumberExt as RangeNumberExt, MixinRangeNumberOutLineExt as RangeNumberOutLineExt, BaseRangeNumberExt } from './RangeNumberExt';
 import LayoutExt, { BaseLayoutExt } from './LayoutExt';
 import DatePickerExt from './DatePickerExt';
+import { BaseCascaderExt } from './CascaderExt';
 export * from 'antd';
 import zh_CN from 'antd/es/locale/zh_CN';
 import en_US from 'antd/es/locale/en_US';
@@ -20,6 +21,7 @@ export {
   BaseDrawerExt,
   BaseRangeNumberExt,
   BaseLayoutExt,
+  BaseCascaderExt,
 
   ButtonExt,
   ConfigProviderExt,

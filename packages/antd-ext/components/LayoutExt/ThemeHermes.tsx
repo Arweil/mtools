@@ -89,6 +89,7 @@ export const customStyleWithLayoutExt = (token: GlobalToken, prefixCls: string) 
 export function ThemeHermesWithLayoutExt(props: ThemeProps) {
   const { children } = props;
   return (
+    // TODO: 影响范围是整个子组件？
     <ConfigProvider
       theme={{
         token: {
