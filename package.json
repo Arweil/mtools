@@ -11,7 +11,7 @@
   "scripts": {
     "build": "lerna run build",
     "changelog": "lerna-changelog",
-    "deploy-docs": "gh-pages -d dist",
+    "deploy:docs": "npm run site:build && gh-pages -d dist",
     "prepare": "husky install && lerna bootstrap",
     "site": "dumi dev",
     "site:build": "dumi build",

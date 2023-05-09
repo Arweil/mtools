@@ -4,6 +4,7 @@ packages/*/lib
 packages/*/es
 packages/*/cjs
 packages/*/dist
+dist
 
 .npmrc
 lerna-debug.log
