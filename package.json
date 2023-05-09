@@ -11,6 +11,7 @@
   "scripts": {
     "build": "lerna run build",
     "changelog": "lerna-changelog",
+    "deploy-docs": "gh-pages -d dist",
     "prepare": "husky install && lerna bootstrap",
     "site": "dumi dev",
     "site:build": "dumi build",
@@ -51,6 +52,7 @@
     "dumi": "^1.1.18",
     "dumi-theme-default": "^1.1.1",
     "eslint": "^7.32.0",
+    "gh-pages": "^5.0.0",
     "husky": "^8.0.3",
     "jest": "^27.0.4",
     "lerna": "^4.0.0",
