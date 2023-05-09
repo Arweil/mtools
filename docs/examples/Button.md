@@ -26,11 +26,11 @@ export default () => (
 ```
 
 ## API
-
 通过设置 Button 的属性来产生不同的按钮样式，推荐顺序为：type -> shape -> size -> loading -> disabled。 按钮的属性说明如下：
 
+
 | 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| --- | --- | --- | --- |
 | block | 将按钮宽度调整为其父宽度的选项 | boolean | false |
 | danger | 设置危险按钮 | boolean | false |
 | disabled | 按钮失效状态 | boolean | false |
