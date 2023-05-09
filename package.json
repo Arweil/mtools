@@ -12,6 +12,8 @@
     "build": "lerna run build",
     "changelog": "lerna-changelog",
     "prepare": "husky install && lerna bootstrap",
+    "site": "dumi dev",
+    "site:build": "dumi build",
     "test": "lerna run test"
   },
   "lint-staged": {

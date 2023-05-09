@@ -4,6 +4,7 @@
   "description": "antd extends",
   "license": "ISC",
   "author": "",
+  "main": "cjs/index.js",
   "module": "es/index.js",
   "types": "es/index.d.ts",
   "files": [
