@@ -18,7 +18,7 @@
     "test": "lerna run test"
   },
   "lint-staged": {
-    "*.{less,json}": [
+    "*.{less,json,scss,css}": [
       "prettier --write",
       "git add"
     ],

@@ -4,7 +4,7 @@
     "baseUrl": ".",
     "paths": {
       "antd-ext/*": ["../packages/antd-ext/components/*"],
-      "antd-ext": ["../packages/antd-ext"]
+      "antd-ext": ["../packages/antd-ext/components/index.ts"]
     }
   }
 }
