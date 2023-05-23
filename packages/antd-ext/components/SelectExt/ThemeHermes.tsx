@@ -14,14 +14,15 @@ export interface ThemeSelectExtProps {
   children: React.ReactNode;
 }
 
-export const customStyleWithPopup = (token: GlobalToken, prefixCls: string) => css`
-  .${prefixCls}-select-item {
-    margin-bottom: 4px;
-    &:last-child {
-      margin-bottom: 0px;
-    }
-  }
-`;
+// TODO: 设置 margin 导致虚拟列表无法完全展示选项，目前未解决
+// export const customStyleWithPopup = (token: GlobalToken, prefixCls: string) => css`
+//   .${prefixCls}-select-item {
+//     margin-bottom: 4px;
+//     &:last-child {
+//       margin-bottom: 0px;
+//     }
+//   }
+// `;
 
 export const customStyleWithSelectExt = (token: GlobalToken, prefixCls: string) => css`
 `;

@@ -1,3 +1,6 @@
+## 0.5.1-alpha.0
+1. 修正了 SelectExt 的 hermes 主题的 虚拟列表 和 margin 问题，目前去掉了margin，后面寻找更好的实现方式。
+
 ## 0.5.0-alpha.0
 1. 新增了 CascaderExt 级联，目前只暴露了 BaseCascaderExt 逻辑层组件
 2. 修正了 TableExt 的 hermes 主题的 ConfigProvider，只对 Table 有作用

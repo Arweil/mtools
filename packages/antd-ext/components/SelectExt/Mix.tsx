@@ -1,6 +1,10 @@
 import React, { useMemo } from 'react';
 import useMapTheme from '../utils/useMapTheme';
-import { customStyleWithSelectExt, customStyleWithPopup, ThemeHermes } from './ThemeHermes';
+import {
+  customStyleWithSelectExt,
+  // customStyleWithPopup,
+  ThemeHermes
+} from './ThemeHermes';
 import type { Theme } from '../ConfigProviderExt/context';
 import type { SelectExtProps } from './SelectExt';
 import type { TooltipProps, GlobalToken } from 'antd';
@@ -42,7 +46,10 @@ export function useSelectExtPopupStyle(data: {
   const { token, prefix, popupClassName, theme, globalTheme } = data;
   const popupStyle = useMemo(() => (
     {
-      hermes: c(popupClassName, customStyleWithPopup(token, prefix)),
+      hermes: c(
+        popupClassName,
+        // customStyleWithPopup(token, prefix)
+      ),
       zeus: '',
       default: '',
     }[theme || globalTheme]
