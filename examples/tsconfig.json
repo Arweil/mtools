@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "antd-ext/*": ["../packages/antd-ext/components/*"],
+      "antd-ext": ["../packages/antd-ext/components/index.ts"]
+    }
+  }
+}
