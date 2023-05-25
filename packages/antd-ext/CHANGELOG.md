@@ -1,3 +1,6 @@
+## 0.5.2-alpha.0
+1. 优化了 RangeNumberExt，提供了 beforeInputNumberProps，afterInputNumberProps 两个属性，用来覆盖 props。
+
 ## 0.5.1-alpha.0
 1. 修正了 SelectExt 的 hermes 主题的 虚拟列表 和 margin 问题，目前去掉了margin，后面寻找更好的实现方式。
 
