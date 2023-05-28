@@ -4,16 +4,22 @@ import useMapTheme from '../utils/useMapTheme';
 import type { DrawerExtProps } from './DrawerExt';
 import { ThemeHermesWithDrawerExt, customStyle } from './ThemeHermes';
 import DrawerExt from './DrawerExt';
-import {
-  colorGreyL6
-} from '../theme/hermes';
+import { colorGreyL6 } from '../theme/hermes';
 
 export interface DrawerExtMixinProps extends DrawerExtProps {
   theme?: Theme;
 }
 
 export default function Mixin(props: DrawerExtMixinProps) {
-  const { className, theme: customTheme, headerStyle, footerStyle, ...restProps } = props;
+  const {
+    className,
+    theme: customTheme,
+    headerStyle,
+    footerStyle,
+    okButtonProps,
+    cancelButtonProps,
+    ...restProps
+  } = props;
   const { classes, ThemeWrapper, globalTheme } = useMapTheme({
     className,
     theme: customTheme,
@@ -22,7 +28,7 @@ export default function Mixin(props: DrawerExtMixinProps) {
     },
     emotioncss: {
       hermes: customStyle,
-    }
+    },
   });
 
   const formattedHeaderStyle = useMemo(() => {
@@ -34,7 +40,7 @@ export default function Mixin(props: DrawerExtMixinProps) {
       },
       zeus: {},
       default: {},
-    }[customTheme || globalTheme]
+    }[customTheme || globalTheme];
   }, [customTheme, globalTheme, headerStyle]);
 
   const formattedFooterStyle = useMemo(() => {
@@ -46,12 +52,31 @@ export default function Mixin(props: DrawerExtMixinProps) {
       },
       zeus: {},
       default: {},
-    }[customTheme || globalTheme]
-  }, [customTheme, globalTheme, headerStyle]);
+    }[customTheme || globalTheme];
+  }, [customTheme, globalTheme, footerStyle]);
+
+  const buttonProps = useMemo(() => {
+    return {
+      okButtonProps: {
+        ...okButtonProps,
+        theme: (okButtonProps && okButtonProps.theme) || customTheme || globalTheme,
+      },
+      cancelButtonProps: {
+        ...cancelButtonProps,
+        theme: (cancelButtonProps && cancelButtonProps?.theme) || customTheme || globalTheme,
+      },
+    };
+  }, [okButtonProps, cancelButtonProps, customTheme, globalTheme]);
 
   return (
     <ThemeWrapper>
-      <DrawerExt {...restProps} headerStyle={formattedHeaderStyle} footerStyle={formattedFooterStyle} rootClassName={classes} />
+      <DrawerExt
+        {...buttonProps}
+        {...restProps}
+        headerStyle={formattedHeaderStyle}
+        footerStyle={formattedFooterStyle}
+        rootClassName={classes}
+      />
     </ThemeWrapper>
-  )
+  );
 }

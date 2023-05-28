@@ -39,6 +39,9 @@
       "stylelint --syntax less"
     ]
   },
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "dependencies": {},
   "devDependencies": {
     "@babel/cli": "^7.14.5",

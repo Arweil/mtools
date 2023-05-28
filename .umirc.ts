@@ -15,6 +15,6 @@ export default defineConfig({
     { title: '更新日志', path: 'https://github.com/Arweil/mtools/releases' },
   ],
   alias: {
-    'antd-ext': resolve('./', 'packages/antd-ext/components/index.ts'),
+    '@m-tools/antd-ext': resolve('./', 'packages/antd-ext/components/index.ts'),
   },
 });

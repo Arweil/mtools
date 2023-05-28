@@ -1,3 +1,8 @@
+## 0.5.3-alpha.0
+1. 新增了demo实例，以及文档
+2. 修正了 TableExt 自定义分页尺寸的加载问题，之前默认 10条/页
+3. 修正了 DrawerExt 设置主题后，底部按钮主题不生效的问题
+
 ## 0.5.2-alpha.0
 1. 优化了 RangeNumberExt，提供了 beforeInputNumberProps，afterInputNumberProps 两个属性，用来覆盖 props。
 

@@ -1,14 +1,20 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Table, Empty, Typography, Skeleton } from 'antd';
 import { css } from '@emotion/css';
-import type { TableProps, ColumnsType, ColumnGroupType, ColumnType, TablePaginationConfig } from 'antd/es/table';
+import type {
+  TableProps,
+  ColumnsType,
+  ColumnGroupType,
+  ColumnType,
+  TablePaginationConfig,
+} from 'antd/es/table';
 import type { TooltipProps } from 'antd/es/tooltip';
 import type { SpinProps } from 'antd/lib/spin';
 
 const emptyClass = css`
-  color: #8F959E;
-  border-top: 1px solid #F1F2F5;
-  border-bottom: 1px solid #F1F2F5;
+  color: #8f959e;
+  border-top: 1px solid #f1f2f5;
+  border-bottom: 1px solid #f1f2f5;
   text-align: center;
   padding: 30px 0;
 `;
@@ -16,12 +22,13 @@ const emptyClass = css`
 export interface ColumnTypeExt<RecordType> extends ColumnType<RecordType> {
   useDefaultRender?: boolean;
   hidden?: boolean;
-  enums?: { [key: string | number]: string | number };
+  enums?: Record<string | number, string | number>;
 }
 
-export type ColumnsTypeExt<RecordType> = (ColumnGroupType<RecordType> | ColumnTypeExt<RecordType>);
+export type ColumnsTypeExt<RecordType> = ColumnGroupType<RecordType> | ColumnTypeExt<RecordType>;
 
-export interface TableExtProps<RecordType extends { $$mock?: boolean } = any> extends TableProps<RecordType> {
+export interface TableExtProps<RecordType extends { $$mock?: boolean } = any>
+  extends TableProps<RecordType> {
   columns?: ColumnsTypeExt<RecordType>[];
   tdTooltip?: TooltipProps;
   emptyDesc?: string;
@@ -40,7 +47,9 @@ function isBool(param: any): param is boolean {
   return Object.prototype.toString.call(param) === '[object Boolean]';
 }
 
-export default function TableExt<RecordType extends { $$mock?: boolean } = any>(props: TableExtProps<RecordType>) {
+export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
+  props: TableExtProps<RecordType>,
+) {
   const {
     columns,
     dataSource,
@@ -78,22 +87,29 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
 
     cacheLoadingState.current = curLoadingState;
     return false;
-  }, [curLoadingState])
+  }, [curLoadingState]);
 
   // 数据源内容
   const finDataSource = useMemo(() => {
     // 如果使用骨架屏，需要默认一些数据，以展示骨架屏
-    if (useSkeleton && !(dataSource && dataSource.length > 0) && !isFirstTimeRendered.current && !hasLoadedData) {
-      return new Array(10).fill({ $$mock: true });
+    if (
+      useSkeleton &&
+      !(dataSource && dataSource.length > 0) &&
+      !isFirstTimeRendered.current &&
+      !hasLoadedData
+    ) {
+      const firstPageMax =
+        (pagination && pagination.pageSizeOptions && Number(pagination.pageSizeOptions[0])) || 10;
+      return new Array(firstPageMax || 10).fill({ $$mock: true });
     }
 
     return dataSource;
-  }, [dataSource, hasLoadedData]);
+  }, [dataSource, hasLoadedData, pagination, useSkeleton]);
 
   // 判断是否有数据，是占位数据还是真实的数据
   const hasData = useMemo(() => {
     if (!dataSource || (dataSource && dataSource.length === 0)) {
-      return false
+      return false;
     }
 
     if (dataSource.some(item => item.$$mock)) {
@@ -121,9 +137,12 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
       isFirstTimeRendered.current = true;
       setFetching(false);
     }
-  }, [curLoadingState, hasData, hasLoadedData]);
+  }, [curLoadingState, hasData, hasLoadedData, useSkeleton]);
 
-  const SkeletonItem = useMemo(() => <Skeleton.Input block style={{ minWidth: "initial", height: 22 }} />, []);
+  const SkeletonItem = useMemo(
+    () => <Skeleton.Input block style={{ minWidth: 'initial', height: 22 }} />,
+    [],
+  );
 
   const formattedCols = useMemo(() => {
     if (!columns || columns.length === 0) {
@@ -132,52 +151,57 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
 
     const cols: ColumnsType<RecordType> = [];
     columns.forEach((item: ColumnTypeExt<RecordType>) => {
-      const { hidden = false, useDefaultRender = true, enums, render, ...restProps } = item;
+      const { hidden = false, useDefaultRender = true, render, ..._restProps } = item;
 
       if (!hidden) {
         if (fetching) {
-          restProps.title = SkeletonItem;
+          _restProps.title = SkeletonItem;
         }
 
         cols.push({
-          ...restProps,
-          render: useDefaultRender ? (value, record, index) => {
-            if (fetching) {
-              return SkeletonItem;
-            }
+          ..._restProps,
+          render: useDefaultRender
+            ? (value, record, index) => {
+                if (fetching) {
+                  return SkeletonItem;
+                }
 
-            if (render) {
-              return render(value, record, index);
-            }
+                if (render) {
+                  return render(value, record, index);
+                }
 
-            if (value === undefined || value === null || value === '') {
-              return '-';
-            }
+                if (value === undefined || value === null || value === '') {
+                  return '-';
+                }
 
-            return (
-              <Typography.Paragraph
-                style={{ marginBottom: 0 }}
-                ellipsis={{
-                  rows: 2,
-                  expandable: false,
-                  tooltip: {
-                    children: value,
-                    ...tdTooltip,
-                  },
-                }}
-              >
-                {value}
-              </Typography.Paragraph>
-            );
-          } : render,
+                return (
+                  <Typography.Paragraph
+                    style={{ marginBottom: 0 }}
+                    ellipsis={{
+                      rows: 2,
+                      expandable: false,
+                      tooltip: {
+                        children: value,
+                        ...tdTooltip,
+                      },
+                    }}
+                  >
+                    {value}
+                  </Typography.Paragraph>
+                );
+              }
+            : render,
         });
       }
     });
 
     return cols;
-  }, [columns, fetching]);
+  }, [columns, fetching, SkeletonItem, tdTooltip]);
 
-  const EmptyText = useMemo(() => <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={emptyDesc} />, [emptyDesc]);
+  const EmptyText = useMemo(
+    () => <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={emptyDesc} />,
+    [emptyDesc],
+  );
 
   const pager: TablePaginationConfig | false | undefined = useMemo(() => {
     // 如果没有数据，那么返回undefined
@@ -194,33 +218,40 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
 
     const total = (pagination && pagination.total) || (finDataSource && finDataSource.length) || 0;
 
-    if (total > 10) {
+    const firstPageMax =
+      (pagination && pagination.pageSizeOptions && Number(pagination.pageSizeOptions[0])) || 10;
+
+    if (total > firstPageMax) {
       return {
         showQuickJumper: true,
         showSizeChanger: true,
         pageSizeOptions: [10, 20, 50, 100],
         showTotal: () => `共${total}条数据`,
         ...pagination,
-      }
+      };
     }
 
     return false;
   }, [pagination, finDataSource, hasData]);
 
-  if (finDataSource && finDataSource.length > 0 || !useSkeleton) {
+  if ((finDataSource && finDataSource.length > 0) || !useSkeleton) {
     return (
       <Table
         loading={fetching ? undefined : loading}
         columns={formattedCols}
         dataSource={finDataSource}
         locale={{
-          emptyText: EmptyText
+          emptyText: EmptyText,
         }}
         pagination={pager}
-        rowSelection={fetching && rowSelection ? { renderCell: () => SkeletonItem, columnTitle: SkeletonItem, ...rowSelection } : rowSelection}
+        rowSelection={
+          fetching && rowSelection
+            ? { renderCell: () => SkeletonItem, columnTitle: SkeletonItem, ...rowSelection }
+            : rowSelection
+        }
         {...restProps}
       />
-    )
+    );
   }
 
   return <div className={emptyClass}>{emptyDesc}</div>;
