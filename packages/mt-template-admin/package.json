@@ -1,6 +1,6 @@
 {
   "name": "@m-tools/mt-template-admin",
-  "version": "1.0.9-alpha.0",
+  "version": "1.0.10-alpha.0",
   "description": "A template for admin",
   "main": "index.js",
   "scripts": {
