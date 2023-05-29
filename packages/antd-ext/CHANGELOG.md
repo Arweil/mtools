@@ -1,3 +1,6 @@
+## 0.5.4-alpha.0
+1. 新增了 LayoutExt 的 siderWidth 属性。
+
 ## 0.5.3-alpha.0
 1. 新增了demo实例，以及文档
 2. 修正了 TableExt 自定义分页尺寸的加载问题，之前默认 10条/页
