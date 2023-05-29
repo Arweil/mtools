@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "esModuleInterop": true,
+    "declaration": true,
     "jsx": "react",
     "paths": {
       "@m-tools/antd-ext/es": [

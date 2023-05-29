@@ -1,3 +1,6 @@
+## 0.5.5-alpha.0
+1. 修正了 类型文件丢失的问题。
+
 ## 0.5.4-alpha.0
 1. 新增了 LayoutExt 的 siderWidth 属性。
 
