@@ -1,3 +1,8 @@
+## 0.5.6-alpha.0
+1. 修正了 @ant-design/cssinjs 版本的问题，@ant-design/cssinjs 1.11.1 导致antd样式丢失。目前使用1.9.1版本。
+2. 修正了 father 的引用问题。改为 devDependencies。
+3. 优化了 SelectExt 的功能，filterOption 可以匹配小写的英文选项
+
 ## 0.5.5-alpha.0
 1. 修正了 类型文件丢失的问题。
 

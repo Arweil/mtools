@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Select, Typography } from 'antd';
 import type { SelectProps, TooltipProps } from 'antd';
 import { css } from '@emotion/css';
@@ -9,7 +9,6 @@ import NotFoundContent from '../NotFoundContent';
 const popup = css`
   min-height: 148px;
 `;
-
 
 export interface SelectItemWrapperProps {
   children?: React.ReactNode;
@@ -28,21 +27,24 @@ export function SelectItemWrapper(props: SelectItemWrapperProps): JSX.Element {
         expandable: false,
         tooltip: {
           children,
-          ...tooltip
+          ...tooltip,
         },
       }}
     >
       {children}
     </Typography.Paragraph>
-  )
+  );
 }
 
 export type DefaultOptionExtType = Partial<DefaultOptionType> & {
   relLabel?: React.ReactNode;
-}
+};
 
-export interface SelectExtProps<ValueType = any, OptionType extends BaseOptionType = DefaultOptionExtType> extends SelectProps<ValueType, OptionType> {
-  dataMap?: { [key: string | number]: React.ReactNode };
+export interface SelectExtProps<
+  ValueType = any,
+  OptionType extends BaseOptionType = DefaultOptionExtType,
+> extends SelectProps<ValueType, OptionType> {
+  dataMap?: Record<string | number, React.ReactNode>;
   tooltip?: TooltipProps;
 }
 
@@ -65,7 +67,13 @@ export default function SelectExt<ValueType = any>(props: SelectExtProps) {
 
       return options.map(item => ({
         ...item,
-        [mapLabelName]: React.isValidElement(item[mapLabelName]) ? item[mapLabelName] : (<SelectItemWrapper tooltip={tooltip} disabled={item.disabled}>{item[mapLabelName]}</SelectItemWrapper>) as React.ReactNode,
+        [mapLabelName]: React.isValidElement(item[mapLabelName])
+          ? item[mapLabelName]
+          : ((
+              <SelectItemWrapper tooltip={tooltip} disabled={item.disabled}>
+                {item[mapLabelName]}
+              </SelectItemWrapper>
+            ) as React.ReactNode),
         relLabel: item[mapLabelName],
       }));
     }
@@ -75,18 +83,38 @@ export default function SelectExt<ValueType = any>(props: SelectExtProps) {
       if (dataMapKeys.length > 0) {
         return dataMapKeys.map(item => ({
           value: item,
-          label: React.isValidElement(dataMap[item]) ? dataMap[item] : (<SelectItemWrapper tooltip={tooltip}>{dataMap[item]}</SelectItemWrapper>) as React.ReactNode,
+          label: React.isValidElement(dataMap[item])
+            ? dataMap[item]
+            : ((
+                <SelectItemWrapper tooltip={tooltip}>{dataMap[item]}</SelectItemWrapper>
+              ) as React.ReactNode),
           relLabel: dataMap[item],
         }));
       }
     }
 
     return undefined;
-  }, [options, dataMap, fieldNames]);
+  }, [options, dataMap, fieldNames, tooltip]);
 
-  const formattedPopupClassName = useMemo(() => classNames(popupClassName, popup), [popupClassName]);
+  const filterOption = useCallback((inputValue: string, option: DefaultOptionExtType) => {
+    // 如果是字符串
+    if (!React.isValidElement(option.relLabel)) {
+      // 转换成小写，英文时比较适用
+      return (option.relLabel as string).toLowerCase().includes(inputValue.toLowerCase());
+    }
 
-  const formattedListHeight = useMemo(() => listHeight !== undefined ? listHeight : 220, [listHeight]);
+    return false;
+  }, []);
+
+  const formattedPopupClassName = useMemo(
+    () => classNames(popupClassName, popup),
+    [popupClassName],
+  );
+
+  const formattedListHeight = useMemo(
+    () => (listHeight !== undefined ? listHeight : 220),
+    [listHeight],
+  );
 
   return (
     <Select<ValueType, DefaultOptionExtType>
@@ -96,6 +124,7 @@ export default function SelectExt<ValueType = any>(props: SelectExtProps) {
       popupClassName={formattedPopupClassName}
       optionLabelProp="relLabel"
       optionFilterProp="relLabel"
+      filterOption={filterOption}
       style={{ minWidth: 130, ...style }}
       listHeight={formattedListHeight}
       fieldNames={fieldNames}
@@ -105,4 +134,3 @@ export default function SelectExt<ValueType = any>(props: SelectExtProps) {
     </Select>
   );
 }
-

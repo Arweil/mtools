@@ -9,6 +9,7 @@ import {
   Radio,
   Card,
   SelectOutLineExt,
+  Space,
 } from '@m-tools/antd-ext';
 import type { Theme } from '@m-tools/antd-ext';
 import type { FormLayout } from 'antd/es/form/Form';
@@ -31,6 +32,19 @@ export default function App() {
         : null,
     [layout],
   );
+
+  const labelReactNodeData = [
+    {
+      en: 'China',
+      cn: '中国',
+      icon: '🇨🇳',
+    },
+    {
+      en: 'USA',
+      cn: '美国',
+      icon: '🇺🇸',
+    },
+  ];
 
   return (
     <ConfigProviderExt locale={locale.zh_CN} themeExt={theme}>
@@ -179,6 +193,29 @@ export default function App() {
                   disabled: true,
                 },
               ]}
+            />
+          </Form.Item>
+          <Form.Item label="Label是ReactNode" name={['form2', 'valueA5']}>
+            <SelectExt
+              placeholder="请选择"
+              showSearch
+              options={labelReactNodeData.map(itm => ({
+                label: (
+                  <Space>
+                    <span role="img" aria-label={itm.en}>
+                      {itm.icon}
+                    </span>
+                    <span>
+                      {itm.en}({itm.cn})
+                    </span>
+                  </Space>
+                ),
+                value: itm.en,
+                ...itm,
+              }))}
+              filterOption={(inputValue, option) =>
+                option.en.toLowerCase().includes(inputValue.toLowerCase())
+              }
             />
           </Form.Item>
           <Form.Item label="Success" name={['form2', 'valueB']} validateStatus="success">

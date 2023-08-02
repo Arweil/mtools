@@ -1,7 +1,15 @@
 import React from 'react';
 import { css } from '@emotion/css';
 import type { GlobalToken } from 'antd/es/theme';
-import { colorPrimaryL1, colorBlackL1, colorBlackL2, colorGreyL1, colorGreyL3, colorBlackL3, colorGreyL2 } from '../theme/hermes';
+import {
+  colorPrimaryL1,
+  colorBlackL1,
+  colorBlackL2,
+  colorGreyL1,
+  colorGreyL3,
+  colorBlackL3,
+  colorGreyL2,
+} from '../theme/hermes';
 import { ConfigProvider } from 'antd';
 
 export interface ThemeProps {
@@ -22,8 +30,8 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
           }
 
           .${prefixCls}-skeleton.${prefixCls}-skeleton-element .${prefixCls}-skeleton-input {
-            border-radius: 0;
             background: ${colorGreyL2};
+            border-radius: 0;
           }
         }
       }
@@ -36,8 +44,8 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
           color: ${colorBlackL1};
 
           .${prefixCls}-skeleton.${prefixCls}-skeleton-element .${prefixCls}-skeleton-input {
-            border-radius: 0;
             background: ${colorGreyL3};
+            border-radius: 0;
           }
         }
       }
@@ -46,17 +54,17 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
     .${prefixCls}-table-ping-left {
       .${prefixCls}-table-cell-fix-left-last {
         &::after {
-          box-shadow: initial;
           width: 1px;
           background: ${colorGreyL2};
+          box-shadow: initial;
         }
       }
       &:not(.${prefixCls}-table-has-fix-left) {
         .${prefixCls}-table-container {
           &::before {
-            box-shadow: initial;
             width: 1px;
             background: ${colorGreyL2};
+            box-shadow: initial;
           }
         }
       }
@@ -65,17 +73,17 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
     .${prefixCls}-table-ping-right {
       .${prefixCls}-table-cell-fix-right-first {
         &::after {
-          box-shadow: initial;
           width: 1px;
           background: ${colorGreyL2};
+          box-shadow: initial;
         }
       }
       &:not(.${prefixCls}-table-has-fix-right) {
         .${prefixCls}-table-container {
           &::after {
-            box-shadow: initial;
             width: 1px;
             background: ${colorGreyL2};
+            box-shadow: initial;
           }
         }
       }
@@ -84,6 +92,9 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
     a {
       &.${prefixCls}-typography {
         color: ${colorPrimaryL1};
+        &.${prefixCls}-typography-disabled {
+          color: ${colorBlackL2};
+        }
       }
     }
 
@@ -101,14 +112,15 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
           color: ${colorBlackL1};
         }
         &.${prefixCls}-pagination-item-active {
-          border: 1px solid ${colorPrimaryL1};
           font-weight: 400;
+          border: 1px solid ${colorPrimaryL1};
           a {
             color: ${colorPrimaryL1};
           }
         }
         &:not(.${prefixCls}-pagination-item-active) {
-          &:hover, &:active {
+          &:hover,
+          &:active {
             background-color: initial;
             border: 1px solid ${colorPrimaryL1};
             a {
@@ -118,8 +130,8 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
         }
       }
       .${prefixCls}-pagination-total-text {
-        margin-inline-end: 12px;
         color: ${colorBlackL3};
+        margin-inline-end: 12px;
       }
       .${prefixCls}-pagination-disabled {
         .${prefixCls}-pagination-item-link {
@@ -131,7 +143,8 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
         button {
           color: ${colorBlackL2};
         }
-        &:hover, &:active {
+        &:hover,
+        &:active {
           .${prefixCls}-pagination-item-link {
             background-color: initial;
           }
@@ -141,7 +154,8 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
         button {
           color: ${colorBlackL2};
         }
-        &:hover, &:active {
+        &:hover,
+        &:active {
           .${prefixCls}-pagination-item-link {
             background-color: initial;
           }
@@ -153,13 +167,13 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
       .${prefixCls}-pagination-options-quick-jumper {
         margin-inline-start: 12px;
         input {
-          border-radius: 3px;
           color: ${colorBlackL1};
+          border-radius: 3px;
         }
       }
       .${prefixCls}-select-single .${prefixCls}-select-selector {
-        border-radius: 3px;
         color: ${colorBlackL1};
+        border-radius: 3px;
       }
     }
   }
@@ -175,7 +189,7 @@ export function Theme(props: ThemeProps) {
             borderRadiusLG: 0,
             controlItemBgActive: '#ffffff',
             controlItemBgActiveHover: colorGreyL3,
-          }
+          },
         },
       }}
     >
