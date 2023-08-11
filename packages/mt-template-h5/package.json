@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@m-tools/mt-template-h5",
-  "version": "1.0.1-alpha.0",
+  "version": "1.0.2-alpha.0",
   "description": "A template for H5",
   "main": "index.js",
   "scripts": {
@@ -58,7 +58,7 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "jaraxxus": "^4.1.3",
+    "jaraxxus": "^4.1.4",
     "postcss-px-to-viewport": "^1.1.1",
     "rimraf": "^3.0.2",
     "tslib": "^2.3.1",
