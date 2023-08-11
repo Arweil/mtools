@@ -1,3 +1,7 @@
+## 0.6.1-alpha.0
+1. 新增了 ProInputNumber 自定义数字输入组件
+2. 优化了 SelectExt 的默认筛选逻辑，目前只默认筛选字符串和数字
+
 ## 0.5.6-alpha.0
 1. 修正了 @ant-design/cssinjs 版本的问题，@ant-design/cssinjs 1.11.1 导致antd样式丢失。目前使用1.9.1版本。
 2. 修正了 father 的引用问题。改为 devDependencies。

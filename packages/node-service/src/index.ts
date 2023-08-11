@@ -12,7 +12,18 @@ import { getConfig, appDirectory } from './utils';
 
 // 获取配置信息
 const config = getConfig();
-const { baseRouter, assetsDir, assetsServiceDir, indexPath, envList, port, DEPLOY_ENV, CSP, useCookieEnv, apis } = config;
+const {
+  baseRouter,
+  assetsDir,
+  assetsServiceDir,
+  indexPath,
+  envList,
+  port,
+  DEPLOY_ENV,
+  CSP,
+  useCookieEnv,
+  apis,
+} = config;
 
 const ENV = process.env[DEPLOY_ENV] || 'dev';
 
@@ -35,9 +46,12 @@ app.use((req, res, next) => {
   res.setHeader('X-XSS-Protection', '1; mode=block');
   next();
 });
-app.use(assetsServiceDir, express.static(path.join(appDirectory, assetsDir), {
-  index: false,
-}));
+app.use(
+  assetsServiceDir,
+  express.static(path.join(appDirectory, assetsDir), {
+    index: false,
+  }),
+);
 
 // 把环境变量返回给前端
 // 不推荐使用 _e
@@ -68,7 +82,7 @@ app.get(baseRouter + '/health', (req, res) => {
 
 const envTemplate = (() => {
   const value = getEnv();
-  const temp = `<script>window.$$_e=${value}</script>`;
+  const temp = `<script>window.$$_e=${value};</script>`;
   return temp;
 })();
 
@@ -90,6 +104,14 @@ app.get(baseRouter + '/*', (req, res) => {
   }
 
   res.send($.html());
+});
+
+// 异常捕获
+// @ts-ignore
+app.use((err, req, res, next) => {
+  if (err) {
+    res.status(err.status).send(`${err.status}`);
+  }
 });
 
 // 启动服务，监听端口

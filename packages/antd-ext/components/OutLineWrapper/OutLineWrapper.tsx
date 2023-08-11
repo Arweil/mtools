@@ -14,23 +14,23 @@ const style = (
   prefixCls: string,
   mtPrefixCls: string,
   token: GlobalToken,
-  injectStyle?: (prefixCls: string, mtPrefixCls: string, token: GlobalToken) => string
+  injectStyle?: (prefixCls: string, mtPrefixCls: string, token: GlobalToken) => string,
 ) => css`
-  border: 1px solid #D0D3D6;
+  border: 1px solid #d0d3d6;
   border-radius: 4px;
   padding-left: 13px;
 
   .${prefixCls}-form-item-label {
-    height: 30px;
     min-width: 70px;
+    height: 30px;
     text-align: right;
     > label {
       height: 30px;
+      color: #8f959e;
       line-height: 30px;
-      color: #8F959E;
       &::after {
-        content: ":";
         position: relative;
+        content: ':';
         margin-block: 0;
         margin-inline-start: 2px;
         margin-inline-end: 8px;
@@ -39,11 +39,11 @@ const style = (
   }
 
   &:focus-within {
-    border: 1px solid #2D64E5;
+    border: 1px solid #2d64e5;
   }
 
   &:hover {
-    border: 1px solid #477EFF;
+    border: 1px solid #477eff;
   }
 
   ${injectStyle ? injectStyle(prefixCls, mtPrefixCls, token) : ''}
@@ -52,16 +52,17 @@ const style = (
 export default function OutLineWrapper<T extends OutLineWrapperProps>(props: T) {
   const { label, children, injectStyle } = props;
   const { token, prefixCls, mtPrefixCls } = usePrefixCls();
-  const customClassName = useMemo(() => style(prefixCls, mtPrefixCls, token, injectStyle), [prefixCls, mtPrefixCls, token]);
+  const customClassName = useMemo(
+    () => style(prefixCls, mtPrefixCls, token, injectStyle),
+    [prefixCls, mtPrefixCls, token, injectStyle],
+  );
 
   return (
     <Row className={customClassName}>
       <Col className={`${prefixCls}-form-item-label`}>
         <label>{label}</label>
       </Col>
-      <Col className={`${prefixCls}-form-item-control`}>
-        {children}
-      </Col>
+      <Col className={`${prefixCls}-form-item-control`}>{children}</Col>
     </Row>
   );
 }

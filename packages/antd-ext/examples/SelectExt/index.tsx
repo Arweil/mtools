@@ -195,7 +195,7 @@ export default function App() {
               ]}
             />
           </Form.Item>
-          <Form.Item label="Label是ReactNode" name={['form2', 'valueA5']}>
+          <Form.Item label="Label是ReactNode" name={['form2', 'valueA6']}>
             <SelectExt
               placeholder="请选择"
               showSearch
@@ -216,6 +216,19 @@ export default function App() {
               filterOption={(inputValue, option) =>
                 option.en.toLowerCase().includes(inputValue.toLowerCase())
               }
+            />
+          </Form.Item>
+          <Form.Item label="LabelNumber" name={['form2', 'valueA7']}>
+            <SelectExt
+              placeholder="请选择"
+              showSearch
+              options={[
+                { label: 1, value: 1 },
+                { label: 2, value: 2 },
+                { label: 3, value: 3 },
+                { label: 4, value: 4 },
+                { label: null, value: 5 },
+              ]}
             />
           </Form.Item>
           <Form.Item label="Success" name={['form2', 'valueB']} validateStatus="success">

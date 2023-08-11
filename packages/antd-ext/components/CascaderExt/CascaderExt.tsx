@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
-import { Cascader, CascaderProps } from 'antd';
+import type { CascaderProps } from 'antd';
+import { Cascader } from 'antd';
 import NotFoundContent from '../NotFoundContent';
 import classNames from 'classnames';
 import { css } from '@emotion/css';
@@ -10,7 +11,10 @@ const popup = css`
 
 export default function CascaderExt(props: CascaderProps) {
   const { popupClassName, ...restProps } = props;
-  const formattedPopupClassName = useMemo(() => classNames(popupClassName, popup), [popupClassName]);
+  const formattedPopupClassName = useMemo(
+    () => classNames(popupClassName, popup),
+    [popupClassName],
+  );
 
   return (
     <Cascader

@@ -97,10 +97,13 @@ export default function SelectExt<ValueType = any>(props: SelectExtProps) {
   }, [options, dataMap, fieldNames, tooltip]);
 
   const filterOption = useCallback((inputValue: string, option: DefaultOptionExtType) => {
-    // 如果是字符串
-    if (!React.isValidElement(option.relLabel)) {
+    if (Object.prototype.toString.call(option.relLabel) === '[object String]') {
       // 转换成小写，英文时比较适用
       return (option.relLabel as string).toLowerCase().includes(inputValue.toLowerCase());
+    }
+
+    if (Object.prototype.toString.call(option.relLabel) === '[object Number]') {
+      return `${option.relLabel as number}`.includes(inputValue);
     }
 
     return false;

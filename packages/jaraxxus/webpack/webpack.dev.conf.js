@@ -1,14 +1,14 @@
-const webpack = require('webpack')
-const merge = require('webpack-merge')
-const ora = require('ora')
+const webpack = require('webpack');
+const merge = require('webpack-merge');
+const ora = require('ora');
 const chalk = require('chalk');
-const webpackDevServer = require('webpack-dev-server')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const webpackDevServer = require('webpack-dev-server');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
-const baseConf = require('./webpack.base.conf.js')
-const config = require('../config/index.js')
-const utils = require('./utils.js')
+const baseConf = require('./webpack.base.conf.js');
+const config = require('../config/index.js');
+const utils = require('./utils.js');
 const { resolveApp, portInUse } = require('../config/utils');
 
 // 设置当前为生产环境
@@ -28,22 +28,20 @@ const devConf = merge(baseConf, {
     publicPath: config.publicPath,
     path: resolveApp(config.outputDir),
     filename: utils.assetsPath('js/[name].js'),
-    chunkFilename: utils.assetsPath('js/[name].js')
+    chunkFilename: utils.assetsPath('js/[name].js'),
   },
   devtool: 'cheap-module-source-map', // 配置生成Source Maps，选择合适的选项
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new ReactRefreshWebpackPlugin(),
-  ]
-})
+  plugins: [new webpack.HotModuleReplacementPlugin(), new ReactRefreshWebpackPlugin()],
+});
 
 if (config.indexPath) {
   devConf.plugins.push(
     new HtmlWebpackPlugin({
+      version: 'dev',
       template: config.indexPath,
       inject: true,
-    })
-  )
+    }),
+  );
 }
 
 async function run() {
@@ -56,18 +54,18 @@ async function run() {
 
     const compiler = webpack(merge(devConf, config.configureWebpack));
 
-    const server = new webpackDevServer(compiler, devServerConf)
+    const server = new webpackDevServer(compiler, devServerConf);
 
     let spinner;
     let spinnerFlag = false;
 
-    server.listen(port, '0.0.0.0', (err) => {
+    server.listen(port, '0.0.0.0', err => {
       console.log(`🥛  Start server on http://localhost:${port}`);
 
       spinner = ora('compiling for development...');
       spinner.start();
       spinnerFlag = true;
-    })
+    });
 
     compiler.hooks.done.tap('CompilerProgressPlugins', function (stats) {
       if (spinnerFlag) {
@@ -85,8 +83,14 @@ async function run() {
       const endTime = stats.endTime;
 
       const date = new Date(endTime);
-      console.log(chalk.cyan(`[EndTime: ${date.toLocaleString()}.${date.getMilliseconds()} & During: ${endTime - startTime}ms] build completed.`))
-    })
+      console.log(
+        chalk.cyan(
+          `[EndTime: ${date.toLocaleString()}.${date.getMilliseconds()} & During: ${
+            endTime - startTime
+          }ms] build completed.`,
+        ),
+      );
+    });
   } catch (ex) {
     console.error(ex);
   }
