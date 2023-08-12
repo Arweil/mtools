@@ -1,4 +1,7 @@
 ## 0.6.1-alpha.0
+1. 修正了 NotFoundContent 的文案多语言支持
+
+## 0.6.0-alpha.0
 1. 新增了 ProInputNumber 自定义数字输入组件
 2. 优化了 SelectExt 的默认筛选逻辑，目前只默认筛选字符串和数字
 

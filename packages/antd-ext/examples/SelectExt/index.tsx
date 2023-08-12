@@ -144,6 +144,15 @@ export default function App() {
           <Form.Item label="SelectExt无选项" name={['form2', 'valueA1']}>
             <SelectExt placeholder="请选择" />
           </Form.Item>
+          <ConfigProviderExt locale={locale.en_US}>
+            <Form.Item label="SelectExt No Option" name={['form2', 'valueA1-1']}>
+              <SelectExt
+                placeholder="Please Select"
+                options={[{ label: 'ItemA', value: 'ItemA' }]}
+              />
+            </Form.Item>
+          </ConfigProviderExt>
+
           <Form.Item label="SelectExt一个选项" name={['form2', 'valueA2']}>
             <SelectExt placeholder="请选择" options={[{ label: 'ItemA', value: 'ItemA' }]} />
           </Form.Item>
