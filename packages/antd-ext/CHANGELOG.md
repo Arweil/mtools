@@ -1,4 +1,4 @@
-## 0.6.1-alpha.0
+## 0.6.2-alpha.0
 1. 修正了 NotFoundContent 的文案多语言支持
 
 ## 0.6.0-alpha.0
