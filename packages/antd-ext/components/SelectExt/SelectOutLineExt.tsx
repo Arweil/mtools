@@ -1,9 +1,9 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { Row, Col } from 'antd';
+import React, { useCallback, useRef, useState } from 'react';
 import { css } from '@emotion/css';
 import SelectExt from './SelectExt';
+import OutLineWrapper from '../OutLineWrapper';
 import type { SelectExtProps } from './SelectExt';
-import { usePrefixCls } from '../utils';
+import type { OutLineWrapperProps } from '../OutLineWrapper';
 
 const style = (prefixCls: string) => css`
   border: 1px solid #D0D3D6;
@@ -35,6 +35,10 @@ const style = (prefixCls: string) => css`
       padding: 0;
       .${prefixCls}-select-selection-search {
         inset-inline-start: 0;
+        margin-inline-start: 0;
+      }
+      .${prefixCls}-select-selection-placeholder{
+        inset-inline-start: 0;
       }
     }
   }
@@ -48,17 +52,14 @@ const style = (prefixCls: string) => css`
   }
 `;
 
-export interface SelectOutLineExtProps extends SelectExtProps {
+export interface SelectOutLineExtProps extends OutLineWrapperProps, SelectExtProps {
   label: string;
 }
 
 export default function SelectOutLineExt(props: SelectOutLineExtProps) {
-  const { label, bordered, ...restProps } = props;
+  const { label, ...restProps } = props;
   const refSelectOutLine = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState<number>(0);
-  const { prefixCls } = usePrefixCls();
-  const customClassName = useMemo(() => style(prefixCls), [prefixCls]);
-
   const onDropdownVisibleChange = useCallback((open: boolean) => {
     if (open) {
       setWidth(refSelectOutLine.current?.offsetWidth || 0);
@@ -66,19 +67,14 @@ export default function SelectOutLineExt(props: SelectOutLineExtProps) {
   }, []);
 
   return (
-    <Row className={customClassName} ref={refSelectOutLine}>
-      <Col className={`${prefixCls}-form-item-label`}>
-        <label htmlFor={restProps.id}>{label}</label>
-      </Col>
-      <Col className={`${prefixCls}-form-item-control`}>
-        <SelectExt
-          {...restProps}
-          bordered={false}
-          onDropdownVisibleChange={onDropdownVisibleChange}
-          dropdownMatchSelectWidth={width}
-          placement="bottomRight"
-        />
-      </Col>
-    </Row>
+    <OutLineWrapper<SelectOutLineExtProps> label={label} injectStyle={style}>
+      <SelectExt
+        {...restProps}
+        bordered={false}
+        onDropdownVisibleChange={onDropdownVisibleChange}
+        dropdownMatchSelectWidth={width}
+        placement="bottomRight"
+      />
+    </OutLineWrapper>
   );
 }

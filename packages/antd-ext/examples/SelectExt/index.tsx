@@ -102,6 +102,24 @@ export default function App() {
           </Form.Item>
           <Form.Item name={['form1', 'labelInsideValueC']}>
             <SelectOutLineExt
+              label="文本多选"
+              placeholder="请选择"
+              mode="multiple"
+              showSearch
+              options={[
+                { renameLabel: 'ItemA', renameValue: 'ItemA' },
+                { renameLabel: 'ItemB', renameValue: 'ItemB' },
+                { renameLabel: 'ItemC', renameValue: 'ItemC' },
+                { renameLabel: 'ItemD', renameValue: 'ItemD' },
+              ]}
+              fieldNames={{
+                label: 'renameLabel',
+                value: 'renameValue',
+              }}
+            />
+          </Form.Item>
+          <Form.Item name={['form1', 'labelInsideValueD']}>
+            <SelectOutLineExt
               label="文本内容拓展"
               placeholder="请选择"
               mode="multiple"

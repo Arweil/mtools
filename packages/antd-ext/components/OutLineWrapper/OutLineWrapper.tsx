@@ -6,7 +6,7 @@ import type { GlobalToken } from 'antd';
 
 export interface OutLineWrapperProps {
   label: string;
-  children?: JSX.Element;
+  children?: React.ReactNode;
   injectStyle?: (prefixCls: string, mtPrefixCls: string, token: GlobalToken) => string;
 }
 
