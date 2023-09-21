@@ -31,6 +31,10 @@ $ npm i @m-tools/node-service --save
   proxy: [],
   // 自定义node接口
   apis: undefined, // (app: Express) => void
+  // 可以动态修改HTML标签在返回html的时候
+  // 有时候我们往往希望注入一些运行时才存在的，必要的变量
+  // 或者做一些页面配置化的时候
+  injectHtml: undefined, // ($: CheerioAPI) => void;
   // 配置 Content-Security-Policy，配置为 undefined 不会加此响应头，配置后，html页会返回此响应头
   CSP: undefined,
   // 是否需要注入 _e 到 cookie中判断环境
@@ -77,6 +81,12 @@ module.exports = {
   },
   // copied from MDN
   CSP: `default-src 'self'; script-src 'report-sample' 'self' www.google-analytics.com/analytics.js assets.codepen.io production-assets.codepen.io 'sha256-GA8+DpFnqAM/vwERTpb5zyLUaN5KnOhctfTsqWfhaUA=' 'sha256-uogddBLIKmJa413dyT0iPejBg3VFcO+4x6B+vw3jng0='; script-src-elem 'report-sample' 'self' www.google-analytics.com/analytics.js assets.codepen.io production-assets.codepen.io 'sha256-GA8+DpFnqAM/vwERTpb5zyLUaN5KnOhctfTsqWfhaUA=' 'sha256-uogddBLIKmJa413dyT0iPejBg3VFcO+4x6B+vw3jng0='; style-src 'report-sample' 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; connect-src 'self' updates.developer.allizom.org updates.developer.mozilla.org www.google-analytics.com stats.g.doubleclick.net; font-src 'self'; frame-src 'self' interactive-examples.mdn.mozilla.net interactive-examples.prod.mdn.mozilla.net interactive-examples.mdn.allizom.net mdn.github.io yari-demos.prod.mdn.mozit.cloud mdn.mozillademos.org yari-demos.stage.mdn.mozit.cloud jsfiddle.net www.youtube-nocookie.com codepen.io survey.alchemer.com; img-src 'self' *.githubusercontent.com *.googleusercontent.com *.gravatar.com mozillausercontent.com firefoxusercontent.com profile.stage.mozaws.net profile.accounts.firefox.com mdn.mozillademos.org media.prod.mdn.mozit.cloud media.stage.mdn.mozit.cloud interactive-examples.mdn.mozilla.net interactive-examples.prod.mdn.mozilla.net interactive-examples.mdn.allizom.net wikipedia.org www.google-analytics.com www.gstatic.com; manifest-src 'self'; media-src 'self' archive.org videos.cdn.mozilla.net; child-src 'self'; worker-src 'self';`
+  injectHtml: ($) => {
+    const eleList = $('#ns-inject');
+    if (eleList && eleList.length) {
+      $(eleList[0]).after(`<script>window.a=1</script>`);
+    }
+  },
 };
 ```
 

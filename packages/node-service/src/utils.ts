@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import type { NodeServiceConfig } from "./types";
+import type { NodeServiceConfig } from './types';
 
 export const appDirectory = fs.realpathSync(process.cwd());
 
@@ -29,6 +29,7 @@ export function getConfig(): NodeServiceConfig {
     // 配置 listen 端口
     port: '8080',
     apis: undefined,
+    injectScript: undefined,
     CSP: undefined,
     useCookieEnv: true,
     ...customConfig,

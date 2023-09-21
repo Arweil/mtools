@@ -1,14 +1,11 @@
 import type { Express } from 'express';
+import type { CheerioAPI } from 'cheerio';
 
-type HttpProxyMiddlewareOptionsFilter = import("http-proxy-middleware").Filter;
-type HttpProxyMiddlewareOptions = import("http-proxy-middleware").Options;
-type NextFunction = import("express").NextFunction;
+type HttpProxyMiddlewareOptionsFilter = import('http-proxy-middleware').Filter;
+type HttpProxyMiddlewareOptions = import('http-proxy-middleware').Options;
+type NextFunction = import('express').NextFunction;
 
-type ByPass = (
-  req: Request,
-  res: Response,
-  proxyConfig: ProxyConfigArrayItem
-) => any;
+type ByPass = (req: Request, res: Response, proxyConfig: ProxyConfigArrayItem) => any;
 
 export type ProxyConfigArrayItem = {
   path?: HttpProxyMiddlewareOptionsFilter | undefined;
@@ -19,10 +16,10 @@ export type ProxyConfigArrayItem = {
 export type ProxyConfigArray = (
   | ProxyConfigArrayItem
   | ((
-    req?: Request | undefined,
-    res?: Response | undefined,
-    next?: NextFunction | undefined
-  ) => ProxyConfigArrayItem)
+      req?: Request | undefined,
+      res?: Response | undefined,
+      next?: NextFunction | undefined,
+    ) => ProxyConfigArrayItem)
 )[];
 
 export type NodeServiceConfig = {
@@ -44,6 +41,10 @@ export type NodeServiceConfig = {
   DEPLOY_ENV: string;
   // 自定义node接口
   apis?: (app: Express) => void;
+  // 可以动态修改HTML标签在返回html的时候
+  // 有时候我们往往希望注入一些运行时才存在的，必要的变量
+  // 或者做一些页面配置化的时候
+  injectHtml?: ($: CheerioAPI) => void;
   // Content-Security-Policy 配置
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
@@ -51,4 +52,4 @@ export type NodeServiceConfig = {
   // 是否需要注入 _e 到 cookie中判断环境
   // 目前可以通过 window.$$_e 来获取环境，推荐使用此方法
   useCookieEnv?: boolean;
-}
+};

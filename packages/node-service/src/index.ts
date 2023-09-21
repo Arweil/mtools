@@ -7,6 +7,7 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import * as cheerio from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
 import proxy from './proxy';
 import { getConfig, appDirectory } from './utils';
 
@@ -23,6 +24,7 @@ const {
   CSP,
   useCookieEnv,
   apis,
+  injectHtml,
 } = config;
 
 const ENV = process.env[DEPLOY_ENV] || 'dev';
@@ -82,7 +84,7 @@ app.get(baseRouter + '/health', (req, res) => {
 
 const envTemplate = (() => {
   const value = getEnv();
-  const temp = `<script>window.$$_e=${value};</script>`;
+  const temp = `<script id="ns-inject">window.$$_e=${value};</script>`;
   return temp;
 })();
 
@@ -93,10 +95,14 @@ app.get(baseRouter + '/*', (req, res) => {
   const buffer = fs.readFileSync(htmlPath);
   const $ = cheerio.load(buffer);
   const scriptList = $('body script');
-  if (scriptList.length > 0) {
+  if (scriptList && scriptList.length > 0) {
     $(scriptList[0]).before(envTemplate);
   } else {
     $('body').append(envTemplate);
+  }
+
+  if (injectHtml) {
+    injectHtml($);
   }
 
   if (CSP) {
