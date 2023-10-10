@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@m-tools/mt-template-h5",
-  "version": "1.0.4-alpha.0",
+  "version": "1.0.5-alpha.0",
   "description": "A template for H5",
   "main": "index.js",
   "scripts": {

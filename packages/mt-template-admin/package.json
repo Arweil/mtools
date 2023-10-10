@@ -1,6 +1,6 @@
 {
   "name": "@m-tools/mt-template-admin",
-  "version": "1.0.15-alpha.0",
+  "version": "1.0.16-alpha.0",
   "description": "A template for admin",
   "main": "index.js",
   "scripts": {
@@ -25,9 +25,9 @@
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@m-tools/browser-utils": "^0.0.4-alpha.0",
-    "@m-tools/node-service": "^0.0.3",
+    "@m-tools/node-service": "^0.0.4",
     "antd": "^4.16.3",
-    "malganis": "^2.0.4",
+    "malganis": "^2.0.5",
     "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
