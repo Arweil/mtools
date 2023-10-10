@@ -71,6 +71,7 @@ observer(function ComponentName() {
 创建实例，进行全局的配置
 * historyOptions：在history的基础上拓展了type属性，用来定义路由方式，主要的两种方式为：'browser' | 'hash'
 * fetchingComp：定义全局文件加载中的展示内容
+* clearPageStore：切换路由是否会清空页面级别的Store。默认会清除前一个页面的Store
 
 ```ts
 // App.tsx
@@ -82,6 +83,7 @@ const app = malganis({
     type: 'browser',
   },
   fetchingComp: LoadingComponent,
+  clearPageStore: true, // 默认为true
 });
 ```
 
@@ -130,6 +132,8 @@ app.router((app: IMalGanisApp, history: History) => {
 
 class UserStore {
   namespace = 'UserStore';
+
+  $$needResetStore = true; // 卸载页面时是否需要把状态还原
 }
 
 const instance = new UserStore();
