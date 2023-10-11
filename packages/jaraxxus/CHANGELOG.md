@@ -1,4 +1,4 @@
-## v4.1.5
+## v4.2.0
 1. 新增了 @svgr/webpack 用来处理 svg
 2. @pmmmwh/react-refresh-webpack-plugin 插件新增了 overlay: false 以防止开发过程中reject弹窗提示
 3. 新增了 favicon 配置，默认为 public/favicon.ico
