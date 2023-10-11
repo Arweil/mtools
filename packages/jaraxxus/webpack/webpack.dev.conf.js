@@ -31,7 +31,12 @@ const devConf = merge(baseConf, {
     chunkFilename: utils.assetsPath('js/[name].js'),
   },
   devtool: 'cheap-module-source-map', // 配置生成Source Maps，选择合适的选项
-  plugins: [new webpack.HotModuleReplacementPlugin(), new ReactRefreshWebpackPlugin()],
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new ReactRefreshWebpackPlugin({
+      overlay: false,
+    }),
+  ],
 });
 
 if (config.indexPath) {
@@ -39,6 +44,7 @@ if (config.indexPath) {
     new HtmlWebpackPlugin({
       version: 'dev',
       template: config.indexPath,
+      favicon: config.favicon,
       inject: true,
     }),
   );

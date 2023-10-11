@@ -7,6 +7,7 @@ module.exports = {
   srcDir: 'src', // 开发目录
   eslintConfigFile: undefined, // eslint.rules.js为根目录文件
   indexPath: 'public/index.html',
+  favicon: 'public/favicon.ico',
   productionSourceMap: false,
   configureWebpack: {},
   bundleAnalyzerReport: false,
@@ -31,6 +32,6 @@ module.exports = {
     lessModifyVars: {},
     loaderOptions: {
       style: {}, // style-loader options
-    }
-  }
-}
+    },
+  },
+};

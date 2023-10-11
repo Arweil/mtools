@@ -72,6 +72,7 @@ if (config.indexPath) {
       version,
       template: config.indexPath,
       inject: true,
+      favicon: config.favicon,
       minify: {
         removeComments: true,
         collapseWhitespace: true,

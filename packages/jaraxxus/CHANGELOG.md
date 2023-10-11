@@ -1,3 +1,12 @@
+## v4.1.5
+1. 新增了 @svgr/webpack 用来处理 svg
+2. @pmmmwh/react-refresh-webpack-plugin 插件新增了 overlay: false 以防止开发过程中reject弹窗提示
+3. 新增了 favicon 配置，默认为 public/favicon.ico
+4. 更新了包版本
+
+## v4.1.4
+1. 新增了 generate-asset-webpack-plugin 用于生成版本信息，并且会在html中注入版本信息，用于比对版本
+
 ## v4.1.3
 1. 修复了 sass 的版本问题，sass 1.49.0 依赖 node8 版本，而 sass 1.49.1 依赖 node12版本
 
