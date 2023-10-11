@@ -1,3 +1,7 @@
+const { isExistFile } = require('./utils');
+
+const faviconPath = 'public/favicon.ico';
+
 module.exports = {
   entry: 'src/index.js',
   needPolyfill: true,
@@ -7,7 +11,7 @@ module.exports = {
   srcDir: 'src', // 开发目录
   eslintConfigFile: undefined, // eslint.rules.js为根目录文件
   indexPath: 'public/index.html',
-  favicon: 'public/favicon.ico',
+  favicon: isExistFile(faviconPath) ? faviconPath : undefined,
   productionSourceMap: false,
   configureWebpack: {},
   bundleAnalyzerReport: false,

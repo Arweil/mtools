@@ -1,9 +1,9 @@
-const fs = require('fs')
-const path = require('path')
-const net = require('net')
+const fs = require('fs');
+const path = require('path');
+const net = require('net');
 
 function isBoolean(val) {
-  return Object.prototype.toString.call(val) === '[object Boolean]'
+  return Object.prototype.toString.call(val) === '[object Boolean]';
 }
 
 function isUndefined(val) {
@@ -23,12 +23,12 @@ function isObject(val) {
 }
 
 function mergeBooleanVal(defaultVal, newVal) {
-  return isBoolean(newVal) ? newVal : !!newVal ? !!newVal : defaultVal
+  return isBoolean(newVal) ? newVal : !!newVal ? !!newVal : defaultVal;
 }
 
-const appDirectory = fs.realpathSync(process.cwd())
+const appDirectory = fs.realpathSync(process.cwd());
 
-const resolveApp = relativePath => path.resolve(appDirectory, relativePath)
+const resolveApp = relativePath => path.posix.resolve(appDirectory, relativePath);
 
 function portInUse(port) {
   return new Promise((resolve, reject) => {
@@ -43,6 +43,11 @@ function portInUse(port) {
       }
     });
   });
+}
+
+function isExistFile(url) {
+  const p = path.posix.resolve(appDirectory, url);
+  return fs.existsSync(p);
 }
 
 module.exports = {
@@ -61,4 +66,6 @@ module.exports = {
   portInUse,
 
   isDevMode: process.env.NODE_ENV !== 'production',
-}
+
+  isExistFile,
+};
