@@ -1,4 +1,5 @@
-import React, { useMemo } from 'react';
+import React from 'react';
+import { useMemo } from 'react';
 import { Row, Col } from 'antd';
 import { css } from '@emotion/css';
 import { usePrefixCls } from '../utils';
@@ -7,6 +8,7 @@ import type { GlobalToken } from 'antd';
 export interface OutLineWrapperProps {
   label: string;
   children?: React.ReactNode;
+  ref?: React.MutableRefObject<HTMLDivElement>;
   injectStyle?: (prefixCls: string, mtPrefixCls: string, token: GlobalToken) => string;
 }
 
@@ -49,7 +51,7 @@ const style = (
   ${injectStyle ? injectStyle(prefixCls, mtPrefixCls, token) : ''}
 `;
 
-export default function OutLineWrapper<T extends OutLineWrapperProps>(props: T) {
+function ClickableListWithRef(props: OutLineWrapperProps, ref: React.RefObject<HTMLDivElement>) {
   const { label, children, injectStyle } = props;
   const { token, prefixCls, mtPrefixCls } = usePrefixCls();
   const customClassName = useMemo(
@@ -58,7 +60,7 @@ export default function OutLineWrapper<T extends OutLineWrapperProps>(props: T) 
   );
 
   return (
-    <Row className={customClassName}>
+    <Row className={customClassName} ref={ref}>
       <Col className={`${prefixCls}-form-item-label`}>
         <label>{label}</label>
       </Col>
@@ -66,3 +68,7 @@ export default function OutLineWrapper<T extends OutLineWrapperProps>(props: T) 
     </Row>
   );
 }
+
+const OutLineWrapper = React.forwardRef<HTMLDivElement, OutLineWrapperProps>(ClickableListWithRef);
+
+export default OutLineWrapper;

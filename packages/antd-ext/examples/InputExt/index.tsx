@@ -51,6 +51,9 @@ export default function App() {
             <InputOutLineExt label="文本内容" placeholder="请输入文本内容" />
           </Form.Item>
           <Form.Item name={['form1', 'labelInsideValueC']}>
+            <InputOutLineExt label="文本清除" allowClear placeholder="请输入文本内容" />
+          </Form.Item>
+          <Form.Item name={['form1', 'labelInsideValueD']}>
             <InputOutLineExt label="文本内容拓展" placeholder="请输入文本内容拓展" />
           </Form.Item>
           <Form.Item>

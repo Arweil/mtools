@@ -11,7 +11,7 @@ export interface ProInputNumberOutLineProps
 export default function ProInputNumberOutLine(props: ProInputNumberOutLineProps) {
   const { label, ...restProps } = props;
   return (
-    <OutLineWrapper<ProInputNumberOutLineProps> label={label}>
+    <OutLineWrapper label={label}>
       <ProInputNumber {...restProps} bordered={false} />
     </OutLineWrapper>
   );

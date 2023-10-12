@@ -59,15 +59,15 @@ export interface SelectOutLineExtProps extends OutLineWrapperProps, SelectExtPro
 export default function SelectOutLineExt(props: SelectOutLineExtProps) {
   const { label, ...restProps } = props;
   const refSelectOutLine = useRef<HTMLDivElement>(null);
-  const [width, setWidth] = useState<number>(0);
+  const [width, setWidth] = useState<number>(refSelectOutLine.current?.offsetWidth);
   const onDropdownVisibleChange = useCallback((open: boolean) => {
     if (open) {
-      setWidth(refSelectOutLine.current?.offsetWidth || 0);
+      setWidth(refSelectOutLine?.current?.offsetWidth || 0);
     }
   }, []);
 
   return (
-    <OutLineWrapper<SelectOutLineExtProps> label={label} injectStyle={style}>
+    <OutLineWrapper label={label} injectStyle={style} ref={refSelectOutLine}>
       <SelectExt
         {...restProps}
         bordered={false}

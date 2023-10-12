@@ -1,9 +1,8 @@
-import React, { useMemo } from 'react';
-import { Row, Col } from 'antd';
+import React from 'react';
 import { InputExt } from './InputExt';
 import { css } from '@emotion/css';
 import type { InputProps } from 'antd';
-import { usePrefixCls } from '../utils';
+import OutLineWrapper from '../OutLineWrapper';
 
 const style = (prefixCls: string) => css`
   border: 1px solid #D0D3D6;
@@ -33,6 +32,9 @@ const style = (prefixCls: string) => css`
     color: #333;
     width: 100%;
   }
+  .${prefixCls}-input-affix-wrapper{
+    padding: 4px 0;
+  }
 
   &:focus-within {
     border: 1px solid #2D64E5;
@@ -48,18 +50,11 @@ export interface InputOutLineExtProps extends InputProps {
 }
 
 export default function InputOutLineExt(props: InputOutLineExtProps) {
-  const { label, bordered, ...restProps } = props;
-  const { prefixCls } = usePrefixCls()
-  const customClassName = useMemo(() => style(prefixCls), [prefixCls]);
+  const { label, ...restProps } = props;
 
   return (
-    <Row className={customClassName}>
-      <Col className={`${prefixCls}-form-item-label`}>
-        <label htmlFor={restProps.id}>{label}</label>
-      </Col>
-      <Col className={`${prefixCls}-form-item-control`}>
-        <InputExt bordered={false} {...restProps} />
-      </Col>
-    </Row>
+    <OutLineWrapper label={label} injectStyle={style}>
+      <InputExt bordered={false} {...restProps} />
+    </OutLineWrapper>
   );
 }

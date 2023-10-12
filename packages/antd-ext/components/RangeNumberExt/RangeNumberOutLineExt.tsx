@@ -7,19 +7,18 @@ import { css } from '@emotion/css';
 
 const style = (prefixCls: string) => css`
   .${prefixCls}-input-number-input {
+    width: 100%;
     padding: 4px 0;
     color: #333;
-    width: 100%;
   }
 `;
 
-export interface RangeNumberOutLineExtProps extends OutLineWrapperProps, RangeNumberExtProps {
-}
+export interface RangeNumberOutLineExtProps extends OutLineWrapperProps, RangeNumberExtProps {}
 
 export default function RangeNumberOutLineExt(props: RangeNumberOutLineExtProps) {
   const { label, ...restProps } = props;
   return (
-    <OutLineWrapper<RangeNumberOutLineExtProps> label={label} injectStyle={style}>
+    <OutLineWrapper label={label} injectStyle={style}>
       <RangeNumberExt {...restProps} bordered={false} />
     </OutLineWrapper>
   );
