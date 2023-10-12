@@ -6,15 +6,9 @@ import { Provider } from 'mobx-react';
 import type { IMalGanisApp, IMalGanisOpt } from './type';
 import { isComputedProp, isObservableProp, toJS } from 'mobx';
 
-function getProvider(params: {
-  app: IMalGanisApp;
-}) {
+function getProvider(params: { app: IMalGanisApp }) {
   const { app } = params;
-  return (
-    <Provider store={app._store}>
-      { app._router }
-    </Provider>
-  );
+  return <Provider store={app._store}>{app._router}</Provider>;
 }
 
 function render(app: IMalGanisApp, container?: ReactDOM.Container) {
@@ -25,12 +19,16 @@ function render(app: IMalGanisApp, container?: ReactDOM.Container) {
   return ReactDOM.render(getProvider({ app }), container);
 }
 
-function malganis<TypeOfStore extends { [key: string]: unknown; }>(options: Partial<IMalGanisOpt> = {}) {
+function malganis<TypeOfStore extends Record<string, unknown>>(
+  options: Partial<IMalGanisOpt> = {},
+) {
   const app: IMalGanisApp = {
     _store: {},
     _cacheRouteModalKey: [],
     _fetchingComp: null,
   } as IMalGanisApp;
+
+  const clearPageStore = options.clearPageStore === undefined ? true : options.clearPageStore;
 
   // 默认为 hash history
   let history: History | MemoryHistory | null = null;
@@ -49,30 +47,36 @@ function malganis<TypeOfStore extends { [key: string]: unknown; }>(options: Part
 
   app._fetchingComp = options.fetchingComp;
 
-  app.router = function router(fun: (params: { app: IMalGanisApp, history: History  }) => JSX.Element): void {
+  app.router = function router(
+    fun: (params: { app: IMalGanisApp; history: History }) => JSX.Element,
+  ): void {
     app._router = fun({ app, history });
   };
   app.model = function modal(inst: any) {
     // 在压缩代码后，类名会被混淆，应该使用 namespace 变量
-    const namespace: keyof TypeOfStore = inst.namespace || inst.constructor && inst.constructor.name;
+    const namespace: keyof TypeOfStore =
+      inst.namespace || (inst.constructor && inst.constructor.name);
     // 定义初始的 Observable 属性，用于数据还原
-    inst.$$initialStates = {};
-    inst.$$needResetStore = inst.$$needResetStore !== undefined ? (!!inst.$$needResetStore) : true;
-    Object.getOwnPropertyNames(inst).forEach(propName => {
-      if (
-        isObservableProp(inst, propName)
-        && !isComputedProp(inst, propName)
-        && propName !== 'namespace'
-        && propName !== '$$needResetStore'
-      ) {
-        inst.$$initialStates[propName] = toJS(inst[propName]);
-      }
-    });
+    inst.$$needResetStore = inst.$$needResetStore !== undefined ? !!inst.$$needResetStore : true;
+    // 只有第一次需要赋值，如果$$needResetStore为false，那么切换回来$$initialStates需要保持第一次的值
+    if (inst.$$initialStates === undefined) {
+      inst.$$initialStates = {};
+      Object.getOwnPropertyNames(inst).forEach(propName => {
+        if (
+          isObservableProp(inst, propName) &&
+          !isComputedProp(inst, propName) &&
+          propName !== 'namespace' &&
+          propName !== '$$needResetStore'
+        ) {
+          inst.$$initialStates[propName] = toJS(inst[propName]);
+        }
+      });
+    }
     app._store[namespace] = inst;
   };
   app.unmodule = function unmodule(namespace: string) {
     const { $$initialStates, $$needResetStore } = app._store[namespace] as {
-      $$initialStates: { [key: string]: unknown; };
+      $$initialStates: Record<string, unknown>;
       $$needResetStore: boolean;
     };
     // 如果需要重置
@@ -82,7 +86,9 @@ function malganis<TypeOfStore extends { [key: string]: unknown; }>(options: Part
       });
     }
 
-    Reflect.deleteProperty(app._store, namespace);
+    if (clearPageStore) {
+      Reflect.deleteProperty(app._store, namespace);
+    }
   };
 
   function start(): JSX.Element;
@@ -92,7 +98,7 @@ function malganis<TypeOfStore extends { [key: string]: unknown; }>(options: Part
       console.error(`you must call 'router' method before 'start'`);
     }
     return render(app, container);
-  };
+  }
 
   app.start = start;
 

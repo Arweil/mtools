@@ -19,4 +19,5 @@ module.exports = {
       ],
     ],
   },
+  ignores: [commit => commit.indexOf('Publish') === 0],
 };

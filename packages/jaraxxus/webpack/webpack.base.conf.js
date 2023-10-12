@@ -1,6 +1,6 @@
-const path = require('path')
-const utils = require('./utils.js')
-const config = require('../config/index.js')
+const path = require('path');
+const utils = require('./utils.js');
+const config = require('../config/index.js');
 const { initThreadLoader, workerPoolJS } = require('./threadLoader');
 
 initThreadLoader();
@@ -23,15 +23,15 @@ const baseConf = {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.scss', '.less'],
     alias: {
       '@': path.resolve(process.cwd(), 'src'),
-    }
+    },
   },
   module: {
     rules: [
       // Disable require.ensure as it's not a standard language feature.
       {
         parser: {
-          requireEnsure: false
-        }
+          requireEnsure: false,
+        },
       },
       ...(config.eslintConfigFile ? [createLintingRule()] : []),
       {
@@ -54,7 +54,7 @@ const baseConf = {
                   require.resolve('@babel/preset-env'),
                   {
                     useBuiltIns: 'entry',
-                    corejs: 3
+                    corejs: 3,
                   },
                 ],
                 [
@@ -68,40 +68,42 @@ const baseConf = {
               ],
               plugins: [
                 process.env.NODE_ENV === 'development' && require.resolve('react-refresh/babel'),
-                require.resolve("@babel/plugin-transform-runtime")
+                require.resolve('@babel/plugin-transform-runtime'),
               ].filter(Boolean),
               extends: config.babelExtends,
-            }
+            },
           },
-        ]
+        ],
       },
       {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        test: /\.svg$/,
+        use: [require.resolve('@svgr/webpack'), require.resolve('url-loader')],
+      },
+      {
+        test: /\.(png|jpe?g|gif|bmp)(\?.*)?$/,
         loader: require.resolve('url-loader'),
         options: {
           limit: 10000,
           name: utils.assetsPath('img/[name].[hash:7].[ext]'),
-        }
+        },
       },
       ...utils.createAllStyleConfig(),
       {
         test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-        loader: require.resolve('url-loader'),
+        loader: require.resolve('file-loader'),
         options: {
-          limit: 10000,
-          name: utils.assetsPath('media/[name].[hash:7].[ext]')
-        }
+          name: utils.assetsPath('media/[name].[hash:7].[ext]'),
+        },
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: require.resolve('url-loader'),
+        loader: require.resolve('file-loader'),
         options: {
-          limit: 10000,
-          name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
-        }
-      }
-    ]
+          name: utils.assetsPath('fonts/[name].[hash:7].[ext]'),
+        },
+      },
+    ],
   },
-}
+};
 
-module.exports = baseConf
+module.exports = baseConf;

@@ -20,6 +20,7 @@ module.exports = {
   srcDir: 'src', // 开发目录
   eslintConfigFile: undefined, // eslint.rules.js为根目录文件
   indexPath: 'public/index.html', // SPA入口HTML
+  favicon: 'public/favicon.ico', // 站点favicon
   productionSourceMap: false, // 生成环境是否需要sourcemap js
   configureWebpack: {}, // webpack 配置，最后通过webpack-merge合并配置
   bundleAnalyzerReport: false, // webpack-bundle-analyzer 是否启用
