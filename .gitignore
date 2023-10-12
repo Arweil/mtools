@@ -16,3 +16,4 @@ packages/mt-template-admin-hermes/*
 
 .umi
 .umi-production
+.idea/
