@@ -21,6 +21,8 @@ import {
 import LayoutExt, { BaseLayoutExt } from './LayoutExt';
 import DatePickerExt from './DatePickerExt';
 import { BaseCascaderExt } from './CascaderExt';
+import { default as FormItemExt, BaseFormItemExt } from './FormItemExt';
+
 export * from 'antd';
 import zh_CN from 'antd/es/locale/zh_CN';
 import en_US from 'antd/es/locale/en_US';
@@ -50,6 +52,8 @@ export {
   LayoutExt,
   DatePickerExt,
   ProInputNumber,
+  FormItemExt,
+  BaseFormItemExt,
   Theme,
 };
 
