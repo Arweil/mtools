@@ -51,24 +51,24 @@ const style = (
   ${injectStyle ? injectStyle(prefixCls, mtPrefixCls, token) : ''}
 `;
 
-function ClickableListWithRef(props: OutLineWrapperProps, ref: React.RefObject<HTMLDivElement>) {
-  const { label, children, injectStyle } = props;
-  const { token, prefixCls, mtPrefixCls } = usePrefixCls();
-  const customClassName = useMemo(
-    () => style(prefixCls, mtPrefixCls, token, injectStyle),
-    [prefixCls, mtPrefixCls, token, injectStyle],
-  );
+const OutLineWrapper = React.forwardRef(
+  (props: OutLineWrapperProps, ref: React.RefObject<HTMLDivElement>) => {
+    const { label, children, injectStyle } = props;
+    const { token, prefixCls, mtPrefixCls } = usePrefixCls();
+    const customClassName = useMemo(
+      () => style(prefixCls, mtPrefixCls, token, injectStyle),
+      [prefixCls, mtPrefixCls, token, injectStyle],
+    );
 
-  return (
-    <Row className={customClassName} ref={ref}>
-      <Col className={`${prefixCls}-form-item-label`}>
-        <label>{label}</label>
-      </Col>
-      <Col className={`${prefixCls}-form-item-control`}>{children}</Col>
-    </Row>
-  );
-}
-
-const OutLineWrapper = React.forwardRef<HTMLDivElement, OutLineWrapperProps>(ClickableListWithRef);
+    return (
+      <Row className={customClassName} ref={ref}>
+        <Col className={`${prefixCls}-form-item-label`}>
+          <label>{label}</label>
+        </Col>
+        <Col className={`${prefixCls}-form-item-control`}>{children}</Col>
+      </Row>
+    );
+  },
+);
 
 export default OutLineWrapper;

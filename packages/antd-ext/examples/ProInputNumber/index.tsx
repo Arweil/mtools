@@ -58,6 +58,7 @@ export default function App() {
               placeholder="请输入文本内容"
               needThousandths
               precision={6}
+              allowClear
             />
           </Form.Item>
           <Form.Item name={['form1', 'labelInsideValueC']}>
