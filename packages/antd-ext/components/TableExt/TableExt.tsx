@@ -1,13 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Table, Empty, Typography, Skeleton } from 'antd';
 import { css } from '@emotion/css';
-import type {
-  TableProps,
-  ColumnsType,
-  ColumnGroupType,
-  ColumnType,
-  TablePaginationConfig,
-} from 'antd/es/table';
+import type { TableProps, ColumnType, TablePaginationConfig } from 'antd/es/table';
 import type { TooltipProps } from 'antd/es/tooltip';
 import type { SpinProps } from 'antd/lib/spin';
 
@@ -25,7 +19,12 @@ export interface ColumnTypeExt<RecordType> extends ColumnType<RecordType> {
   enums?: Record<string | number, string | number>;
 }
 
-export type ColumnsTypeExt<RecordType> = ColumnGroupType<RecordType> | ColumnTypeExt<RecordType>;
+export interface ColumnGroupTypeExt<RecordType>
+  extends Omit<ColumnTypeExt<RecordType>, 'dataIndex'> {
+  children?: ColumnsTypeExt<RecordType>[];
+}
+
+export type ColumnsTypeExt<RecordType> = ColumnGroupTypeExt<RecordType> | ColumnTypeExt<RecordType>;
 
 export interface TableExtProps<RecordType extends { $$mock?: boolean } = any>
   extends TableProps<RecordType> {
@@ -45,6 +44,39 @@ function isSpinObj(param: any): param is SpinProps {
 
 function isBool(param: any): param is boolean {
   return Object.prototype.toString.call(param) === '[object Boolean]';
+}
+
+/**
+ * 遍历树，可以用callback获取，操作每一个结点
+ * @param tree 树
+ * @param callback 执行函数
+ * @returns undefined
+ */
+function forEachTree<T>(
+  tree: ColumnGroupTypeExt<T>,
+  callback: (treeNode: ColumnGroupTypeExt<T>) => void,
+) {
+  if (tree === null) {
+    return;
+  }
+
+  const copyTree = { ...tree };
+
+  callback(copyTree);
+
+  if (copyTree.children && copyTree.children.length > 0) {
+    const cols = [];
+    copyTree.children.forEach(item => {
+      // 剔除隐藏的列
+      const { hidden = false } = item;
+      if (!hidden) {
+        cols.push(forEachTree(item as ColumnGroupTypeExt<T>, callback));
+      }
+    });
+    copyTree.children = cols;
+  }
+
+  return copyTree;
 }
 
 export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
@@ -149,50 +181,45 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
       return columns;
     }
 
-    const cols: ColumnsType<RecordType> = [];
-    columns.forEach((item: ColumnTypeExt<RecordType>) => {
-      const { hidden = false, useDefaultRender = true, render, ..._restProps } = item;
-
-      if (!hidden) {
-        if (fetching) {
-          _restProps.title = SkeletonItem;
-        }
-
-        cols.push({
-          ..._restProps,
-          render: useDefaultRender
-            ? (value, record, index) => {
-                if (fetching) {
-                  return SkeletonItem;
-                }
-
-                if (render) {
-                  return render(value, record, index);
-                }
-
-                if (value === undefined || value === null || value === '') {
-                  return '-';
-                }
-
-                return (
-                  <Typography.Paragraph
-                    style={{ marginBottom: 0 }}
-                    ellipsis={{
-                      rows: 2,
-                      expandable: false,
-                      tooltip: {
-                        children: value,
-                        ...tdTooltip,
-                      },
-                    }}
-                  >
-                    {value}
-                  </Typography.Paragraph>
-                );
+    const cols: ColumnsTypeExt<RecordType>[] = [];
+    columns.forEach((item: ColumnsTypeExt<RecordType>) => {
+      const c = forEachTree(item as ColumnGroupTypeExt<RecordType>, i => {
+        const { useDefaultRender = true, render } = i;
+        i.title = fetching ? SkeletonItem : i.title;
+        i.render = useDefaultRender
+          ? (value, record, index) => {
+              if (fetching) {
+                return SkeletonItem;
               }
-            : render,
-        });
-      }
+
+              if (render) {
+                return render(value, record, index);
+              }
+
+              if (value === undefined || value === null || value === '') {
+                return '-';
+              }
+
+              return (
+                <Typography.Paragraph
+                  style={{ marginBottom: 0 }}
+                  ellipsis={{
+                    rows: 2,
+                    expandable: false,
+                    tooltip: {
+                      children: value,
+                      ...tdTooltip,
+                    },
+                  }}
+                >
+                  {value}
+                </Typography.Paragraph>
+              );
+            }
+          : render;
+      });
+
+      cols.push(c);
     });
 
     return cols;

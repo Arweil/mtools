@@ -12,6 +12,8 @@ toc: menu
 
 <code src="../../packages/antd-ext/examples/TableExt/customPageSizeOptions"></code>
 
+<code src="../../packages/antd-ext/examples/TableExt/columnsGroup"></code>
+
 ## 逻辑拓展
 在原有的Table基础上拓展了如下属性：
 | 属性 | 说明 | 类型 | 默认值 | 版本 |
