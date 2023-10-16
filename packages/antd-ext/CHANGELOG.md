@@ -1,3 +1,7 @@
+## 0.6.3-alpha.0
+1. 修复了 SelectOutLineExt 和 InputOutLineExt 样式修正
+2. 优化了 TableExt 能够兼容复合表头的骨架屏
+
 ## 0.6.2-alpha.0
 1. 修正了 NotFoundContent 的文案多语言支持
 
