@@ -1,4 +1,12 @@
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  isValidElement,
+  cloneElement,
+} from 'react';
 import { ConfigProvider, Form } from 'antd'; // 修改Button为想要导入的组件
 import type { FormItemProps } from 'antd';
 import cls from 'classnames';
@@ -8,27 +16,36 @@ export type FormItemExtProps = FormItemProps;
 
 export default function FormItemExt(props: FormItemExtProps) {
   const { children, className, ...restProps } = props;
+
   const { getPrefixCls } = useContext(ConfigProvider.ConfigContext);
   const prefix = useMemo(getPrefixCls, [getPrefixCls]);
   const uuid = useId();
   const formItemClassName = `form_item_${uuid}`;
   const [dropdownMatchSelectWidth, setDropdownMatchSelectWidth] = useState<boolean | number>(true);
   const [offsetX, setOffsetX] = useState(0);
-  // TODO 根据子组件类型判断传入的props
-  // const [isInput, setIsInput] = useState(false);
+  // 根据子组件类型判断传入的props
+  const [childrenType, setChildrenType] = useState<'select' | 'picker' | ''>('');
 
   const calcPopupPosition = useCallback(() => {
     const formItemElement = document.querySelector(`.${formItemClassName}`);
     const childFormControlElement = document.querySelector(
       `.${formItemClassName} .${prefix}-form-item-control`,
     );
+    const childSelectElement = document.querySelector(`.${formItemClassName} .${prefix}-select`);
+    const childPickerElement = document.querySelector(`.${formItemClassName} .${prefix}-picker`);
+    if (childSelectElement) {
+      setChildrenType('select');
+    }
+    if (childPickerElement) {
+      setChildrenType('picker');
+    }
     const rect = formItemElement.getBoundingClientRect();
     const childFormControlRect = childFormControlElement.getBoundingClientRect();
     const { width } = rect;
     const offset = childFormControlRect.width - width;
     setOffsetX(offset);
     setDropdownMatchSelectWidth(width);
-  }, [uuid]);
+  }, [formItemClassName, prefix]);
 
   useEffect(() => {
     if (uuid) {
@@ -36,19 +53,31 @@ export default function FormItemExt(props: FormItemExtProps) {
     }
     window.addEventListener('resize', calcPopupPosition);
     return () => window.removeEventListener('resize', calcPopupPosition);
-  }, [uuid]);
+  }, [calcPopupPosition, uuid]);
 
   const renderChildren = () => {
-    if (!React.isValidElement(children)) {
+    if (!isValidElement(children)) {
       return null;
     }
-    // 这里我们通常还会判断 child 的类型来确定是不是要传递相应的数据，这里我就不做了
-    const childProps = {
+
+    let childProps = {
       ...children.props,
-      dropdownMatchSelectWidth,
-      dropdownAlign: { offset: [offsetX, 4] },
     };
-    return React.cloneElement(children, childProps);
+
+    // 根据子组件类型判断传入的props, 防止控制台警告
+    if (childrenType === 'select') {
+      childProps = {
+        ...childProps,
+        dropdownMatchSelectWidth,
+        dropdownAlign: { offset: [offsetX, 4] },
+      };
+    } else if (childrenType === 'picker') {
+      childProps = {
+        ...childProps,
+        dropdownAlign: { offset: [offsetX, 4] },
+      };
+    }
+    return cloneElement(children, childProps);
   };
 
   return (

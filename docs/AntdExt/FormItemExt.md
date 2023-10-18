@@ -7,4 +7,4 @@ toc: menu
 
 # FormItemExt
 
-<code src="../../packages/antd-ext/examples/FormItemExt/FormItemCascader"></code>
+<code src="../../packages/antd-ext/examples/FormItemExt"></code>

@@ -2,7 +2,13 @@ import React from 'react';
 import { ConfigProvider } from 'antd';
 import type { GlobalToken } from 'antd';
 import { css } from '@emotion/css';
-import { colorPrimaryL1, colorPrimaryL3, colorError } from '../theme/hermes';
+import {
+  colorPrimaryL1,
+  colorPrimaryL3,
+  colorError,
+  colorGreyL1,
+  colorBlackL3,
+} from '../theme/hermes';
 
 export interface ThemeProps {
   children: React.ReactNode;
@@ -10,7 +16,7 @@ export interface ThemeProps {
 
 export const customStyle = (token: GlobalToken, prefixCls: string) => css`
   border-radius: 5px;
-  border: 1px solid #cfd5de;
+  border: 1px solid ${colorGreyL1};
   padding-left: 12px;
   position: relative;
   flex-wrap: nowrap;
@@ -52,24 +58,12 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
 
     > label {
       height: 32px;
-      color: #888888;
+      color: ${colorBlackL3};
     }
-  }
-
-  .${prefixCls}-form-item-control {
-    // width: 0;
-    // flex: auto;
-    // overflow: hidden;
-    // text-overflow: ellipsis;
-    // white-space: nowrap;
   }
 
   .${prefixCls}-form-item-control-input {
     height: 32px;
-    // width: 100%;
-    // overflow: hidden;
-    // text-overflow: ellipsis;
-    // white-space: nowrap;
   }
 
   .${prefixCls}-tree-select {
@@ -78,7 +72,6 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
   }
 
   .${prefixCls}-picker {
-    // padding-left: 0;
     padding-left: 10px;
     background-color: transparent !important;
     border-color: transparent !important;
