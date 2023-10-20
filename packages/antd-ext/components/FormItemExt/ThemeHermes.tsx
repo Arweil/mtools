@@ -41,8 +41,12 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
   .${prefixCls}-select-selection-item {
     background-color: ${colorGreyL4};
   }
-  &:hover:not(.${prefixCls}-form-item-has-warning,.${prefixCls}-form-item-has-error，),
-  &:focus:not(.${prefixCls}-form-item-has-warning，.${prefixCls}-form-item-has-error，) {
+  &:hover:not(
+      .${prefixCls}-form-item-has-warning,.${prefixCls}-form-item-has-error,.${prefixCls}-form-item-focused
+    ),
+  &:focus:not(
+      .${prefixCls}-form-item-has-warning,.${prefixCls}-form-item-has-error,.${prefixCls}-form-item-focused
+    ) {
     border-color: ${colorPrimaryL3};
   }
   .${prefixCls}-form-item-with-help .${prefixCls}-form-item-explain {
