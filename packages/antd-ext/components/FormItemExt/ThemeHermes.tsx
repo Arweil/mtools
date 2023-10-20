@@ -27,6 +27,9 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
   input {
     padding-left: 0;
   }
+  input.${prefixCls}-input-number-input {
+    padding-left: 0;
+  }
 
   &.${prefixCls}-form-item-focused {
     border-color: ${colorPrimaryL3};
@@ -48,6 +51,17 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
       .${prefixCls}-form-item-has-warning,.${prefixCls}-form-item-has-error,.${prefixCls}-form-item-focused
     ) {
     border-color: ${colorPrimaryL3};
+  }
+  &:not(
+      .${prefixCls}-form-item-has-warning,.${prefixCls}-form-item-has-error,.${prefixCls}-form-item-focused
+    ) {
+    &:hover,
+    &:focus {
+      border-color: ${colorPrimaryL3};
+    }
+    &:focus-within {
+      border-color: ${colorPrimaryL3};
+    }
   }
   .${prefixCls}-form-item-with-help .${prefixCls}-form-item-explain {
     position: absolute;

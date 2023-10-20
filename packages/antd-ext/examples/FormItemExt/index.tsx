@@ -14,6 +14,7 @@ import {
   TreeSelect,
   Checkbox,
   Radio,
+  RangeNumberExt,
 } from '@m-tools/antd-ext';
 import { treeSelectOptions } from '../constants';
 
@@ -131,7 +132,8 @@ export default function () {
           </FormItemExt>
         </Col>
         <Col span={8}>
-          <FormItemExt name="Radio" label="Radio" rules={[{ required: true }]}>
+          {/*没有星号，但是必填*/}
+          <FormItemExt required={false} name="Radio" label="Radio" rules={[{ required: true }]}>
             <Radio.Group>
               <Radio value="123">苹果</Radio>
               <Radio value="432">戴尔</Radio>
@@ -139,6 +141,36 @@ export default function () {
           </FormItemExt>
         </Col>
       </Row>
+      <FormItemExt
+        label="RangeNumberExt"
+        name="RangeNumberExt"
+        rules={[
+          { required: true, message: '请填写起始结束值' },
+          {
+            validator: async (rule, value) => {
+              if (value === undefined || value.length < 2) {
+                return Promise.resolve();
+              }
+
+              if (value[0] === null && value[1] === null) {
+                return Promise.reject(new Error('必填'));
+              }
+
+              if (value[0] === null) {
+                return Promise.reject(new Error('起始值必填'));
+              }
+
+              if (value[1] === null) {
+                return Promise.reject(new Error('结束值必填'));
+              }
+
+              return Promise.resolve();
+            },
+          },
+        ]}
+      >
+        <RangeNumberExt placeholder={['before', 'after']} />
+      </FormItemExt>
       <Button
         onClick={() => {
           form

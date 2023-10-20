@@ -42,9 +42,8 @@ export default function FormItemExt(props: FormItemExtProps) {
   const formItemClassName = `form_item_${uuid}`;
   const [dropdownMatchSelectWidth, setDropdownMatchSelectWidth] = useState<boolean | number>(true);
   const [offsetX, setOffsetX] = useState(0);
-  const [isFocused, setIsFocused] = useState(false);
-  // 根据子组件类型判断传入的props
 
+  // 根据子组件类型判断传入的props
   const [childrenType, setChildrenType] = useState<ChildNodeTypes>('');
 
   const calcPopupPosition = useCallback(() => {
@@ -103,50 +102,28 @@ export default function FormItemExt(props: FormItemExtProps) {
       bordered: false,
     };
 
-    const { onDropdownVisibleChange, onOpenChange, onFocus, onBlur } = childProps;
-
     // 根据子组件类型判断传入的props, 防止控制台警告
     if (childrenType === 'select') {
       childProps = {
         ...childProps,
         dropdownMatchSelectWidth,
-        onDropdownVisibleChange: visible => {
-          setIsFocused(visible);
-          onDropdownVisibleChange && onDropdownVisibleChange(visible);
-        },
         dropdownAlign: { offset: [offsetX, 4] },
       };
     } else if (childrenType === 'picker') {
       childProps = {
         ...childProps,
-        onOpenChange: isOpen => {
-          setIsFocused(isOpen);
-          onOpenChange && onOpenChange(isOpen);
-        },
         dropdownAlign: { offset: [offsetX, 4] },
         popupClassName: pickerCss,
       };
     } else if (childrenType === 'cascader') {
       childProps = {
         ...childProps,
-        onDropdownVisibleChange: visible => {
-          setIsFocused(visible);
-          onDropdownVisibleChange && onDropdownVisibleChange(visible);
-        },
         dropdownMatchSelectWidth: childProps.dropdownMatchSelectWidth ?? false,
         dropdownAlign: { offset: [offsetX, 4] },
       };
     } else if (childrenType === 'input') {
       childProps = {
         ...childProps,
-        onFocus: event => {
-          setIsFocused(true);
-          onFocus && onFocus(event);
-        },
-        onBlur: event => {
-          setIsFocused(false);
-          onBlur && onBlur(event);
-        },
       };
     } else if (
       childrenType === 'switch' ||
@@ -158,11 +135,14 @@ export default function FormItemExt(props: FormItemExtProps) {
     return cloneElement(children, childProps);
   };
 
+  const formItemCss = css`
+    .${prefix}-form-item-explain {
+      margin-left: ${offsetX}px;
+    }
+  `;
+
   return (
-    <Form.Item
-      {...restProps}
-      className={cls(className, formItemClassName, isFocused && `${prefix}-form-item-focused`)}
-    >
+    <Form.Item {...restProps} className={cls(className, formItemClassName, formItemCss)}>
       {renderChildren()}
     </Form.Item>
   );
