@@ -6,52 +6,27 @@ import {
   InputExt,
   ProInputNumber,
   DatePickerExt,
-  SelectOutLineExt,
   SelectExt,
+  Button,
+  Col,
+  Row,
+  Switch,
+  TreeSelect,
+  Checkbox,
+  Radio,
 } from '@m-tools/antd-ext';
-import { Button, Col, Row, TreeSelect } from 'antd';
+import { treeSelectOptions } from '../constants';
 
 export default function () {
-  const options = [
-    {
-      value: 'zhejiang',
-      label: 'Zhejiang',
-      children: [
-        {
-          value: 'hangzhou',
-          label: 'Hangzhou',
-          children: [
-            {
-              value: 'xihu',
-              label: 'West Lake',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      value: 'jiangsu',
-      label: 'Jiangsu',
-      children: [
-        {
-          value: 'nanjing',
-          label: 'Nanjing',
-          children: [
-            {
-              value: 'zhonghuamen',
-              label: 'Zhong Hua Men',
-            },
-          ],
-        },
-      ],
-    },
-  ];
-
   const [form] = Form.useForm();
-
+  const options = treeSelectOptions;
   return (
     <Form form={form}>
-      <FormItemExt name="dir" label="BaseCascaderExt" rules={[{ required: true }]}>
+      <FormItemExt
+        name="dir"
+        label="BaseCascaderExt"
+        rules={[{ required: true, message: '请选择地名' }]}
+      >
         <BaseCascaderExt options={options} multiple />
       </FormItemExt>
       <FormItemExt name="InputExt" label="InputExt" rules={[{ required: true }]}>
@@ -66,13 +41,33 @@ export default function () {
         <ProInputNumber />
       </FormItemExt>
       <Row gutter={8}>
-        <Col span={12}>
+        <Col span={8}>
           <FormItemExt name="DatePickerExt" label="DatePickerExt" rules={[{ required: true }]}>
             <DatePickerExt />
           </FormItemExt>
         </Col>
-        <Col span={12}>
+        <Col span={8}>
           <FormItemExt name="TreeSelect" label="TreeSelect" rules={[{ required: true }]}>
+            {/* eslint-disable-next-line react/jsx-no-undef */}
+            <TreeSelect
+              showSearch
+              style={{ width: '100%' }}
+              dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+              placeholder="Please select"
+              allowClear
+              multiple
+              treeDefaultExpandAll
+              treeData={options}
+            />
+          </FormItemExt>
+        </Col>
+        <Col span={8}>
+          <FormItemExt
+            validateStatus="warning"
+            name="TreeSelect2"
+            label="TreeSelect"
+            rules={[{ required: true }]}
+          >
             {/* eslint-disable-next-line react/jsx-no-undef */}
             <TreeSelect
               showSearch
@@ -113,7 +108,37 @@ export default function () {
           </FormItemExt>
         </Col>
       </Row>
-
+      <FormItemExt name="DateRangePicker" label="DateRangePicker" rules={[{ required: true }]}>
+        <DatePickerExt.RangePicker />
+      </FormItemExt>
+      <Row gutter={8}>
+        <Col span={8}>
+          <FormItemExt
+            valuePropName="checked"
+            name="Switch"
+            label="Switch"
+            rules={[{ required: true }]}
+          >
+            <Switch />
+          </FormItemExt>
+        </Col>
+        <Col span={8}>
+          <FormItemExt name="Checkbox" label="Checkbox">
+            <Checkbox.Group>
+              <Checkbox value="83">苹果</Checkbox>
+              <Checkbox value="432">戴尔</Checkbox>
+            </Checkbox.Group>
+          </FormItemExt>
+        </Col>
+        <Col span={8}>
+          <FormItemExt name="Radio" label="Radio" rules={[{ required: true }]}>
+            <Radio.Group>
+              <Radio value="123">苹果</Radio>
+              <Radio value="432">戴尔</Radio>
+            </Radio.Group>
+          </FormItemExt>
+        </Col>
+      </Row>
       <Button
         onClick={() => {
           form

@@ -6,8 +6,10 @@ import {
   colorPrimaryL1,
   colorPrimaryL3,
   colorError,
+  colorWarning,
   colorGreyL1,
   colorBlackL3,
+  colorGreyL4,
 } from '../theme/hermes';
 
 export interface ThemeProps {
@@ -15,18 +17,32 @@ export interface ThemeProps {
 }
 
 export const customStyle = (token: GlobalToken, prefixCls: string) => css`
-  border-radius: 5px;
+  border-radius: 4px;
   border: 1px solid ${colorGreyL1};
   padding-left: 12px;
   position: relative;
   flex-wrap: nowrap;
   margin-bottom: 22px;
 
+  input {
+    padding-left: 0;
+  }
+
+  &.${prefixCls}-form-item-focused {
+    border-color: ${colorPrimaryL3};
+  }
   &.${prefixCls}-form-item-has-error {
     border-color: ${colorError};
   }
-  &:hover,
-  &:focus {
+  &.${prefixCls}-form-item-has-warning {
+    border-color: ${colorWarning};
+  }
+
+  .${prefixCls}-select-selection-item {
+    background-color: ${colorGreyL4};
+  }
+  &:hover:not(.${prefixCls}-form-item-has-warning,.${prefixCls}-form-item-has-error，),
+  &:focus:not(.${prefixCls}-form-item-has-warning，.${prefixCls}-form-item-has-error，) {
     border-color: ${colorPrimaryL3};
   }
   .${prefixCls}-form-item-with-help .${prefixCls}-form-item-explain {
@@ -37,19 +53,8 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
     line-height: normal;
   }
 
-  .${prefixCls}-select-focused:not(.${prefixCls}-select-disabled).${prefixCls}-select:not(.${prefixCls}-select-customize-input)
-    .${prefixCls}-select-selector {
-    border: none;
-    box-shadow: none;
-  }
-
-  .ant-select:not(.ant-select-customize-input) .ant-select-selector {
-    border: none;
-    box-shadow: none;
-  }
-
   .${prefixCls}-select-selector {
-    max-height: 70px;
+    //max-height: 70px;
     overflow-y: auto;
   }
 
@@ -62,20 +67,18 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
     }
   }
 
-  .${prefixCls}-form-item-control-input {
-    height: 32px;
-  }
-
   .${prefixCls}-tree-select {
     padding-left: 0;
     overflow: visible !important;
   }
 
   .${prefixCls}-picker {
-    padding-left: 10px;
+    padding-left: 0;
     background-color: transparent !important;
-    border-color: transparent !important;
-    box-shadow: none !important;
+  }
+
+  .${prefixCls}-picker-active-bar {
+    transform: translateX(-11px);
   }
 
   .${prefixCls}-select {
@@ -98,49 +101,6 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
 
     .${prefixCls}-select-selection-search {
       margin-left: 0;
-    }
-  }
-
-  .${prefixCls}-input-affix-wrapper {
-    border: none;
-  }
-
-  .${prefixCls}-input-affix-wrapper-focused {
-    border: none;
-    box-shadow: none;
-  }
-
-  .${prefixCls}-input-affix-wrapper-focused > input {
-    border: none;
-    outline: none;
-  }
-
-  .${prefixCls}-input-status-error:not(.${prefixCls}-input-disabled):not(
-      .${prefixCls}-input-borderless
-    ) {
-    &.${prefixCls}-input:focus {
-      border: none;
-      box-shadow: none;
-    }
-
-    &.${prefixCls}-input-focused {
-      border: none;
-      box-shadow: none;
-    }
-  }
-
-  .${prefixCls}-input {
-    //padding-left: 10px;
-    border: none;
-    box-shadow: none;
-
-    &:hover {
-      border: none;
-    }
-
-    &:focus {
-      border: none;
-      box-shadow: none;
     }
   }
 `;
