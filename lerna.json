@@ -1,0 +1,16 @@
+{
+  "packages": ["packages/*"],
+  "npmClient": "npm",
+  "version": "independent",
+  "changelog": {
+    "repo": "Arweil/mtools",
+    "labels": {
+      "feat": "A new Feature",
+      "fix": "A bug Fix",
+      "docs": "Document only changes",
+      "perf": "A code change that improves performace",
+      "test": "Adding missing tests or correcting existing tests"
+    },
+    "cacheDir": ".changelog"
+  }
+}

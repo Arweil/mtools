@@ -1,0 +1,47 @@
+{
+  "name": "@m-tools/browser-utils",
+  "version": "0.0.4-alpha.0",
+  "description": "convert tree data to simple data, or convert simple data to tree data",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "browser": "lib/index.js",
+  "scripts": {
+    "clean:lib": "rimraf lib",
+    "clean:es": "rimraf es",
+    "build:file": "rollup -c rollup.config.ts",
+    "build": "npm run clean:lib && npm run clean:es && npm run build:file"
+  },
+  "keywords": [
+    "browser",
+    "utils"
+  ],
+  "author": "Milk",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.0.0",
+    "npm": ">=7.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "es/*",
+    "lib/*",
+    "package.json",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "dependencies": {
+    "@m-tools/isomorphic-utils": "^0.0.4-alpha.0",
+    "core-js": "3.16.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-typescript": "^8.2.5",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.56.2",
+    "typescript": "^4.3.5"
+  }
+}

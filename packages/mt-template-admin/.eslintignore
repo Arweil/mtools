@@ -1,0 +1,5 @@
+node_modules/*
+server/*
+component/*
+dist/*
+service.config.js

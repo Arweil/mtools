@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "declaration": true,
+    "jsx": "react",
+    "paths": {
+      "@m-tools/antd-ext/es": [
+        "./es/*"
+      ],
+      "@m-tools/antd-ext/*": [
+        "./components/*"
+      ],
+      "@m-tools/antd-ext": [
+        "./components/index.ts"
+      ],
+    }
+  }
+}
