@@ -1,4 +1,4 @@
-## 0.6.4-alpha.0
+## 0.6.5-alpha.0
 1. 修复了 layoutExt 使用 ConfigProvider 修改变量造成的污染
 2. 修复了 DrawerExt 使用 ConfigProvider 修改变量造成的污染
 3. 新增了 TableExt 的 useEmpty 属性，始终使用无表格头的为空状态
