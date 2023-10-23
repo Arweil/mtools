@@ -11,6 +11,7 @@ const emptyClass = css`
   border-bottom: 1px solid #f1f2f5;
   text-align: center;
   padding: 30px 0;
+  background-color: #ffffff;
 `;
 
 export interface ColumnTypeExt<RecordType> extends ColumnType<RecordType> {
@@ -32,6 +33,7 @@ export interface TableExtProps<RecordType extends { $$mock?: boolean } = any>
   tdTooltip?: TooltipProps;
   emptyDesc?: string;
   useSkeleton?: boolean;
+  useEmpty?: boolean;
 }
 
 export interface OperateBtnGroupProps {
@@ -89,6 +91,7 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
     emptyDesc = '没有数据',
     loading,
     useSkeleton = false,
+    useEmpty = false,
     pagination,
     rowSelection,
     ...restProps
@@ -261,7 +264,7 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
     return false;
   }, [pagination, finDataSource, hasData]);
 
-  if ((finDataSource && finDataSource.length > 0) || !useSkeleton) {
+  if (((finDataSource && finDataSource.length > 0) || !useSkeleton) && !useEmpty) {
     return (
       <Table
         loading={fetching ? undefined : loading}

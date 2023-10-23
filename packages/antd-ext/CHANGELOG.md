@@ -1,3 +1,8 @@
+## 0.6.4-alpha.0
+1. 修复了 layoutExt 使用 ConfigProvider 修改变量造成的污染
+2. 修复了 DrawerExt 使用 ConfigProvider 修改变量造成的污染
+3. 新增了 TableExt 的 useEmpty 属性，始终使用无表格头的为空状态
+
 ## 0.6.3-alpha.0
 1. 修复了 SelectOutLineExt 和 InputOutLineExt 样式修正
 2. 优化了 TableExt 能够兼容复合表头的骨架屏

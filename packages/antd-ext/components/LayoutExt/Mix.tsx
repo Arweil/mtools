@@ -1,8 +1,9 @@
 import React from 'react';
-import LayoutExt, { LayoutExtProps } from './LayoutExt';
+import type { LayoutExtProps } from './LayoutExt';
+import LayoutExt from './LayoutExt';
 import {
   customStyleWithLayoutExt,
-  ThemeHermesWithLayoutExt,
+  // ThemeHermesWithLayoutExt,
 } from './ThemeHermes';
 import type { Theme } from '../ConfigProviderExt/context';
 import { useMapTheme } from '../utils';
@@ -13,18 +14,15 @@ export interface LayoutExtMixinProps extends LayoutExtProps {
 
 export default function Mixin(props: LayoutExtMixinProps) {
   const { theme, className, ...restProps } = props;
-  const {
-    ThemeWrapper,
-    classes,
-  } = useMapTheme({
+  const { ThemeWrapper, classes } = useMapTheme({
     theme,
     className,
     emotioncss: {
       hermes: customStyleWithLayoutExt,
     },
     themeWrap: {
-      hermes: ThemeHermesWithLayoutExt,
-    }
+      // hermes: ThemeHermesWithLayoutExt,
+    },
   });
 
   return (

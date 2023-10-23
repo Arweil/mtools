@@ -1,39 +1,50 @@
-import React from 'react';
-import { ConfigProvider } from 'antd';
+import type React from 'react';
 import { css } from '@emotion/css';
 import type { GlobalToken } from 'antd';
-
+import { colorBlackL3, colorGreyL1, colorGreyL7, colorPrimaryL1 } from '../theme/hermes';
 
 export interface ThemeProps {
   children: React.ReactNode;
 }
 
 export const customStyleWithLayoutExt = (token: GlobalToken, prefixCls: string) => css`
+  &.${prefixCls}-layout {
+    .${prefixCls}-layout-sider-light {
+      background: ${colorGreyL7};
+
+      .${prefixCls}-layout-sider-trigger {
+        background: ${colorGreyL7};
+      }
+    }
+  }
+
   .${prefixCls}-layout-header {
-    background-color: #FFF !important;
-    padding-inline: 20px;
+    background-color: #fff !important;
     border-top-left-radius: 16px;
+    padding-inline: 20px;
   }
 
   .${prefixCls}-menu-item-group-title {
-    padding: 16px 16px 4px;
     height: 40px;
-    color: #8F959E;
+    padding: 16px 16px 4px;
+    color: ${colorBlackL3};
+    font-size: 12px;
   }
 
-  .${prefixCls}-menu-inline .${prefixCls}-menu-sub.${prefixCls}-menu-inline>.${prefixCls}-menu-submenu>.${prefixCls}-menu-submenu-title {
-    height: 40px;
-    line-height: 40px;
-    margin: 0;
+  .${prefixCls}-menu-inline
+    .${prefixCls}-menu-sub.${prefixCls}-menu-inline>.${prefixCls}-menu-submenu>.${prefixCls}-menu-submenu-title {
     width: 100%;
+    height: 40px;
+    margin: 0;
+    line-height: 40px;
   }
-  
+
   .${prefixCls}-menu-inline, .${prefixCls}-menu-vertical {
     .${prefixCls}-menu-submenu-title, .${prefixCls}-menu-item {
-      height: 40px;
-      line-height: 40px;
-      margin: 0;
       width: 100%;
+      height: 40px;
+      margin: 0;
+      line-height: 40px;
     }
   }
 
@@ -42,14 +53,22 @@ export const customStyleWithLayoutExt = (token: GlobalToken, prefixCls: string) 
       transition: initial !important;
     }
 
-    .${prefixCls}-menu-item-group .${prefixCls}-menu-item-group-list .${prefixCls}-menu-submenu-title {
-      margin: 0;
-      height: 40px;
+    .${prefixCls}-menu-item-group
+      .${prefixCls}-menu-item-group-list
+      .${prefixCls}-menu-submenu-title {
       width: 100%;
+      height: 40px;
+      margin: 0;
+    }
+
+    .${prefixCls}-menu-item {
+      border-radius: 0;
     }
   }
 
   .${prefixCls}-menu-light {
+    color: #333333;
+    background: ${colorGreyL7};
     &.${prefixCls}-menu-root {
       &.${prefixCls}-menu-inline, &.${prefixCls}-menu-vertical {
         border-inline-end: 0;
@@ -62,21 +81,26 @@ export const customStyleWithLayoutExt = (token: GlobalToken, prefixCls: string) 
 
     &:not(.${prefixCls}-menu-horizontal) {
       .${prefixCls}-menu-item:not(.${prefixCls}-menu-item-selected):hover {
-        color: #3370FF;
+        color: ${colorPrimaryL1};
+        background-color: #f1f3fb;
       }
 
-      .ant-menu-submenu-title:hover {
-        color: #3370FF;
+      .${prefixCls}-menu-submenu-title:hover {
+        color: ${colorPrimaryL1};
       }
+    }
+
+    .${prefixCls}-menu-item-selected {
+      background-color: transparent;
     }
   }
 
   .${prefixCls}-layout-sider-trigger {
     height: 48px;
+    padding: 0 16px;
     line-height: 48px;
     text-align: left;
-    box-shadow: inset 0px 1px 0px 0px #D0D3D6;
-    padding: 0 16px;
+    box-shadow: inset 0px 1px 0px 0px ${colorGreyL1};
   }
 
   .${prefixCls}-layout-sider-collapsed {
@@ -85,26 +109,3 @@ export const customStyleWithLayoutExt = (token: GlobalToken, prefixCls: string) 
     }
   }
 `;
-
-export function ThemeHermesWithLayoutExt(props: ThemeProps) {
-  const { children } = props;
-  return (
-    // TODO: 影响范围是整个子组件？
-    <ConfigProvider
-      theme={{
-        token: {
-          colorBgContainer: '#F8F9FD',
-          colorBgLayout: '#F8F9FD',
-          controlItemBgActive: '#F8F9FD',
-          colorBgTextHover: '#F1F3FB',
-          colorPrimary: '#3370FF',
-          controlHeight: 28,
-          borderRadius: 4,
-          colorText: '#333',
-        }
-      }}
-    >
-      {children}
-    </ConfigProvider>
-  );
-}

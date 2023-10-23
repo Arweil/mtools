@@ -19,7 +19,8 @@ toc: menu
 | 属性 | 说明 | 类型 | 默认值 | 版本 |
 | --- | --- | --- | --- | --- |
 | useSkeleton | 首屏展示骨架屏，状态会从loading同步，所以需要和loading属性一起使用 | boolean | - | 0.0.1-alpha.4 |
-| emptyDesc | 没有数据展示的文案 | string | 没有数据 | 0.0.1-alpha.4 |
+| emptyDesc | 没有数据展示的文案 | string | "没有数据" | 0.0.1-alpha.4 |
+| useEmpty | 没有数据始终显示“没有数据”的样式 | boolean | false | 0.6.4-alpha.0 |
 
 在原有的列属性上拓展了如下属性：
 | 属性 | 说明 | 类型 | 默认值 | 版本 |

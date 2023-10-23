@@ -166,7 +166,7 @@ function TabItem(props: {
     if (history) {
       history.push(url);
     }
-  }, [onSelect]);
+  }, [onSelect, history, url]);
 
   return (
     <div className={classes} onClick={_onSelect}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { ConfigProvider } from 'antd';
 import { css } from '@emotion/css';
 import { colorBlackL1, colorBlackL4 } from '../theme/hermes';
@@ -11,25 +11,30 @@ export interface ThemeDrawerExtProps {
 
 export const customStyle = (token: GlobalToken, prefixCls: string) => css`
   .${prefixCls}-${mtPrefixCls}-drawer-close {
-    font-size: 14px;
     color: ${colorBlackL4};
+    font-size: 14px;
+  }
+
+  &.${prefixCls}-drawer {
+    .${prefixCls}-drawer-mask {
+      background: rgba(0, 0, 0, 0.06);
+    }
+
+    .${prefixCls}-drawer-header {
+      padding: 20px;
+    }
+
+    .${prefixCls}-drawer-title {
+      color: ${colorBlackL1};
+      font-weight: 500;
+    }
+
+    .${prefixCls}-drawer-body {
+      padding: 20px;
+    }
+
+    .${prefixCls}-drawer-footer {
+      padding: 16px 20px;
+    }
   }
 `;
-
-export function ThemeHermesWithDrawerExt(props: ThemeDrawerExtProps) {
-  return (
-    <ConfigProvider
-      theme={{
-        token: {
-          paddingXS: 23,
-          padding: 20,
-          paddingLG: 20,
-          colorText: colorBlackL1,
-          colorBgMask: 'rgba(0, 0, 0, 0.06)'
-        }
-      }}
-    >
-      {props.children}
-    </ConfigProvider>
-  )
-}

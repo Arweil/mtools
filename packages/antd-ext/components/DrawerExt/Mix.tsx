@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import type { Theme } from '../ConfigProviderExt/context';
 import useMapTheme from '../utils/useMapTheme';
 import type { DrawerExtProps } from './DrawerExt';
-import { ThemeHermesWithDrawerExt, customStyle } from './ThemeHermes';
+import { customStyle } from './ThemeHermes';
 import DrawerExt from './DrawerExt';
 import { colorGreyL6 } from '../theme/hermes';
 
@@ -23,9 +23,7 @@ export default function Mixin(props: DrawerExtMixinProps) {
   const { classes, ThemeWrapper, globalTheme } = useMapTheme({
     className,
     theme: customTheme,
-    themeWrap: {
-      hermes: ThemeHermesWithDrawerExt,
-    },
+    themeWrap: {},
     emotioncss: {
       hermes: customStyle,
     },
@@ -35,7 +33,6 @@ export default function Mixin(props: DrawerExtMixinProps) {
     return {
       hermes: {
         background: colorGreyL6,
-        height: 64,
         ...headerStyle,
       },
       zeus: {},
@@ -46,8 +43,7 @@ export default function Mixin(props: DrawerExtMixinProps) {
   const formattedFooterStyle = useMemo(() => {
     return {
       hermes: {
-        height: 78,
-        borderTop: 0,
+        height: 64,
         ...footerStyle,
       },
       zeus: {},
