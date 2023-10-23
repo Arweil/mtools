@@ -10,7 +10,6 @@
   "main": "index.js",
   "scripts": {
     "build": "lerna run build",
-    "gcomp": "node ./packages/antd-ext/generateFile.mjs",
     "changelog": "lerna-changelog",
     "deploy:docs": "npm run site:build && gh-pages -d dist",
     "prepare": "husky install && lerna bootstrap",
