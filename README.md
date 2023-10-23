@@ -25,8 +25,3 @@
     ```bash
     $ npm run deploy:docs
     ```
-
-6. 快速生成antd-ext组件模板
-   ```bash
-   $ npm run gcomp
-   ```
