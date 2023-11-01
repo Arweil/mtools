@@ -15,6 +15,8 @@ export function ThemeHermesWithProInputNumber(props: ThemeProps) {
           colorWarningBorderHover: '#F9AD13',
           colorSuccess: '#05BD80',
           colorSuccessBorderHover: '#05BD80',
+          colorTextDisabled: '#BFBFBF',
+          colorBgContainerDisabled: '#F1F2F5',
         },
       }}
     >

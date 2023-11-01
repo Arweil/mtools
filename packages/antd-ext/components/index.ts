@@ -18,6 +18,7 @@ import {
   MixinRangeNumberOutLineExt as RangeNumberOutLineExt,
   BaseRangeNumberExt,
 } from './RangeNumberExt';
+import RadioGroupExt from './RadioGroupExt';
 import LayoutExt, { BaseLayoutExt } from './LayoutExt';
 import DatePickerExt from './DatePickerExt';
 import { BaseCascaderExt } from './CascaderExt';
@@ -50,6 +51,7 @@ export {
   RangeNumberOutLineExt,
   LayoutExt,
   DatePickerExt,
+  RadioGroupExt,
   ProInputNumber,
   Theme,
 };

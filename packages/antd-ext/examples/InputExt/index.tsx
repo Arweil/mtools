@@ -56,6 +56,9 @@ export default function App() {
           <Form.Item name={['form1', 'labelInsideValueD']}>
             <InputOutLineExt label="文本内容拓展" placeholder="请输入文本内容拓展" />
           </Form.Item>
+          <Form.Item name={['form1', 'labelInsideValueE']}>
+            <InputOutLineExt label="禁用" disabled placeholder="请输入文本" />
+          </Form.Item>
           <Form.Item>
             <ButtonExt onClick={() => alert(JSON.stringify(form1.getFieldsValue()))}>
               GetFieldsValue
@@ -93,6 +96,9 @@ export default function App() {
                 <InputExt theme="hermes" placeholder="after" style={{ width: '50%' }} />
               </Form.Item>
             </Input.Group>
+          </Form.Item>
+          <Form.Item label="Disabled" name={['form2', 'disabled']}>
+            <InputExt theme="hermes" disabled placeholder="请输入文本" />
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 4, span: 14 }}>
             <ButtonExt onClick={() => alert(JSON.stringify(form2.getFieldsValue()))}>

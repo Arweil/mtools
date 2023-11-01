@@ -37,7 +37,12 @@ export default function SelectOutLineExt(props: SelectOutLineExtProps) {
   }, []);
 
   return (
-    <OutLineWrapper label={label} injectStyle={style} ref={refSelectOutLine}>
+    <OutLineWrapper
+      label={label}
+      injectStyle={style}
+      ref={refSelectOutLine}
+      disabled={restProps.disabled}
+    >
       <SelectExt
         {...restProps}
         bordered={false}

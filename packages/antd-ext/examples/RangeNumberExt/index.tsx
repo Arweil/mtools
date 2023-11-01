@@ -72,6 +72,9 @@ export default function App() {
           <Form.Item name={['form1', 'labelInsideValueC']}>
             <RangeNumberOutLineExt label="文本内容拓展" placeholder={['before', 'after']} />
           </Form.Item>
+          <Form.Item name={['form1', 'labelInsideValueD']}>
+            <RangeNumberOutLineExt disabled label="文本" placeholder={['before', 'after']} />
+          </Form.Item>
           <Form.Item>
             <ButtonExt onClick={() => alert(JSON.stringify(form1.getFieldsValue()))}>
               GetFieldsValue

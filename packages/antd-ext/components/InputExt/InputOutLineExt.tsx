@@ -25,7 +25,7 @@ export default function InputOutLineExt(props: InputOutLineExtProps) {
   const { label, ...restProps } = props;
 
   return (
-    <OutLineWrapper label={label} injectStyle={style}>
+    <OutLineWrapper label={label} injectStyle={style} disabled={restProps.disabled}>
       <InputExt bordered={false} {...restProps} />
     </OutLineWrapper>
   );
