@@ -31,6 +31,8 @@ export function ThemeHermesWithRangeNumberExt(props: ThemeRangeNumberExtProps) {
           colorWarningBorderHover: colorWarning,
           colorSuccess: colorSuccess,
           colorSuccessBorderHover: colorSuccess,
+          colorTextDisabled: '#BFBFBF',
+          colorBgContainerDisabled: '#F1F2F5',
         },
       }}
     >
@@ -43,10 +45,8 @@ export interface ThemeHermesWithRangeNumberOutLineExtProps {
   children: React.ReactNode;
 }
 
-export const customStyleWithRangeNumberOutLineExt = (
-  token: GlobalToken,
-  prefixCls: string,
-) => css``;
+export const customStyleWithRangeNumberOutLineExt = (token: GlobalToken, prefixCls: string) =>
+  css``;
 
 export function ThemeHermesWithRangeNumberOutLineExt(
   props: ThemeHermesWithRangeNumberOutLineExtProps,
@@ -64,6 +64,8 @@ export function ThemeHermesWithRangeNumberOutLineExt(
           colorWarningBorderHover: colorWarning,
           colorSuccess: colorSuccess,
           colorSuccessBorderHover: colorSuccess,
+          colorTextDisabled: '#BFBFBF',
+          colorBgContainerDisabled: '#F1F2F5',
         },
       }}
     >

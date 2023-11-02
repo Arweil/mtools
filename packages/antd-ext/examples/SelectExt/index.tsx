@@ -149,6 +149,9 @@ export default function App() {
               }}
             />
           </Form.Item>
+          <Form.Item name={['form1', 'labelInsideValueE']}>
+            <SelectOutLineExt label="禁用" disabled placeholder="请选择" />
+          </Form.Item>
           <Form.Item>
             <ButtonExt onClick={() => alert(JSON.stringify(form1.getFieldsValue()))}>
               GetFieldsValue
@@ -161,6 +164,9 @@ export default function App() {
         <Form form={form2} layout={layout} {...formItemLayoutB}>
           <Form.Item label="SelectExt无选项" name={['form2', 'valueA1']}>
             <SelectExt placeholder="请选择" />
+          </Form.Item>
+          <Form.Item label="禁用" name={['form2', 'valueA1']}>
+            <SelectExt disabled placeholder="请选择" />
           </Form.Item>
           <ConfigProviderExt locale={locale.en_US}>
             <Form.Item label="SelectExt No Option" name={['form2', 'valueA1-1']}>

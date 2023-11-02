@@ -69,6 +69,15 @@ export default function App() {
               precision={6}
             />
           </Form.Item>
+          <Form.Item name={['form1', 'labelInsideValueD']}>
+            <ProInputNumberOutLine
+              label="禁用"
+              disabled
+              placeholder="请输入文本"
+              needThousandths
+              precision={6}
+            />
+          </Form.Item>
           <Form.Item>
             <ButtonExt onClick={() => alert(JSON.stringify(form1.getFieldsValue()))}>
               GetFieldsValue
@@ -98,6 +107,15 @@ export default function App() {
             rules={[{ required: true }]}
           >
             <ProInputNumber theme="hermes" placeholder="请输入" needThousandths precision={2} />
+          </Form.Item>
+          <Form.Item label="禁用" name={['form2', 'valueD']}>
+            <ProInputNumber
+              theme="hermes"
+              disabled
+              placeholder="请输入"
+              needThousandths
+              precision={2}
+            />
           </Form.Item>
           <Form.Item>
             <ButtonExt onClick={() => alert(JSON.stringify(form2.getFieldsValue()))}>

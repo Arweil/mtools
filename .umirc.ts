@@ -3,7 +3,7 @@ import { defineConfig } from 'dumi';
 import { resolve } from 'path';
 
 export default defineConfig({
-  title: 'm-tools',
+  title: 'NW-WOW',
   mode: 'site',
   exportStatic: {},
   base: '/mtools',

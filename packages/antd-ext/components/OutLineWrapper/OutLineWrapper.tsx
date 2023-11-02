@@ -4,9 +4,11 @@ import { Row, Col } from 'antd';
 import { css } from '@emotion/css';
 import { usePrefixCls } from '../utils';
 import type { GlobalToken } from 'antd';
+import classNames from 'classnames';
 
 export interface OutLineWrapperProps {
   label: string;
+  disabled?: boolean;
   children?: React.ReactNode;
   ref?: React.MutableRefObject<HTMLDivElement>;
   injectStyle?: (prefixCls: string, mtPrefixCls: string, token: GlobalToken) => string;
@@ -40,12 +42,16 @@ const style = (
     }
   }
 
-  &:focus-within {
+  &:focus-within:not(.${mtPrefixCls}-outline-disabled) {
     border: 1px solid #2d64e5;
   }
 
-  &:hover {
+  &:hover:not(.${mtPrefixCls}-outline-disabled) {
     border: 1px solid #477eff;
+  }
+
+  &.${mtPrefixCls}-outline-disabled {
+    background-color: #f1f2f5;
   }
 
   ${injectStyle ? injectStyle(prefixCls, mtPrefixCls, token) : ''}
@@ -53,7 +59,7 @@ const style = (
 
 const OutLineWrapper = React.forwardRef(
   (props: OutLineWrapperProps, ref: React.RefObject<HTMLDivElement>) => {
-    const { label, children, injectStyle } = props;
+    const { label, children, disabled, injectStyle } = props;
     const { token, prefixCls, mtPrefixCls } = usePrefixCls();
     const customClassName = useMemo(
       () => style(prefixCls, mtPrefixCls, token, injectStyle),
@@ -61,7 +67,13 @@ const OutLineWrapper = React.forwardRef(
     );
 
     return (
-      <Row className={customClassName} ref={ref}>
+      <Row
+        className={classNames([
+          customClassName,
+          disabled ? `${mtPrefixCls}-outline-disabled` : undefined,
+        ])}
+        ref={ref}
+      >
         <Col className={`${prefixCls}-form-item-label`}>
           <label>{label}</label>
         </Col>

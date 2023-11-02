@@ -2,6 +2,7 @@ import React from 'react';
 import { ConfigProvider } from 'antd';
 import { css } from '@emotion/css';
 import type { GlobalToken } from 'antd';
+import { colorGreyL1, colorPrimaryL3 } from '../theme/hermes';
 
 export interface ThemeProps {
   children: React.ReactNode;
@@ -16,7 +17,11 @@ export function ThemeHermesWithInputOutLineExt(props: ThemeProps) {
 
 export const customStyleWithInputExt = (token: GlobalToken, prefixCls: string) => css`
   &:focus {
-    border-color: #2d64e5;
+    border-color: ${colorPrimaryL3};
+  }
+
+  &.${prefixCls}-input-disabled {
+    border-color: ${colorGreyL1};
   }
 `;
 
@@ -33,6 +38,8 @@ export function ThemeHermesWithInputExt(props: ThemeProps) {
           colorWarningBorderHover: '#F9AD13',
           colorSuccess: '#05BD80',
           colorSuccessBorderHover: '#05BD80',
+          colorTextDisabled: '#BFBFBF',
+          colorBgContainerDisabled: '#F1F2F5',
         },
       }}
     >

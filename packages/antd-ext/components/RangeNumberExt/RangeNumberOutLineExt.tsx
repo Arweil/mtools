@@ -18,7 +18,7 @@ export interface RangeNumberOutLineExtProps extends OutLineWrapperProps, RangeNu
 export default function RangeNumberOutLineExt(props: RangeNumberOutLineExtProps) {
   const { label, ...restProps } = props;
   return (
-    <OutLineWrapper label={label} injectStyle={style}>
+    <OutLineWrapper label={label} injectStyle={style} disabled={restProps.disabled}>
       <RangeNumberExt {...restProps} bordered={false} />
     </OutLineWrapper>
   );

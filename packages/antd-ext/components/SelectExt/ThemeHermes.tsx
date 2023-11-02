@@ -45,6 +45,8 @@ export function ThemeHermes(props: ThemeSelectExtProps) {
           borderRadiusSM: 2,
           colorFillSecondary: colorGreyL4,
           colorSplit: colorGreyL4,
+          colorTextDisabled: '#BFBFBF',
+          colorBgContainerDisabled: '#F1F2F5',
         },
       }}
     >
