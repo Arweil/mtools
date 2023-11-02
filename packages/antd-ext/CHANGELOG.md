@@ -1,6 +1,6 @@
 ## 0.7.0-alpha.0
 1. 新增了 RadioGroupExt
-2. 修复了 OutLine 组件 disabled 样式确实的问题。
+2. 修复了 OutLine 组件 disabled 样式缺失的问题。
 
 ## 0.6.5-alpha.0
 1. 修复了 layoutExt 使用 ConfigProvider 修改变量造成的污染
