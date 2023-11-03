@@ -28,7 +28,7 @@ function mergeBooleanVal(defaultVal, newVal) {
 
 const appDirectory = fs.realpathSync(process.cwd());
 
-const resolveApp = relativePath => path.posix.resolve(appDirectory, relativePath);
+const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 
 function portInUse(port) {
   return new Promise((resolve, reject) => {

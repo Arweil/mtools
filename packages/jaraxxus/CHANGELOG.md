@@ -1,3 +1,6 @@
+## v4.2.1
+1. 修正了 windows 操作系统解析路径的问题
+
 ## v4.2.0
 1. 新增了 @svgr/webpack 用来处理 svg
 2. @pmmmwh/react-refresh-webpack-plugin 插件新增了 overlay: false 以防止开发过程中reject弹窗提示
