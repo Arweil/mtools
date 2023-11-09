@@ -1,9 +1,12 @@
 import React, { useMemo } from 'react';
-import { Theme } from '../ConfigProviderExt/context';
-import TableExt from './TableExt';
+import type { Theme } from '../ConfigProviderExt/context';
+import TableExt, { SkeletonItem } from './TableExt';
 import { Theme as ThemeHermes, customStyle as customStyleHermes } from './ThemeHermes';
 import type { TableExtProps } from './TableExt';
 import useMapTheme from '../utils/useMapTheme';
+import { Table } from 'antd';
+
+const { Summary } = Table;
 
 export interface TableExtMixinProps extends TableExtProps {
   theme?: Theme;
@@ -68,3 +71,7 @@ export default function Mixin(props: TableExtMixinProps) {
     </ThemeWrapper>
   );
 }
+
+Mixin.Summary = Summary;
+
+Mixin.SkeletonItem = SkeletonItem;

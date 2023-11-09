@@ -1,3 +1,5 @@
+// import type { ThemeConfig } from "antd";
+
 export const colorPrimaryL1 = '#3370FF';
 export const colorPrimaryL2 = '#477EFF';
 export const colorPrimaryL3 = '#2D64E5';
@@ -24,3 +26,18 @@ export const colorGreyL4 = '#F1F3FB';
 export const colorGreyL5 = '#F2F3F5';
 export const colorGreyL6 = '#FAFAFD';
 export const colorGreyL7 = '#F8F9FD';
+
+// export const theme: ThemeConfig = {
+//   components: {
+//     Button: {
+//       borderRadius: 4,
+//       // primary
+//       colorPrimary: colorPrimaryL1,
+//       colorPrimaryHover: colorPrimaryL2,
+//       colorPrimaryActive: colorPrimaryL3,
+//       // default
+//       colorBorder: colorGreyL1,
+//       colorText: colorBlackL1,
+//     },
+//   }
+// }

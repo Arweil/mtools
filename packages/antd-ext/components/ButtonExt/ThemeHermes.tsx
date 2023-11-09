@@ -3,7 +3,7 @@ import { ConfigProvider } from 'antd';
 import { css } from '@emotion/css';
 import type { GlobalToken } from 'antd/es/theme/interface';
 import type { ThemeColor } from '../theme/type';
-import { ThemeProps } from '../utils/useMapTheme';
+import type { ThemeProps } from '../utils/useMapTheme';
 
 export const customStyle = (
   token: GlobalToken,

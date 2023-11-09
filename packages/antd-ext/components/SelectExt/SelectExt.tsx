@@ -1,23 +1,103 @@
-import React, { useCallback, useMemo } from 'react';
-import { Select, Typography } from 'antd';
-import type { SelectProps, TooltipProps } from 'antd';
+import React, { useCallback, useContext, useMemo } from 'react';
+import { ConfigProvider, Select, Typography, theme } from 'antd';
+import type { GlobalToken, SelectProps, TooltipProps } from 'antd';
 import { css } from '@emotion/css';
 import classNames from 'classnames';
 import type { BaseOptionType, DefaultOptionType } from 'antd/es/select';
 import NotFoundContent from '../NotFoundContent';
+import { mtPrefixCls } from '../utils/config';
 
-const popup = css`
+const { useToken } = theme;
+
+const popup = (token: GlobalToken, prefixCls: string) => css`
   min-height: 148px;
+
+  .${mtPrefixCls}-select-item-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  .${mtPrefixCls}-select-checkbox {
+    margin-inline-end: ${token.marginXS}px;
+  }
+
+  .${prefixCls}-select-item-option-selected {
+    .${mtPrefixCls}-select-checkbox-inner {
+      background-color: ${token.colorPrimary};
+      border-color: ${token.colorPrimary};
+
+      &::after {
+        position: absolute;
+        top: 50%;
+        display: block;
+        box-sizing: border-box;
+        width: ${(token.controlInteractiveSize / 14) * 5}px;
+        height: ${(token.controlInteractiveSize / 14) * 8}px;
+        border: ${token.lineWidthBold}px solid ${token.colorWhite};
+        border-top: 0;
+        transform: rotate(45deg) scale(1) translate(-50%, -50%);
+        content: '';
+        border-inline-start: 0;
+        inset-inline-start: 21.5%;
+      }
+    }
+  }
+
+  .${prefixCls}-select-item-option-disabled {
+    .${mtPrefixCls}-select-checkbox-inner {
+      background: ${token.colorBgContainerDisabled};
+      border-color: ${token.colorBorder};
+
+      &::after {
+        border-color: ${token.colorTextDisabled};
+      }
+    }
+  }
+
+  .${mtPrefixCls}-select-checkbox-inner {
+    position: relative;
+    display: block;
+    width: ${token.controlInteractiveSize}px;
+    height: ${token.controlInteractiveSize}px;
+    background-color: ${token.colorBgContainer};
+    border: ${token.lineWidth}px solid ${token.colorBorder};
+    border-radius: ${token.borderRadiusSM}px;
+
+    &:hover {
+      border-color: ${token.colorPrimary};
+    }
+  }
+
+  .${mtPrefixCls}-select-content {
+    overflow: hidden;
+  }
 `;
 
 export interface SelectItemWrapperProps {
   children?: React.ReactNode;
   disabled?: boolean;
   tooltip?: TooltipProps;
+  multiple: boolean;
 }
 
-export function SelectItemWrapper(props: SelectItemWrapperProps): JSX.Element {
-  const { children, disabled, tooltip } = props;
+export function SelectItemWrapperWithComp(props: SelectItemWrapperProps): JSX.Element {
+  const { children, multiple } = props;
+
+  return multiple ? (
+    <div className={`${mtPrefixCls}-select-item-wrapper`}>
+      <span className={classNames(`${mtPrefixCls}-select-checkbox`)}>
+        <span className={`${mtPrefixCls}-select-checkbox-inner`} />
+      </span>
+      <div className={`${mtPrefixCls}-select-content`}>{children}</div>
+    </div>
+  ) : (
+    <>{children}</>
+  );
+}
+
+export function SelectItemContent(props: Omit<SelectItemWrapperProps, 'multiple'>) {
+  const { disabled, children, tooltip } = props;
+
   return (
     <Typography.Paragraph
       disabled={disabled}
@@ -36,6 +116,26 @@ export function SelectItemWrapper(props: SelectItemWrapperProps): JSX.Element {
   );
 }
 
+export function SelectItemWrapper(props: SelectItemWrapperProps): JSX.Element {
+  const { children, disabled, tooltip, multiple } = props;
+
+  if (multiple) {
+    return (
+      <SelectItemWrapperWithComp multiple={multiple}>
+        <SelectItemContent disabled={disabled} tooltip={tooltip}>
+          {children}
+        </SelectItemContent>
+      </SelectItemWrapperWithComp>
+    );
+  }
+
+  return (
+    <SelectItemContent disabled={disabled} tooltip={tooltip}>
+      {children}
+    </SelectItemContent>
+  );
+}
+
 export type DefaultOptionExtType = Partial<DefaultOptionType> & {
   relLabel?: React.ReactNode;
 };
@@ -46,6 +146,7 @@ export interface SelectExtProps<
 > extends SelectProps<ValueType, OptionType> {
   dataMap?: Record<string | number, React.ReactNode>;
   tooltip?: TooltipProps;
+  multipleCheckbox?: boolean;
 }
 
 export default function SelectExt<ValueType = any>(props: SelectExtProps) {
@@ -58,8 +159,17 @@ export default function SelectExt<ValueType = any>(props: SelectExtProps) {
     style,
     listHeight,
     fieldNames,
+    multipleCheckbox,
     ...restProps
   } = props;
+
+  const { getPrefixCls } = useContext(ConfigProvider.ConfigContext);
+
+  const { token } = useToken();
+
+  const useOptionCheckbox = useMemo(() => {
+    return (props.mode === 'multiple' || props.mode === 'tags') && multipleCheckbox;
+  }, [props.mode, multipleCheckbox]);
 
   const formattedOptions = useMemo(() => {
     if (options && options.length > 0) {
@@ -67,13 +177,21 @@ export default function SelectExt<ValueType = any>(props: SelectExtProps) {
 
       return options.map(item => ({
         ...item,
-        [mapLabelName]: React.isValidElement(item[mapLabelName])
-          ? item[mapLabelName]
-          : ((
-              <SelectItemWrapper tooltip={tooltip} disabled={item.disabled}>
-                {item[mapLabelName]}
-              </SelectItemWrapper>
-            ) as React.ReactNode),
+        [mapLabelName]: React.isValidElement(item[mapLabelName]) ? (
+          <SelectItemWrapperWithComp multiple={useOptionCheckbox}>
+            {item[mapLabelName]}
+          </SelectItemWrapperWithComp>
+        ) : (
+          ((
+            <SelectItemWrapper
+              tooltip={tooltip}
+              disabled={item.disabled}
+              multiple={useOptionCheckbox}
+            >
+              {item[mapLabelName]}
+            </SelectItemWrapper>
+          ) as React.ReactNode)
+        ),
         relLabel: item[mapLabelName],
       }));
     }
@@ -83,18 +201,24 @@ export default function SelectExt<ValueType = any>(props: SelectExtProps) {
       if (dataMapKeys.length > 0) {
         return dataMapKeys.map(item => ({
           value: item,
-          label: React.isValidElement(dataMap[item])
-            ? dataMap[item]
-            : ((
-                <SelectItemWrapper tooltip={tooltip}>{dataMap[item]}</SelectItemWrapper>
-              ) as React.ReactNode),
+          label: React.isValidElement(dataMap[item]) ? (
+            <SelectItemWrapperWithComp multiple={useOptionCheckbox}>
+              dataMap[item]
+            </SelectItemWrapperWithComp>
+          ) : (
+            ((
+              <SelectItemWrapper tooltip={tooltip} multiple={useOptionCheckbox}>
+                {dataMap[item]}
+              </SelectItemWrapper>
+            ) as React.ReactNode)
+          ),
           relLabel: dataMap[item],
         }));
       }
     }
 
     return undefined;
-  }, [options, dataMap, fieldNames, tooltip]);
+  }, [options, dataMap, fieldNames, tooltip, useOptionCheckbox]);
 
   const filterOption = useCallback((inputValue: string, option: DefaultOptionExtType) => {
     if (Object.prototype.toString.call(option.relLabel) === '[object String]') {
@@ -110,8 +234,8 @@ export default function SelectExt<ValueType = any>(props: SelectExtProps) {
   }, []);
 
   const formattedPopupClassName = useMemo(
-    () => classNames(popupClassName, popup),
-    [popupClassName],
+    () => classNames(popupClassName, popup(token, getPrefixCls())),
+    [popupClassName, token, getPrefixCls],
   );
 
   const formattedListHeight = useMemo(
@@ -132,6 +256,7 @@ export default function SelectExt<ValueType = any>(props: SelectExtProps) {
       listHeight={formattedListHeight}
       fieldNames={fieldNames}
       {...restProps}
+      menuItemSelectedIcon={useOptionCheckbox ? null : props.menuItemSelectedIcon}
     >
       {children}
     </Select>

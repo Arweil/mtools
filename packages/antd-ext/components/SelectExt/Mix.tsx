@@ -1,14 +1,15 @@
 import React, { useMemo } from 'react';
 import useMapTheme from '../utils/useMapTheme';
 import {
-  customStyleWithSelectExt,
+  // customStyleWithSelectExt,
   // customStyleWithPopup,
   ThemeHermes,
 } from './ThemeHermes';
 import type { Theme } from '../ConfigProviderExt/context';
 import type { SelectExtProps } from './SelectExt';
 import type { TooltipProps, GlobalToken } from 'antd';
-import SelectOutLineExt, { SelectOutLineExtProps } from './SelectOutLineExt';
+import type { SelectOutLineExtProps } from './SelectOutLineExt';
+import SelectOutLineExt from './SelectOutLineExt';
 import SelectExt from './SelectExt';
 import c from 'classnames';
 
@@ -32,7 +33,7 @@ export function useSelectTooltipStyle(data: {
         zeus: {},
         default: {},
       }[theme || globalTheme]),
-    [theme, globalTheme],
+    [theme, globalTheme, tooltip],
   );
 
   return tooltipStyle;
@@ -45,18 +46,18 @@ export function useSelectExtPopupStyle(data: {
   theme?: Theme;
   globalTheme: Theme;
 }) {
-  const { token, prefix, popupClassName, theme, globalTheme } = data;
+  const { popupClassName, theme, globalTheme } = data;
   const popupStyle = useMemo(
     () =>
       ({
         hermes: c(
           popupClassName,
-          // customStyleWithPopup(token, prefix)
+          // customStyleWithPopup(token, prefix),
         ),
         zeus: '',
         default: '',
       }[theme || globalTheme]),
-    [theme, globalTheme],
+    [theme, globalTheme, popupClassName],
   );
 
   return popupStyle;
@@ -82,7 +83,7 @@ export function MixinSelectExt(props: SelectExtMixinProps) {
       hermes: ThemeHermes,
     },
     emotioncss: {
-      hermes: customStyleWithSelectExt,
+      // hermes: customStyleWithSelectExt,
     },
   });
 
@@ -107,6 +108,7 @@ export function MixinSelectExt(props: SelectExtMixinProps) {
         {...restProps}
         popupClassName={popupStyle}
         className={classes}
+        multipleCheckbox={customTheme === 'hermes' || globalTheme === 'hermes'}
       />
     </ThemeWrapper>
   );
@@ -132,7 +134,7 @@ export function MixinSelectOutLineExt(props: MixinSelectOutLineExtProps) {
       hermes: ThemeHermes,
     },
     emotioncss: {
-      hermes: customStyleWithSelectExt,
+      // hermes: customStyleWithSelectExt,
     },
   });
 
@@ -157,6 +159,7 @@ export function MixinSelectOutLineExt(props: MixinSelectOutLineExtProps) {
         {...restProps}
         popupClassName={popupStyle}
         className={classes}
+        multipleCheckbox={customTheme === 'hermes' || globalTheme === 'hermes'}
       />
     </ThemeWrapper>
   );

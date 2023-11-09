@@ -28,12 +28,13 @@ export interface ColumnGroupTypeExt<RecordType>
 export type ColumnsTypeExt<RecordType> = ColumnGroupTypeExt<RecordType> | ColumnTypeExt<RecordType>;
 
 export interface TableExtProps<RecordType extends { $$mock?: boolean } = any>
-  extends TableProps<RecordType> {
+  extends Omit<TableProps<RecordType>, 'summary'> {
   columns?: ColumnsTypeExt<RecordType>[];
   tdTooltip?: TooltipProps;
   emptyDesc?: string;
   useSkeleton?: boolean;
   useEmpty?: boolean;
+  summary?: (data: readonly RecordType[], fetching: boolean) => React.ReactNode;
 }
 
 export interface OperateBtnGroupProps {
@@ -81,6 +82,10 @@ function forEachTree<T>(
   return copyTree;
 }
 
+export function SkeletonItem() {
+  return <Skeleton.Input block style={{ minWidth: 'initial', height: 22 }} />;
+}
+
 export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
   props: TableExtProps<RecordType>,
 ) {
@@ -94,6 +99,7 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
     useEmpty = false,
     pagination,
     rowSelection,
+    summary,
     ...restProps
   } = props;
 
@@ -174,11 +180,6 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
     }
   }, [curLoadingState, hasData, hasLoadedData, useSkeleton]);
 
-  const SkeletonItem = useMemo(
-    () => <Skeleton.Input block style={{ minWidth: 'initial', height: 22 }} />,
-    [],
-  );
-
   const formattedCols = useMemo(() => {
     if (!columns || columns.length === 0) {
       return columns;
@@ -188,11 +189,11 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
     columns.forEach((item: ColumnsTypeExt<RecordType>) => {
       const c = forEachTree(item as ColumnGroupTypeExt<RecordType>, i => {
         const { useDefaultRender = true, render } = i;
-        i.title = fetching ? SkeletonItem : i.title;
+        i.title = fetching ? <SkeletonItem /> : i.title;
         i.render = useDefaultRender
           ? (value, record, index) => {
               if (fetching) {
-                return SkeletonItem;
+                return <SkeletonItem />;
               }
 
               if (render) {
@@ -276,9 +277,10 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
         pagination={pager}
         rowSelection={
           fetching && rowSelection
-            ? { renderCell: () => SkeletonItem, columnTitle: SkeletonItem, ...rowSelection }
+            ? { renderCell: SkeletonItem, columnTitle: <SkeletonItem />, ...rowSelection }
             : rowSelection
         }
+        summary={summary ? currentData => summary(currentData, fetching) : undefined}
         {...restProps}
       />
     );
