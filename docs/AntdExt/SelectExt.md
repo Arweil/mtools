@@ -9,6 +9,12 @@ toc: menu
 ## 示例
 <code src="../../packages/antd-ext/examples/SelectExt"></code>
 
+在原有的Select基础上拓展了如下属性：
+| 属性 | 说明 | 类型 | 默认值 | 版本 |
+| --- | --- | --- | --- | --- |
+| dataMap | 数据绑定 | Record<string \| number, React.ReactNode> | undefined | 0.0.6-alpha.0 |
+| multipleCheckbox | 多选时是否使用checkbox样式 | boolean | undefined | 0.7.0 |
+
 ## 逻辑拓展
 基于 ant-design 的 Select 组件，修改了：
 1. 重新设置了为空状态，通过 *notFoundContent* 属性

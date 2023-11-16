@@ -33,6 +33,8 @@ export default function DrawerExt(props: DrawerExtProps) {
 
   const { prefixCls, mtPrefixCls } = usePrefixCls();
 
+  console.log(okButtonProps, cancelButtonProps);
+
   return (
     <Drawer
       footer={

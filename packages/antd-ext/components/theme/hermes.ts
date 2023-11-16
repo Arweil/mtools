@@ -24,3 +24,5 @@ export const colorGreyL4 = '#F1F3FB';
 export const colorGreyL5 = '#F2F3F5';
 export const colorGreyL6 = '#FAFAFD';
 export const colorGreyL7 = '#F8F9FD';
+
+export const colorWhite = '#FFFFFF';

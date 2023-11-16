@@ -1,23 +1,19 @@
 import React, { useMemo } from 'react';
 import useMapTheme from '../utils/useMapTheme';
-import {
-  customStyleWithSelectExt,
-  // customStyleWithPopup,
-  ThemeHermes,
-} from './ThemeHermes';
+import // customStyleWithSelectExt,
+// customStyleWithPopup,
+'./ThemeHermes';
 import type { Theme } from '../ConfigProviderExt/context';
 import type { SelectExtProps } from './SelectExt';
 import type { TooltipProps, GlobalToken } from 'antd';
-import SelectOutLineExt, { SelectOutLineExtProps } from './SelectOutLineExt';
+import type { SelectOutLineExtProps } from './SelectOutLineExt';
+import SelectOutLineExt from './SelectOutLineExt';
 import SelectExt from './SelectExt';
 import c from 'classnames';
+import ThemeWrapper from '../theme/ThemeWrapper';
 
-export function useSelectTooltipStyle(data: {
-  theme?: Theme;
-  globalTheme: Theme;
-  tooltip?: TooltipProps;
-}) {
-  const { theme, globalTheme, tooltip } = data;
+export function useSelectTooltipStyle(data: { theme?: Theme; tooltip?: TooltipProps }) {
+  const { theme, tooltip } = data;
 
   // tooltip 默认样式
   const tooltipStyle = useMemo(
@@ -31,8 +27,8 @@ export function useSelectTooltipStyle(data: {
         },
         zeus: {},
         default: {},
-      }[theme || globalTheme]),
-    [theme, globalTheme],
+      }[theme]),
+    [theme, tooltip],
   );
 
   return tooltipStyle;
@@ -43,20 +39,19 @@ export function useSelectExtPopupStyle(data: {
   prefix: string;
   popupClassName?: string;
   theme?: Theme;
-  globalTheme: Theme;
 }) {
-  const { token, prefix, popupClassName, theme, globalTheme } = data;
+  const { popupClassName, theme } = data;
   const popupStyle = useMemo(
     () =>
       ({
         hermes: c(
           popupClassName,
-          // customStyleWithPopup(token, prefix)
+          // customStyleWithPopup(token, prefix),
         ),
         zeus: '',
         default: '',
-      }[theme || globalTheme]),
-    [theme, globalTheme],
+      }[theme]),
+    [theme, popupClassName],
   );
 
   return popupStyle;
@@ -70,25 +65,20 @@ export function MixinSelectExt(props: SelectExtMixinProps) {
   const { className, theme, tooltip, popupClassName, ...restProps } = props;
   const {
     classes,
-    ThemeWrapper,
+    themeConfig,
     theme: customTheme,
-    globalTheme,
     token,
     prefix,
   } = useMapTheme({
     className,
     theme,
-    themeWrap: {
-      hermes: ThemeHermes,
-    },
     emotioncss: {
-      hermes: customStyleWithSelectExt,
+      // hermes: customStyleWithSelectExt,
     },
   });
 
   const tooltipStyle = useSelectTooltipStyle({
     theme: customTheme,
-    globalTheme,
     tooltip,
   });
 
@@ -97,16 +87,16 @@ export function MixinSelectExt(props: SelectExtMixinProps) {
     prefix,
     popupClassName,
     theme: customTheme,
-    globalTheme,
   });
 
   return (
-    <ThemeWrapper>
+    <ThemeWrapper theme={themeConfig} type="Select">
       <SelectExt
         tooltip={tooltipStyle}
         {...restProps}
         popupClassName={popupStyle}
         className={classes}
+        multipleCheckbox={customTheme === 'hermes'}
       />
     </ThemeWrapper>
   );
@@ -120,25 +110,20 @@ export function MixinSelectOutLineExt(props: MixinSelectOutLineExtProps) {
   const { className, theme, tooltip, popupClassName, ...restProps } = props;
   const {
     classes,
-    ThemeWrapper,
     theme: customTheme,
-    globalTheme,
+    themeConfig,
     token,
     prefix,
   } = useMapTheme({
     className,
     theme,
-    themeWrap: {
-      hermes: ThemeHermes,
-    },
     emotioncss: {
-      hermes: customStyleWithSelectExt,
+      // hermes: customStyleWithSelectExt,
     },
   });
 
   const tooltipStyle = useSelectTooltipStyle({
     theme: customTheme,
-    globalTheme,
     tooltip,
   });
 
@@ -147,16 +132,16 @@ export function MixinSelectOutLineExt(props: MixinSelectOutLineExtProps) {
     prefix,
     popupClassName,
     theme: customTheme,
-    globalTheme,
   });
 
   return (
-    <ThemeWrapper>
+    <ThemeWrapper theme={themeConfig} type="Select">
       <SelectOutLineExt
         tooltip={tooltipStyle}
         {...restProps}
         popupClassName={popupStyle}
         className={classes}
+        multipleCheckbox={customTheme === 'hermes'}
       />
     </ThemeWrapper>
   );

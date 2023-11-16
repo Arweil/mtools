@@ -36,7 +36,7 @@ export default function App() {
   const labelReactNodeData = [
     {
       en: 'China',
-      cn: '中国',
+      cn: '中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国中国',
       icon: '🇨🇳',
     },
     {
@@ -109,7 +109,11 @@ export default function App() {
               options={[
                 { renameLabel: 'ItemA', renameValue: 'ItemA' },
                 { renameLabel: 'ItemB', renameValue: 'ItemB' },
-                { renameLabel: 'ItemC', renameValue: 'ItemC' },
+                {
+                  renameLabel:
+                    'ItemCItemCItemCItemCItemCItemCItemCItemCItemCItemCItemCItemCItemCItemCItemCItemCItemCItemCItemCItemCItemCItemCItemCItemCItemCItemCItemCItemCItemCItemCItemCItemCItemCItemC',
+                  renameValue: 'ItemC',
+                },
                 { renameLabel: 'ItemD', renameValue: 'ItemD' },
               ]}
               fieldNames={{
@@ -124,11 +128,12 @@ export default function App() {
               placeholder="请选择"
               mode="multiple"
               showSearch
+              defaultValue={['ItemD']}
               options={[
                 { renameLabel: 'ItemA', renameValue: 'ItemA' },
                 { renameLabel: 'ItemB', renameValue: 'ItemB' },
-                { renameLabel: 'ItemC', renameValue: 'ItemC' },
-                { renameLabel: 'ItemD', renameValue: 'ItemD' },
+                { renameLabel: 'ItemC', renameValue: 'ItemC', disabled: true },
+                { renameLabel: 'ItemD', renameValue: 'ItemD', disabled: true },
                 { renameLabel: 'ItemE', renameValue: 'ItemE' },
                 { renameLabel: 'ItemF', renameValue: 'ItemF' },
                 { renameLabel: 'ItemG', renameValue: 'ItemG' },
@@ -170,10 +175,7 @@ export default function App() {
           </Form.Item>
           <ConfigProviderExt locale={locale.en_US}>
             <Form.Item label="SelectExt No Option" name={['form2', 'valueA1-1']}>
-              <SelectExt
-                placeholder="Please Select"
-                options={[{ label: 'ItemA', value: 'ItemA' }]}
-              />
+              <SelectExt placeholder="Please Select" />
             </Form.Item>
           </ConfigProviderExt>
 
@@ -251,7 +253,7 @@ export default function App() {
               }
             />
           </Form.Item>
-          <Form.Item label="LabelNumber" name={['form2', 'valueA7']}>
+          <Form.Item label="LabelNumber" name={['form2', 'valueA8']}>
             <SelectExt
               placeholder="请选择"
               showSearch

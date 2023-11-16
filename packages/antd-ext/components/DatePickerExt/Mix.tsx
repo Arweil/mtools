@@ -1,10 +1,11 @@
 import React, { useMemo } from 'react';
 import { DatePicker } from 'antd';
 import type { DatePickerProps } from 'antd';
-import ThemeHermesWithDatePicker, { customPopupStyle } from './ThemeHermes';
+import { customPopupStyle } from './ThemeHermes';
 import classNames from 'classnames';
 import type { Theme } from '../ConfigProviderExt/context';
 import { useMapTheme } from '../utils';
+import ThemeWrapper from '../theme/ThemeWrapper';
 import type {
   RangePickerProps,
   QuarterPicker,
@@ -23,24 +24,25 @@ export type MixinHOCProps = (DatePickerProps | RangePickerProps | QuarterPicker)
 
 export function MixHOC(props: MixinHOCProps) {
   const { className, theme, popupClassName, children } = props;
-  const { classes, ThemeWrapper, token, prefix, globalTheme } = useMapTheme({
+  const { classes, themeConfig, token, prefix, tokenExt } = useMapTheme({
     className,
     theme,
-    themeWrap: {
-      hermes: ThemeHermesWithDatePicker,
-    },
     emotioncss: {},
   });
 
   const _popupClassName = useMemo(() => {
     return {
-      hermes: classNames(customPopupStyle(token, prefix), popupClassName),
+      hermes: classNames(customPopupStyle(token, prefix, tokenExt), popupClassName),
       zeus: popupClassName,
       default: popupClassName,
-    }[theme || globalTheme];
-  }, [token, prefix, theme, globalTheme, popupClassName]);
+    }[theme];
+  }, [token, prefix, theme, popupClassName, tokenExt]);
 
-  return <ThemeWrapper>{children(classes, _popupClassName)}</ThemeWrapper>;
+  return (
+    <ThemeWrapper theme={themeConfig} type="DatePicker">
+      {children(classes, _popupClassName)}
+    </ThemeWrapper>
+  );
 }
 
 export type MixinDatePickerExtProps = DatePickerProps & {

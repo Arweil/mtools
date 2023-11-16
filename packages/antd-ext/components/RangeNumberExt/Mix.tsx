@@ -1,15 +1,12 @@
 import React from 'react';
-import { Theme } from '../ConfigProviderExt/context';
+import type { Theme } from '../ConfigProviderExt/context';
 import useMapTheme from '../utils/useMapTheme';
 import type { RangeNumberExtProps } from './RangeNumberExt';
 import RangeNumberExt from './RangeNumberExt';
-import RangeNumberOutLineExt, { RangeNumberOutLineExtProps } from './RangeNumberOutLineExt';
-import {
-  ThemeHermesWithRangeNumberExt,
-  customStyleWithRangeNumberExt,
-  ThemeHermesWithRangeNumberOutLineExt,
-  customStyleWithRangeNumberOutLineExt,
-} from './ThemeHermes';
+import type { RangeNumberOutLineExtProps } from './RangeNumberOutLineExt';
+import RangeNumberOutLineExt from './RangeNumberOutLineExt';
+import { customStyleWithRangeNumberExt, customStyleWithRangeNumberOutLineExt } from './ThemeHermes';
+import ThemeWrapper from '../theme/ThemeWrapper';
 
 export interface RangeNumberExtMixProps extends RangeNumberExtProps {
   theme?: Theme;
@@ -17,19 +14,16 @@ export interface RangeNumberExtMixProps extends RangeNumberExtProps {
 
 export function MixinRangeNumberExt(props: RangeNumberExtMixProps) {
   const { className, theme, ...restProps } = props;
-  const { classes, ThemeWrapper } = useMapTheme({
+  const { classes, themeConfig } = useMapTheme({
     className,
     theme,
-    themeWrap: {
-      hermes: ThemeHermesWithRangeNumberExt,
-    },
     emotioncss: {
       hermes: customStyleWithRangeNumberExt,
     },
   });
 
   return (
-    <ThemeWrapper>
+    <ThemeWrapper theme={themeConfig} type="InputNumber">
       <RangeNumberExt {...restProps} className={classes} />
     </ThemeWrapper>
   );
@@ -41,19 +35,16 @@ export interface RangeNumberOutLineExtMixProps extends RangeNumberOutLineExtProp
 
 export function MixinRangeNumberOutLineExt(props: RangeNumberOutLineExtMixProps) {
   const { className, theme, ...restProps } = props;
-  const { classes, ThemeWrapper } = useMapTheme({
+  const { classes, themeConfig } = useMapTheme({
     className,
     theme,
-    themeWrap: {
-      hermes: ThemeHermesWithRangeNumberOutLineExt,
-    },
     emotioncss: {
       hermes: customStyleWithRangeNumberOutLineExt,
     },
   });
 
   return (
-    <ThemeWrapper>
+    <ThemeWrapper theme={themeConfig} type="InputNumber">
       <RangeNumberOutLineExt {...restProps} className={classes} />
     </ThemeWrapper>
   );

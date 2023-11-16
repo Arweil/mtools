@@ -125,6 +125,20 @@ export default function TableExtFrontEnd(props: {
               }
             : undefined
         }
+        summary={(currentData, fetching) => {
+          return (
+            <>
+              <TableExt.Summary.Row>
+                <TableExt.Summary.Cell index={0}>
+                  {fetching ? <TableExt.SkeletonItem /> : 'Summary'}
+                </TableExt.Summary.Cell>
+                <TableExt.Summary.Cell colSpan={3} index={1}>
+                  {fetching ? <TableExt.SkeletonItem /> : 'This is a summary content'}
+                </TableExt.Summary.Cell>
+              </TableExt.Summary.Row>
+            </>
+          );
+        }}
       />
     </Card>
   );

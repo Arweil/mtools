@@ -1,6 +1,8 @@
-## 0.7.0-alpha.0
+## 0.7.0
 1. 新增了 RadioGroupExt
 2. 修复了 OutLine 组件 disabled 样式缺失的问题。
+3. 新增了 SelectExt 的 multipleCheckbox 多选样式，会在可以在选项前加 checkbox。
+4. 新增了 TableExt.Summary 和 TableExt.SkeletonItem 的导出。
 
 ## 0.6.5-alpha.0
 1. 修复了 layoutExt 使用 ConfigProvider 修改变量造成的污染

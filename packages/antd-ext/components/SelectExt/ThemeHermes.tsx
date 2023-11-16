@@ -8,23 +8,30 @@ import {
   colorSuccess,
   colorGreyL4,
 } from '../theme/hermes';
-import type { GlobalToken } from 'antd';
 
 export interface ThemeSelectExtProps {
   children: React.ReactNode;
 }
 
+// export const customStyleWithSelectExt = (token: GlobalToken, prefixCls: string) => css``;
+
 // TODO: 设置 margin 导致虚拟列表无法完全展示选项，目前未解决
 // export const customStyleWithPopup = (token: GlobalToken, prefixCls: string) => css`
 //   .${prefixCls}-select-item {
-//     margin-bottom: 4px;
-//     &:last-child {
-//       margin-bottom: 0px;
+//     display: flex;
+//     align-items: center;
+//     .${prefixCls}-select-item-option-content {
+//       flex: 1;
+//     }
+//     &::before {
+//       content: ' ';
+//       width: 16px;
+//       height: 16px;
+//       background: red;
+//       margin-inline-end: 8px;
 //     }
 //   }
 // `;
-
-export const customStyleWithSelectExt = (token: GlobalToken, prefixCls: string) => css``;
 
 export function ThemeHermes(props: ThemeSelectExtProps) {
   const { children } = props;

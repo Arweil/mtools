@@ -3,7 +3,7 @@ import { useMapTheme } from '../utils';
 import type { ProInputNumberProps } from './ProInputNumber';
 import ProInputNumber from './ProInputNumber';
 import type { Theme } from '../ConfigProviderExt/context';
-import { ThemeHermesWithProInputNumber } from './ThemeHermes';
+import ThemeWrapper from '../theme/ThemeWrapper';
 
 export interface ProInputNumberMixinProps extends ProInputNumberProps {
   theme?: Theme;
@@ -11,17 +11,14 @@ export interface ProInputNumberMixinProps extends ProInputNumberProps {
 
 export function MixinProInputNumber(props: ProInputNumberMixinProps) {
   const { className, theme, ...restProps } = props;
-  const { classes, ThemeWrapper } = useMapTheme({
+  const { classes, themeConfig } = useMapTheme({
     className,
     theme,
-    themeWrap: {
-      hermes: ThemeHermesWithProInputNumber,
-    },
     emotioncss: {},
   });
 
   return (
-    <ThemeWrapper>
+    <ThemeWrapper theme={themeConfig} type="Input">
       <ProInputNumber className={classes} {...restProps} />
     </ThemeWrapper>
   );

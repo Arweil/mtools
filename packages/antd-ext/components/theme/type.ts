@@ -25,4 +25,6 @@ export interface ThemeColor {
   colorGreyL5: string;
   colorGreyL6: string;
   colorGreyL7: string;
+
+  colorWhite: string;
 }
