@@ -1,17 +1,20 @@
 import type React from 'react';
-import { ConfigProvider } from 'antd';
 import { css } from '@emotion/css';
-import { colorBlackL1, colorBlackL4 } from '../theme/hermes';
 import type { GlobalToken } from 'antd';
 import { mtPrefixCls } from '../utils/config';
+import type { ThemeColor } from '../theme/type';
 
 export interface ThemeDrawerExtProps {
   children: React.ReactNode;
 }
 
-export const customStyle = (token: GlobalToken, prefixCls: string) => css`
+export const customStyle = (
+  token: GlobalToken,
+  prefixCls: string,
+  tokenExt: Partial<ThemeColor>,
+) => css`
   .${prefixCls}-${mtPrefixCls}-drawer-close {
-    color: ${colorBlackL4};
+    color: ${tokenExt.colorBlackL4};
     font-size: 14px;
   }
 
@@ -25,7 +28,7 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
     }
 
     .${prefixCls}-drawer-title {
-      color: ${colorBlackL1};
+      color: ${tokenExt.colorBlackL1};
       font-weight: 500;
     }
 

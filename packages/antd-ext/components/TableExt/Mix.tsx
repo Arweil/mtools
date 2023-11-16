@@ -1,10 +1,11 @@
 import React, { useMemo } from 'react';
 import type { Theme } from '../ConfigProviderExt/context';
 import TableExt, { SkeletonItem } from './TableExt';
-import { Theme as ThemeHermes, customStyle as customStyleHermes } from './ThemeHermes';
+import { customStyle as customStyleHermes } from './ThemeHermes';
 import type { TableExtProps } from './TableExt';
 import useMapTheme from '../utils/useMapTheme';
 import { Table } from 'antd';
+import ThemeWrapper from '../theme/ThemeWrapper';
 
 const { Summary } = Table;
 
@@ -14,12 +15,9 @@ export interface TableExtMixinProps extends TableExtProps {
 
 export default function Mixin(props: TableExtMixinProps) {
   const { className, theme: customTheme, rowSelection, ...restProps } = props;
-  const { classes, ThemeWrapper, globalTheme } = useMapTheme({
+  const { classes, themeConfig } = useMapTheme({
     className,
     theme: customTheme,
-    themeWrap: {
-      hermes: ThemeHermes,
-    },
     emotioncss: {
       hermes: customStyleHermes,
     },
@@ -36,8 +34,8 @@ export default function Mixin(props: TableExtMixinProps) {
         },
         zeus: {},
         default: {},
-      }[customTheme || globalTheme]),
-    [customTheme, globalTheme],
+      }[customTheme]),
+    [customTheme],
   );
 
   // rowSelection 默认样式
@@ -49,12 +47,12 @@ export default function Mixin(props: TableExtMixinProps) {
         },
         zeus: {},
         default: {},
-      }[customTheme || globalTheme]),
-    [customTheme, globalTheme],
+      }[customTheme]),
+    [customTheme],
   );
 
   return (
-    <ThemeWrapper>
+    <ThemeWrapper theme={themeConfig} type="Table">
       <TableExt
         tdTooltip={toolTipStyle}
         rowSelection={

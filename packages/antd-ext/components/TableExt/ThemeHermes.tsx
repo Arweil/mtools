@@ -1,36 +1,26 @@
-import React from 'react';
 import { css } from '@emotion/css';
 import type { GlobalToken } from 'antd/es/theme';
-import {
-  colorPrimaryL1,
-  colorBlackL1,
-  colorBlackL2,
-  colorGreyL1,
-  colorGreyL3,
-  colorBlackL3,
-  colorGreyL2,
-} from '../theme/hermes';
-import { ConfigProvider } from 'antd';
+import type { ThemeColor } from '../theme/type';
 
-export interface ThemeProps {
-  children: React.ReactNode;
-}
-
-export const customStyle = (token: GlobalToken, prefixCls: string) => css`
+export const customStyle = (
+  token: GlobalToken,
+  prefixCls: string,
+  tokenExt: Partial<ThemeColor>,
+) => css`
   &.${prefixCls}-table-wrapper {
     .${prefixCls}-table-thead {
       & > tr {
         & > th {
           padding: 10px 16px;
-          color: ${colorBlackL2};
+          color: ${tokenExt.colorBlackL2};
           font-weight: 500;
-          background: ${colorGreyL3};
+          background: ${tokenExt.colorGreyL3};
           &::before {
             display: none;
           }
 
           .${prefixCls}-skeleton.${prefixCls}-skeleton-element .${prefixCls}-skeleton-input {
-            background: ${colorGreyL2};
+            background: ${tokenExt.colorGreyL2};
             border-radius: 0;
           }
         }
@@ -41,10 +31,10 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
       & > tr {
         & > td {
           padding: 12px 16px;
-          color: ${colorBlackL1};
+          color: ${tokenExt.colorBlackL1};
 
           .${prefixCls}-skeleton.${prefixCls}-skeleton-element .${prefixCls}-skeleton-input {
-            background: ${colorGreyL3};
+            background: ${tokenExt.colorGreyL3};
             border-radius: 0;
           }
         }
@@ -55,7 +45,7 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
       .${prefixCls}-table-cell-fix-left-last {
         &::after {
           width: 1px;
-          background: ${colorGreyL2};
+          background: ${tokenExt.colorGreyL2};
           box-shadow: initial;
         }
       }
@@ -63,7 +53,7 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
         .${prefixCls}-table-container {
           &::before {
             width: 1px;
-            background: ${colorGreyL2};
+            background: ${tokenExt.colorGreyL2};
             box-shadow: initial;
           }
         }
@@ -74,7 +64,7 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
       .${prefixCls}-table-cell-fix-right-first {
         &::after {
           width: 1px;
-          background: ${colorGreyL2};
+          background: ${tokenExt.colorGreyL2};
           box-shadow: initial;
         }
       }
@@ -82,7 +72,7 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
         .${prefixCls}-table-container {
           &::after {
             width: 1px;
-            background: ${colorGreyL2};
+            background: ${tokenExt.colorGreyL2};
             box-shadow: initial;
           }
         }
@@ -91,57 +81,57 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
 
     a {
       &.${prefixCls}-typography {
-        color: ${colorPrimaryL1};
+        color: ${tokenExt.colorPrimaryL1};
         &.${prefixCls}-typography-disabled {
-          color: ${colorBlackL2};
+          color: ${tokenExt.colorBlackL2};
         }
       }
     }
 
     .${prefixCls}-typography {
-      color: ${colorBlackL1};
+      color: ${tokenExt.colorBlackL1};
     }
 
     .${prefixCls}-pagination {
-      color: ${colorBlackL1};
+      color: ${tokenExt.colorBlackL1};
       .${prefixCls}-pagination-item {
-        border: 1px solid ${colorGreyL1};
+        border: 1px solid ${tokenExt.colorGreyL1};
         border-radius: 3px;
         margin-inline-end: 4px;
         a {
-          color: ${colorBlackL1};
+          color: ${tokenExt.colorBlackL1};
         }
         &.${prefixCls}-pagination-item-active {
           font-weight: 400;
-          border: 1px solid ${colorPrimaryL1};
+          border: 1px solid ${tokenExt.colorPrimaryL1};
           a {
-            color: ${colorPrimaryL1};
+            color: ${tokenExt.colorPrimaryL1};
           }
         }
         &:not(.${prefixCls}-pagination-item-active) {
           &:hover,
           &:active {
             background-color: initial;
-            border: 1px solid ${colorPrimaryL1};
+            border: 1px solid ${tokenExt.colorPrimaryL1};
             a {
-              color: ${colorPrimaryL1};
+              color: ${tokenExt.colorPrimaryL1};
             }
           }
         }
       }
       .${prefixCls}-pagination-total-text {
-        color: ${colorBlackL3};
+        color: ${tokenExt.colorBlackL3};
         margin-inline-end: 12px;
       }
       .${prefixCls}-pagination-disabled {
         .${prefixCls}-pagination-item-link {
-          color: ${colorBlackL2};
+          color: ${tokenExt.colorBlackL2};
         }
       }
       .${prefixCls}-pagination-prev {
         margin-inline-end: 4px;
         button {
-          color: ${colorBlackL2};
+          color: ${tokenExt.colorBlackL2};
         }
         &:hover,
         &:active {
@@ -152,7 +142,7 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
       }
       .${prefixCls}-pagination-next {
         button {
-          color: ${colorBlackL2};
+          color: ${tokenExt.colorBlackL2};
         }
         &:hover,
         &:active {
@@ -167,33 +157,14 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
       .${prefixCls}-pagination-options-quick-jumper {
         margin-inline-start: 12px;
         input {
-          color: ${colorBlackL1};
+          color: ${tokenExt.colorBlackL1};
           border-radius: 3px;
         }
       }
       .${prefixCls}-select-single .${prefixCls}-select-selector {
-        color: ${colorBlackL1};
+        color: ${tokenExt.colorBlackL1};
         border-radius: 3px;
       }
     }
   }
 `;
-
-export function Theme(props: ThemeProps) {
-  return (
-    <ConfigProvider
-      theme={{
-        components: {
-          Table: {
-            colorPrimary: colorPrimaryL1,
-            borderRadiusLG: 0,
-            controlItemBgActive: '#ffffff',
-            controlItemBgActiveHover: colorGreyL3,
-          },
-        },
-      }}
-    >
-      {props.children}
-    </ConfigProvider>
-  );
-}

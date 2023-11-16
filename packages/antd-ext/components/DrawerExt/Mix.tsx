@@ -4,7 +4,7 @@ import useMapTheme from '../utils/useMapTheme';
 import type { DrawerExtProps } from './DrawerExt';
 import { customStyle } from './ThemeHermes';
 import DrawerExt from './DrawerExt';
-import { colorGreyL6 } from '../theme/hermes';
+import ThemeWrapper from '../theme/ThemeWrapper';
 
 export interface DrawerExtMixinProps extends DrawerExtProps {
   theme?: Theme;
@@ -13,17 +13,22 @@ export interface DrawerExtMixinProps extends DrawerExtProps {
 export default function Mixin(props: DrawerExtMixinProps) {
   const {
     className,
-    theme: customTheme,
+    theme,
     headerStyle,
     footerStyle,
     okButtonProps,
     cancelButtonProps,
     ...restProps
   } = props;
-  const { classes, ThemeWrapper, globalTheme } = useMapTheme({
-    className,
+
+  const {
+    classes,
+    themeConfig,
+    tokenExt,
     theme: customTheme,
-    themeWrap: {},
+  } = useMapTheme({
+    className,
+    theme,
     emotioncss: {
       hermes: customStyle,
     },
@@ -32,13 +37,13 @@ export default function Mixin(props: DrawerExtMixinProps) {
   const formattedHeaderStyle = useMemo(() => {
     return {
       hermes: {
-        background: colorGreyL6,
+        background: tokenExt.colorGreyL6,
         ...headerStyle,
       },
       zeus: {},
       default: {},
-    }[customTheme || globalTheme];
-  }, [customTheme, globalTheme, headerStyle]);
+    }[customTheme];
+  }, [customTheme, headerStyle, tokenExt.colorGreyL6]);
 
   const formattedFooterStyle = useMemo(() => {
     return {
@@ -48,24 +53,24 @@ export default function Mixin(props: DrawerExtMixinProps) {
       },
       zeus: {},
       default: {},
-    }[customTheme || globalTheme];
-  }, [customTheme, globalTheme, footerStyle]);
+    }[customTheme];
+  }, [customTheme, footerStyle]);
 
   const buttonProps = useMemo(() => {
     return {
       okButtonProps: {
         ...okButtonProps,
-        theme: (okButtonProps && okButtonProps.theme) || customTheme || globalTheme,
+        theme: (okButtonProps && okButtonProps.theme) || customTheme,
       },
       cancelButtonProps: {
         ...cancelButtonProps,
-        theme: (cancelButtonProps && cancelButtonProps?.theme) || customTheme || globalTheme,
+        theme: (cancelButtonProps && cancelButtonProps?.theme) || customTheme,
       },
     };
-  }, [okButtonProps, cancelButtonProps, customTheme, globalTheme]);
+  }, [okButtonProps, cancelButtonProps, customTheme]);
 
   return (
-    <ThemeWrapper>
+    <ThemeWrapper theme={themeConfig} type="Drawer">
       <DrawerExt
         {...buttonProps}
         {...restProps}

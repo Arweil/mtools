@@ -1,32 +1,29 @@
 import type React from 'react';
 import type { GlobalToken } from 'antd';
 import { css } from '@emotion/css';
-import {
-  colorPrimaryL1,
-  colorPrimaryL2,
-  colorWeakPrimary,
-  colorBlackL2,
-  colorGreyL1,
-  colorGreyL5,
-} from '../theme/hermes';
+import type { ThemeColor } from '../theme/type';
 
 export interface ThemeProps {
   children: React.ReactNode;
 }
 
-export const customStyle = (token: GlobalToken, prefixCls: string) => css`
+export const customStyle = (
+  token: GlobalToken,
+  prefixCls: string,
+  tokenExt: Partial<ThemeColor>,
+) => css`
   &.${prefixCls}-radio-group-solid
     .${prefixCls}-radio-button-wrapper-checked:not(.${prefixCls}-radio-button-wrapper-disabled) {
     z-index: initial;
-    color: ${colorPrimaryL1};
-    background: ${colorWeakPrimary};
-    border-color: ${colorWeakPrimary};
+    color: ${tokenExt.colorPrimaryL1};
+    background: ${tokenExt.colorWeakPrimary};
+    border-color: ${tokenExt.colorWeakPrimary};
   }
 
   .${prefixCls}-radio-button-wrapper {
     min-width: 80px;
-    color: ${colorBlackL2};
-    background: ${colorGreyL5};
+    color: ${tokenExt.colorBlackL2};
+    background: ${tokenExt.colorGreyL5};
     border: 0;
 
     &:first-child {
@@ -35,16 +32,16 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
 
     &:not(:first-child)::before {
       width: 2px;
-      background-color: #ffffff;
+      background-color: ${tokenExt.colorWhite};
     }
 
     &:not(.${prefixCls}-radio-button-wrapper-disabled):hover {
-      color: ${colorPrimaryL2};
+      color: ${tokenExt.colorPrimaryL2};
     }
   }
 
   .${prefixCls}-radio-button-wrapper-disabled {
-    color: #ffffff;
-    background: ${colorGreyL1};
+    color: ${tokenExt.colorWhite};
+    background: ${tokenExt.colorGreyL1};
   }
 `;

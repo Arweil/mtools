@@ -1,9 +1,7 @@
-import React from 'react';
-import { ConfigProvider } from 'antd';
 import { css } from '@emotion/css';
+import { TinyColor } from '@ctrl/tinycolor';
 import type { GlobalToken } from 'antd/es/theme/interface';
 import type { ThemeColor } from '../theme/type';
-import type { ThemeProps } from '../utils/useMapTheme';
 
 export const customStyle = (
   token: GlobalToken,
@@ -44,7 +42,7 @@ export const customStyle = (
       }
     }
     &:disabled {
-      background: #ffffff;
+      background: ${tokenExt.colorWhite};
     }
   }
 
@@ -55,45 +53,19 @@ export const customStyle = (
           background: ${tokenExt.colorWeakPrimary};
         }
         &:active {
-          background: rgba(51, 112, 255, 0.16);
+          background: ${new TinyColor(tokenExt.colorPrimaryL1).setAlpha(0.16).toRgbString()};
         }
       }
       &:disabled {
         color: ${tokenExt.colorGreyL1};
-        background: #ffffff;
+        background: ${tokenExt.colorWhite};
         border-color: ${tokenExt.colorGreyL1};
       }
     }
     &:disabled {
-      color: #ffffff;
+      color: ${tokenExt.colorWhite};
       background: ${tokenExt.colorGreyL1};
       border-color: ${tokenExt.colorGreyL1};
     }
   }
 `;
-
-export function Theme(props: ThemeProps) {
-  const { children, tokenExt } = props;
-  const { colorPrimaryL1, colorPrimaryL2, colorPrimaryL3, colorGreyL1, colorBlackL1 } =
-    tokenExt || {};
-
-  return (
-    <ConfigProvider
-      autoInsertSpaceInButton={false}
-      theme={{
-        token: {
-          borderRadius: 4,
-          // primary
-          colorPrimary: colorPrimaryL1,
-          colorPrimaryHover: colorPrimaryL2,
-          colorPrimaryActive: colorPrimaryL3,
-          // default
-          colorBorder: colorGreyL1,
-          colorText: colorBlackL1,
-        },
-      }}
-    >
-      {children}
-    </ConfigProvider>
-  );
-}

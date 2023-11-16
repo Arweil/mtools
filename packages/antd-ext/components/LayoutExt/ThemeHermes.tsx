@@ -1,25 +1,29 @@
 import type React from 'react';
 import { css } from '@emotion/css';
 import type { GlobalToken } from 'antd';
-import { colorBlackL3, colorGreyL1, colorGreyL7, colorPrimaryL1 } from '../theme/hermes';
+import type { ThemeColor } from '../theme/type';
 
 export interface ThemeProps {
   children: React.ReactNode;
 }
 
-export const customStyleWithLayoutExt = (token: GlobalToken, prefixCls: string) => css`
+export const customStyleWithLayoutExt = (
+  token: GlobalToken,
+  prefixCls: string,
+  tokenExt: Partial<ThemeColor>,
+) => css`
   &.${prefixCls}-layout {
     .${prefixCls}-layout-sider-light {
-      background: ${colorGreyL7};
+      background: ${tokenExt.colorGreyL7};
 
       .${prefixCls}-layout-sider-trigger {
-        background: ${colorGreyL7};
+        background: ${tokenExt.colorGreyL7};
       }
     }
   }
 
   .${prefixCls}-layout-header {
-    background-color: #fff !important;
+    background-color: ${tokenExt.colorWhite} !important;
     border-top-left-radius: 16px;
     padding-inline: 20px;
   }
@@ -27,7 +31,7 @@ export const customStyleWithLayoutExt = (token: GlobalToken, prefixCls: string) 
   .${prefixCls}-menu-item-group-title {
     height: 40px;
     padding: 16px 16px 4px;
-    color: ${colorBlackL3};
+    color: ${tokenExt.colorBlackL3};
     font-size: 12px;
   }
 
@@ -67,8 +71,8 @@ export const customStyleWithLayoutExt = (token: GlobalToken, prefixCls: string) 
   }
 
   .${prefixCls}-menu-light {
-    color: #333333;
-    background: ${colorGreyL7};
+    color: ${tokenExt.colorWhite};
+    background: ${tokenExt.colorGreyL7};
     &.${prefixCls}-menu-root {
       &.${prefixCls}-menu-inline, &.${prefixCls}-menu-vertical {
         border-inline-end: 0;
@@ -81,12 +85,12 @@ export const customStyleWithLayoutExt = (token: GlobalToken, prefixCls: string) 
 
     &:not(.${prefixCls}-menu-horizontal) {
       .${prefixCls}-menu-item:not(.${prefixCls}-menu-item-selected):hover {
-        color: ${colorPrimaryL1};
-        background-color: #f1f3fb;
+        color: ${tokenExt.colorPrimaryL1};
+        background-color: ${tokenExt.colorGreyL4};
       }
 
       .${prefixCls}-menu-submenu-title:hover {
-        color: ${colorPrimaryL1};
+        color: ${tokenExt.colorPrimaryL1};
       }
     }
 
@@ -100,7 +104,7 @@ export const customStyleWithLayoutExt = (token: GlobalToken, prefixCls: string) 
     padding: 0 16px;
     line-height: 48px;
     text-align: left;
-    box-shadow: inset 0px 1px 0px 0px ${colorGreyL1};
+    box-shadow: inset 0px 1px 0px 0px ${tokenExt.colorGreyL1};
   }
 
   .${prefixCls}-layout-sider-collapsed {

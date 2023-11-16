@@ -1,12 +1,13 @@
 import React from 'react';
 import type { ThemeColor } from '../theme/type';
+import type { ThemeConfig } from 'antd';
 
 export const AntdExtGlobalContext = React.createContext<{
   themeExt: Theme;
-  tokenExt?: Partial<ThemeColor>;
+  mergedTokenExt?: ThemeColor;
 }>({
   themeExt: 'hermes',
-  tokenExt: undefined,
+  mergedTokenExt: undefined,
 });
 
 export type Theme = 'hermes' | 'zeus' | 'default';

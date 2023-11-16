@@ -8,7 +8,6 @@ import {
   colorSuccess,
   colorGreyL4,
 } from '../theme/hermes';
-import type { GlobalToken } from 'antd';
 
 export interface ThemeSelectExtProps {
   children: React.ReactNode;

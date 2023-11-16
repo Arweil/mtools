@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  customStyleWithInputOutLineExt,
-  ThemeHermesWithInputOutLineExt,
-  customStyleWithInputExt,
-  ThemeHermesWithInputExt,
-} from './ThemeHermes';
+import { customStyleWithInputOutLineExt, customStyleWithInputExt } from './ThemeHermes';
 import { Input } from 'antd';
 import { InputExt } from './InputExt';
 import InputOutLineExt from './InputOutLineExt';
@@ -13,6 +8,7 @@ import type { Theme } from '../ConfigProviderExt/context';
 import type { InputOutLineExtProps } from './InputOutLineExt';
 import type { PasswordProps, SearchProps, TextAreaProps } from 'antd/es/input';
 import useMapTheme from '../utils/useMapTheme';
+import ThemeWrapper from '../theme/ThemeWrapper';
 
 export interface InputExtMixinProps extends InputExtProps {
   theme?: Theme;
@@ -31,18 +27,19 @@ function InputExtHOC(
     InputExtHOCProps,
 ) {
   const { className, theme, children } = props;
-  const { classes, ThemeWrapper } = useMapTheme({
+  const { classes, themeConfig } = useMapTheme({
     className,
     theme,
-    themeWrap: {
-      hermes: ThemeHermesWithInputExt,
-    },
     emotioncss: {
       hermes: customStyleWithInputExt,
     },
   });
 
-  return <ThemeWrapper>{children(classes)}</ThemeWrapper>;
+  return (
+    <ThemeWrapper theme={themeConfig} type="Input">
+      {children(classes)}
+    </ThemeWrapper>
+  );
 }
 
 export function MixinInputExt(props: InputExtMixinProps) {
@@ -93,19 +90,16 @@ export interface InputOutLineExtMixinProps extends InputOutLineExtProps {
 
 export function MixinInputOutLineExt(props: InputOutLineExtMixinProps) {
   const { className, theme, ...restProps } = props;
-  const { classes, ThemeWrapper } = useMapTheme({
+  const { classes, themeConfig } = useMapTheme({
     className,
     theme,
-    themeWrap: {
-      hermes: ThemeHermesWithInputOutLineExt,
-    },
     emotioncss: {
       hermes: customStyleWithInputOutLineExt,
     },
   });
 
   return (
-    <ThemeWrapper>
+    <ThemeWrapper theme={themeConfig} type="Input">
       <InputOutLineExt className={classes} {...restProps} />
     </ThemeWrapper>
   );
