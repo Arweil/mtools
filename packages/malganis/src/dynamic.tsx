@@ -5,7 +5,7 @@ import { $mobx } from 'mobx';
 
 export default function dynamic(params: {
   app: IMalGanisApp;
-  models?: () => Array<Promise<any>>;
+  models?: () => Promise<any>[];
   component: () => Promise<any>;
   fetchingComp?: React.ReactNode;
 }) {
@@ -101,7 +101,7 @@ export default function dynamic(params: {
         return FetchingComponent;
       }
 
-      return React.createElement(FinComp, null);
+      return React.createElement(FinComp, this.props);
     }
   };
 }
