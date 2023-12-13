@@ -227,7 +227,7 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
     });
 
     return cols;
-  }, [columns, fetching, SkeletonItem, tdTooltip]);
+  }, [columns, fetching, tdTooltip]);
 
   const EmptyText = useMemo(
     () => <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={emptyDesc} />,

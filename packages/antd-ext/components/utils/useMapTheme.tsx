@@ -86,7 +86,7 @@ export default function useMapTheme(props: MapTheme) {
     theme: finTheme,
     themeConfig,
     token,
-    tokenExt: mergedTokenExt,
+    tokenExt: mergedTokenExt || hermesToken,
     prefix,
   };
 }

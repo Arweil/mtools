@@ -1,6 +1,5 @@
 ---
 title: RangeNumberExt
-order: 7
 toc: menu
 ---
 

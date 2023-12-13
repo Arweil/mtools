@@ -8,8 +8,9 @@ import classNames from 'classnames';
 
 export interface OutLineWrapperProps {
   label: string;
-  disabled?: boolean;
+  disabled?: boolean | [boolean, boolean];
   children?: React.ReactNode;
+  isRequired?: boolean;
   ref?: React.MutableRefObject<HTMLDivElement>;
   injectStyle?: (prefixCls: string, mtPrefixCls: string, token: GlobalToken) => string;
 }
@@ -20,7 +21,7 @@ const style = (
   token: GlobalToken,
   injectStyle?: (prefixCls: string, mtPrefixCls: string, token: GlobalToken) => string,
 ) => css`
-  border: 1px solid #d0d3d6;
+  border: 1px solid ${token.colorBorder};
   border-radius: 4px;
   padding-left: 13px;
 
@@ -42,16 +43,16 @@ const style = (
     }
   }
 
-  &:focus-within:not(.${mtPrefixCls}-outline-disabled) {
-    border: 1px solid #2d64e5;
+  &:focus-within:not(.${prefixCls}-${mtPrefixCls}-outline-disabled) {
+    border: 1px solid ${token.colorPrimaryActive};
   }
 
-  &:hover:not(.${mtPrefixCls}-outline-disabled) {
-    border: 1px solid #477eff;
+  &:hover:not(.${prefixCls}-${mtPrefixCls}-outline-disabled) {
+    border: 1px solid ${token.colorPrimaryHover};
   }
 
-  &.${mtPrefixCls}-outline-disabled {
-    background-color: #f1f2f5;
+  &.${prefixCls}-${mtPrefixCls}-outline-disabled {
+    background-color: ${token.colorBgContainerDisabled};
   }
 
   ${injectStyle ? injectStyle(prefixCls, mtPrefixCls, token) : ''}
@@ -59,7 +60,7 @@ const style = (
 
 const OutLineWrapper = React.forwardRef(
   (props: OutLineWrapperProps, ref: React.RefObject<HTMLDivElement>) => {
-    const { label, children, disabled, injectStyle } = props;
+    const { label, children, disabled, injectStyle, isRequired } = props;
     const { token, prefixCls, mtPrefixCls } = usePrefixCls();
     const customClassName = useMemo(
       () => style(prefixCls, mtPrefixCls, token, injectStyle),
@@ -70,12 +71,16 @@ const OutLineWrapper = React.forwardRef(
       <Row
         className={classNames([
           customClassName,
-          disabled ? `${mtPrefixCls}-outline-disabled` : undefined,
+          disabled ? `${prefixCls}-${mtPrefixCls}-outline-disabled` : undefined,
         ])}
         ref={ref}
       >
         <Col className={`${prefixCls}-form-item-label`}>
-          <label>{label}</label>
+          <label
+            className={classNames([isRequired ? `${prefixCls}-form-item-required` : undefined])}
+          >
+            {label}
+          </label>
         </Col>
         <Col className={`${prefixCls}-form-item-control`}>{children}</Col>
       </Row>

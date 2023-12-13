@@ -7,6 +7,13 @@ import type {
 import type { ButtonSize } from 'antd/es/button';
 import type { Dayjs } from 'dayjs';
 
+export type DatePickerProps = PickerProps<Dayjs> & {
+  status?: '' | 'error' | 'warning' | undefined;
+  hashId?: string | undefined;
+  popupClassName?: string | undefined;
+  rootClassName?: string | undefined;
+};
+
 export type RangePickerProps = BaseRangePickerProps<Dayjs> & {
   dropdownClassName?: string | undefined;
   popupClassName?: string | undefined;

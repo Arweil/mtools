@@ -1,3 +1,11 @@
+## 0.8.0
+1. 新增了 DatePickerExt 组件以及 DatePickerOutLineExt、RangePickerOutLineExt 组件；
+2. 新增了 *OutLineExt 相关组件的必填样式；
+3. 升级了 antd 的版本至 5.12.1；@ant-design/cssinjs 至 1.18.0；@ant-design/icons 至 5.2.6；
+4. 修复了部分主题配置不生效的问题；
+5. 优化了部分文档测试用例；
+
+
 ## 0.7.0
 1. 新增了 RadioGroupExt
 2. 修复了 OutLine 组件 disabled 样式缺失的问题。

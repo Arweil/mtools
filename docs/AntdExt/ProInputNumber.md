@@ -1,6 +1,5 @@
 ---
 title: ProInputNumber
-order: 4
 toc: menu
 ---
 

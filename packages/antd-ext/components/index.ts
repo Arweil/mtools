@@ -20,8 +20,12 @@ import {
 } from './RangeNumberExt';
 import RadioGroupExt from './RadioGroupExt';
 import LayoutExt, { BaseLayoutExt } from './LayoutExt';
-import DatePickerExt from './DatePickerExt';
+import DatePickerExt, {
+  MixinDatePickerOutLine as DatePickerOutLineExt,
+  MixinRangePickerOutLine as RangePickerOutLineExt,
+} from './DatePickerExt';
 import { BaseCascaderExt } from './CascaderExt';
+import ProSearchTable from './ProSearchTable';
 
 export * from 'antd';
 import zh_CN from 'antd/es/locale/zh_CN';
@@ -40,19 +44,22 @@ export {
   BaseCascaderExt,
   ButtonExt,
   ConfigProviderExt,
-  TableExt,
-  InputExt,
-  InputOutLineExt,
-  ProInputNumberOutLine,
-  SelectExt,
-  SelectOutLineExt,
-  DrawerExt,
-  RangeNumberExt,
-  RangeNumberOutLineExt,
-  LayoutExt,
   DatePickerExt,
+  DrawerExt,
+  InputExt,
+  TableExt,
+  SelectExt,
+  RangeNumberExt,
+  LayoutExt,
   RadioGroupExt,
   ProInputNumber,
+  ProSearchTable,
+  InputOutLineExt,
+  DatePickerOutLineExt,
+  RangePickerOutLineExt,
+  SelectOutLineExt,
+  RangeNumberOutLineExt,
+  ProInputNumberOutLine,
   Theme,
 };
 

@@ -1,9 +1,8 @@
-import ProInputNumberOutLine from './ProInputNumberOutLine';
-import { MixinProInputNumber } from './Mix';
+import { MixinProInputNumber, MixinProInputNumberOutLine } from './Mix';
 import ProInputNumber from './ProInputNumber';
 
 export {
   ProInputNumber as BaseProInputNumber,
-  ProInputNumberOutLine,
   MixinProInputNumber as ProInputNumber,
+  MixinProInputNumberOutLine as ProInputNumberOutLine,
 };

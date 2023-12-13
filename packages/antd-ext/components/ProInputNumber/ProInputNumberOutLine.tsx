@@ -15,18 +15,27 @@ const style = (prefixCls: string) => css`
   }
   .${prefixCls}-input-affix-wrapper{
     padding: 4px 0;
+
+    &:focus-within {
+      box-shadow: none;
+    }
   }
 `;
 
 export interface ProInputNumberOutLineProps
-  extends OutLineWrapperProps,
+  extends Omit<OutLineWrapperProps, 'disabled'>,
     Omit<ProInputNumberProps, 'children'> {}
 
 export default function ProInputNumberOutLine(props: ProInputNumberOutLineProps) {
-  const { label, ...restProps } = props;
+  const { label, disabled, ...restProps } = props;
   return (
-    <OutLineWrapper label={label} injectStyle={style} disabled={restProps.disabled}>
-      <ProInputNumber {...restProps} bordered={false} />
+    <OutLineWrapper
+      label={label}
+      injectStyle={style}
+      disabled={disabled}
+      isRequired={restProps['aria-required'] === 'true'}
+    >
+      <ProInputNumber {...restProps} bordered={false} disabled={disabled} />
     </OutLineWrapper>
   );
 }

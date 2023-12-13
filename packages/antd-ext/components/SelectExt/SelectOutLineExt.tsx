@@ -22,12 +22,14 @@ const style = (prefixCls: string) => css`
   }
 `;
 
-export interface SelectOutLineExtProps extends OutLineWrapperProps, SelectExtProps {
+export interface SelectOutLineExtProps
+  extends Omit<OutLineWrapperProps, 'disabled'>,
+    SelectExtProps {
   label: string;
 }
 
 export default function SelectOutLineExt(props: SelectOutLineExtProps) {
-  const { label, ...restProps } = props;
+  const { label, disabled, ...restProps } = props;
   const refSelectOutLine = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState<number>(refSelectOutLine.current?.offsetWidth);
   const onDropdownVisibleChange = useCallback((open: boolean) => {
@@ -41,13 +43,15 @@ export default function SelectOutLineExt(props: SelectOutLineExtProps) {
       label={label}
       injectStyle={style}
       ref={refSelectOutLine}
-      disabled={restProps.disabled}
+      disabled={disabled}
+      isRequired={restProps['aria-required'] === 'true'}
     >
       <SelectExt
         {...restProps}
+        disabled={disabled as boolean}
         bordered={false}
         onDropdownVisibleChange={onDropdownVisibleChange}
-        dropdownMatchSelectWidth={width}
+        popupMatchSelectWidth={width}
         placement="bottomRight"
       />
     </OutLineWrapper>

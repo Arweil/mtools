@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import type { Theme } from '@m-tools/antd-ext';
 import {
   ConfigProviderExt,
   locale,
@@ -14,6 +15,7 @@ import type { FormLayout } from 'antd/es/form/Form';
 
 export default function App() {
   const [layout, setLayout] = useState<FormLayout>('horizontal');
+  const [theme, setTheme] = useState<Theme>('hermes');
   const [form1] = Form.useForm();
   const [form2] = Form.useForm();
 
@@ -26,17 +28,30 @@ export default function App() {
       : null;
 
   return (
-    <ConfigProviderExt locale={locale.zh_CN}>
-      <Radio.Group
-        value={layout}
-        style={{ marginBottom: 24 }}
-        buttonStyle="solid"
-        onChange={e => setLayout(e.target.value)}
-      >
-        <Radio.Button value="horizontal">horizontal</Radio.Button>
-        <Radio.Button value="inline">inline</Radio.Button>
-        <Radio.Button value="vertical">vertical</Radio.Button>
-      </Radio.Group>
+    <ConfigProviderExt locale={locale.zh_CN} themeExt={theme}>
+      <div>
+        <Radio.Group
+          value={layout}
+          style={{ marginBottom: 24 }}
+          buttonStyle="solid"
+          onChange={e => setLayout(e.target.value)}
+        >
+          <Radio.Button value="horizontal">horizontal</Radio.Button>
+          <Radio.Button value="inline">inline</Radio.Button>
+          <Radio.Button value="vertical">vertical</Radio.Button>
+        </Radio.Group>
+      </div>
+      <div>
+        <Radio.Group
+          value={theme}
+          style={{ marginBottom: 24 }}
+          buttonStyle="solid"
+          onChange={e => setTheme(e.target.value)}
+        >
+          <Radio.Button value="hermes">hermes</Radio.Button>
+          <Radio.Button value="default">default</Radio.Button>
+        </Radio.Group>
+      </div>
 
       <Card title="InputOutLineExt（layout vertical不可用）" style={{ marginBottom: 24 }}>
         <Form
@@ -47,7 +62,7 @@ export default function App() {
           <Form.Item name={['form1', 'labelInsideValueA']} rules={[{ required: true }]}>
             <InputOutLineExt label="文本" placeholder="请输入文本" />
           </Form.Item>
-          <Form.Item name={['form1', 'labelInsideValueB']}>
+          <Form.Item name={['form1', 'labelInsideValueB']} required>
             <InputOutLineExt label="文本内容" placeholder="请输入文本内容" />
           </Form.Item>
           <Form.Item name={['form1', 'labelInsideValueC']}>
@@ -70,35 +85,35 @@ export default function App() {
       <Card title="InputExt">
         <Form form={form2} layout={layout} {...formItemLayoutB}>
           <Form.Item label="InputExt" name={['form2', 'valueA']} rules={[{ required: true }]}>
-            <InputExt theme="hermes" placeholder="请输入文本" />
+            <InputExt placeholder="请输入文本" />
           </Form.Item>
           <Form.Item label="Success" name={['form2', 'valueB']} validateStatus="success">
-            <InputExt theme="hermes" placeholder="请输入文本" />
+            <InputExt placeholder="请输入文本" />
           </Form.Item>
           <Form.Item label="Warning" name={['form2', 'valueC']} validateStatus="warning">
-            <InputExt theme="hermes" placeholder="请输入文本" />
+            <InputExt placeholder="请输入文本" />
           </Form.Item>
           <Form.Item label="Search" name={['form2', 'valueD']}>
-            <InputExt.Search theme="hermes" placeholder="请输入Search" />
+            <InputExt.Search placeholder="请输入Search" />
           </Form.Item>
           <Form.Item label="Password" name={['form2', 'valueE']}>
-            <InputExt.Password theme="hermes" placeholder="请输入Password" />
+            <InputExt.Password placeholder="请输入Password" />
           </Form.Item>
           <Form.Item label="TextArea" name={['form2', 'valueF']}>
-            <InputExt.TextArea theme="hermes" placeholder="请输入TextArea" />
+            <InputExt.TextArea placeholder="请输入TextArea" />
           </Form.Item>
           <Form.Item label="Input Compact">
             <Input.Group compact>
               <Form.Item noStyle name={['form2', 'valueBefore']}>
-                <InputExt theme="hermes" placeholder="before" style={{ width: '50%' }} />
+                <InputExt placeholder="before" style={{ width: '50%' }} />
               </Form.Item>
               <Form.Item noStyle name={['form2', 'valueAfter']}>
-                <InputExt theme="hermes" placeholder="after" style={{ width: '50%' }} />
+                <InputExt placeholder="after" style={{ width: '50%' }} />
               </Form.Item>
             </Input.Group>
           </Form.Item>
           <Form.Item label="Disabled" name={['form2', 'disabled']}>
-            <InputExt theme="hermes" disabled placeholder="请输入文本" />
+            <InputExt disabled placeholder="请输入文本" />
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 4, span: 14 }}>
             <ButtonExt onClick={() => alert(JSON.stringify(form2.getFieldsValue()))}>

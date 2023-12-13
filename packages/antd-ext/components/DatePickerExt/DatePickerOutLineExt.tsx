@@ -1,31 +1,28 @@
 import React from 'react';
-import { InputExt } from './InputExt';
-import { css } from '@emotion/css';
-import type { InputProps } from 'antd';
+import type { DatePickerProps } from './type';
 import OutLineWrapper from '../OutLineWrapper';
+import { DatePicker } from 'antd';
+import { css } from '@emotion/css';
 
 const style = (prefixCls: string) => css`
   padding: 0 13px;
 
-  .${prefixCls}-input {
+  .${prefixCls}-picker {
     padding: 4px 0;
     color: #333;
     width: 100%;
+    border: 0px;
   }
-  .${prefixCls}-input-affix-wrapper{
+  .${prefixCls}-picker-affix-wrapper{
     padding: 4px 0;
-
-    &:focus-within {
-      box-shadow: none;
-    }
   }
 `;
 
-export interface InputOutLineExtProps extends InputProps {
+export type DatePickerOutLineExtProps = DatePickerProps & {
   label: string;
-}
+};
 
-export default function InputOutLineExt(props: InputOutLineExtProps) {
+export default function DatePickerOutLineExt(props: DatePickerOutLineExtProps) {
   const { label, ...restProps } = props;
 
   return (
@@ -35,7 +32,7 @@ export default function InputOutLineExt(props: InputOutLineExtProps) {
       disabled={restProps.disabled}
       isRequired={restProps['aria-required'] === 'true'}
     >
-      <InputExt {...restProps} bordered={false} />
+      <DatePicker {...restProps} bordered={false} />
     </OutLineWrapper>
   );
 }

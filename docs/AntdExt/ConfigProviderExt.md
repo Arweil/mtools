@@ -1,6 +1,5 @@
 ---
 title: ConfigProviderExt
-order: 1
 toc: menu
 ---
 

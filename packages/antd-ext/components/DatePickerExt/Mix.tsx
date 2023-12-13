@@ -14,6 +14,10 @@ import type {
   WeekPicker,
   TimePicker,
 } from './type';
+import type { DatePickerOutLineExtProps } from './DatePickerOutLineExt';
+import DatePickerOutLineExt from './DatePickerOutLineExt';
+import type { RangePickerOutLineExtProps } from './RangePickerOutLineExt';
+import RangePickerOutLineExt from './RangePickerOutLineExt';
 
 export type MixinHOCProps = (DatePickerProps | RangePickerProps | QuarterPicker) & {
   theme?: Theme;
@@ -177,3 +181,35 @@ MixinDatePicker.TimePicker = (props: MixinTimePickerExtProps) => {
     </MixHOC>
   );
 };
+
+export type MixinDatePickerOutLineExtProps = DatePickerOutLineExtProps & {
+  theme?: Theme;
+};
+
+export function MixinDatePickerOutLine(props: MixinDatePickerOutLineExtProps) {
+  return (
+    <MixHOC {...props}>
+      {(classes, _popupClassName) => {
+        return (
+          <DatePickerOutLineExt {...props} className={classes} popupClassName={_popupClassName} />
+        );
+      }}
+    </MixHOC>
+  );
+}
+
+export type MixinRangePickerOutLineExtProps = RangePickerOutLineExtProps & {
+  theme?: Theme;
+};
+
+export function MixinRangePickerOutLine(props: MixinRangePickerOutLineExtProps) {
+  return (
+    <MixHOC {...props}>
+      {(classes, _popupClassName) => {
+        return (
+          <RangePickerOutLineExt {...props} className={classes} popupClassName={_popupClassName} />
+        );
+      }}
+    </MixHOC>
+  );
+}

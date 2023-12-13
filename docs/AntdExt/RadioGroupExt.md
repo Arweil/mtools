@@ -1,6 +1,5 @@
 ---
 title: RadioGroupExt
-order: 8
 toc: menu
 ---
 

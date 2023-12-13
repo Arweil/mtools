@@ -1,28 +1,28 @@
-import React, { useCallback, useContext, useMemo } from 'react';
-import { ConfigProvider, Select, Typography, theme } from 'antd';
+import React, { useCallback, useMemo } from 'react';
+import { Select, Typography, theme } from 'antd';
 import type { GlobalToken, SelectProps, TooltipProps } from 'antd';
 import { css } from '@emotion/css';
 import classNames from 'classnames';
 import type { BaseOptionType, DefaultOptionType } from 'antd/es/select';
 import NotFoundContent from '../NotFoundContent';
-import { mtPrefixCls } from '../utils/config';
+import { usePrefixCls } from '../utils';
 
 const { useToken } = theme;
 
-const popup = (token: GlobalToken, prefixCls: string) => css`
+const popup = (token: GlobalToken, prefixCls: string, mtPrefixCls: string) => css`
   min-height: 148px;
 
-  .${mtPrefixCls}-select-item-wrapper {
+  .${prefixCls}-${mtPrefixCls}-select-item-wrapper {
     display: flex;
     align-items: center;
   }
 
-  .${mtPrefixCls}-select-checkbox {
+  .${prefixCls}-${mtPrefixCls}-select-checkbox {
     margin-inline-end: ${token.marginXS}px;
   }
 
   .${prefixCls}-select-item-option-selected {
-    .${mtPrefixCls}-select-checkbox-inner {
+    .${prefixCls}-${mtPrefixCls}-select-checkbox-inner {
       background-color: ${token.colorPrimary};
       border-color: ${token.colorPrimary};
 
@@ -44,7 +44,7 @@ const popup = (token: GlobalToken, prefixCls: string) => css`
   }
 
   .${prefixCls}-select-item-option-disabled {
-    .${mtPrefixCls}-select-checkbox-inner {
+    .${prefixCls}-${mtPrefixCls}-select-checkbox-inner {
       background: ${token.colorBgContainerDisabled};
       border-color: ${token.colorBorder};
 
@@ -54,7 +54,7 @@ const popup = (token: GlobalToken, prefixCls: string) => css`
     }
   }
 
-  .${mtPrefixCls}-select-checkbox-inner {
+  .${prefixCls}-${mtPrefixCls}-select-checkbox-inner {
     position: relative;
     display: block;
     width: ${token.controlInteractiveSize}px;
@@ -68,7 +68,7 @@ const popup = (token: GlobalToken, prefixCls: string) => css`
     }
   }
 
-  .${mtPrefixCls}-select-content {
+  .${prefixCls}-${mtPrefixCls}-select-content {
     overflow: hidden;
   }
 `;
@@ -82,13 +82,14 @@ export interface SelectItemWrapperProps {
 
 export function SelectItemWrapperWithComp(props: SelectItemWrapperProps): JSX.Element {
   const { children, multiple } = props;
+  const { prefixCls, mtPrefixCls } = usePrefixCls();
 
   return multiple ? (
-    <div className={`${mtPrefixCls}-select-item-wrapper`}>
-      <span className={classNames(`${mtPrefixCls}-select-checkbox`)}>
-        <span className={`${mtPrefixCls}-select-checkbox-inner`} />
+    <div className={`${prefixCls}-${mtPrefixCls}-select-item-wrapper`}>
+      <span className={classNames(`${prefixCls}-${mtPrefixCls}-select-checkbox`)}>
+        <span className={`${prefixCls}-${mtPrefixCls}-select-checkbox-inner`} />
       </span>
-      <div className={`${mtPrefixCls}-select-content`}>{children}</div>
+      <div className={`${prefixCls}-${mtPrefixCls}-select-content`}>{children}</div>
     </div>
   ) : (
     <>{children}</>
@@ -163,7 +164,7 @@ export default function SelectExt<ValueType = any>(props: SelectExtProps) {
     ...restProps
   } = props;
 
-  const { getPrefixCls } = useContext(ConfigProvider.ConfigContext);
+  const { prefixCls, mtPrefixCls } = usePrefixCls();
 
   const { token } = useToken();
 
@@ -234,8 +235,8 @@ export default function SelectExt<ValueType = any>(props: SelectExtProps) {
   }, []);
 
   const formattedPopupClassName = useMemo(
-    () => classNames(popupClassName, popup(token, getPrefixCls())),
-    [popupClassName, token, getPrefixCls],
+    () => classNames(popupClassName, popup(token, prefixCls, mtPrefixCls)),
+    [popupClassName, token, prefixCls, mtPrefixCls],
   );
 
   const formattedListHeight = useMemo(

@@ -4,11 +4,11 @@ import {
   ConfigProviderExt,
   locale,
   Form,
-  ProInputNumberOutLine,
+  DatePickerExt,
+  DatePickerOutLineExt,
   ButtonExt,
   Radio,
   Card,
-  ProInputNumber,
 } from '@m-tools/antd-ext';
 import type { FormLayout } from 'antd/es/form/Form';
 
@@ -53,45 +53,26 @@ export default function App() {
         </Radio.Group>
       </div>
 
-      <Card title="ProInputNumberOutLine（layout vertical不可用）" style={{ marginBottom: 24 }}>
+      <Card title="DatePickerOutLineExt（layout vertical不可用）" style={{ marginBottom: 24 }}>
         <Form
           form={form1}
           layout={layout === 'vertical' ? 'horizontal' : layout}
           {...formItemLayoutA}
         >
-          <Form.Item name={['form1', 'labelInsideValueA']} rules={[{ required: true }]}>
-            <ProInputNumberOutLine
-              label="文本"
-              placeholder="请输入文本"
-              needThousandths
-              precision={6}
-            />
+          <Form.Item name={['form1', 'labelInsideValueA']} required rules={[{ required: true }]}>
+            <DatePickerOutLineExt label="文本" placeholder="请输入文本" />
           </Form.Item>
           <Form.Item name={['form1', 'labelInsideValueB']}>
-            <ProInputNumberOutLine
-              label="文本内容"
-              placeholder="请输入文本内容"
-              needThousandths
-              precision={6}
-              allowClear
-            />
+            <DatePickerOutLineExt label="文本内容" placeholder="请输入文本内容" />
           </Form.Item>
           <Form.Item name={['form1', 'labelInsideValueC']}>
-            <ProInputNumberOutLine
-              label="文本内容拓展"
-              placeholder="请输入文本内容拓展"
-              needThousandths
-              precision={6}
-            />
+            <DatePickerOutLineExt label="文本清除" allowClear placeholder="请输入文本内容" />
           </Form.Item>
           <Form.Item name={['form1', 'labelInsideValueD']}>
-            <ProInputNumberOutLine
-              label="禁用"
-              disabled
-              placeholder="请输入文本"
-              needThousandths
-              precision={6}
-            />
+            <DatePickerOutLineExt label="文本内容拓展" placeholder="请输入文本内容拓展" />
+          </Form.Item>
+          <Form.Item name={['form1', 'labelInsideValueE']}>
+            <DatePickerOutLineExt label="禁用" disabled placeholder="请输入文本" />
           </Form.Item>
           <Form.Item>
             <ButtonExt onClick={() => alert(JSON.stringify(form1.getFieldsValue()))}>
@@ -101,32 +82,21 @@ export default function App() {
         </Form>
       </Card>
 
-      <Card title="ProInputNumber">
+      <Card title="DatePickerExt">
         <Form form={form2} layout={layout} {...formItemLayoutB}>
-          <Form.Item label="ProInputNumber" name={['form2', 'valueA']} rules={[{ required: true }]}>
-            <ProInputNumber placeholder="请输入" needThousandths precision={2} />
+          <Form.Item label="InputExt" name={['form2', 'valueA']} rules={[{ required: true }]}>
+            <DatePickerExt placeholder="请输入文本" />
           </Form.Item>
-          <Form.Item
-            label="NoNeedThousandths"
-            name={['form2', 'valueB']}
-            rules={[{ required: true }]}
-          >
-            <ProInputNumber placeholder="请输入" precision={2} />
+          <Form.Item label="Success" name={['form2', 'valueB']} validateStatus="success">
+            <DatePickerExt placeholder="请输入文本" />
           </Form.Item>
-          <Form.Item label="Precision 6" name={['form2', 'valueC']} rules={[{ required: true }]}>
-            <ProInputNumber placeholder="请输入" precision={6} />
+          <Form.Item label="Warning" name={['form2', 'valueC']} validateStatus="warning">
+            <DatePickerExt placeholder="请输入文本" />
           </Form.Item>
-          <Form.Item
-            label="ProInputNumber Hermes"
-            name={['form2', 'valueD']}
-            rules={[{ required: true }]}
-          >
-            <ProInputNumber placeholder="请输入" needThousandths precision={2} />
+          <Form.Item label="Disabled" name={['form2', 'disabled']}>
+            <DatePickerExt disabled placeholder="请输入文本" />
           </Form.Item>
-          <Form.Item label="禁用" name={['form2', 'valueD']}>
-            <ProInputNumber disabled placeholder="请输入" needThousandths precision={2} />
-          </Form.Item>
-          <Form.Item>
+          <Form.Item wrapperCol={{ offset: 4, span: 14 }}>
             <ButtonExt onClick={() => alert(JSON.stringify(form2.getFieldsValue()))}>
               GetFieldsValue
             </ButtonExt>

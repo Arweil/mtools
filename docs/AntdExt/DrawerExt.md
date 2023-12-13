@@ -1,6 +1,5 @@
 ---
 title: DrawerExt
-order: 6
 toc: menu
 ---
 
