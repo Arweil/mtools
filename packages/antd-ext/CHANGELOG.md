@@ -1,3 +1,7 @@
+## 0.8.1
+1. 修复了 RangePickerOutLineExt 的样式问题
+2. 修复了 LayoutExt 的样式问题
+
 ## 0.8.0
 1. 新增了 DatePickerExt 组件以及 DatePickerOutLineExt、RangePickerOutLineExt 组件；
 2. 新增了 *OutLineExt 相关组件的必填样式；

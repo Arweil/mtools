@@ -71,7 +71,7 @@ export const customStyleWithLayoutExt = (
   }
 
   .${prefixCls}-menu-light {
-    color: ${tokenExt.colorWhite};
+    color: ${tokenExt.colorBlackL1};
     background: ${tokenExt.colorGreyL7};
     &.${prefixCls}-menu-root {
       &.${prefixCls}-menu-inline, &.${prefixCls}-menu-vertical {
