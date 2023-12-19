@@ -13,11 +13,19 @@ const style = (prefixCls: string) => css`
     color: #333;
     border: 0px;
   }
+
   .${prefixCls}-picker-affix-wrapper {
     padding: 4px 0;
   }
-  .${prefixCls}-picker-range .${prefixCls}-picker-active-bar {
-    margin-inline-start: 0;
+
+  .${prefixCls}-picker-range {
+    .${prefixCls}-picker-active-bar {
+      margin-inline-start: 0;
+    }
+
+    .${prefixCls}-picker-clear {
+      inset-inline-end: 0px;
+    }
   }
 `;
 
