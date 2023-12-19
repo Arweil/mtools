@@ -25,7 +25,7 @@ import DatePickerExt, {
   MixinRangePickerOutLine as RangePickerOutLineExt,
 } from './DatePickerExt';
 import { BaseCascaderExt } from './CascaderExt';
-import ProSearchTable from './ProSearchTable';
+// import ProSearchTable from './ProSearchTable';
 
 export * from 'antd';
 import zh_CN from 'antd/es/locale/zh_CN';
@@ -53,7 +53,7 @@ export {
   LayoutExt,
   RadioGroupExt,
   ProInputNumber,
-  ProSearchTable,
+  // ProSearchTable,
   InputOutLineExt,
   DatePickerOutLineExt,
   RangePickerOutLineExt,
