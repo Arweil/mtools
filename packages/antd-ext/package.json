@@ -12,6 +12,7 @@
     "README.md"
   ],
   "scripts": {
+    "gcomp": "node ./generateFile.mjs",
     "build": "father build"
   },
   "dependencies": {
