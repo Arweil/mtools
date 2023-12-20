@@ -1,28 +1,17 @@
-import React from 'react';
-import { ConfigProvider } from 'antd';
 import type { GlobalToken } from 'antd';
 import { css } from '@emotion/css';
-import {
-  colorPrimaryL1,
-  colorPrimaryL3,
-  colorError,
-  colorWarning,
-  colorGreyL1,
-  colorBlackL3,
-  colorGreyL4,
-} from '../theme/hermes';
+import type { ThemeColor } from '../theme/type';
 
-export interface ThemeProps {
-  children: React.ReactNode;
-}
-
-export const customStyle = (token: GlobalToken, prefixCls: string) => css`
+export const customStyle = (
+  token: GlobalToken,
+  prefixCls: string,
+  tokenExt: Partial<ThemeColor>,
+) => css`
   border-radius: 4px;
-  border: 1px solid ${colorGreyL1};
+  border: 1px solid ${tokenExt.colorGreyL1};
   padding-left: 12px;
   position: relative;
   flex-wrap: nowrap;
-  margin-bottom: 22px;
 
   input {
     padding-left: 0;
@@ -32,17 +21,17 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
   }
 
   &.${prefixCls}-form-item-focused {
-    border-color: ${colorPrimaryL3};
+    border-color: ${tokenExt.colorPrimaryL3};
   }
   &.${prefixCls}-form-item-has-error {
-    border-color: ${colorError};
+    border-color: ${tokenExt.colorError};
   }
   &.${prefixCls}-form-item-has-warning {
-    border-color: ${colorWarning};
+    border-color: ${tokenExt.colorWarning};
   }
 
   .${prefixCls}-select-selection-item {
-    background-color: ${colorGreyL4};
+    background-color: ${tokenExt.colorGreyL4};
   }
   &:hover:not(
       .${prefixCls}-form-item-has-warning,.${prefixCls}-form-item-has-error,.${prefixCls}-form-item-focused
@@ -50,17 +39,17 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
   &:focus:not(
       .${prefixCls}-form-item-has-warning,.${prefixCls}-form-item-has-error,.${prefixCls}-form-item-focused
     ) {
-    border-color: ${colorPrimaryL3};
+    border-color: ${tokenExt.colorPrimaryL3};
   }
   &:not(
       .${prefixCls}-form-item-has-warning,.${prefixCls}-form-item-has-error,.${prefixCls}-form-item-focused
     ) {
     &:hover,
     &:focus {
-      border-color: ${colorPrimaryL3};
+      border-color: ${tokenExt.colorPrimaryL3};
     }
     &:focus-within {
-      border-color: ${colorPrimaryL3};
+      border-color: ${tokenExt.colorPrimaryL3};
     }
   }
   .${prefixCls}-form-item-with-help .${prefixCls}-form-item-explain {
@@ -71,18 +60,8 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
     line-height: normal;
   }
 
-  .${prefixCls}-select-selector {
-    //max-height: 70px;
-    overflow-y: auto;
-  }
-
   .${prefixCls}-form-item-label {
     flex-shrink: 0;
-
-    > label {
-      height: 32px;
-      color: ${colorBlackL3};
-    }
   }
 
   .${prefixCls}-tree-select {
@@ -122,17 +101,3 @@ export const customStyle = (token: GlobalToken, prefixCls: string) => css`
     }
   }
 `;
-
-export default function ThemeHermesWithFormItemExt(props: ThemeProps) {
-  return (
-    <ConfigProvider
-      theme={{
-        token: {
-          colorPrimary: colorPrimaryL1,
-        },
-      }}
-    >
-      {props.children}
-    </ConfigProvider>
-  );
-}

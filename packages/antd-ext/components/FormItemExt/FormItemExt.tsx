@@ -135,11 +135,14 @@ export default function FormItemExt(props: FormItemExtProps) {
     return cloneElement(children, childProps);
   };
 
-  const formItemCss = css`
-    .${prefix}-form-item-explain {
-      margin-left: ${offsetX}px;
-    }
-  `;
+  const formItemCss = useMemo(
+    () => css`
+      .${prefix}-form-item-explain {
+        margin-left: ${offsetX}px;
+      }
+    `,
+    [offsetX],
+  );
 
   return (
     <Form.Item {...restProps} className={cls(className, formItemClassName, formItemCss)}>

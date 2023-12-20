@@ -39,6 +39,7 @@ export function createHermesTheme(theme: ThemeColor) {
     colorGreyL4,
     colorGreyL5,
     colorWhite,
+    colorBlackL3,
   } = theme;
   return {
     token: {
@@ -83,6 +84,11 @@ export function createHermesTheme(theme: ThemeColor) {
         borderRadiusLG: 0,
         controlItemBgActive: colorWhite,
         controlItemBgActiveHover: colorGreyL3,
+      },
+      Form: {
+        itemMarginBottom: 22,
+        labelHeight: 32,
+        labelColor: colorBlackL3,
       },
     },
   } as ThemeConfig;

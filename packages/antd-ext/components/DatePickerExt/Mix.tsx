@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { DatePicker } from 'antd';
 import type { DatePickerProps } from 'antd';
 import { customPopupStyle } from './ThemeHermes';
@@ -18,6 +18,7 @@ import type { DatePickerOutLineExtProps } from './DatePickerOutLineExt';
 import DatePickerOutLineExt from './DatePickerOutLineExt';
 import type { RangePickerOutLineExtProps } from './RangePickerOutLineExt';
 import RangePickerOutLineExt from './RangePickerOutLineExt';
+import { AntdExtGlobalContext } from '../ConfigProviderExt/context';
 
 export type MixinHOCProps = (DatePickerProps | RangePickerProps | QuarterPicker) & {
   theme?: Theme;
@@ -33,13 +34,15 @@ export function MixHOC(props: MixinHOCProps) {
     theme,
     emotioncss: {},
   });
+  const { themeExt } = useContext(AntdExtGlobalContext);
+  const finTheme = theme || themeExt;
 
   const _popupClassName = useMemo(() => {
     return {
       hermes: classNames(customPopupStyle(token, prefix, tokenExt), popupClassName),
       zeus: popupClassName,
       default: popupClassName,
-    }[theme];
+    }[finTheme];
   }, [token, prefix, theme, popupClassName, tokenExt]);
 
   return (

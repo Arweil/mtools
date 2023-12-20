@@ -1,17 +1,16 @@
 import React from 'react';
-import {{{compName}}} from './{{{compName}}}';
-import type { {{{compName}}}Props } from './{{{compName}}}';
+import FormItemExt from './FormItemExt';
+import type { FormItemExtProps } from './FormItemExt';
 import { customStyle as customStyleHermes } from './ThemeHermes';
 import type { Theme } from '../ConfigProviderExt/context';
 import useMapTheme from '../utils/useMapTheme';
 import ThemeWrapper from '../theme/ThemeWrapper';
 
-
-export interface {{{compName}}}MixinProps extends {{{compName}}}Props {
+export interface FormItemExtMixinProps extends FormItemExtProps {
   theme?: Theme;
 }
 
-export default function Mixin(props: {{{compName}}}MixinProps) {
+export default function Mixin(props: FormItemExtMixinProps) {
   const { className, theme, ...restProps } = props;
   const { classes, themeConfig } = useMapTheme({
     className,
@@ -23,7 +22,7 @@ export default function Mixin(props: {{{compName}}}MixinProps) {
 
   return (
     <ThemeWrapper theme={themeConfig} type="Form">
-      <{{{compName}}} className={classes} {...restProps} />
+      <FormItemExt className={classes} {...restProps} />
     </ThemeWrapper>
   );
 }

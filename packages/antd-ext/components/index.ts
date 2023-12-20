@@ -26,7 +26,7 @@ import DatePickerExt, {
 } from './DatePickerExt';
 import { BaseCascaderExt } from './CascaderExt';
 // import ProSearchTable from './ProSearchTable';
-import FormItemExt from './FormItemExt/FormItemExt';
+import { default as FormItemExt } from './FormItemExt';
 
 export * from 'antd';
 import zh_CN from 'antd/es/locale/zh_CN';
