@@ -43,6 +43,10 @@ const style = (
     }
   }
 
+  .${prefixCls}-${mtPrefixCls}-outline-control {
+    flex: 1 1 0;
+  }
+
   &:focus-within:not(.${prefixCls}-${mtPrefixCls}-outline-disabled) {
     border: 1px solid ${token.colorPrimaryActive};
   }
@@ -82,7 +86,14 @@ const OutLineWrapper = React.forwardRef(
             {label}
           </label>
         </Col>
-        <Col className={`${prefixCls}-form-item-control`}>{children}</Col>
+        <Col
+          className={classNames([
+            `${prefixCls}-form-item-control`,
+            `${prefixCls}-${mtPrefixCls}-outline-control`,
+          ])}
+        >
+          {children}
+        </Col>
       </Row>
     );
   },
