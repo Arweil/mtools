@@ -8,6 +8,8 @@ import {
   Card,
   locale,
   Radio,
+  Row,
+  Col,
 } from '@m-tools/antd-ext';
 import type { Theme } from '@m-tools/antd-ext';
 import type { FormLayout } from 'antd/es/form/Form';
@@ -130,6 +132,16 @@ export default function App() {
             </ButtonExt>
           </Form.Item>
         </Form>
+      </Card>
+      <Card title="脱离Form.Item">
+        <Row gutter={10}>
+          <Col span={6}>
+            <RangeNumberOutLineExt label="Label" />
+          </Col>
+          <Col span={6}>
+            <RangeNumberOutLineExt label="Label" disabled value={[100, 200]} />
+          </Col>
+        </Row>
       </Card>
     </ConfigProviderExt>
   );

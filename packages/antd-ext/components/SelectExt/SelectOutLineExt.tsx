@@ -19,6 +19,14 @@ const style = (prefixCls: string) => css`
         inset-inline-start: 0;
       }
     }
+
+    &.${prefixCls}-select-single {
+      height: 30px;
+    }
+  }
+
+  .${prefixCls}-select {
+    width: 100%;
   }
 `;
 

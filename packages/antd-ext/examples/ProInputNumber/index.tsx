@@ -9,6 +9,8 @@ import {
   Radio,
   Card,
   ProInputNumber,
+  Row,
+  Col,
 } from '@m-tools/antd-ext';
 import type { FormLayout } from 'antd/es/form/Form';
 
@@ -101,7 +103,7 @@ export default function App() {
         </Form>
       </Card>
 
-      <Card title="ProInputNumber">
+      <Card title="ProInputNumber" style={{ marginBottom: 24 }}>
         <Form form={form2} layout={layout} {...formItemLayoutB}>
           <Form.Item label="ProInputNumber" name={['form2', 'valueA']} rules={[{ required: true }]}>
             <ProInputNumber placeholder="请输入" needThousandths precision={2} />
@@ -132,6 +134,17 @@ export default function App() {
             </ButtonExt>
           </Form.Item>
         </Form>
+      </Card>
+
+      <Card title="脱离Form.Item">
+        <Row gutter={10}>
+          <Col span={6}>
+            <ProInputNumberOutLine label="Label" allowClear />
+          </Col>
+          <Col span={6}>
+            <ProInputNumberOutLine label="Label" disabled />
+          </Col>
+        </Row>
       </Card>
     </ConfigProviderExt>
   );

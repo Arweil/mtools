@@ -12,8 +12,8 @@ export default function ThemeWrapper(props: ThemeWrapperProps) {
 
   const components = useMemo(() => {
     return Array.isArray(type)
-      ? type.reduce((pre, cur) => ({ ...pre, [cur]: theme[cur] }), {})
-      : theme[type];
+      ? type.reduce((pre, cur) => ({ ...pre, [cur]: (theme.components ?? {})[cur] }), {})
+      : { [type]: (theme.components ?? {})[type] };
   }, [theme, type]);
 
   return (

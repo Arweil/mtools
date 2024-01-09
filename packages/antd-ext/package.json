@@ -12,9 +12,11 @@
     "README.md"
   ],
   "scripts": {
+    "gcomp": "node ./generateFile.mjs",
     "build": "father build"
   },
   "dependencies": {
+    "@ant-design/colors": "7.0.0",
     "@ant-design/cssinjs": "1.18.0",
     "@ant-design/icons": "5.2.6",
     "@ctrl/tinycolor": "3.6.1",
