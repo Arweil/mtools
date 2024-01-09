@@ -1,6 +1,5 @@
 import React from 'react';
 import type { ThemeColor } from '../theme/type';
-import type { ThemeConfig } from 'antd';
 
 export const AntdExtGlobalContext = React.createContext<{
   themeExt: Theme;

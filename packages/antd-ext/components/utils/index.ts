@@ -86,8 +86,8 @@ export function createHermesTheme(theme: ThemeColor) {
         controlItemBgActiveHover: colorGreyL3,
       },
       Form: {
-        itemMarginBottom: 22,
-        labelHeight: 32,
+        itemMarginBottom: 24,
+        labelHeight: 30,
         labelColor: colorBlackL3,
       },
     },

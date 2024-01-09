@@ -16,6 +16,7 @@ export const customStyle = (
   input {
     padding-left: 0;
   }
+
   input.${prefixCls}-input-number-input {
     padding-left: 0;
   }
@@ -23,9 +24,11 @@ export const customStyle = (
   &.${prefixCls}-form-item-focused {
     border-color: ${tokenExt.colorPrimaryL3};
   }
+
   &.${prefixCls}-form-item-has-error {
     border-color: ${tokenExt.colorError};
   }
+
   &.${prefixCls}-form-item-has-warning {
     border-color: ${tokenExt.colorWarning};
   }
@@ -33,6 +36,7 @@ export const customStyle = (
   .${prefixCls}-select-selection-item {
     background-color: ${tokenExt.colorGreyL4};
   }
+
   &:hover:not(
       .${prefixCls}-form-item-has-warning,.${prefixCls}-form-item-has-error,.${prefixCls}-form-item-focused
     ),
@@ -41,6 +45,7 @@ export const customStyle = (
     ) {
     border-color: ${tokenExt.colorPrimaryL3};
   }
+
   &:not(
       .${prefixCls}-form-item-has-warning,.${prefixCls}-form-item-has-error,.${prefixCls}-form-item-focused
     ) {
@@ -48,12 +53,18 @@ export const customStyle = (
     &:focus {
       border-color: ${tokenExt.colorPrimaryL3};
     }
+
     &:focus-within {
       border-color: ${tokenExt.colorPrimaryL3};
     }
   }
+
   .${prefixCls}-form-item-with-help .${prefixCls}-form-item-explain {
     position: absolute;
+  }
+
+  .${prefixCls}-form-item-control-input {
+    min-height: 30px;
   }
 
   .${prefixCls}-form-item-control-input-content {
@@ -70,7 +81,7 @@ export const customStyle = (
   }
 
   .${prefixCls}-picker {
-    padding-left: 0;
+    padding: 3px 11px 3px 0;
     background-color: transparent !important;
   }
 
@@ -80,7 +91,7 @@ export const customStyle = (
 
   .${prefixCls}-select {
     > .${prefixCls}-select-selector {
-      padding-left: 0;
+      padding: 0 4px 0 0;
 
       > .${prefixCls}-select-selection-item {
       }
