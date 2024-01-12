@@ -9,7 +9,7 @@ import * as hermesDefaultColor from '../theme/hermes';
 export interface ConfigProviderExtProps extends ConfigProviderProps {
   children?: React.ReactNode;
   themeExt?: Theme;
-  tokenExt?: ThemeColor;
+  tokenExt?: Partial<ThemeColor>;
 }
 
 export default function ConfigProviderExt(props: ConfigProviderExtProps) {
