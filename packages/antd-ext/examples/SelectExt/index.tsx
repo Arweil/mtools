@@ -10,6 +10,8 @@ import {
   Card,
   SelectOutLineExt,
   Space,
+  Row,
+  Col,
 } from '@m-tools/antd-ext';
 import type { Theme } from '@m-tools/antd-ext';
 import type { FormLayout } from 'antd/es/form/Form';
@@ -165,7 +167,7 @@ export default function App() {
         </Form>
       </Card>
 
-      <Card title="SelectExt">
+      <Card title="SelectExt" style={{ marginBottom: 24 }}>
         <Form form={form2} layout={layout} {...formItemLayoutB}>
           <Form.Item label="SelectExt无选项" name={['form2', 'valueA1']}>
             <SelectExt placeholder="请选择" />
@@ -288,6 +290,28 @@ export default function App() {
             </ButtonExt>
           </Form.Item>
         </Form>
+      </Card>
+
+      <Card title="脱离Form.Item">
+        <Row gutter={10}>
+          <Col span={6}>
+            <SelectOutLineExt label="Label" />
+          </Col>
+          <Col span={6}>
+            <SelectOutLineExt
+              label="Label"
+              options={[
+                { label: 1, value: 1 },
+                { label: 2, value: 2 },
+                { label: 3, value: 3 },
+                { label: 4, value: 4 },
+              ]}
+            />
+          </Col>
+          <Col span={6}>
+            <SelectOutLineExt label="Label" disabled />
+          </Col>
+        </Row>
       </Card>
     </ConfigProviderExt>
   );

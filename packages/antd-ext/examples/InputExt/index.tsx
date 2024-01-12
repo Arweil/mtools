@@ -10,6 +10,8 @@ import {
   InputOutLineExt,
   Radio,
   Card,
+  Row,
+  Col,
 } from '@m-tools/antd-ext';
 import type { FormLayout } from 'antd/es/form/Form';
 
@@ -82,7 +84,7 @@ export default function App() {
         </Form>
       </Card>
 
-      <Card title="InputExt">
+      <Card title="InputExt" style={{ marginBottom: 24 }}>
         <Form form={form2} layout={layout} {...formItemLayoutB}>
           <Form.Item label="InputExt" name={['form2', 'valueA']} rules={[{ required: true }]}>
             <InputExt placeholder="请输入文本" />
@@ -121,6 +123,17 @@ export default function App() {
             </ButtonExt>
           </Form.Item>
         </Form>
+      </Card>
+
+      <Card title="脱离Form.Item">
+        <Row gutter={10}>
+          <Col span={6}>
+            <InputOutLineExt label="Label" allowClear />
+          </Col>
+          <Col span={6}>
+            <InputOutLineExt label="Label" disabled />
+          </Col>
+        </Row>
       </Card>
     </ConfigProviderExt>
   );

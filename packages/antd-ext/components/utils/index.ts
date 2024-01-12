@@ -2,6 +2,9 @@ import type { ThemeConfig } from 'antd';
 import useMapTheme from './useMapTheme';
 import usePrefixCls from './usePrefixCls';
 import type { ThemeColor } from '../theme/type';
+import { transPlacement2DropdownAlign } from 'antd/es/date-picker/util';
+import type { DirectionType } from 'antd/es/config-provider';
+import type { SelectCommonPlacement } from 'antd/es/_util/motion';
 
 export function mergeTheme(theme: ThemeConfig, customTheme: ThemeConfig) {
   const { token = {}, components = {}, ...restProps } = customTheme;
@@ -94,4 +97,14 @@ export function createHermesTheme(theme: ThemeColor) {
   } as ThemeConfig;
 }
 
-export { useMapTheme, usePrefixCls };
+function transPlacement2DropdownAlign4Outline(
+  direction: DirectionType,
+  offset: number[],
+  placement?: SelectCommonPlacement,
+) {
+  const d = transPlacement2DropdownAlign(direction, placement);
+  d.offset = offset;
+  return d;
+}
+
+export { useMapTheme, usePrefixCls, transPlacement2DropdownAlign4Outline };

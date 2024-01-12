@@ -1,3 +1,7 @@
+## 0.8.2
+1. 修复了 SelectOutLineExt 组件的样式问题
+2. 新增了 OutLine 相关组件的脱离 Form.Item 示例
+
 ## 0.8.1
 1. 修复了 RangePickerOutLineExt 的样式问题
 2. 修复了 LayoutExt 的样式问题
