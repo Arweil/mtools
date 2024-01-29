@@ -15,6 +15,7 @@ export default function TableExtFrontEnd(props: {
   rowSelection: boolean;
   loadWithNoData: boolean;
   noLoading: boolean;
+  cellEllipsisRows: number;
 }) {
   const {
     fixedNameLeft,
@@ -26,6 +27,7 @@ export default function TableExtFrontEnd(props: {
     rowSelection,
     loadWithNoData,
     noLoading,
+    cellEllipsisRows,
   } = props;
   const [dataSource, setDataSource] = useState<IDataSource[]>([]);
   const [loading, setLoading] = useState(false);
@@ -116,6 +118,7 @@ export default function TableExtFrontEnd(props: {
         loading={noLoading ? undefined : loading}
         columns={cols}
         dataSource={dataSource}
+        cellEllipsisRows={cellEllipsisRows}
         scroll={scroll ? { x: 1000 } : {}}
         emptyDesc={empty ? '自定义的为空文案' : undefined}
         rowSelection={

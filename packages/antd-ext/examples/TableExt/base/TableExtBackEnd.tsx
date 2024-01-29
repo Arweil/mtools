@@ -15,6 +15,7 @@ export default function TableExtBackEnd(props: {
   rowSelection: boolean;
   loadWithNoData: boolean;
   noLoading: boolean;
+  cellEllipsisRows: number;
 }) {
   const {
     fixedNameLeft,
@@ -26,6 +27,7 @@ export default function TableExtBackEnd(props: {
     rowSelection,
     loadWithNoData,
     noLoading,
+    cellEllipsisRows,
   } = props;
 
   const [dataSource, setDataSource] = useState<IDataSource[]>([]);
@@ -137,6 +139,7 @@ export default function TableExtBackEnd(props: {
         dataSource={dataSource}
         scroll={scroll ? { x: 1000 } : {}}
         emptyDesc={empty ? '自定义的为空文案' : undefined}
+        cellEllipsisRows={cellEllipsisRows}
         pagination={{
           current,
           pageSize,

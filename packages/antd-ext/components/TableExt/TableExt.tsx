@@ -1,9 +1,10 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Table, Empty, Typography, Skeleton } from 'antd';
+import { Table, Empty, Skeleton, Typography } from 'antd';
 import { css } from '@emotion/css';
 import type { TableProps, ColumnType, TablePaginationConfig } from 'antd/es/table';
 import type { TooltipProps } from 'antd/es/tooltip';
 import type { SpinProps } from 'antd/lib/spin';
+import TypographyRowOne from './TypographyRowOne';
 
 const emptyClass = css`
   color: #8f959e;
@@ -34,6 +35,7 @@ export interface TableExtProps<RecordType extends { $$mock?: boolean } = any>
   emptyDesc?: string;
   useSkeleton?: boolean;
   useEmpty?: boolean;
+  cellEllipsisRows?: number;
   summary?: (data: readonly RecordType[], fetching: boolean) => React.ReactNode;
 }
 
@@ -100,6 +102,7 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
     pagination,
     rowSelection,
     summary,
+    cellEllipsisRows = 1,
     ...restProps
   } = props;
 
@@ -204,11 +207,13 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
                 return '-';
               }
 
-              return (
+              return cellEllipsisRows === 1 ? (
+                <TypographyRowOne tooltipProps={tdTooltip}>{value}</TypographyRowOne>
+              ) : (
                 <Typography.Paragraph
                   style={{ marginBottom: 0 }}
                   ellipsis={{
-                    rows: 2,
+                    rows: cellEllipsisRows,
                     expandable: false,
                     tooltip: {
                       children: value,
@@ -227,7 +232,7 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
     });
 
     return cols;
-  }, [columns, fetching, tdTooltip]);
+  }, [cellEllipsisRows, columns, fetching, tdTooltip]);
 
   const EmptyText = useMemo(
     () => <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={emptyDesc} />,

@@ -15,6 +15,7 @@ import {
   Row,
   Col,
   locale,
+  InputNumber,
 } from '@m-tools/antd-ext';
 import type { RadioChangeEvent } from 'antd/es/radio';
 
@@ -43,6 +44,7 @@ export default function App() {
   const [radioVal, setRadioVal] = useState('TableExtBackEnd');
   const [loadWithNoData, setLoadWithNoData] = useState(false);
   const [noLoading, setNoLoading] = useState(false);
+  const [cellEllipsisRows, setCellEllipsisRows] = useState<number>(1);
 
   const onChangeRadio = useCallback((e: RadioChangeEvent) => {
     setRadioVal(e.target.value);
@@ -75,6 +77,9 @@ export default function App() {
         <Form.Item label="No Loading">
           <Switch checked={noLoading} onChange={() => setNoLoading(!noLoading)} />
         </Form.Item>
+        <Form.Item label="CellEllipsisRows">
+          <InputNumber onChange={(value: number) => setCellEllipsisRows(value)} />
+        </Form.Item>
       </Form>
 
       <Divider />
@@ -105,6 +110,7 @@ export default function App() {
               rowSelection={rowSelection}
               loadWithNoData={loadWithNoData}
               noLoading={noLoading}
+              cellEllipsisRows={cellEllipsisRows}
             />
           </Col>
           <Col span={12}>
@@ -118,6 +124,7 @@ export default function App() {
               rowSelection={rowSelection}
               loadWithNoData={loadWithNoData}
               noLoading={noLoading}
+              cellEllipsisRows={cellEllipsisRows}
             />
           </Col>
         </Row>
@@ -134,6 +141,7 @@ export default function App() {
               rowSelection={rowSelection}
               loadWithNoData={loadWithNoData}
               noLoading={noLoading}
+              cellEllipsisRows={cellEllipsisRows}
             />
           </Col>
           <Col span={12}>
@@ -147,6 +155,7 @@ export default function App() {
               rowSelection={rowSelection}
               loadWithNoData={loadWithNoData}
               noLoading={noLoading}
+              cellEllipsisRows={cellEllipsisRows}
             />
           </Col>
         </Row>

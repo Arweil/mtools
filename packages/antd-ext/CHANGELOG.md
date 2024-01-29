@@ -1,3 +1,7 @@
+## 0.8.3
+1. 优化了 TableExt 组件单元格默认展示一行，超出省略
+2. 新增了 TableExt 组件，可以设置默认展示的行数
+
 ## 0.8.2
 1. 修复了 SelectOutLineExt 组件的样式问题
 2. 新增了 OutLine 相关组件的脱离 Form.Item 示例
