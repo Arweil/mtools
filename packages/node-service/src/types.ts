@@ -1,4 +1,4 @@
-import type { Express } from 'express';
+import type { Express, Request } from 'express';
 import type { CheerioAPI } from 'cheerio';
 
 type HttpProxyMiddlewareOptionsFilter = import('http-proxy-middleware').Filter;
@@ -44,7 +44,7 @@ export type NodeServiceConfig = {
   // 可以动态修改HTML标签在返回html的时候
   // 有时候我们往往希望注入一些运行时才存在的，必要的变量
   // 或者做一些页面配置化的时候
-  injectHtml?: ($: CheerioAPI) => void;
+  injectHtml?: ($: CheerioAPI, req: Request) => void;
   // Content-Security-Policy 配置
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP

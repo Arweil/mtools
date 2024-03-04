@@ -7,7 +7,6 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import * as cheerio from 'cheerio';
-import type { CheerioAPI } from 'cheerio';
 import proxy from './proxy';
 import { getConfig, appDirectory } from './utils';
 
@@ -102,7 +101,7 @@ app.get(baseRouter + '/*', (req, res) => {
   }
 
   if (injectHtml) {
-    injectHtml($);
+    injectHtml($, req);
   }
 
   if (CSP) {
