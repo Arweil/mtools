@@ -1,5 +1,6 @@
 import { ConfigProvider } from 'antd';
-import type { ConfigProviderProps } from 'antd/es/config-provider';
+import type { ConfigProviderProps, ThemeConfig } from 'antd/es/config-provider';
+import type { Theme as AntdTheme } from 'antd/es/config-provider/context';
 import React, { useMemo } from 'react';
 import GlobalStyle from '../GlobalStyle';
 import * as hermesDefaultColor from '../theme/hermes';
@@ -35,6 +36,15 @@ export default function ConfigProviderExt(props: ConfigProviderExtProps) {
   );
 }
 
-ConfigProviderExt.config = ConfigProvider.config;
+export interface GlobalConfigProps {
+  prefixCls?: string;
+  iconPrefixCls?: string;
+  theme?: AntdTheme | ThemeConfig;
+  holderRender?: (children: React.ReactNode) => React.ReactNode;
+}
+
+ConfigProviderExt.config = (config: GlobalConfigProps) => {
+  return ConfigProvider.config(config);
+};
 
 ConfigProviderExt.useConfig = ConfigProvider.useConfig;
