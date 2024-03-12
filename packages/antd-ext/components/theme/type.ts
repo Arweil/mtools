@@ -6,12 +6,13 @@ export interface ThemeColor {
   colorSuccess: string;
   colorWarning: string;
   colorError: string;
-
-  colorWeakSuccess: string;
-  colorWeakWarning: string;
-  colorWeakError: string;
+  colorOrange: string;
 
   colorWeakPrimary: string;
+  colorWeakSuccess: string;
+  colorWeakWarning: string;
+  colorWeakNotice: string;
+  colorWeakError: string;
 
   colorBlackL1: string;
   colorBlackL2: string;

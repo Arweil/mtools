@@ -1,13 +1,13 @@
-import React, { useContext, useMemo } from 'react';
+import { useTheme } from '@emotion/react';
+import type { GlobalToken } from 'antd';
 import { ConfigProvider, theme } from 'antd';
 import classNames from 'classnames';
-import { AntdExtGlobalContext } from '../ConfigProviderExt/context';
-import type { GlobalToken } from 'antd';
-import type { Theme } from '../ConfigProviderExt/context';
-import type { ThemeColor } from '../theme/type';
+import React, { useContext, useMemo } from 'react';
 import { createHermesTheme, mergeTheme } from '.';
-import { useTheme } from '@emotion/react';
-import * as hermesToken from '../theme/hermes';
+import type { Theme } from '../ConfigProviderExt/context';
+import { AntdExtGlobalContext } from '../ConfigProviderExt/context';
+import type { ThemeColor } from '../theme/type';
+import useTokenExt from './useTokenExt';
 
 const { useToken } = theme;
 
@@ -33,14 +33,22 @@ export const DefaultThemeWithMemo = React.memo(function DefaultTheme(props: Them
 });
 
 export default function useMapTheme(props: MapTheme) {
+  // antd tokens
   const { token } = useToken();
+  // ConfigProvider theme
   const a = useTheme();
-  const { themeExt, mergedTokenExt } = useContext(AntdExtGlobalContext);
+  // 自定义主题 'zeus' | 'hermes' | 'default'，以及对应主题合并后的自定义token
+  // 没有用 ConfigProvider 时，mergedTokenExt 为 {}
+  const { themeExt } = useContext(AntdExtGlobalContext);
 
   const { getPrefixCls } = useContext(ConfigProvider.ConfigContext);
+
+  // customTheme: 组件级别theme
   const { className, theme: customTheme, emotioncss, themeWrap } = props;
 
   const finTheme = customTheme || themeExt;
+
+  const tokenExt = useTokenExt(finTheme);
 
   const prefix = useMemo(getPrefixCls, [getPrefixCls]);
 
@@ -48,18 +56,16 @@ export default function useMapTheme(props: MapTheme) {
     () =>
       ({
         hermes: classNames(className, [
-          emotioncss &&
-            emotioncss.hermes &&
-            emotioncss.hermes(token, prefix, mergedTokenExt || hermesToken),
+          emotioncss && emotioncss.hermes && emotioncss.hermes(token, prefix, tokenExt),
         ]),
         zeus: classNames(className, [
-          emotioncss && emotioncss.zeus && emotioncss.zeus(token, prefix, mergedTokenExt),
+          emotioncss && emotioncss.zeus && emotioncss.zeus(token, prefix, tokenExt),
         ]),
         default: classNames(className, [
-          emotioncss && emotioncss.default && emotioncss.default(token, prefix, mergedTokenExt),
+          emotioncss && emotioncss.default && emotioncss.default(token, prefix, tokenExt),
         ]),
       }[finTheme]),
-    [className, emotioncss, token, prefix, mergedTokenExt, finTheme],
+    [className, emotioncss, token, prefix, tokenExt, finTheme],
   );
 
   const ThemeWrapper = useMemo(
@@ -74,11 +80,11 @@ export default function useMapTheme(props: MapTheme) {
 
   const themeConfig = useMemo(() => {
     return {
-      hermes: mergeTheme(createHermesTheme(mergedTokenExt || hermesToken), a),
-      zeus: {},
+      hermes: mergeTheme(createHermesTheme(tokenExt), a),
+      zeus: mergeTheme(createHermesTheme(tokenExt), a),
       default: {},
     }[finTheme];
-  }, [finTheme, mergedTokenExt, a]);
+  }, [finTheme, tokenExt, a]);
 
   return {
     classes,
@@ -86,7 +92,7 @@ export default function useMapTheme(props: MapTheme) {
     theme: finTheme,
     themeConfig,
     token,
-    tokenExt: mergedTokenExt || hermesToken,
+    tokenExt,
     prefix,
   };
 }

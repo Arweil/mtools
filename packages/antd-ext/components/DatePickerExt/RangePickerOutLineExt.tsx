@@ -1,8 +1,9 @@
-import React from 'react';
-import OutLineWrapper from '../OutLineWrapper';
-import type { RangePickerProps } from './type';
 import { css } from '@emotion/css';
 import { DatePicker } from 'antd';
+import React from 'react';
+import type { Theme } from '../ConfigProviderExt/context';
+import OutLineWrapper from '../OutLineWrapper';
+import type { RangePickerProps } from './type';
 
 const style = (prefixCls: string) => css`
   padding: 0 13px;
@@ -31,19 +32,21 @@ const style = (prefixCls: string) => css`
 
 export type RangePickerOutLineExtProps = RangePickerProps & {
   label: string;
+  theme?: Theme;
 };
 
 export default function RangePickerOutLineExt(props: RangePickerOutLineExtProps) {
-  const { label, ...restProps } = props;
+  const { label, theme, ...restProps } = props;
 
   return (
     <OutLineWrapper
       label={label}
       injectStyle={style}
       disabled={restProps.disabled}
+      theme={theme}
       isRequired={restProps['aria-required'] === 'true'}
     >
-      <DatePicker.RangePicker {...restProps} bordered={false} />
+      <DatePicker.RangePicker {...restProps} variant="borderless" />
     </OutLineWrapper>
   );
 }
