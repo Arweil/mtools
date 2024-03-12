@@ -12,7 +12,7 @@
     "build": "lerna run build",
     "changelog": "lerna-changelog",
     "deploy:docs": "npm run site:build && gh-pages -d dist",
-    "prepare": "husky install && lerna bootstrap",
+    "prepare": "husky install && lerna bootstrap && dumi setup",
     "site": "dumi dev",
     "site:build": "dumi build",
     "test": "lerna run test"
@@ -42,7 +42,6 @@
   "engines": {
     "node": ">=14.0.0"
   },
-  "dependencies": {},
   "devDependencies": {
     "@babel/cli": "^7.14.5",
     "@babel/core": "^7.14.6",
@@ -52,8 +51,7 @@
     "@types/jest": "^26.0.23",
     "@umijs/fabric": "^2.14.1",
     "commitlint": "^17.6.3",
-    "dumi": "^1.1.18",
-    "dumi-theme-default": "^1.1.1",
+    "dumi": "^2.2.17",
     "eslint": "^7.32.0",
     "gh-pages": "^5.0.0",
     "husky": "^8.0.3",
@@ -66,5 +64,9 @@
     "ts-node": "^10.2.1",
     "tslib": "^2.3.0",
     "typescript": "^4.3.3"
+  },
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   }
 }

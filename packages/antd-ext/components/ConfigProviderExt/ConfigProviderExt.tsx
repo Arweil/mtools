@@ -1,10 +1,11 @@
-import React, { useMemo } from 'react';
 import { ConfigProvider } from 'antd';
 import type { ConfigProviderProps } from 'antd/es/config-provider';
-import { AntdExtGlobalContext } from './context';
-import type { Theme } from './context';
-import type { ThemeColor } from '../theme/type';
+import React, { useMemo } from 'react';
+import GlobalStyle from '../GlobalStyle';
 import * as hermesDefaultColor from '../theme/hermes';
+import type { ThemeColor } from '../theme/type';
+import type { Theme } from './context';
+import { AntdExtGlobalContext } from './context';
 
 export interface ConfigProviderExtProps extends ConfigProviderProps {
   children?: React.ReactNode;
@@ -13,7 +14,7 @@ export interface ConfigProviderExtProps extends ConfigProviderProps {
 }
 
 export default function ConfigProviderExt(props: ConfigProviderExtProps) {
-  const { children, themeExt = 'default', tokenExt, ...restConfigProviderProps } = props;
+  const { children, themeExt = 'hermes', tokenExt, ...restConfigProviderProps } = props;
 
   // 合并后的token
   const mergedTokenExt = useMemo(() => {
@@ -27,6 +28,7 @@ export default function ConfigProviderExt(props: ConfigProviderExtProps) {
   return (
     <ConfigProvider {...restConfigProviderProps}>
       <AntdExtGlobalContext.Provider value={{ themeExt, mergedTokenExt }}>
+        <GlobalStyle />
         {children}
       </AntdExtGlobalContext.Provider>
     </ConfigProvider>
@@ -34,3 +36,5 @@ export default function ConfigProviderExt(props: ConfigProviderExtProps) {
 }
 
 ConfigProviderExt.config = ConfigProvider.config;
+
+ConfigProviderExt.useConfig = ConfigProvider.useConfig;

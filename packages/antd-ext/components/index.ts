@@ -1,38 +1,38 @@
+import en_US from 'antd/es/locale/en_US';
+import zh_CN from 'antd/es/locale/zh_CN';
 import ButtonExt, { BaseButtonExt } from './ButtonExt';
+import { BaseCascaderExt } from './CascaderExt';
 import ConfigProviderExt from './ConfigProviderExt';
-import TableExt, { BaseTableExt } from './TableExt';
-import {
-  MixinInputExt as InputExt,
-  MixinInputOutLineExt as InputOutLineExt,
-  BaseInputExt,
-} from './InputExt';
-import { BaseProInputNumber, ProInputNumberOutLine, ProInputNumber } from './ProInputNumber';
-import {
-  MixinSelectExt as SelectExt,
-  MixinSelectOutLineExt as SelectOutLineExt,
-  BaseSelectExt,
-} from './SelectExt';
-import DrawerExt, { BaseDrawerExt } from './DrawerExt';
-import {
-  MixinRangeNumberExt as RangeNumberExt,
-  MixinRangeNumberOutLineExt as RangeNumberOutLineExt,
-  BaseRangeNumberExt,
-} from './RangeNumberExt';
-import RadioGroupExt from './RadioGroupExt';
-import LayoutExt, { BaseLayoutExt } from './LayoutExt';
+import type { Theme } from './ConfigProviderExt/context';
 import DatePickerExt, {
   MixinDatePickerOutLine as DatePickerOutLineExt,
   MixinRangePickerOutLine as RangePickerOutLineExt,
 } from './DatePickerExt';
-import { BaseCascaderExt } from './CascaderExt';
+import DrawerExt, { BaseDrawerExt } from './DrawerExt';
 // import ProSearchTable from './ProSearchTable';
 import { default as FormItemExt } from './FormItemExt';
+import {
+  BaseInputExt,
+  MixinInputExt as InputExt,
+  MixinInputOutLineExt as InputOutLineExt,
+} from './InputExt';
+import LayoutExt, { BaseLayoutExt } from './LayoutExt';
+import notificationExt from './Notification';
+import { BaseProInputNumber, ProInputNumber, ProInputNumberOutLine } from './ProInputNumber';
+import RadioGroupExt from './RadioGroupExt';
+import {
+  BaseRangeNumberExt,
+  MixinRangeNumberExt as RangeNumberExt,
+  MixinRangeNumberOutLineExt as RangeNumberOutLineExt,
+} from './RangeNumberExt';
+import {
+  BaseSelectExt,
+  MixinSelectExt as SelectExt,
+  MixinSelectOutLineExt as SelectOutLineExt,
+} from './SelectExt';
+import TableExt, { BaseTableExt } from './TableExt';
 
 export * from 'antd';
-import zh_CN from 'antd/es/locale/zh_CN';
-import en_US from 'antd/es/locale/en_US';
-import type { Theme } from './ConfigProviderExt/context';
-
 export {
   BaseButtonExt,
   BaseTableExt,
@@ -63,6 +63,7 @@ export {
   RangeNumberOutLineExt,
   ProInputNumberOutLine,
   Theme,
+  notificationExt,
 };
 
 export const locale = {

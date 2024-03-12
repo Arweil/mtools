@@ -23,7 +23,7 @@
     "noUnusedLocals": true,
     "outDir": "lib",
     "paths": {
-      "@": ["src"]
+      "@@/*": [".dumi/tmp/*"]
     },
     "pretty": true,
     "removeComments": true,
