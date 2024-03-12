@@ -1,3 +1,14 @@
+## 0.9.0
+1. 新增了 NotificationExt 组件
+2. 库版本升级
+  a. @ant-design/colors@7.0.2
+  b. @ant-design/cssinjs@1.18.2
+  c. antd@5.13.2
+3. peerDependencies 升级
+  a. React 版本依赖升级到 v18
+  b. 更新了 dumi 至 v2 版本，用于升级 React 至 v18 版，[antd 对 React v17 兼容问题](https://github.com/ant-design/ant-design/issues/47732)
+
+
 ## 0.8.3
 1. 优化了 TableExt 组件单元格默认展示一行，超出省略
 2. 新增了 TableExt 组件，可以设置默认展示的行数

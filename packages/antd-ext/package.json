@@ -16,14 +16,14 @@
     "build": "father build"
   },
   "dependencies": {
-    "@ant-design/colors": "7.0.0",
-    "@ant-design/cssinjs": "1.18.0",
+    "@ant-design/colors": "7.0.2",
+    "@ant-design/cssinjs": "1.18.2",
     "@ant-design/icons": "5.2.6",
     "@ctrl/tinycolor": "3.6.1",
     "@emotion/css": "11.10.6",
     "@emotion/hash": "0.9.0",
     "@emotion/react": "11.10.6",
-    "antd": "5.12.1",
+    "antd": "5.13.2",
     "classnames": "2.3.2"
   },
   "devDependencies": {
@@ -35,8 +35,8 @@
     "typescript": "4.4.2"
   },
   "peerDependencies": {
-    "react": ">=16.9.0",
-    "react-dom": ">=16.9.0"
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
   },
   "publishConfig": {
     "access": "public"

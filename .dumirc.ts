@@ -3,17 +3,17 @@ import { defineConfig } from 'dumi';
 import { resolve } from 'path';
 
 export default defineConfig({
-  title: 'NW-WOW',
-  mode: 'site',
+  themeConfig: {
+    name: 'NW-WOW',
+    nav: [
+      { title: 'antd-ext', link: '/antd-ext' },
+      { title: 'GitHub', link: 'https://github.com/Arweil/mtools' },
+    ],
+  },
   exportStatic: {},
   base: '/mtools',
   publicPath: '/mtools/',
   hash: true,
-  navs: [
-    null,
-    { title: 'GitHub', path: 'https://github.com/Arweil/mtools' },
-    { title: '更新日志', path: 'https://github.com/Arweil/mtools/releases' },
-  ],
   alias: {
     '@m-tools/antd-ext': resolve('./', 'packages/antd-ext/components/index.ts'),
   },

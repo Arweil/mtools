@@ -15,5 +15,7 @@ packages/antd-ext-example/*
 packages/mt-template-admin-hermes/*
 
 .umi
-.umi-production
+.dumi/tmp
+.dumi/tmp-test
+.dumi/tmp-production
 .idea/
