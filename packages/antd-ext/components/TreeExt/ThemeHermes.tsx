@@ -72,6 +72,16 @@ export const customStyle = (
       }
     }
 
+    // more按钮
+    .${prefixCls}-more-btn {
+      display: none;
+    }
+    .${prefixCls}-tree-treenode {
+      &:hover .${prefixCls}-more-btn {
+        display: block;
+      }
+    }
+
     // more的下拉菜单项
     .${prefixCls}-dropdown {
       .${prefixCls}-dropdown-menu {

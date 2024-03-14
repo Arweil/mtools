@@ -1,4 +1,3 @@
-// import { usePrefixCls } from '../utils';
 import { EllipsisOutlined } from '@ant-design/icons';
 import type { DropDownProps, TreeDataNode, TreeProps } from 'antd';
 import { Dropdown, Row, Tree } from 'antd';
@@ -7,6 +6,7 @@ import type { MenuItemType } from 'antd/es/menu/hooks/useItems';
 import classNames from 'classnames';
 import React, { useMemo, useRef } from 'react';
 import ButtonExt from '../ButtonExt/ButtonExt';
+import { usePrefixCls } from '../utils';
 export interface TreeExtProps extends TreeProps {
   treeData: TreeDataNodeExt[];
 }
@@ -15,10 +15,9 @@ export type TreeDataNodeExt = TreeDataNode & {
 };
 
 export default function TreeExt(props: TreeExtProps) {
-  // const { prefixCls, token, mtPrefixCls } = usePrefixCls();
+  const { prefixCls, token, mtPrefixCls } = usePrefixCls();
   const treeRef = useRef(null);
   const {
-    prefixCls: customizePrefixCls,
     className,
     blockNode = true,
     showIcon = true,
@@ -61,7 +60,12 @@ export default function TreeExt(props: TreeExtProps) {
             <Row justify={'space-between'} align="middle">
               {tree.title}
               <Dropdown {...ddProps}>
-                <ButtonExt onClick={e => e.stopPropagation()} size="small" type="text">
+                <ButtonExt
+                  className={prefixCls + '-more-btn'}
+                  onClick={e => e.stopPropagation()}
+                  size="small"
+                  type="text"
+                >
                   <EllipsisOutlined />
                 </ButtonExt>
               </Dropdown>
@@ -71,7 +75,7 @@ export default function TreeExt(props: TreeExtProps) {
       }
       return tree;
     });
-  }, [treeData]);
+  }, [treeData, prefixCls]);
 
   const treeClassName = classNames(showLine ? '' : 'not-showline', blockNode ? 'is-blockNode' : '');
 
