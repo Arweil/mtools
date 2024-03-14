@@ -33,6 +33,7 @@ export default function App() {
       message: `成功提示`,
       description: `成功提示副标题文案${num}`,
       needBtn: true,
+      className: 'a',
     });
   }, []);
 
