@@ -32,6 +32,7 @@ import {
 } from './SelectExt';
 import TableExt, { BaseTableExt } from './TableExt';
 import UploadExt, { BaseUploadExt } from './UploadExt';
+import { BaseTreeExt, default as TreeExt } from './TreeExt';
 
 export * from 'antd';
 export {
@@ -51,6 +52,8 @@ export {
   DrawerExt,
   InputExt,
   TableExt,
+  BaseTreeExt,
+  TreeExt,
   SelectExt,
   RangeNumberExt,
   LayoutExt,

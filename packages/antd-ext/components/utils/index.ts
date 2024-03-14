@@ -94,6 +94,14 @@ export function createHermesTheme(theme: ThemeColor) {
         labelColor: colorBlackL3,
       },
       Upload: {},
+      Tree: {
+        // controlItemBgHover: '#EBF4FF', // tmp 宙斯主色的8%透明度
+        titleHeight: 28,
+        nodeHoverBg: '#EBF4FF',
+      },
+      Dropdown: {
+        controlItemBgHover: '#EBF4FF',
+      },
     },
   } as ThemeConfig;
 }
