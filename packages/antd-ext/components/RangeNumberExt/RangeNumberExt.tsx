@@ -1,12 +1,12 @@
-import React, { useCallback, useContext, useMemo, useState } from 'react';
+import type { ValueType } from '@rc-component/mini-decimal';
 import type { InputNumberProps } from 'antd';
 import { InputNumber, Space } from 'antd';
 import { FormItemInputContext } from 'antd/es/form/context';
-import { SwapRightOutlined } from '../icon';
 import classNames from 'classnames';
-import { getRangeNumberStyle } from './style';
+import React, { useCallback, useContext, useMemo, useState } from 'react';
+import { SwapRightOutlined } from '../icon';
 import { usePrefixCls } from '../utils';
-import type { ValueType } from '@rc-component/mini-decimal';
+import { getRangeNumberStyle } from './style';
 
 export type RangeNumberVal = [number | null, number | null];
 
@@ -42,6 +42,7 @@ export default function RangeNumberExt(props: RangeNumberExtProps) {
 
   const { status: contextStatus } = useContext(FormItemInputContext);
 
+  console.log(token.colorPrimary);
   const classname = useMemo(
     () =>
       classNames(
@@ -91,7 +92,7 @@ export default function RangeNumberExt(props: RangeNumberExtProps) {
     const finVal: RangeNumberVal = [...val.sort((a, b) => (a || 0) - (b || 0))];
     setVal(finVal);
     onChange && onChange(finVal);
-  }, [val]);
+  }, [val, onChange]);
 
   return (
     <div className={classname}>
@@ -100,7 +101,7 @@ export default function RangeNumberExt(props: RangeNumberExtProps) {
           {...beforeInputNumberProps}
           disabled={disabled}
           placeholder={placeholder && placeholder[0]}
-          bordered={false}
+          variant="borderless"
           value={value !== undefined ? value[0] : val[0]}
           onChange={onBeforeInputNumberChange}
           onBlur={onBlur}
@@ -112,7 +113,7 @@ export default function RangeNumberExt(props: RangeNumberExtProps) {
           {...afterInputNumberProps}
           disabled={disabled}
           placeholder={placeholder && placeholder[1]}
-          bordered={false}
+          variant="borderless"
           value={value !== undefined ? value[1] : val[1]}
           onChange={onAfterInputNumberChange}
           onBlur={onBlur}

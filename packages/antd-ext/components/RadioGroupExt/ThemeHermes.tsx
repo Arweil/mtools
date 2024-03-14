@@ -1,6 +1,6 @@
-import type React from 'react';
-import type { GlobalToken } from 'antd';
 import { css } from '@emotion/css';
+import type { GlobalToken } from 'antd';
+import type React from 'react';
 import type { ThemeColor } from '../theme/type';
 
 export interface ThemeProps {
@@ -23,6 +23,7 @@ export const customStyle = (
   .${prefixCls}-radio-button-wrapper {
     min-width: 80px;
     color: ${tokenExt.colorBlackL2};
+    text-align: center;
     background: ${tokenExt.colorGreyL5};
     border: 0;
 

@@ -65,7 +65,7 @@ export const getRangeNumberStyle = (token: GlobalToken, prefixCls: string) => cs
     }
 
     &:focus-within {
-      border: 1px solid #2d64e5;
+      border: 1px solid ${token.colorPrimary};
     }
   }
 

@@ -1,12 +1,12 @@
-import type { ReactNode } from 'react';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Layout, Menu } from 'antd';
-import { MenuFoldOutlined, MenuUnfoldOutlined, CloseOutlined } from '../icon';
-import type { ItemType, MenuItemGroupType, SubMenuType } from 'antd/es/menu/hooks/useItems';
-import { usePrefixCls } from '../utils';
 import { css } from '@emotion/css';
 import type { GlobalToken } from 'antd';
+import { Layout, Menu } from 'antd';
+import type { ItemType, MenuItemGroupType, SubMenuType } from 'antd/es/menu/hooks/useItems';
 import classNames from 'classnames';
+import type { ReactNode } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { CloseOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '../icon';
+import { usePrefixCls } from '../utils';
 
 const { Header, Content, Sider } = Layout;
 
@@ -250,7 +250,7 @@ export default function AppLayoutExt<IMenuInfo extends IBaseMenuInfo>(
       menu && menu.length > 0
         ? menu.map(item => bindMenu({ isGroup: needMenuGroup, menu: item }))
         : undefined,
-    [menu],
+    [menu, bindMenu, needMenuGroup],
   );
 
   const onCollapse = useCallback(() => {

@@ -1,15 +1,24 @@
+import { css } from '@emotion/css';
+import type { GlobalToken } from 'antd';
 import React from 'react';
+import type { Theme } from '../ConfigProviderExt/context';
+import ThemeWrapper from '../theme/ThemeWrapper';
+import type { ThemeColor } from '../theme/type';
 import { useMapTheme } from '../utils';
 import type { ProInputNumberProps } from './ProInputNumber';
 import ProInputNumber from './ProInputNumber';
-import type { Theme } from '../ConfigProviderExt/context';
-import ThemeWrapper from '../theme/ThemeWrapper';
 import type { ProInputNumberOutLineProps } from './ProInputNumberOutLine';
 import ProInputNumberOutLine from './ProInputNumberOutLine';
 
 export interface ProInputNumberMixinProps extends ProInputNumberProps {
   theme?: Theme;
 }
+
+const customStyle = (token: GlobalToken, prefixCls: string, tokenExt: Partial<ThemeColor>) => css`
+  .${prefixCls}-input {
+    color: ${tokenExt.colorBlackL1};
+  }
+`;
 
 export function MixinProInputNumber(props: ProInputNumberMixinProps) {
   const { className, theme, ...restProps } = props;
@@ -35,7 +44,10 @@ export function MixinProInputNumberOutLine(props: ProInputNumberOutLineMixinProp
   const { classes, themeConfig } = useMapTheme({
     className,
     theme,
-    emotioncss: {},
+    emotioncss: {
+      hermes: customStyle,
+      zeus: customStyle,
+    },
   });
 
   return (

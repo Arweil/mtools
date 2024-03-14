@@ -1,10 +1,10 @@
-import React, { useMemo } from 'react';
-import { Radio } from 'antd';
 import type { RadioGroupProps } from 'antd';
-import { customStyle as customStyleHermes } from './ThemeHermes';
+import { Radio } from 'antd';
+import React, { useMemo } from 'react';
 import type { Theme } from '../ConfigProviderExt/context';
-import useMapTheme from '../utils/useMapTheme';
 import ThemeWrapper from '../theme/ThemeWrapper';
+import useMapTheme from '../utils/useMapTheme';
+import { customStyle as customStyleHermes } from './ThemeHermes';
 
 export interface RadioGroupExtMixinProps extends RadioGroupProps {
   theme?: Theme;
@@ -18,6 +18,7 @@ export default function Mixin(props: RadioGroupExtMixinProps) {
     themeWrap: {},
     emotioncss: {
       hermes: customStyleHermes,
+      zeus: customStyleHermes,
     },
   });
 
@@ -25,6 +26,10 @@ export default function Mixin(props: RadioGroupExtMixinProps) {
     () =>
       ({
         hermes: {
+          optionType: 'button',
+          buttonStyle: 'solid',
+        } as RadioGroupProps,
+        zeus: {
           optionType: 'button',
           buttonStyle: 'solid',
         } as RadioGroupProps,

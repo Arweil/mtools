@@ -1,18 +1,21 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Table, Empty, Skeleton, Typography } from 'antd';
 import { css } from '@emotion/css';
-import type { TableProps, ColumnType, TablePaginationConfig } from 'antd/es/table';
+import type { GlobalToken } from 'antd';
+import { Empty, Skeleton, Table, Typography } from 'antd';
+import type { ColumnType, TablePaginationConfig, TableProps } from 'antd/es/table';
 import type { TooltipProps } from 'antd/es/tooltip';
 import type { SpinProps } from 'antd/lib/spin';
+import classNames from 'classnames';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { usePrefixCls } from '../utils';
 import TypographyRowOne from './TypographyRowOne';
 
-const emptyClass = css`
-  color: #8f959e;
-  border-top: 1px solid #f1f2f5;
-  border-bottom: 1px solid #f1f2f5;
+const emptyClass = (token: GlobalToken) => css`
+  color: ${token.colorTextDisabled};
+  border-top: 1px solid ${token.colorBorder};
+  border-bottom: 1px solid ${token.colorBorder};
   text-align: center;
   padding: 30px 0;
-  background-color: #ffffff;
+  background-color: ${token.colorBgContainer};
 `;
 
 export interface ColumnTypeExt<RecordType> extends ColumnType<RecordType> {
@@ -106,6 +109,7 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
     ...restProps
   } = props;
 
+  const { token, prefixCls, mtPrefixCls } = usePrefixCls();
   const isFirstTimeRendered = useRef(false);
   const cacheLoadingState = useRef<boolean | undefined>(undefined);
   const [fetching, setFetching] = useState(useSkeleton);
@@ -291,5 +295,15 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
     );
   }
 
-  return <div className={emptyClass}>{emptyDesc}</div>;
+  return (
+    <div
+      className={classNames(
+        emptyClass(token),
+        restProps.className,
+        `${prefixCls}-${mtPrefixCls}-table-empty`,
+      )}
+    >
+      {emptyDesc}
+    </div>
+  );
 }

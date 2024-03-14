@@ -2,19 +2,16 @@ import { css } from '@emotion/css';
 import type { GlobalToken } from 'antd';
 import { Col, Row } from 'antd';
 import classNames from 'classnames';
-import React, { useContext, useMemo } from 'react';
-import type { Theme } from '../ConfigProviderExt/context';
-import { AntdExtGlobalContext } from '../ConfigProviderExt/context';
+import React, { useMemo } from 'react';
 import type { ThemeColor } from '../theme/type';
-import { usePrefixCls } from '../utils';
-import useTokenExt from '../utils/useTokenExt';
+import { useMapTheme, usePrefixCls } from '../utils';
 
 export interface OutLineWrapperProps {
   label: string;
   disabled?: boolean | [boolean, boolean];
   children?: React.ReactNode;
   isRequired?: boolean;
-  theme?: Theme;
+  className?: string;
   ref?: React.MutableRefObject<HTMLDivElement>;
   injectStyle?: (prefixCls: string, mtPrefixCls: string, token: GlobalToken) => string;
 }
@@ -23,7 +20,6 @@ const style = (
   prefixCls: string,
   mtPrefixCls: string,
   token: GlobalToken,
-  tokenExt: ThemeColor,
   injectStyle?: (prefixCls: string, mtPrefixCls: string, token: GlobalToken) => string,
 ) => css`
   border: 1px solid ${token.colorBorder};
@@ -36,7 +32,6 @@ const style = (
     text-align: right;
     > label {
       height: 30px;
-      color: #8f959e;
       line-height: 30px;
       &::after {
         position: relative;
@@ -62,27 +57,32 @@ const style = (
 
   &.${prefixCls}-${mtPrefixCls}-outline-disabled {
     background-color: ${token.colorBgContainerDisabled};
+    .ant-form-item-label {
+      & > label {
+        color: ${token.colorTextDisabled};
+      }
+    }
   }
 
   ${injectStyle ? injectStyle(prefixCls, mtPrefixCls, token) : ''}
 `;
 
-const OutLineWrapper = React.forwardRef(
+export const OutLineWrapper = React.forwardRef(
   (props: OutLineWrapperProps, ref: React.RefObject<HTMLDivElement>) => {
-    const { label, children, disabled, injectStyle, isRequired, theme } = props;
+    const { label, children, disabled, injectStyle, isRequired, className } = props;
     const { token, prefixCls, mtPrefixCls } = usePrefixCls();
-    const { themeExt } = useContext(AntdExtGlobalContext);
-    const tokenExt = useTokenExt(theme || themeExt);
     const customClassName = useMemo(
-      () => style(prefixCls, mtPrefixCls, token, tokenExt, injectStyle),
-      [prefixCls, mtPrefixCls, token, injectStyle, tokenExt],
+      () => style(prefixCls, mtPrefixCls, token, injectStyle),
+      [prefixCls, mtPrefixCls, token, injectStyle],
     );
 
     return (
       <Row
         className={classNames([
           customClassName,
+          `${prefixCls}-${mtPrefixCls}-outline`,
           disabled ? `${prefixCls}-${mtPrefixCls}-outline-disabled` : undefined,
+          className,
         ])}
         ref={ref}
       >
@@ -106,4 +106,24 @@ const OutLineWrapper = React.forwardRef(
   },
 );
 
-export default OutLineWrapper;
+const customStyle = (token: GlobalToken, prefixCls: string, tokenExt: Partial<ThemeColor>) => css`
+  .${prefixCls}-form-item-label {
+    > label {
+      color: ${tokenExt.colorBlackL3};
+    }
+  }
+`;
+
+export default function Mixin(props: OutLineWrapperProps) {
+  const { className, ...restProps } = props;
+
+  const { classes } = useMapTheme({
+    emotioncss: {
+      hermes: customStyle,
+      zeus: customStyle,
+    },
+    className,
+  });
+
+  return <OutLineWrapper className={classes} {...restProps} />;
+}

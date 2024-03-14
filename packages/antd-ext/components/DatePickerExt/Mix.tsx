@@ -10,7 +10,7 @@ import type { DatePickerOutLineExtProps } from './DatePickerOutLineExt';
 import DatePickerOutLineExt from './DatePickerOutLineExt';
 import type { RangePickerOutLineExtProps } from './RangePickerOutLineExt';
 import RangePickerOutLineExt from './RangePickerOutLineExt';
-import { customPopupStyle } from './ThemeHermes';
+import { customPopupStyle, customStyle } from './ThemeHermes';
 import type {
   MonthPickerProps,
   QuarterPicker,
@@ -32,7 +32,10 @@ export function MixHOC(props: MixinHOCProps) {
   const { classes, themeConfig, token, prefix, tokenExt } = useMapTheme({
     className,
     theme,
-    emotioncss: {},
+    emotioncss: {
+      hermes: customStyle,
+      zeus: customStyle,
+    },
   });
   const { themeExt } = useContext(AntdExtGlobalContext);
   const finTheme = theme || themeExt;

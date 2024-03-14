@@ -1,15 +1,14 @@
-import React from 'react';
-import OutLineWrapper from '../OutLineWrapper';
-import RangeNumberExt from './RangeNumberExt';
-import type { OutLineWrapperProps } from '../OutLineWrapper';
-import type { RangeNumberExtProps } from './RangeNumberExt';
 import { css } from '@emotion/css';
+import React from 'react';
+import type { OutLineWrapperProps } from '../OutLineWrapper';
+import OutLineWrapper from '../OutLineWrapper';
+import type { RangeNumberExtProps } from './RangeNumberExt';
+import RangeNumberExt from './RangeNumberExt';
 
 const style = (prefixCls: string, mtPrefixCls: string) => css`
   .${prefixCls}-input-number-input {
     width: 100%;
     padding: 4px 0;
-    color: #333;
   }
 
   &.${prefixCls}-${mtPrefixCls}-outline-disabled {

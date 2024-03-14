@@ -1,6 +1,6 @@
-import React, { useCallback, useState } from 'react';
-import { DrawerExt, ButtonExt, ConfigProviderExt, Radio, Space } from '@m-tools/antd-ext';
 import type { Theme } from '@m-tools/antd-ext';
+import { ButtonExt, ConfigProviderExt, DrawerExt, Radio, Space } from '@m-tools/antd-ext';
+import React, { useCallback, useState } from 'react';
 
 export default function App() {
   const [open, setOpen] = useState(true);
@@ -22,13 +22,16 @@ export default function App() {
         <ButtonExt onClick={() => setOpen(true)}>Show Drawer</ButtonExt>
         <Radio.Group value={theme} buttonStyle="solid" onChange={e => setTheme(e.target.value)}>
           <Radio.Button value="hermes">hermes</Radio.Button>
+          <Radio.Button value="zeus">zeus</Radio.Button>
           <Radio.Button value="default">default</Radio.Button>
         </Radio.Group>
       </Space>
       <DrawerExt
         title="抽屉"
         open={open}
-        bodyStyle={{ padding: 0 }}
+        styles={{
+          body: { padding: 0 },
+        }}
         onOk={onOk}
         onCancel={onCancel}
       />

@@ -1,16 +1,15 @@
+import { css } from '@emotion/css';
 import React from 'react';
-import OutLineWrapper from '../OutLineWrapper';
 import type { OutLineWrapperProps } from '../OutLineWrapper';
+import OutLineWrapper from '../OutLineWrapper';
 import type { ProInputNumberProps } from './ProInputNumber';
 import ProInputNumber from './ProInputNumber';
-import { css } from '@emotion/css';
 
 const style = (prefixCls: string) => css`
   padding: 0 13px;
 
   .${prefixCls}-input {
     padding: 4px 0;
-    color: #333;
     width: 100%;
   }
   .${prefixCls}-input-affix-wrapper{
