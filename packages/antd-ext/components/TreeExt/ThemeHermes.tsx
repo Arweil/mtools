@@ -7,7 +7,6 @@ export const customStyle = (
   prefixCls: string,
   tokenExt: Partial<ThemeColor>,
 ) => {
-  const tmoColor = '#EBF4FF'; // tmp 宙斯主色的8%透明度
   return css`
     .${prefixCls}-tree {
       color: ${tokenExt.colorBlackL1};
@@ -49,7 +48,7 @@ export const customStyle = (
         // hover
         &:hover {
           &:before {
-            background: ${tmoColor};
+            background: ${tokenExt.colorWeakPrimary};
             border-radius: ${token.borderRadiusSM}px;
           }
           .${prefixCls}-tree-node-content-wrapper, .${prefixCls}-tree-switcher {
@@ -62,7 +61,7 @@ export const customStyle = (
         &.${prefixCls}-tree-treenode-selected {
           color: ${tokenExt.colorPrimaryL3};
           &:before {
-            background: ${tmoColor};
+            background: ${tokenExt.colorWeakPrimary};
             border-radius: ${token.borderRadiusSM}px;
           }
           .${prefixCls}-tree-node-selected {

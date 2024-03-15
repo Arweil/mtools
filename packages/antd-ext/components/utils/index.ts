@@ -43,6 +43,7 @@ export function createHermesTheme(theme: ThemeColor) {
     colorGreyL5,
     colorWhite,
     colorBlackL3,
+    colorWeakPrimary,
   } = theme;
   return {
     token: {
@@ -95,12 +96,11 @@ export function createHermesTheme(theme: ThemeColor) {
       },
       Upload: {},
       Tree: {
-        // controlItemBgHover: '#EBF4FF', // tmp 宙斯主色的8%透明度
         titleHeight: 28,
-        nodeHoverBg: '#EBF4FF',
+        nodeHoverBg: colorWeakPrimary,
       },
       Dropdown: {
-        controlItemBgHover: '#EBF4FF',
+        controlItemBgHover: colorWeakPrimary,
       },
     },
   } as ThemeConfig;

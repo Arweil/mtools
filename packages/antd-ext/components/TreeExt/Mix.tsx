@@ -19,6 +19,7 @@ export default function Mixin(props: TreeExtMixinProps) {
     theme,
     emotioncss: {
       hermes: customStyleHermes,
+      zeus: customStyleHermes,
     },
   });
   return (

@@ -112,7 +112,18 @@ export default function App() {
         </Form.Item>
       </Form>
       <Row gutter={24}>
-        <Col span={12}>
+        <Col span={8}>
+          <Card title="zeus" style={{ marginBottom: 24 }}>
+            <TreeExt
+              theme={'zeus'}
+              showIcon={showIcon}
+              treeData={treeData}
+              showLine={showLine}
+              checkable={checkable}
+            />
+          </Card>
+        </Col>
+        <Col span={8}>
           <Card title="hermes" style={{ marginBottom: 24 }}>
             <TreeExt
               theme={'hermes'}
@@ -123,7 +134,7 @@ export default function App() {
             />
           </Card>
         </Col>
-        <Col span={12}>
+        <Col span={8}>
           <Card title="default" style={{ marginBottom: 24 }}>
             <TreeExt
               theme={'default'}
