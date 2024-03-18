@@ -21,37 +21,6 @@ export default function App() {
       title: 'parent 0',
       key: '0-0',
       icon: <FolderFilled />,
-      more: {
-        menu: {
-          items: [
-            {
-              label: '新增',
-              onClick: ({ key, domEvent }) => {
-                domEvent.stopPropagation();
-                console.log(key);
-              },
-              key: 'add',
-            },
-            {
-              label: '编辑',
-              onClick: ({ key, domEvent }) => {
-                domEvent.stopPropagation();
-                console.log(key);
-              },
-              key: 'edit',
-            },
-            {
-              label: '删除',
-              // label: <ButtonExt type="text" danger>删除</ButtonExt>,
-              onClick: ({ key, domEvent }) => {
-                domEvent.stopPropagation();
-                console.log(key);
-              },
-              key: 'delete',
-            },
-          ],
-        },
-      },
       children: [
         {
           title: 'parent 0-0',
@@ -70,6 +39,7 @@ export default function App() {
         {
           title: 'parent 0-1',
           key: '0-0-1',
+          disabled: true,
           children: [
             {
               title: 'leaf',
@@ -120,6 +90,46 @@ export default function App() {
               treeData={treeData}
               showLine={showLine}
               checkable={checkable}
+              getNodeMore={tdn => {
+                const { key: k, disabled, children } = tdn;
+                if (k.toString().includes('0-0')) {
+                  return {
+                    menu: {
+                      items: [
+                        {
+                          label: '新增',
+                          disabled,
+                          onClick: ({ key, domEvent }) => {
+                            domEvent.stopPropagation();
+                            console.log(key);
+                          },
+                          key: 'add',
+                        },
+                        {
+                          label: '编辑',
+                          disabled,
+                          onClick: ({ key, domEvent }) => {
+                            domEvent.stopPropagation();
+                            console.log(key);
+                          },
+                          key: 'edit',
+                        },
+                        (!children || !children.length) && {
+                          label: '删除',
+                          disabled,
+                          // label: <ButtonExt type="text" danger>删除</ButtonExt>,
+                          onClick: ({ key, domEvent }) => {
+                            domEvent.stopPropagation();
+                            console.log(key);
+                          },
+                          key: 'delete',
+                        },
+                      ],
+                    },
+                  };
+                }
+                return;
+              }}
             />
           </Card>
         </Col>

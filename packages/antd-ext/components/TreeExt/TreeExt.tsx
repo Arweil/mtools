@@ -1,18 +1,33 @@
 import { EllipsisOutlined } from '@ant-design/icons';
 import type { DropDownProps, TreeDataNode, TreeProps } from 'antd';
 import { Dropdown, Row, Tree } from 'antd';
-import { isString } from 'antd/es/button';
-import type { MenuItemType } from 'antd/es/menu/hooks/useItems';
 import classNames from 'classnames';
 import React, { useMemo, useRef } from 'react';
 import ButtonExt from '../ButtonExt/ButtonExt';
 import { usePrefixCls } from '../utils';
 export interface TreeExtProps extends TreeProps {
   treeData: TreeDataNodeExt[];
+  getNodeMore?: (tdn: TreeDataNode) => DropDownProps | void;
 }
 export type TreeDataNodeExt = TreeDataNode & {
-  more?: DropDownProps;
+  // more?: DropDownProps;
 };
+
+function dfs(t: TreeDataNode[], visitFn: (tdn: TreeDataNode) => void) {
+  function _createTree(node: TreeDataNode) {
+    const newNode = { ...node };
+    visitFn(newNode);
+
+    if (Array.isArray(node.children)) {
+      newNode.children = node.children.map(child => _createTree(child));
+    }
+    return newNode;
+  }
+
+  const newt = t.map(node => _createTree(node));
+
+  return newt;
+}
 
 export default function TreeExt(props: TreeExtProps) {
   const { prefixCls, token, mtPrefixCls } = usePrefixCls();
@@ -24,58 +39,51 @@ export default function TreeExt(props: TreeExtProps) {
     showLine,
     children,
     treeData,
+    getNodeMore,
     ...restProps
   } = props;
 
   const _treeData = useMemo(() => {
     console.log(treeRef);
     // debugger
-    return treeData.map(tree => {
-      if (tree.more) {
-        const { menu, ...rest } = tree.more;
-        // 改写Dropdown选项样式
-        const menuItems = (menu?.items || []).map(it => {
-          const _it = it as MenuItemType;
-          return {
-            ..._it,
-            label: isString(_it.label) ? _it.label : _it.label,
-          };
-        });
-        const morePorps = {
-          ...rest,
-          menu: {
-            ...menu,
-            items: menuItems,
-          },
-        };
-        const ddProps = {
-          getPopupContainer: () => treeRef.current,
-          trigger: ['click'] as 'click'[],
-          arrow: { pointAtCenter: true },
-          ...morePorps,
-        };
-        return {
-          ...tree,
-          title: (
-            <Row justify={'space-between'} align="middle">
-              {tree.title}
-              <Dropdown {...ddProps}>
-                <ButtonExt
-                  className={prefixCls + '-more-btn'}
-                  onClick={e => e.stopPropagation()}
-                  size="small"
-                  type="text"
-                >
-                  <EllipsisOutlined />
-                </ButtonExt>
-              </Dropdown>
-            </Row>
-          ),
-        };
-      }
-      return tree;
+    if (!getNodeMore) {
+      return treeData;
+    }
+    if (typeof getNodeMore !== 'function') {
+      console.warn('[warn]: getNodeMore should be a function'); // TODO: 优化警告
+      return treeData;
+    }
+    return dfs(treeData, tdn => {
+      const nodeMore = getNodeMore(tdn);
+      if (!nodeMore) return;
+      const { menu, ...rest } = nodeMore;
+      const morePorps = {
+        ...rest,
+        menu,
+      };
+      const ddProps = {
+        getPopupContainer: () => treeRef.current,
+        trigger: ['click'] as 'click'[],
+        arrow: { pointAtCenter: true },
+        ...morePorps,
+      };
+      tdn.title = (
+        <Row justify={'space-between'} align="middle">
+          {tdn.title}
+          <Dropdown {...ddProps}>
+            <ButtonExt
+              className={prefixCls + '-more-btn'}
+              onClick={e => e.stopPropagation()}
+              size="small"
+              type="text"
+            >
+              <EllipsisOutlined />
+            </ButtonExt>
+          </Dropdown>
+        </Row>
+      );
     });
-  }, [treeData, prefixCls]);
+  }, [treeData, prefixCls, getNodeMore]);
 
   const treeClassName = classNames(showLine ? '' : 'not-showline', blockNode ? 'is-blockNode' : '');
 
