@@ -59,6 +59,7 @@ export interface LayoutExtProps<IMenuInfo extends IBaseMenuInfo = IBaseMenuInfo>
   headerContent?: ReactNode | false;
   siderWidth?: number;
   tabs?: { code: string | number; label: string }[];
+  tabActive?: string | number;
   onTabClick: (key: string | number) => void;
   onTabRemove: (key: string | number) => void;
 }
