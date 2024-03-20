@@ -58,6 +58,9 @@ export interface LayoutExtProps<IMenuInfo extends IBaseMenuInfo = IBaseMenuInfo>
   needMenuGroup?: boolean;
   headerContent?: ReactNode | false;
   siderWidth?: number;
+  tabs?: { code: string | number; label: string }[];
+  onTabClick: (key: string | number) => void;
+  onTabRemove: (key: string | number) => void;
 }
 
 export interface IBaseMenuInfo {
@@ -68,7 +71,7 @@ export interface IBaseMenuInfo {
   [key: string]: any;
 }
 
-function TriggerElement(props: {
+export function TriggerElement(props: {
   collapsed: boolean;
   onClick: () => void;
   style: React.CSSProperties;
