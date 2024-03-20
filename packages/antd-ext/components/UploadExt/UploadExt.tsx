@@ -1,8 +1,9 @@
-import { CloseOutlined, UploadOutlined } from '@ant-design/icons';
+import { CloseOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import type { UploadFile, UploadProps } from 'antd';
 import { Flex, Progress, Upload } from 'antd'; // 修改Button为想要导入的组件
 import classNames from 'classnames';
 import React from 'react';
+import ButtonExt from '../ButtonExt/ButtonExt';
 import { usePrefixCls } from '../utils';
 import other from './img/other.svg';
 import pdf from './img/pdf.svg';
@@ -45,6 +46,15 @@ const mapping = {
 export default function UploadExt(props: UploadExtProps) {
   const { mtPrefixCls } = usePrefixCls();
 
+  const { children, className, listType, itemRender, maxCount, ...restProps } = props;
+  // listType不传值时默认使用自定义改造的picture-card
+  const isCustomPictureCard = !listType;
+  const internalListType = listType || 'picture-card';
+  const uploadClassName = classNames(
+    className,
+    isCustomPictureCard ? `${mtPrefixCls}-upload-picture-card-wrapper` : '',
+  );
+
   const UploadBtn = (
     <button className={`${mtPrefixCls}-upload-btn`}>
       <UploadOutlined />
@@ -66,17 +76,10 @@ export default function UploadExt(props: UploadExtProps) {
     return <div className={`${mtPrefixCls}-upload-file-icon`}>{renderIcon(file)}</div>;
   };
 
-  const { children, className, listType, itemRender, ...restProps } = props;
-  // listType不传值时默认使用自定义改造的picture-card
-  const isCustomPictureCard = !listType;
-  const internalListType = listType || 'picture-card';
-  const uploadClassName = classNames(
-    className,
-    isCustomPictureCard ? `${mtPrefixCls}-upload-picture-card-wrapper` : '',
-  );
   return (
     <Upload
       className={uploadClassName}
+      maxCount={maxCount}
       itemRender={(originNode, file, fileList, actions) => {
         if (typeof itemRender === 'function') {
           return itemRender(originNode, file, fileList, actions);
@@ -115,7 +118,13 @@ export default function UploadExt(props: UploadExtProps) {
       listType={internalListType}
       {...restProps}
     >
-      {children || UploadBtn}
+      {children ||
+        (restProps.fileList?.length >= maxCount
+          ? null
+          : (isCustomPictureCard && UploadBtn) ||
+            (['picture-card', 'picture-circle'].includes(listType) && <PlusOutlined />) || (
+              <ButtonExt>上传</ButtonExt>
+            ))}
     </Upload>
   );
 }
