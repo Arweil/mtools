@@ -11,7 +11,7 @@ import type { IBaseMenuInfo, LayoutExtProps } from './LayoutHermesExt';
 import { TriggerElement } from './LayoutHermesExt';
 
 const { Header, Content, Sider } = Layout;
-const pd = 16;
+const pd = 0;
 const scrollStep = 200;
 const logo = (siderWidth?: number) => css`
   width: ${siderWidth}px;
@@ -285,7 +285,11 @@ export default function LayoutZeusExt<IMenuInfo extends IBaseMenuInfo>(
   useEffect(RfScrollLeft, [tabs?.length]);
   useEffect(() => {
     try {
-      setTimeout(() => document.getElementById(tabActive + '')?.scrollIntoView());
+      setTimeout(() => {
+        document.getElementById(tabActive + '')?.scrollIntoView({
+          block: 'nearest',
+        });
+      });
     } catch (error) {}
   }, [tabActive]);
 
