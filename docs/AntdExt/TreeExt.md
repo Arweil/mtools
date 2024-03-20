@@ -11,7 +11,7 @@ toc: menu
 在原有的 Tree 基础上拓展了如下属性：
 | 属性 | 说明 | 类型 | 默认值 | 版本 |
 | --- | --- | --- | --- | --- |
-| more | 右侧展示下拉菜单选项 | DropDownProps | undefined | |
+| getNodeMore | 渲染右侧的下拉菜单选项 | (tdn: TreeDataNode) => DropDownProps | void | undefined | |
 <!-- | multipleCheckbox | 多选时是否使用checkbox样式 | boolean | undefined | 0.7.0 | -->
 
 <!-- ## 逻辑拓展
