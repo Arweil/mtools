@@ -5,13 +5,14 @@ import type { ItemType, MenuItemGroupType, SubMenuType } from 'antd/es/menu/hook
 import classNames from 'classnames';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { usePrefixCls } from '../utils';
+import left from './img/left.png';
+import right from './img/right.png';
 import type { IBaseMenuInfo, LayoutExtProps } from './LayoutHermesExt';
 import { TriggerElement } from './LayoutHermesExt';
-import left from './img/left.png';
-import right from './img/right.png'
+
 const { Header, Content, Sider } = Layout;
 const pd = 16;
-const scrollStep = 200
+const scrollStep = 200;
 const logo = (siderWidth?: number) => css`
   width: ${siderWidth}px;
   height: 100%;
@@ -19,19 +20,19 @@ const logo = (siderWidth?: number) => css`
 const tabContainerStyle = css`
   position: relative;
   height: 36px;
-  background-color: #EEF4FF;
-`
+  background-color: #eef4ff;
+`;
 
 const tabContentStyle = css`
   height: 100%;
   overflow-x: auto;
   padding: 0 ${pd}px;
   ::-webkit-scrollbar {
-      width: 0px; // 纵向滚动条
-      height: 0px; // 横向滚动条
-      background-color: transparent;
+    width: 0px; // 纵向滚动条
+    height: 0px; // 横向滚动条
+    background-color: transparent;
   }
-`
+`;
 
 const tabItemActiveStyle = css`
   > span {
@@ -88,10 +89,10 @@ const imgStyle = css`
   position: absolute;
   top: 0;
   z-index: 999;
-`
+`;
 
 function TabItem(props: {
-  tab: { code: string | number; label: string; };
+  tab: { code: string | number; label: string };
   tabActive: string | number;
   showRemoveIcon: boolean;
   onSelect: (key: string | number) => void;
@@ -155,15 +156,19 @@ export default function LayoutZeusExt<IMenuInfo extends IBaseMenuInfo>(
   const [collapsed, setCollapsed] = useState(false);
   const [firstLevelMenuKey, setFirstLevelMenuKey] = useState<string | undefined>(undefined);
   const [secondMenu, setSecondMenu] = useState<ItemType[]>([]);
-  const [scrollData, setScrollData] = useState<{ scrollLeft: number, clientWidth: number, scrollWidth: number }>({ scrollLeft: 0, clientWidth: 0, scrollWidth: 0 })
-  const tabContentRef = useRef<HTMLDivElement>(null)
-  const { current: tabContentEl } = tabContentRef
+  const [scrollData, setScrollData] = useState<{
+    scrollLeft: number;
+    clientWidth: number;
+    scrollWidth: number;
+  }>({ scrollLeft: 0, clientWidth: 0, scrollWidth: 0 });
+  const tabContentRef = useRef<HTMLDivElement>(null);
+  const { current: tabContentEl } = tabContentRef;
   const { token, prefixCls, mtPrefixCls } = usePrefixCls();
 
   const finSiderWidth = collapsed ? 62 : siderWidth || 134;
 
   const firstLevelMenu = useMemo(() => {
-    return menu.map(item => {
+    return (menu || []).map(item => {
       return {
         key: item.url,
         label: item.name,
@@ -228,7 +233,7 @@ export default function LayoutZeusExt<IMenuInfo extends IBaseMenuInfo>(
 
   const onFirstLevelMenuSelect = useCallback(
     ({ key }) => {
-      const menus = menu.find(item => item.url === key)?.children || [];
+      const menus = (menu || []).find(item => item.url === key)?.children || [];
       setSecondMenu(
         menus && menus.length > 0
           ? menus.map(item => bindMenu({ isGroup: needMenuGroup, menu: item }))
@@ -238,41 +243,51 @@ export default function LayoutZeusExt<IMenuInfo extends IBaseMenuInfo>(
     },
     [bindMenu, menu, needMenuGroup],
   );
-  const reach = useMemo(() => ({
-    L: scrollData?.scrollLeft <= pd,
-    R: scrollData?.scrollWidth - scrollData?.scrollLeft - scrollData?.clientWidth <= pd,
-  }), [scrollData])
+  const reach = useMemo(
+    () => ({
+      L: scrollData?.scrollLeft <= pd,
+      R: scrollData?.scrollWidth - scrollData?.scrollLeft - scrollData?.clientWidth <= pd,
+    }),
+    [scrollData],
+  );
 
-  const scrollTo = useCallback((direction: 'L' | 'R') => {
-    const left = tabContentEl.scrollLeft + (direction === 'L' ? (-scrollStep) : scrollStep);
-    tabContentEl?.scrollTo({ left, behavior: 'smooth' })
-  }, [tabContentEl])
+  const scrollTo = useCallback(
+    (direction: 'L' | 'R') => {
+      const lft = tabContentEl.scrollLeft + (direction === 'L' ? -scrollStep : scrollStep);
+      tabContentEl?.scrollTo({ lft, behavior: 'smooth' });
+    },
+    [tabContentEl],
+  );
 
   const RfScrollLeft = useCallback(() => {
     setScrollData({
       scrollLeft: tabContentEl?.scrollLeft || 0,
       clientWidth: tabContentEl?.clientWidth || 0,
-      scrollWidth: tabContentEl?.scrollWidth || 0
-    })
-  }, [tabContentEl])
+      scrollWidth: tabContentEl?.scrollWidth || 0,
+    });
+  }, [tabContentEl]);
 
   const listenDom = () => {
     const resizeObserver = new ResizeObserver(RfScrollLeft);
     resizeObserver.observe(tabContentEl);
-    tabContentEl?.addEventListener('scroll', RfScrollLeft)
-  }
+    tabContentEl?.addEventListener('scroll', RfScrollLeft);
+  };
 
   useEffect(() => {
-    onFirstLevelMenuSelect({ key: '/Demo' });
+    const { pathname } = props.history.location || {};
+    const arr = (pathname || '').split('/');
+    onFirstLevelMenuSelect({ key: arr.length > 1 ? `/${arr[1]}` : '/' });
   }, []);
 
-  useEffect(() => {tabContentEl && listenDom()}, [tabContentEl])
-  useEffect(RfScrollLeft, [tabs?.length])
+  useEffect(() => {
+    tabContentEl && listenDom();
+  }, [tabContentEl]);
+  useEffect(RfScrollLeft, [tabs?.length]);
   useEffect(() => {
     try {
       setTimeout(() => document.getElementById(tabActive + '')?.scrollIntoView());
-    } catch (error) { }
-  }, [tabActive])
+    } catch (error) {}
+  }, [tabActive]);
 
   return (
     <Layout style={{ height: '100%' }} className={className}>
@@ -344,13 +359,34 @@ export default function LayoutZeusExt<IMenuInfo extends IBaseMenuInfo>(
         <Layout>
           {tabs && tabs.length > 0 ? (
             <div className={tabContainerStyle}>
-              {!reach.L && <img src={left} className={imgStyle} style={{ left: 0 }} onClick={scrollTo.bind(null, 'L')} />}
+              {!reach.L && (
+                <img
+                  src={left}
+                  className={imgStyle}
+                  style={{ left: 0 }}
+                  onClick={scrollTo.bind(null, 'L')}
+                />
+              )}
               <Flex align="center" className={tabContentStyle} ref={tabContentRef}>
                 {tabs.map(item => (
-                  <TabItem tab={item} showRemoveIcon onSelect={onTabClick} onRemove={onTabRemove} key={item.code} tabActive={tabActive} />
+                  <TabItem
+                    tab={item}
+                    showRemoveIcon
+                    onSelect={onTabClick}
+                    onRemove={onTabRemove}
+                    key={item.code}
+                    tabActive={tabActive}
+                  />
                 ))}
               </Flex>
-              {!reach.R && <img src={right} className={imgStyle} style={{ right: 0 }} onClick={scrollTo.bind(null, 'R')} />}
+              {!reach.R && (
+                <img
+                  src={right}
+                  className={imgStyle}
+                  style={{ right: 0 }}
+                  onClick={scrollTo.bind(null, 'R')}
+                />
+              )}
             </div>
           ) : null}
           <Content style={{ overflow: 'auto', backgroundColor: '#D6E5FF', padding: 8 }}>

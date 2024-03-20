@@ -44,6 +44,11 @@ const headerExtraStyle = (token: GlobalToken, prefixCls: string) => css`
   justify-content: space-between;
 `;
 
+export interface ITab {
+  code: string | number;
+  label: string;
+}
+
 export interface LayoutExtProps<IMenuInfo extends IBaseMenuInfo = IBaseMenuInfo> {
   menu: IMenuInfo[];
   openKeys: string[];
@@ -58,7 +63,7 @@ export interface LayoutExtProps<IMenuInfo extends IBaseMenuInfo = IBaseMenuInfo>
   needMenuGroup?: boolean;
   headerContent?: ReactNode | false;
   siderWidth?: number;
-  tabs?: { code: string | number; label: string }[];
+  tabs?: ITab[];
   tabActive?: string | number;
   onTabClick: (key: string | number) => void;
   onTabRemove: (key: string | number) => void;
