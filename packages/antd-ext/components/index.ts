@@ -31,6 +31,7 @@ import {
   MixinSelectOutLineExt as SelectOutLineExt,
 } from './SelectExt';
 import TableExt, { BaseTableExt } from './TableExt';
+import UploadExt, { BaseUploadExt } from './UploadExt';
 
 export * from 'antd';
 export {
@@ -44,6 +45,7 @@ export {
   BaseLayoutExt,
   BaseCascaderExt,
   ButtonExt,
+  BaseUploadExt,
   ConfigProviderExt,
   DatePickerExt,
   DrawerExt,
@@ -62,6 +64,7 @@ export {
   SelectOutLineExt,
   RangeNumberOutLineExt,
   ProInputNumberOutLine,
+  UploadExt,
   Theme,
   notificationExt,
 };
