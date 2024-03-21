@@ -1,6 +1,7 @@
 import { css } from '@emotion/css';
 import type { GlobalToken } from 'antd/es/theme';
 import type { ThemeColor } from '../theme/type';
+import { mtPrefixCls } from '../utils/config';
 
 export const customStyle = (
   token: GlobalToken,
@@ -166,5 +167,12 @@ export const customStyle = (
         border-radius: 3px;
       }
     }
+  }
+
+  &.${prefixCls}-${mtPrefixCls}-table-empty {
+    color: ${tokenExt.colorBlackL3};
+    background-color: ${token.colorWhite};
+    border-top: 1px solid ${tokenExt.colorGreyL3};
+    border-bottom: 1px solid ${tokenExt.colorGreyL3};
   }
 `;

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>3.Input输入/7.Upload上传/4.文件类型/pdf</title>
+    <defs>
+        <linearGradient x1="84.7222222%" y1="4.33570151%" x2="19.6046718%" y2="97.1407161%" id="linearGradient-1">
+            <stop stop-color="#FF797F" offset="0%"></stop>
+            <stop stop-color="#FF505A" offset="100%"></stop>
+        </linearGradient>
+        <filter x="-107.7%" y="-115.8%" width="315.4%" height="331.7%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 0   0 0 0 0 0  0 0 0 0.551518794 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <linearGradient x1="100%" y1="50%" x2="0%" y2="50%" id="linearGradient-3">
+            <stop stop-color="#FBBFC0" offset="0%"></stop>
+            <stop stop-color="#FFC9CB" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="3.14" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="画板备份" transform="translate(-711.000000, -406.000000)">
+            <g id="3.Input输入/7.Upload上传/4.文件类型/pdf-2" transform="translate(711.000000, 406.000000)">
+                <g id="3.Input输入/7.Upload上传/4.文件类型/pdf" transform="translate(2.024583, 1.579355)">
+                    <polygon id="矩形" fill="#FF6067" points="19.2 24.8 26.4 24.8 26.4 28.8 19.2 28.8"></polygon>
+                    <path d="M24,7.2 L26.4,7.2 C27.2836556,7.2 28,7.9163444 28,8.8 L28,26.8 C28,27.9045695 27.1045695,28.8 26,28.8 C24.8954305,28.8 24,27.9045695 24,26.8 L24,7.2 L24,7.2 Z" id="矩形备份" fill="#FF0000"></path>
+                    <path d="M1.6,0 L22.4,0 C23.2836556,-1.623249e-16 24,0.7163444 24,1.6 L24,28.8 L24,28.8 L1.6,28.8 C0.7163444,28.8 -1.13828005e-16,28.0836556 0,27.2 L0,1.6 C3.3587261e-16,0.7163444 0.7163444,-5.03808915e-16 1.6,0 Z" id="矩形" fill="url(#linearGradient-1)"></path>
+                    <g id="编组-3" transform="translate(4.322195, 8.964597)" fill-rule="nonzero">
+                        <g id="编组-4" filter="url(#filter-2)">
+                            <path d="M7.71772865,0.248136571 C7.93248767,0.257045231 8.25462619,0.270408222 8.68414423,0.288225543 C8.4409729,6.15030079 6.20248009,10.6349485 1.99158208,13.5979772 L1.67994787,13.8120666 L0.00891816903,11.320549 C3.49181099,8.98461629 5.36971356,5.4534136 5.6652638,0.584500829 C5.66772215,0.53631339 5.66956591,0.50017281 5.67079509,0.47607909" id="路径-25" fill="#FF989B"></path>
+                            <path d="M13.6103624,10.5405084 C8.89034686,10.6206158 5.03643304,11.64308 2.02206452,13.5852819 L1.68886603,13.8060387 L0,11.3265768 C3.60038655,8.87420177 8.15901946,7.62044371 13.6457044,7.5395847 L14.2166017,7.53540287 C14.2166017,8.09402188 14.2166017,8.51298614 14.2166017,8.79229565" id="路径-24" fill="url(#linearGradient-3)"></path>
+                            <path d="M8.66830157,0 C9.17702724,3.3371104 11.0830305,5.80950734 14.5162708,7.51461453 L14.8532919,7.67723288 L13.5799116,10.3935729 C9.17994891,8.33093505 6.53015695,5.10425746 5.76220204,0.812243423 L5.70256472,0.452111645 L8.66830157,0 Z" id="路径-23" fill="#FFFFFF"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,34 +1,38 @@
+import type { GlobalToken, TooltipProps } from 'antd';
+import c from 'classnames';
 import React, { useMemo } from 'react';
-import useMapTheme from '../utils/useMapTheme';
-import // customStyleWithSelectExt,
-// customStyleWithPopup,
-'./ThemeHermes';
 import type { Theme } from '../ConfigProviderExt/context';
+import ThemeWrapper from '../theme/ThemeWrapper';
+import useMapTheme from '../utils/useMapTheme';
+import useTokenExt from '../utils/useTokenExt';
 import type { SelectExtProps } from './SelectExt';
-import type { TooltipProps, GlobalToken } from 'antd';
+import SelectExt from './SelectExt';
 import type { SelectOutLineExtProps } from './SelectOutLineExt';
 import SelectOutLineExt from './SelectOutLineExt';
-import SelectExt from './SelectExt';
-import c from 'classnames';
-import ThemeWrapper from '../theme/ThemeWrapper';
 
 export function useSelectTooltipStyle(data: { theme?: Theme; tooltip?: TooltipProps }) {
   const { theme, tooltip } = data;
+  const tokenExt = useTokenExt(theme);
 
   // tooltip 默认样式
   const tooltipStyle = useMemo(
     () =>
       ({
         hermes: {
-          color: '#ffffff',
+          color: tokenExt.colorWhite,
           overlayStyle: { maxWidth: 280 },
-          overlayInnerStyle: { color: '#333' },
+          overlayInnerStyle: { color: tokenExt.colorBlackL1 },
           ...tooltip,
         },
-        zeus: {},
+        zeus: {
+          color: tokenExt.colorWhite,
+          overlayStyle: { maxWidth: 280 },
+          overlayInnerStyle: { color: tokenExt.colorBlackL1 },
+          ...tooltip,
+        },
         default: {},
       }[theme]),
-    [theme, tooltip],
+    [theme, tooltip, tokenExt],
   );
 
   return tooltipStyle;
@@ -48,7 +52,10 @@ export function useSelectExtPopupStyle(data: {
           popupClassName,
           // customStyleWithPopup(token, prefix),
         ),
-        zeus: '',
+        zeus: c(
+          popupClassName,
+          // customStyleWithPopup(token, prefix),
+        ),
         default: '',
       }[theme]),
     [theme, popupClassName],
@@ -72,9 +79,7 @@ export function MixinSelectExt(props: SelectExtMixinProps) {
   } = useMapTheme({
     className,
     theme,
-    emotioncss: {
-      // hermes: customStyleWithSelectExt,
-    },
+    emotioncss: {},
   });
 
   const tooltipStyle = useSelectTooltipStyle({

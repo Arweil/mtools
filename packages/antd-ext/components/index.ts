@@ -31,6 +31,8 @@ import {
   MixinSelectOutLineExt as SelectOutLineExt,
 } from './SelectExt';
 import TableExt, { BaseTableExt } from './TableExt';
+import { BaseTreeExt, default as TreeExt } from './TreeExt';
+import UploadExt, { BaseUploadExt } from './UploadExt';
 
 export * from 'antd';
 export {
@@ -44,11 +46,14 @@ export {
   BaseLayoutExt,
   BaseCascaderExt,
   ButtonExt,
+  BaseUploadExt,
   ConfigProviderExt,
   DatePickerExt,
   DrawerExt,
   InputExt,
   TableExt,
+  BaseTreeExt,
+  TreeExt,
   SelectExt,
   RangeNumberExt,
   LayoutExt,
@@ -62,6 +67,7 @@ export {
   SelectOutLineExt,
   RangeNumberOutLineExt,
   ProInputNumberOutLine,
+  UploadExt,
   Theme,
   notificationExt,
 };

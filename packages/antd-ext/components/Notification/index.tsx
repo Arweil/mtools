@@ -6,6 +6,7 @@ import type { MouseEventHandler } from 'react';
 import React from 'react';
 import ButtonExt from '../ButtonExt/ButtonExt';
 import type { Theme } from '../ConfigProviderExt/context';
+import type { ThemeColor } from '../theme/type';
 import error from './img/error.svg';
 import info from './img/info.svg';
 import success from './img/success.svg';
@@ -16,7 +17,11 @@ interface ArgsPropsExt extends ArgsProps {
   needBtn?: boolean;
 }
 
-export function NotificationGlobalStyle(props: { prefixCls: string; theme: Theme }): JSX.Element {
+export function NotificationGlobalStyle(props: {
+  prefixCls: string;
+  theme: Theme;
+  tokenExt: Partial<ThemeColor>;
+}): JSX.Element {
   const { prefixCls, theme } = props;
 
   switch (theme) {
@@ -35,17 +40,17 @@ export function NotificationGlobalStyle(props: { prefixCls: string; theme: Theme
 
                 .${prefixCls}-notification-notice-with-icon {
                   .${prefixCls}-notification-notice-message {
-                    margin-bottom: 4px !important;
+                    margin-bottom: 4px;
                     padding-top: 2px;
                     font-weight: 500;
-                    font-size: 15px !important;
-                    margin-inline-start: ${52 + 12}px !important;
+                    font-size: 15px;
+                    margin-inline-start: ${52 + 12}px;
                   }
               
                   .${prefixCls}-notification-notice-description {
-                    color: #666666 !important;
-                    font-size: 12px !important;
-                    margin-inline-start: ${52 + 12}px !important;
+                    color: #666666;
+                    font-size: 12px;
+                    margin-inline-start: ${52 + 12}px;
                   }
                 }
               }

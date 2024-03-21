@@ -5,6 +5,7 @@ import React, { useMemo } from 'react';
 import GlobalStyle from '../GlobalStyle';
 import * as hermesDefaultColor from '../theme/hermes';
 import type { ThemeColor } from '../theme/type';
+import * as zeusDefaultColor from '../theme/zeus';
 import type { Theme } from './context';
 import { AntdExtGlobalContext } from './context';
 
@@ -21,8 +22,8 @@ export default function ConfigProviderExt(props: ConfigProviderExtProps) {
   const mergedTokenExt = useMemo(() => {
     return {
       hermes: { ...hermesDefaultColor, ...(tokenExt || {}) } as ThemeColor,
-      zeus: tokenExt as ThemeColor,
-      default: tokenExt as ThemeColor,
+      zeus: { ...zeusDefaultColor, ...(tokenExt || {}) } as ThemeColor,
+      default: (tokenExt || {}) as ThemeColor,
     }[themeExt];
   }, [themeExt, tokenExt]);
 

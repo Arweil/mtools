@@ -5,12 +5,13 @@ export const colorPrimaryL3 = '#2D64E5';
 export const colorSuccess = '#05BD80';
 export const colorWarning = '#F9AD13';
 export const colorError = '#F74E4F';
-
-export const colorWeakSuccess = '#EBFAF5';
-export const colorWeakWarning = '#FFF9ED';
-export const colorWeakError = '#FFF1F1';
+export const colorOrange = '#FF5C00';
 
 export const colorWeakPrimary = '#EFF4FF';
+export const colorWeakSuccess = '#EBFAF5';
+export const colorWeakWarning = '#FFF9ED';
+export const colorWeakNotice = '#FFF2EB';
+export const colorWeakError = '#FFF1F1';
 
 export const colorBlackL1 = '#333333';
 export const colorBlackL2 = '#646A73';

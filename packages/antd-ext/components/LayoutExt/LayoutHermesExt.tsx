@@ -1,12 +1,12 @@
-import type { ReactNode } from 'react';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Layout, Menu } from 'antd';
-import { MenuFoldOutlined, MenuUnfoldOutlined, CloseOutlined } from '../icon';
-import type { ItemType, MenuItemGroupType, SubMenuType } from 'antd/es/menu/hooks/useItems';
-import { usePrefixCls } from '../utils';
 import { css } from '@emotion/css';
 import type { GlobalToken } from 'antd';
+import { Layout, Menu } from 'antd';
+import type { ItemType, MenuItemGroupType, SubMenuType } from 'antd/es/menu/hooks/useItems';
 import classNames from 'classnames';
+import type { ReactNode } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { CloseOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '../icon';
+import { usePrefixCls } from '../utils';
 
 const { Header, Content, Sider } = Layout;
 
@@ -44,6 +44,11 @@ const headerExtraStyle = (token: GlobalToken, prefixCls: string) => css`
   justify-content: space-between;
 `;
 
+export interface ITab {
+  code: string | number;
+  label: string;
+}
+
 export interface LayoutExtProps<IMenuInfo extends IBaseMenuInfo = IBaseMenuInfo> {
   menu: IMenuInfo[];
   openKeys: string[];
@@ -58,6 +63,10 @@ export interface LayoutExtProps<IMenuInfo extends IBaseMenuInfo = IBaseMenuInfo>
   needMenuGroup?: boolean;
   headerContent?: ReactNode | false;
   siderWidth?: number;
+  tabs?: ITab[];
+  tabActive?: string | number;
+  onTabClick: (key: string | number) => void;
+  onTabRemove: (key: string | number) => void;
 }
 
 export interface IBaseMenuInfo {
@@ -68,7 +77,7 @@ export interface IBaseMenuInfo {
   [key: string]: any;
 }
 
-function TriggerElement(props: {
+export function TriggerElement(props: {
   collapsed: boolean;
   onClick: () => void;
   style: React.CSSProperties;
@@ -250,7 +259,7 @@ export default function AppLayoutExt<IMenuInfo extends IBaseMenuInfo>(
       menu && menu.length > 0
         ? menu.map(item => bindMenu({ isGroup: needMenuGroup, menu: item }))
         : undefined,
-    [menu],
+    [menu, bindMenu, needMenuGroup],
   );
 
   const onCollapse = useCallback(() => {

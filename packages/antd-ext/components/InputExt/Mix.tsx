@@ -1,14 +1,14 @@
-import React from 'react';
-import { customStyleWithInputOutLineExt, customStyleWithInputExt } from './ThemeHermes';
 import { Input } from 'antd';
-import { InputExt } from './InputExt';
-import InputOutLineExt from './InputOutLineExt';
-import type { InputExtProps } from './InputExt';
-import type { Theme } from '../ConfigProviderExt/context';
-import type { InputOutLineExtProps } from './InputOutLineExt';
 import type { PasswordProps, SearchProps, TextAreaProps } from 'antd/es/input';
-import useMapTheme from '../utils/useMapTheme';
+import React from 'react';
+import type { Theme } from '../ConfigProviderExt/context';
 import ThemeWrapper from '../theme/ThemeWrapper';
+import useMapTheme from '../utils/useMapTheme';
+import type { InputExtProps } from './InputExt';
+import { InputExt } from './InputExt';
+import type { InputOutLineExtProps } from './InputOutLineExt';
+import InputOutLineExt from './InputOutLineExt';
+import { customStyleWithInputExt, customStyleWithInputOutLineExt } from './ThemeHermes';
 
 export interface InputExtMixinProps extends InputExtProps {
   theme?: Theme;
@@ -32,6 +32,7 @@ function InputExtHOC(
     theme,
     emotioncss: {
       hermes: customStyleWithInputExt,
+      zeus: customStyleWithInputExt,
     },
   });
 
@@ -95,6 +96,7 @@ export function MixinInputOutLineExt(props: InputOutLineExtMixinProps) {
     theme,
     emotioncss: {
       hermes: customStyleWithInputOutLineExt,
+      zeus: customStyleWithInputOutLineExt,
     },
   });
 

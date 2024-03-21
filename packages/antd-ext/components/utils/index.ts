@@ -1,10 +1,10 @@
 import type { ThemeConfig } from 'antd';
+import type { DirectionType } from 'antd/es/config-provider';
+import { transPlacement2DropdownAlign } from 'antd/es/date-picker/util';
+import type { SelectCommonPlacement } from 'antd/es/_util/motion';
+import type { ThemeColor } from '../theme/type';
 import useMapTheme from './useMapTheme';
 import usePrefixCls from './usePrefixCls';
-import type { ThemeColor } from '../theme/type';
-import { transPlacement2DropdownAlign } from 'antd/es/date-picker/util';
-import type { DirectionType } from 'antd/es/config-provider';
-import type { SelectCommonPlacement } from 'antd/es/_util/motion';
 
 export function mergeTheme(theme: ThemeConfig, customTheme: ThemeConfig) {
   const { token = {}, components = {}, ...restProps } = customTheme;
@@ -43,6 +43,7 @@ export function createHermesTheme(theme: ThemeColor) {
     colorGreyL5,
     colorWhite,
     colorBlackL3,
+    colorWeakPrimary,
   } = theme;
   return {
     token: {
@@ -92,6 +93,14 @@ export function createHermesTheme(theme: ThemeColor) {
         itemMarginBottom: 24,
         labelHeight: 30,
         labelColor: colorBlackL3,
+      },
+      Upload: {},
+      Tree: {
+        titleHeight: 28,
+        nodeHoverBg: colorWeakPrimary,
+      },
+      Dropdown: {
+        controlItemBgHover: colorWeakPrimary,
       },
     },
   } as ThemeConfig;

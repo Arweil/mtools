@@ -1,0 +1,55 @@
+[
+  {
+    "url": "/first-level01",
+    "name": "一级菜单A",
+    "children": [
+      {
+        "url": "/first-level01/second-level01",
+        "name": "二级菜单AA",
+        "children": [
+          {
+            "url": "/first-level01/second-level01/third-level01",
+            "name": "三级菜单AAA",
+            "children": []
+          },
+          {
+            "url": "/first-level01/second-level01/third-level02",
+            "name": "三级菜单AAB",
+            "children": []
+          }
+        ]
+      },
+      {
+        "url": "/first-level01/second-level02",
+        "name": "二级菜单AB",
+        "children": []
+      },
+      {
+        "url": "/first-level01/second-level03",
+        "name": "二级菜单AC",
+        "children": []
+      }
+    ]
+  },
+  {
+    "url": "/first-level02",
+    "name": "一级菜单B",
+    "children": [
+      {
+        "url": "/first-level02/second-level01",
+        "name": "二级菜单BA",
+        "children": []
+      },
+      {
+        "url": "/first-level02/second-level02",
+        "name": "二级菜单BB",
+        "children": []
+      },
+      {
+        "url": "/first-level02/second-level03",
+        "name": "二级菜单BC",
+        "children": []
+      }
+    ]
+  }
+]

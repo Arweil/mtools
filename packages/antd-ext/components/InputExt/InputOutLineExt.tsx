@@ -1,15 +1,14 @@
-import React from 'react';
-import { InputExt } from './InputExt';
 import { css } from '@emotion/css';
 import type { InputProps } from 'antd';
+import React from 'react';
 import OutLineWrapper from '../OutLineWrapper';
+import { InputExt } from './InputExt';
 
 const style = (prefixCls: string) => css`
   padding: 0 13px;
 
   .${prefixCls}-input {
     padding: 4px 0;
-    color: #333;
     width: 100%;
   }
   .${prefixCls}-input-affix-wrapper{

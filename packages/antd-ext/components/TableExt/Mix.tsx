@@ -3,6 +3,7 @@ import React, { useMemo } from 'react';
 import type { Theme } from '../ConfigProviderExt/context';
 import ThemeWrapper from '../theme/ThemeWrapper';
 import useMapTheme from '../utils/useMapTheme';
+import useTokenExt from '../utils/useTokenExt';
 import type { TableExtProps } from './TableExt';
 import TableExt, { SkeletonItem } from './TableExt';
 import { customStyle as customStyleHermes } from './ThemeHermes';
@@ -15,27 +16,33 @@ export interface TableExtMixinProps extends TableExtProps {
 
 export default function Mixin(props: TableExtMixinProps) {
   const { className, theme: customTheme, rowSelection, ...restProps } = props;
-  const { classes, themeConfig } = useMapTheme({
+  const { classes, themeConfig, theme } = useMapTheme({
     className,
     theme: customTheme,
     emotioncss: {
       hermes: customStyleHermes,
+      zeus: customStyleHermes,
     },
   });
+  const tokenExt = useTokenExt(theme);
 
   // tooltip 默认样式
   const toolTipStyle = useMemo(
     () =>
       ({
         hermes: {
-          color: '#ffffff',
+          color: tokenExt.colorWhite,
           overlayStyle: { maxWidth: 280 },
-          overlayInnerStyle: { color: '#333' },
+          overlayInnerStyle: { color: tokenExt.colorBlackL1 },
         },
-        zeus: {},
+        zeus: {
+          color: tokenExt.colorWhite,
+          overlayStyle: { maxWidth: 280 },
+          overlayInnerStyle: { color: tokenExt.colorBlackL1 },
+        },
         default: {},
       }[customTheme]),
-    [customTheme],
+    [customTheme, tokenExt],
   );
 
   // rowSelection 默认样式
@@ -45,7 +52,9 @@ export default function Mixin(props: TableExtMixinProps) {
         hermes: {
           columnWidth: 48,
         },
-        zeus: {},
+        zeus: {
+          columnWidth: 48,
+        },
         default: {},
       }[customTheme]),
     [customTheme],

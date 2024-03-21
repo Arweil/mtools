@@ -1,24 +1,24 @@
-import React, { useContext, useMemo } from 'react';
-import { DatePicker } from 'antd';
 import type { DatePickerProps } from 'antd';
-import { customPopupStyle } from './ThemeHermes';
+import { DatePicker } from 'antd';
 import classNames from 'classnames';
+import React, { useContext, useMemo } from 'react';
 import type { Theme } from '../ConfigProviderExt/context';
-import { useMapTheme } from '../utils';
+import { AntdExtGlobalContext } from '../ConfigProviderExt/context';
 import ThemeWrapper from '../theme/ThemeWrapper';
-import type {
-  RangePickerProps,
-  QuarterPicker,
-  YearPicker,
-  MonthPickerProps,
-  WeekPicker,
-  TimePicker,
-} from './type';
+import { useMapTheme } from '../utils';
 import type { DatePickerOutLineExtProps } from './DatePickerOutLineExt';
 import DatePickerOutLineExt from './DatePickerOutLineExt';
 import type { RangePickerOutLineExtProps } from './RangePickerOutLineExt';
 import RangePickerOutLineExt from './RangePickerOutLineExt';
-import { AntdExtGlobalContext } from '../ConfigProviderExt/context';
+import { customPopupStyle, customStyle } from './ThemeHermes';
+import type {
+  MonthPickerProps,
+  QuarterPicker,
+  RangePickerProps,
+  TimePicker,
+  WeekPicker,
+  YearPicker,
+} from './type';
 
 export type MixinHOCProps = (DatePickerProps | RangePickerProps | QuarterPicker) & {
   theme?: Theme;
@@ -32,7 +32,10 @@ export function MixHOC(props: MixinHOCProps) {
   const { classes, themeConfig, token, prefix, tokenExt } = useMapTheme({
     className,
     theme,
-    emotioncss: {},
+    emotioncss: {
+      hermes: customStyle,
+      zeus: customStyle,
+    },
   });
   const { themeExt } = useContext(AntdExtGlobalContext);
   const finTheme = theme || themeExt;
@@ -40,10 +43,10 @@ export function MixHOC(props: MixinHOCProps) {
   const _popupClassName = useMemo(() => {
     return {
       hermes: classNames(customPopupStyle(token, prefix, tokenExt), popupClassName),
-      zeus: popupClassName,
+      zeus: classNames(customPopupStyle(token, prefix, tokenExt), popupClassName),
       default: popupClassName,
     }[finTheme];
-  }, [token, prefix, theme, popupClassName, tokenExt]);
+  }, [token, prefix, popupClassName, finTheme, tokenExt]);
 
   return (
     <ThemeWrapper theme={themeConfig} type="DatePicker">

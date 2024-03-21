@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react';
 import type { Theme } from '../ConfigProviderExt/context';
+import ThemeWrapper from '../theme/ThemeWrapper';
 import useMapTheme from '../utils/useMapTheme';
 import type { DrawerExtProps } from './DrawerExt';
-import { customStyle } from './ThemeHermes';
 import DrawerExt from './DrawerExt';
-import ThemeWrapper from '../theme/ThemeWrapper';
+import { customStyle } from './ThemeHermes';
 
 export interface DrawerExtMixinProps extends DrawerExtProps {
   theme?: Theme;
@@ -16,6 +16,7 @@ export default function Mixin(props: DrawerExtMixinProps) {
     theme,
     headerStyle,
     footerStyle,
+    styles,
     okButtonProps,
     cancelButtonProps,
     ...restProps
@@ -31,6 +32,7 @@ export default function Mixin(props: DrawerExtMixinProps) {
     theme,
     emotioncss: {
       hermes: customStyle,
+      zeus: customStyle,
     },
   });
 
@@ -39,22 +41,32 @@ export default function Mixin(props: DrawerExtMixinProps) {
       hermes: {
         background: tokenExt.colorGreyL6,
         ...headerStyle,
+        ...styles?.header,
       },
-      zeus: {},
+      zeus: {
+        background: tokenExt.colorGreyL6,
+        ...headerStyle,
+        ...styles?.header,
+      },
       default: {},
     }[customTheme];
-  }, [customTheme, headerStyle, tokenExt.colorGreyL6]);
+  }, [customTheme, headerStyle, tokenExt.colorGreyL6, styles]);
 
   const formattedFooterStyle = useMemo(() => {
     return {
       hermes: {
         height: 64,
         ...footerStyle,
+        ...styles?.footer,
       },
-      zeus: {},
+      zeus: {
+        height: 64,
+        ...footerStyle,
+        ...styles?.footer,
+      },
       default: {},
     }[customTheme];
-  }, [customTheme, footerStyle]);
+  }, [customTheme, footerStyle, styles]);
 
   const buttonProps = useMemo(() => {
     return {
@@ -74,8 +86,11 @@ export default function Mixin(props: DrawerExtMixinProps) {
       <DrawerExt
         {...buttonProps}
         {...restProps}
-        headerStyle={formattedHeaderStyle}
-        footerStyle={formattedFooterStyle}
+        styles={{
+          ...styles,
+          header: formattedHeaderStyle,
+          footer: formattedFooterStyle,
+        }}
         rootClassName={classes}
       />
     </ThemeWrapper>

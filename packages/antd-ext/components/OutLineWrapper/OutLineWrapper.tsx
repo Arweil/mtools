@@ -1,16 +1,17 @@
-import React from 'react';
-import { useMemo } from 'react';
-import { Row, Col } from 'antd';
 import { css } from '@emotion/css';
-import { usePrefixCls } from '../utils';
 import type { GlobalToken } from 'antd';
+import { Col, Row } from 'antd';
 import classNames from 'classnames';
+import React, { useMemo } from 'react';
+import type { ThemeColor } from '../theme/type';
+import { useMapTheme, usePrefixCls } from '../utils';
 
 export interface OutLineWrapperProps {
   label: string;
   disabled?: boolean | [boolean, boolean];
   children?: React.ReactNode;
   isRequired?: boolean;
+  className?: string;
   ref?: React.MutableRefObject<HTMLDivElement>;
   injectStyle?: (prefixCls: string, mtPrefixCls: string, token: GlobalToken) => string;
 }
@@ -31,7 +32,6 @@ const style = (
     text-align: right;
     > label {
       height: 30px;
-      color: #8f959e;
       line-height: 30px;
       &::after {
         position: relative;
@@ -57,14 +57,19 @@ const style = (
 
   &.${prefixCls}-${mtPrefixCls}-outline-disabled {
     background-color: ${token.colorBgContainerDisabled};
+    .ant-form-item-label {
+      & > label {
+        color: ${token.colorTextDisabled};
+      }
+    }
   }
 
   ${injectStyle ? injectStyle(prefixCls, mtPrefixCls, token) : ''}
 `;
 
-const OutLineWrapper = React.forwardRef(
+export const OutLineWrapper = React.forwardRef(
   (props: OutLineWrapperProps, ref: React.RefObject<HTMLDivElement>) => {
-    const { label, children, disabled, injectStyle, isRequired } = props;
+    const { label, children, disabled, injectStyle, isRequired, className } = props;
     const { token, prefixCls, mtPrefixCls } = usePrefixCls();
     const customClassName = useMemo(
       () => style(prefixCls, mtPrefixCls, token, injectStyle),
@@ -75,7 +80,9 @@ const OutLineWrapper = React.forwardRef(
       <Row
         className={classNames([
           customClassName,
+          `${prefixCls}-${mtPrefixCls}-outline`,
           disabled ? `${prefixCls}-${mtPrefixCls}-outline-disabled` : undefined,
+          className,
         ])}
         ref={ref}
       >
@@ -99,4 +106,24 @@ const OutLineWrapper = React.forwardRef(
   },
 );
 
-export default OutLineWrapper;
+const customStyle = (token: GlobalToken, prefixCls: string, tokenExt: Partial<ThemeColor>) => css`
+  .${prefixCls}-form-item-label {
+    > label {
+      color: ${tokenExt.colorBlackL3};
+    }
+  }
+`;
+
+export default function Mixin(props: OutLineWrapperProps) {
+  const { className, ...restProps } = props;
+
+  const { classes } = useMapTheme({
+    emotioncss: {
+      hermes: customStyle,
+      zeus: customStyle,
+    },
+    className,
+  });
+
+  return <OutLineWrapper className={classes} {...restProps} />;
+}
