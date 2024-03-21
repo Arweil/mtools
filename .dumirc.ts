@@ -11,7 +11,7 @@ export default defineConfig({
     ],
   },
   exportStatic: {},
-  base: '/mtools',
+  base: '/mtools/',
   publicPath: '/mtools/',
   hash: true,
   alias: {
