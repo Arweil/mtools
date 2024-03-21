@@ -1,12 +1,10 @@
-import { CloseOutlined } from '@ant-design/icons';
+import { CloseOutlined, LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { css } from '@emotion/css';
 import { ConfigProvider, Flex, Layout, Menu } from 'antd';
 import type { ItemType, MenuItemGroupType, SubMenuType } from 'antd/es/menu/hooks/useItems';
 import classNames from 'classnames';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { usePrefixCls } from '../utils';
-import left from './img/left.png';
-import right from './img/right.png';
 import type { IBaseMenuInfo, LayoutExtProps } from './LayoutHermesExt';
 import { TriggerElement } from './LayoutHermesExt';
 
@@ -83,12 +81,49 @@ const tabItemStyle = css`
   }
 `;
 
-const imgStyle = css`
-  display: block;
+const arrowStyle = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 100%;
+  background-color: #eef4ff;
   cursor: pointer;
   position: absolute;
   top: 0;
   z-index: 999;
+`;
+
+const arrowStyleL = css`
+  left: 0;
+  ::after {
+    position: absolute;
+    top: 50%;
+    right: -12px;
+    z-index: 1;
+    width: 16px;
+    height: calc(100% - 10px);
+    background: rgba(238, 244, 255, 0.8);
+    transform: translateY(-50%);
+    filter: blur(5px);
+    content: '';
+  }
+`;
+const arrowStyleR = css`
+  right: 0;
+  ::before {
+    position: absolute;
+    top: 50%;
+    left: -12px;
+    z-index: 1;
+    width: 16px;
+    height: calc(100% - 10px);
+    background: rgba(238, 244, 255, 0.8);
+    transform: translateY(-50%);
+    filter: blur(5px);
+    content: '';
+  }
 `;
 
 function TabItem(props: {
@@ -381,12 +416,12 @@ export default function LayoutZeusExt<IMenuInfo extends IBaseMenuInfo>(
           {tabs && tabs.length > 0 ? (
             <div className={tabContainerStyle}>
               {!reach.L && (
-                <img
-                  src={left}
-                  className={imgStyle}
-                  style={{ left: 0 }}
+                <div
+                  className={classNames(arrowStyle, arrowStyleL)}
                   onClick={scrollTo.bind(null, 'L')}
-                />
+                >
+                  <LeftOutlined />
+                </div>
               )}
               <Flex align="center" className={tabContentStyle} ref={tabContentRef}>
                 {tabs.map(item => (
@@ -401,12 +436,12 @@ export default function LayoutZeusExt<IMenuInfo extends IBaseMenuInfo>(
                 ))}
               </Flex>
               {!reach.R && (
-                <img
-                  src={right}
-                  className={imgStyle}
-                  style={{ right: 0 }}
+                <div
+                  className={classNames(arrowStyle, arrowStyleR)}
                   onClick={scrollTo.bind(null, 'R')}
-                />
+                >
+                  <RightOutlined />
+                </div>
               )}
             </div>
           ) : null}
