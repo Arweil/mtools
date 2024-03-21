@@ -254,7 +254,7 @@ export default function LayoutZeusExt<IMenuInfo extends IBaseMenuInfo>(
   const scrollTo = useCallback(
     (direction: 'L' | 'R') => {
       const lft = tabContentEl.scrollLeft + (direction === 'L' ? -scrollStep : scrollStep);
-      tabContentEl?.scrollTo({ lft, behavior: 'smooth' });
+      tabContentEl?.scrollTo({ left: lft, behavior: 'smooth' });
     },
     [tabContentEl],
   );
