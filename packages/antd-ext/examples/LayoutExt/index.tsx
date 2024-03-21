@@ -69,12 +69,24 @@ export default function Index() {
         }}
         onTabRemove={key => {
           const index = tabs.findIndex(item => item.code === key);
+          const newTabs = tabs.filter(item => item.code !== key);
+
+          if (tabActive === key) {
+            if (index === tabs.length - 1) {
+              setTabActive(newTabs[newTabs.length - 1].code);
+            } else {
+              setTabActive(newTabs[index].code);
+            }
+          }
+
+          setTabs(newTabs);
         }}
         openKeys={layoutOpenKeys}
         selectedKeys={layoutSelectedKeys}
         setOpenKeys={setOpenKeys}
         setSelectedKeys={keys => {
           const key = keys[0];
+
           const ele = tabs.find(item => item.code === key);
           if (!ele) {
             const node = findNodeByUrl(menu, key);

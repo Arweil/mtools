@@ -70,7 +70,7 @@ const tabItemActiveStyle = css`
 
 const tabItemStyle = css`
   position: relative;
-  padding: 0px 10px 0px 16px;
+  padding: 0px 16px 0px 16px;
   height: 32px;
   line-height: 32px;
   margin-top: 4px;
@@ -123,7 +123,7 @@ function TabItem(props: {
       </span>
       {showRemoveIcon ? (
         <CloseOutlined
-          style={{ fontSize: 10, padding: 6, color: '#999999' }}
+          style={{ fontSize: 10, padding: 6, color: '#999999', marginRight: -6 }}
           onClick={e => _onRemove(e, tab.code)}
         />
       ) : null}
@@ -232,7 +232,8 @@ export default function LayoutZeusExt<IMenuInfo extends IBaseMenuInfo>(
   );
 
   const onFirstLevelMenuSelect = useCallback(
-    ({ key }) => {
+    (data: { key: string }) => {
+      const { key } = data;
       const menus = (menu || []).find(item => item.url === key)?.children || [];
       setSecondMenu(
         menus && menus.length > 0
@@ -243,6 +244,22 @@ export default function LayoutZeusExt<IMenuInfo extends IBaseMenuInfo>(
     },
     [bindMenu, menu, needMenuGroup],
   );
+
+  const _onTabClick = useCallback(
+    (key: string | number) => {
+      const { pathname } = props.history.location || {};
+
+      console.log(pathname, key, firstLevelMenuKey);
+
+      const arr = (pathname || '').split('/');
+      if (`/${arr[1]}` !== firstLevelMenuKey) {
+        onFirstLevelMenuSelect({ key: `/${arr[1]}` });
+      }
+      onTabClick(key);
+    },
+    [props.history.location, firstLevelMenuKey, onTabClick, onFirstLevelMenuSelect],
+  );
+
   const reach = useMemo(
     () => ({
       L: scrollData?.scrollLeft <= pd,
@@ -375,8 +392,8 @@ export default function LayoutZeusExt<IMenuInfo extends IBaseMenuInfo>(
                 {tabs.map(item => (
                   <TabItem
                     tab={item}
-                    showRemoveIcon
-                    onSelect={onTabClick}
+                    showRemoveIcon={tabs.length > 1}
+                    onSelect={_onTabClick}
                     onRemove={onTabRemove}
                     key={item.code}
                     tabActive={tabActive}
