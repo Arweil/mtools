@@ -1,3 +1,9 @@
+## 0.10.0
+1. 新增了 TreeExt 组件
+2. 新增了 UploadExt 组件
+3. 新增了 zeus 主题的 Layout
+4. 新增了 zeus 色板，已有组件新增了 zeus 的配色
+
 ## 0.9.0
 1. 新增了 NotificationExt 组件
 2. 库版本升级
