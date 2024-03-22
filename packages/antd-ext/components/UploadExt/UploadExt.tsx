@@ -10,7 +10,9 @@ import pdf from './img/pdf.svg';
 import word from './img/word.svg';
 
 const { Dragger } = Upload;
-export type UploadExtProps = UploadProps;
+export interface UploadExtProps extends UploadProps {
+  uploadBtnPosition?: 'top' | 'bottom';
+}
 
 function getType(name: string) {
   return (
@@ -46,13 +48,15 @@ const mapping = {
 export default function UploadExt(props: UploadExtProps) {
   const { mtPrefixCls } = usePrefixCls();
 
-  const { children, className, listType, itemRender, maxCount, ...restProps } = props;
+  const { children, className, listType, itemRender, maxCount, uploadBtnPosition, ...restProps } =
+    props;
   // listType不传值时默认使用自定义改造的picture-card
   const isCustomPictureCard = !listType;
   const internalListType = listType || 'picture-card';
   const uploadClassName = classNames(
     className,
     isCustomPictureCard ? `${mtPrefixCls}-upload-picture-card-wrapper` : '',
+    uploadBtnPosition !== 'top' ? '' : `${mtPrefixCls}-upload-btn-top`,
   );
 
   const UploadBtn = (
@@ -61,6 +65,15 @@ export default function UploadExt(props: UploadExtProps) {
       上传文件
     </button>
   );
+
+  const uploadActionArea =
+    children ||
+    (restProps.fileList?.length >= maxCount
+      ? null
+      : (isCustomPictureCard && UploadBtn) ||
+        (['picture-card', 'picture-circle'].includes(listType) && <PlusOutlined />) || (
+          <ButtonExt>上传</ButtonExt>
+        ));
 
   const getSpecificFileType = (file: UploadFile) => {
     let fileType = file?.type || file?.originFileObj?.type;
@@ -89,6 +102,7 @@ export default function UploadExt(props: UploadExtProps) {
         }
         const { status, percent } = file;
         const { remove } = actions;
+        // (uploadBtnPosition !== 'top') ? {} : { order: -1 }
         return (
           <Flex
             className={classNames(`${mtPrefixCls}-upload-list-item`, `status-${status}`)}
@@ -118,13 +132,7 @@ export default function UploadExt(props: UploadExtProps) {
       listType={internalListType}
       {...restProps}
     >
-      {children ||
-        (restProps.fileList?.length >= maxCount
-          ? null
-          : (isCustomPictureCard && UploadBtn) ||
-            (['picture-card', 'picture-circle'].includes(listType) && <PlusOutlined />) || (
-              <ButtonExt>上传</ButtonExt>
-            ))}
+      {uploadActionArea}
     </Upload>
   );
 }

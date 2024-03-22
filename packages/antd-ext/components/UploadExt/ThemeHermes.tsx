@@ -15,6 +15,8 @@ export const customStyle = (
     // 针对picture-card做样式自定义
     &.${mtPrefixCls}-upload-picture-card-wrapper {
       .${prefixCls}-upload-list-picture-card {
+        display: flex;
+        flex-direction: column;
         .${prefixCls}-upload.${prefixCls}-upload-select {
           width: 100%;
           height: ${uploadHeight}px;
@@ -73,6 +75,11 @@ export const customStyle = (
               height: 100%;
             }
           }
+        }
+      }
+      &.${mtPrefixCls}-upload-btn-top {
+        .${prefixCls}-upload.${prefixCls}-upload-select {
+          order: -1;
         }
       }
     }

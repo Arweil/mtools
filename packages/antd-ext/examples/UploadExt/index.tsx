@@ -6,6 +6,8 @@ import React, { useState } from 'react';
 export default function App() {
   const [theme, setTheme] = useState<Theme>('hermes');
   const [listType, setListType] = useState<UploadExtProps['listType']>();
+  const [uploadBtnPosition, setUploadBtnPosition] =
+    useState<UploadExtProps['uploadBtnPosition']>('bottom');
   const [fileList, setFileList] = useState<UploadExtProps['fileList']>([
     {
       uid: '-1',
@@ -74,6 +76,17 @@ export default function App() {
               <Radio.Button value="picture-circle">picture-circle</Radio.Button>
             </Radio.Group>
           </Form.Item>
+          <Form.Item label="uploadBtnPosition">
+            <Radio.Group
+              value={uploadBtnPosition}
+              style={{ marginBottom: 24 }}
+              buttonStyle="solid"
+              onChange={e => setUploadBtnPosition(e.target.value)}
+            >
+              <Radio.Button value="bottom">bottom</Radio.Button>
+              <Radio.Button value="top">top</Radio.Button>
+            </Radio.Group>
+          </Form.Item>
         </Form>
       </div>
       <Row gutter={24}>
@@ -81,6 +94,7 @@ export default function App() {
           <Card title={`主题：${theme}`} style={{ marginBottom: 24 }}>
             <UploadExt
               listType={listType}
+              uploadBtnPosition={uploadBtnPosition}
               theme={theme}
               fileList={fileList}
               onChange={({ fileList: newFileList }) => {
