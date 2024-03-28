@@ -1,9 +1,8 @@
+import { DollarOutlined } from '@ant-design/icons';
+import type { IBaseMenuInfo } from '@m-tools/antd-ext/es/LayoutExt/LayoutExt';
+import { getFullPath, getSelectedMenu, simple2Tree } from '@m-tools/browser-utils';
 import { action, makeAutoObservable, runInAction } from 'malganis/mobx';
 import React from 'react';
-import { DollarOutlined } from '@ant-design/icons';
-import { simple2Tree, getFullPath, getSelectedMenu } from '@m-tools/browser-utils';
-
-import type { IBaseMenuInfo } from '@/layout/AppLayout';
 
 const mapIcon: { [key: string]: React.FunctionComponent } = {
   DollarOutlined,
@@ -70,13 +69,13 @@ export class UserStore {
               path: '/Demo',
               icon: 'DollarOutlined',
             },
-            {
-              code: 'demoBaseCom',
-              id: 2,
-              nameZn: 'DemoBaseCom',
-              pId: 1,
-              path: '/Demo/DemoBaseCom',
-            },
+            // {
+            //   code: 'demoBaseCom',
+            //   id: 2,
+            //   nameZn: 'DemoBaseCom',
+            //   pId: 1,
+            //   path: '/Demo/DemoBaseCom',
+            // },
             {
               code: 'demoMulStore',
               id: 3,
@@ -90,6 +89,13 @@ export class UserStore {
               nameZn: 'DemoNoStore',
               pId: 1,
               path: '/Demo/DemoNoStore',
+            },
+            {
+              code: 'demoSingleStore',
+              id: 2,
+              nameZn: 'DemoSingleStore',
+              pId: 1,
+              path: '/Demo/DemoSingleStore',
             },
             {
               code: 'errorpage',

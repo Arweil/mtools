@@ -8,7 +8,4 @@ module.exports = {
     open: false,
     proxy: serviceConfig.proxy,
   },
-  css: {
-    lessModifyVars: require('./theme'),
-  },
 };

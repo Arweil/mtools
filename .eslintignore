@@ -5,3 +5,4 @@
 jest.config.js
 commitlint.config.js
 dist
+packages/mt-template-admin

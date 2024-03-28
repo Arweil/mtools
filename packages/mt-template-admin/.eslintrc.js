@@ -3,6 +3,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
+  root: true,
   extends: [
     'airbnb',
     'airbnb-typescript',
@@ -14,6 +15,7 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
+    tsconfigRootDir: __dirname,
     ecmaVersion: 12,
     sourceType: 'module',
     project: './tsconfig.json',

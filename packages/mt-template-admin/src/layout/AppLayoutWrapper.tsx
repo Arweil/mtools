@@ -1,10 +1,13 @@
-import React, { useEffect, useContext } from 'react';
-import { MobXProviderContext, observer } from 'malganis/mobx-react';
 import { UserStore as UserStoreMbx } from '@/stores/UserStore';
-import AppLayout from './AppLayout';
+import { LayoutExt as AppLayout } from '@m-tools/antd-ext';
+import { MobXProviderContext, observer } from 'malganis/mobx-react';
+import { useHistory } from 'malganis/router';
+import React, { useContext, useEffect } from 'react';
 
 export default observer((props: { children?: React.ReactNode }): JSX.Element => {
   const { children } = props;
+  const history = useHistory();
+
   const { store } = useContext(MobXProviderContext);
 
   const { UserStore } = store as { UserStore: UserStoreMbx };
@@ -26,6 +29,7 @@ export default observer((props: { children?: React.ReactNode }): JSX.Element => 
   return (
     <AppLayout
       menu={menu || []}
+      history={history}
       openKeys={layoutOpenKeys}
       selectedKeys={layoutSelectedKeys}
       userName={userInfo && userInfo.nickname ? userInfo.nickname : ''}
@@ -40,7 +44,6 @@ export default observer((props: { children?: React.ReactNode }): JSX.Element => 
         <div style={{ display: 'flex', height: '100%', alignItems: 'center' }}>
           <div
             style={{
-              color: '#fff',
               fontSize: 20,
               textAlign: 'center',
               flex: 1,

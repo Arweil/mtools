@@ -3,6 +3,8 @@ import { makeAutoObservable } from 'malganis/mobx';
 class DemoAStore {
   namespace: string;
 
+  $$needResetStore = false;
+
   constructor() {
     makeAutoObservable(this);
 

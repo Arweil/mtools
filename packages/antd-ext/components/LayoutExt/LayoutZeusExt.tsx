@@ -353,7 +353,7 @@ export default function LayoutZeusExt<IMenuInfo extends IBaseMenuInfo>(
           theme={{
             components: {
               Menu: {
-                fontSize: 11,
+                fontSize: 12,
                 itemHoverColor: '#FFFFFF',
                 itemColor: '#BBC0CC',
               },
@@ -376,7 +376,7 @@ export default function LayoutZeusExt<IMenuInfo extends IBaseMenuInfo>(
         <Sider
           collapsible
           trigger={
-            <TriggerElement collapsed={collapsed} onClick={onCollapse} style={{ fontSize: 12 }} />
+            <TriggerElement collapsed={collapsed} onClick={onCollapse} style={{ fontSize: 16 }} />
           }
           collapsed={collapsed}
           width={finSiderWidth}
@@ -387,7 +387,7 @@ export default function LayoutZeusExt<IMenuInfo extends IBaseMenuInfo>(
             theme={{
               components: {
                 Menu: {
-                  fontSize: 11,
+                  fontSize: 12,
                   itemHeight: 32,
                   itemSelectedBg: 'transparent',
                   itemHoverBg: '#DFEBFF',

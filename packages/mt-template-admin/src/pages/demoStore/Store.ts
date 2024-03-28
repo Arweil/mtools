@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'malganis/mobx';
 
-class DemoBStore {
+class Store {
   namespace: string;
 
   $$needResetStore = false;
@@ -8,8 +8,8 @@ class DemoBStore {
   constructor() {
     makeAutoObservable(this);
 
-    this.namespace = 'DemoBStoreNameSpace';
+    this.namespace = 'SingleStoreNameSpace';
   }
 }
 
-export default new DemoBStore();
+export default new Store();

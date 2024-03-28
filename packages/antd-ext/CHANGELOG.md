@@ -1,3 +1,6 @@
+## 0.10.1
+1. 修正了 LayoutExt 组件的部分样式
+
 ## 0.10.0
 1. 新增了 TreeExt 组件
 2. 新增了 UploadExt 组件

@@ -3,12 +3,11 @@ import { observer } from 'malganis/mobx-react';
 import { RouteComponentProps } from 'malganis/router';
 import React from 'react';
 
-function Demo(props: { onClick: () => void }): JSX.Element {
+function Demo(props: { onClick: () => void }) {
   const { onClick } = props;
-
   return (
     <div>
-      This is DemoMulStore Page
+      Demo
       <Input />
       <Button onClick={onClick}>show context</Button>
     </div>
@@ -18,5 +17,5 @@ function Demo(props: { onClick: () => void }): JSX.Element {
 export default observer((props: RouteComponentProps) => {
   console.log(props);
 
-  return <Demo onClick={() => console.log('MulStore')} />;
+  return <Demo onClick={() => console.log('SingleStore')} />;
 });
