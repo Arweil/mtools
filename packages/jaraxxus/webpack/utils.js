@@ -68,7 +68,7 @@ function createStyleLoaderConfig(cssLoaderOptions, preLoaderOptions, preLoader) 
   }
 
   // 样式以何种方式加载
-  if (isDevMode) {
+  if (isDevMode || !config.css.extract) {
     // https://github.com/webpack-contrib/style-loader
     // 使用style标签
     loaders.unshift({

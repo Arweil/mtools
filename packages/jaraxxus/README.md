@@ -1,13 +1,16 @@
 # Jaraxxus
-用此工具包可以快速创建一个React开发环境。提高项目创建效率。
+
+用此工具包可以快速创建一个 React 开发环境。提高项目创建效率。
 
 ## Usage
-* 创建React项目后，在根目录添加*jaraxxus.config.js*配置文件进行webpack的基本配置；（在v4.0.0版本后已经不需要jaraxxus.config.js文件了，会使用默认配置）
-* *jaraxxus start* 命令用作dev环境；
-* *jaraxxus build* 命令用作项目打包。
-* dev环境中需要 node >= 10.X
+
+- 创建 React 项目后，在根目录添加*jaraxxus.config.js*配置文件进行 webpack 的基本配置；（在 v4.0.0 版本后已经不需要 jaraxxus.config.js 文件了，会使用默认配置）
+- _jaraxxus start_ 命令用作 dev 环境；
+- _jaraxxus build_ 命令用作项目打包。
+- dev 环境中需要 node >= 10.X
 
 ## API
+
 jaraxxus.config.js
 
 ```javascript
@@ -24,7 +27,8 @@ module.exports = {
   productionSourceMap: false, // 生成环境是否需要sourcemap js
   configureWebpack: {}, // webpack 配置，最后通过webpack-merge合并配置
   bundleAnalyzerReport: false, // webpack-bundle-analyzer 是否启用
-  devServer: { // 和devServer配置相同，可以全量配置
+  devServer: {
+    // 和devServer配置相同，可以全量配置
     publicPath: '/',
     port: 9999,
     clientLogLevel: 'info',
@@ -37,22 +41,25 @@ module.exports = {
     quiet: true,
   },
   css: {
+    extract: true, // production 环境下，
     cssModules: false, // 是否启用css模块化
     sourceMap: false, // css sourceMap
     lessModifyVars: {}, // less modifyVars 配置
     loaderOptions: {
       style: {}, // style-loader options
-    }
-  }
-}
+    },
+  },
+};
 ```
 
-## 配置babel
+## 配置 babel
+
 此版本已经不需要额外的配置*babel.config.js*文件了。
 
 如果需要额外的配置，默认使用*babel*中的*extends*配置项去拓展配置。
 
 babel.config.js 参考文件
+
 ```javascript
 module.exports = {
   presets: [
@@ -95,15 +102,16 @@ module.exports = {
 };
 ```
 
-## 关于postcss
+## 关于 postcss
+
 此版本已经不需要格外的配置*postcss.config.js*文件了。
 
-如果需要额外的配置，可以另外声明*postcss.config.js*，将会覆盖已有的默认配置（*postcss-preset-env* & *postcss-normalize*）。
+如果需要额外的配置，可以另外声明*postcss.config.js*，将会覆盖已有的默认配置（_postcss-preset-env_ & _postcss-normalize_）。
 
 ## What means Jaraxxus
-![Load Jaraxxus](https://github.com/Arweil/Jaraxxus/blob/master/jaraxxus.png)
-![Infernal](https://github.com/Arweil/Jaraxxus/blob/master/infernal.png)
 
-Jaraxxus是炉石中的一个恶魔，他非常强大，2费可以召唤一个666的地狱火。
+![Load Jaraxxus](https://github.com/Arweil/Jaraxxus/blob/master/jaraxxus.png) ![Infernal](https://github.com/Arweil/Jaraxxus/blob/master/infernal.png)
 
-我希望此项目也能通过简单的配置创建出强大的React项目。
+Jaraxxus 是炉石中的一个恶魔，他非常强大，2 费可以召唤一个 666 的地狱火。
+
+我希望此项目也能通过简单的配置创建出强大的 React 项目。

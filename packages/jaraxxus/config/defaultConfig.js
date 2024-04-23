@@ -30,6 +30,7 @@ module.exports = {
     logLevel: 'error', // webpack-dev-server ~> webpack-log 中配置的level选项
   },
   css: {
+    extract: true,
     sourceMap: false,
     cssModules: false,
     localIdentName: '',
