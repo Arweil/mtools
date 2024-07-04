@@ -1,9 +1,9 @@
-import React, { useCallback, useRef, useState } from 'react';
 import { css } from '@emotion/css';
-import SelectExt from './SelectExt';
+import React, { useCallback, useRef, useState } from 'react';
+import type { OutLineWrapperProps } from '../OutLineWrapper';
 import OutLineWrapper from '../OutLineWrapper';
 import type { SelectExtProps } from './SelectExt';
-import type { OutLineWrapperProps } from '../OutLineWrapper';
+import SelectExt from './SelectExt';
 
 const style = (prefixCls: string) => css`
   .${prefixCls}-select-borderless {
@@ -57,7 +57,7 @@ export default function SelectOutLineExt(props: SelectOutLineExtProps) {
       <SelectExt
         {...restProps}
         disabled={disabled as boolean}
-        bordered={false}
+        variant="borderless"
         onDropdownVisibleChange={onDropdownVisibleChange}
         popupMatchSelectWidth={width}
         placement="bottomRight"

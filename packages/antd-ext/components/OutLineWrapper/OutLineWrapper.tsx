@@ -114,7 +114,10 @@ const customStyle = (token: GlobalToken, prefixCls: string, tokenExt: Partial<Th
   }
 `;
 
-export default function Mixin(props: OutLineWrapperProps) {
+export default React.forwardRef(function Mixin(
+  props: OutLineWrapperProps,
+  ref: React.RefObject<HTMLDivElement>,
+) {
   const { className, ...restProps } = props;
 
   const { classes } = useMapTheme({
@@ -125,5 +128,5 @@ export default function Mixin(props: OutLineWrapperProps) {
     className,
   });
 
-  return <OutLineWrapper className={classes} {...restProps} />;
-}
+  return <OutLineWrapper className={classes} ref={ref} {...restProps} />;
+});

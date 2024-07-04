@@ -1,3 +1,9 @@
+## 0.10.2
+1. 库版本升级
+  a. antd@5.19.0
+  b. @ant-design/icons@5.3.7
+2. 修正了 SelectOutLineExt 组件下拉框的样式问题
+
 ## 0.10.1
 1. 修正了 LayoutExt 组件的部分样式
 
