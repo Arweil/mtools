@@ -1,14 +1,14 @@
 /**
  * node 作为静态资源服务器，挂载资源，并且进行数据转发
  */
-import path from 'path';
-import fs from 'fs';
-import express from 'express';
-import cookieParser from 'cookie-parser';
-import compression from 'compression';
 import * as cheerio from 'cheerio';
+import compression from 'compression';
+import cookieParser from 'cookie-parser';
+import express from 'express';
+import fs from 'fs';
+import path from 'path';
 import proxy from './proxy';
-import { getConfig, appDirectory } from './utils';
+import { appDirectory, getConfig } from './utils';
 
 // 获取配置信息
 const config = getConfig();
@@ -115,7 +115,7 @@ app.get(baseRouter + '/*', (req, res) => {
 // @ts-ignore
 app.use((err, req, res, next) => {
   if (err) {
-    res.status(err.status).send(`${err.status}`);
+    res.status(err.status ?? 500).send(`${err}`);
   }
 });
 

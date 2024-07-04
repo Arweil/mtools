@@ -1,4 +1,7 @@
 export default {
+  targets: {
+    node: 14,
+  },
   cjs: {
     input: 'src', // 默认编译目录
     platform: 'node', // 默认构建为 Browser 环境的产物

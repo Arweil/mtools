@@ -4,6 +4,9 @@
   "bin": {
     "node-service": "./bin/node-service.js"
   },
+  "engines": {
+    "node": ">=14"
+  },
   "description": "",
   "scripts": {
     "build": "father build",
