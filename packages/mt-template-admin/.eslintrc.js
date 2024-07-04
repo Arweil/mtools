@@ -20,14 +20,18 @@ module.exports = {
     sourceType: 'module',
     project: './tsconfig.json',
   },
-  plugins: ['react', '@typescript-eslint'],
+  plugins: ['react', 'react-hooks', '@typescript-eslint'],
   rules: {
+    'react/require-default-props': ['off'],
+    'no-underscore-dangle': ['error', { allow: ['__POWERED_BY_QIANKUN__'] }],
     // https://eslint.org/docs/rules/class-methods-use-this
-    'class-methods-use-this': [0],
+    'class-methods-use-this': ['off'],
     // https://github.com/iamturns/eslint-config-airbnb-typescript/issues/239
-    'import/extensions': [0],
+    'import/extensions': ['off'],
     // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/unbound-method.md
     // mobx中使用action.bound绑定this，不使用this可以不绑定
-    '@typescript-eslint/unbound-method': [0],
+    '@typescript-eslint/unbound-method': ['off'],
+    'react-hooks/exhaustive-deps': 'error',
+    'react-hooks/rules-of-hooks': 'error',
   },
 };

@@ -23,14 +23,14 @@
     "access": "public"
   },
   "dependencies": {
-    "@ant-design/icons": "^4.7.0",
     "@m-tools/antd-ext": "^0.10.1",
     "@m-tools/browser-utils": "^0.0.4-alpha.0",
     "@m-tools/node-service": "^0.0.5",
     "malganis": "^2.0.7",
     "react": "^18.2.0",
     "react-activation": "^0.12.4",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "whatwg-fetch": "^3.6.20"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",

@@ -5,16 +5,12 @@ import React from 'react';
 import { AliveScope } from 'react-activation';
 import RegisterRouter from './routers';
 
-function LoadingComponent(): React.ReactNode {
-  return;
-}
-
 const app = malganis({
   historyOptions: {
     type: 'browser',
     basename: window.__POWERED_BY_QIANKUN__ ? '/app-name' : undefined,
   },
-  fetchingComp: LoadingComponent,
+  fetchingComp: <span>loading...</span>,
 });
 
 app.model(userStore);

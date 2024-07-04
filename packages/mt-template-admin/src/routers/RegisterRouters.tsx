@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import AppLayoutWrapper from '@/layout/AppLayoutWrapper';
 import ScrollToTop from '@/routers/ScrollToTop';
 import dynamic from 'malganis/dynamic';
@@ -24,7 +25,7 @@ function DynamicComponent(props: KeepAliveHOCProps) {
         models,
         fetchingComp,
       }),
-    [],
+    [app, component, fetchingComp, models],
   );
 
   return <D {...p} />;
@@ -33,7 +34,6 @@ function DynamicComponent(props: KeepAliveHOCProps) {
 function DynamicComponentKP(props: KeepAliveHOCProps) {
   const { location } = props;
 
-  // const k = `${location.pathname}${location.search}`;
   const k = location.pathname;
 
   return (

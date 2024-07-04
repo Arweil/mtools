@@ -24,7 +24,7 @@ export default observer((props: { children?: React.ReactNode }): JSX.Element => 
     }
 
     return () => {};
-  }, []);
+  }, [UserStore]);
 
   return (
     <AppLayout
@@ -32,12 +32,6 @@ export default observer((props: { children?: React.ReactNode }): JSX.Element => 
       history={history}
       openKeys={layoutOpenKeys}
       selectedKeys={layoutSelectedKeys}
-      userName={userInfo && userInfo.nickname ? userInfo.nickname : ''}
-      onMenuItemClick={async menuItem => {
-        if (menuItem.key === 'logout') {
-          await UserStore.logout();
-        }
-      }}
       setOpenKeys={UserStore.setOpenKeys}
       setSelectedKeys={UserStore.setSelectedKeys}
       setTitle={({ collapsed }) => (
@@ -53,6 +47,8 @@ export default observer((props: { children?: React.ReactNode }): JSX.Element => 
           </div>
         </div>
       )}
+      onTabClick={() => undefined}
+      onTabRemove={() => undefined}
     >
       {children}
     </AppLayout>

@@ -1,8 +1,13 @@
-// import { hot } from 'react-hot-loader/root';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import App from './App';
 import './public-path';
+
+declare global {
+  interface Window {
+    __POWERED_BY_QIANKUN__: boolean | undefined;
+  }
+}
 
 type OnGlobalStateChangeCallback = (
   state: Record<string, any>,
@@ -19,31 +24,31 @@ interface IQiankunProps {
 }
 
 if (!window.__POWERED_BY_QIANKUN__) {
-  ReactDOM.render(<App />, document.getElementById('root'));
+  const root = ReactDOM.createRoot(document.getElementById('root')!);
+  root.render(<App />);
 }
 
-export async function bootstrap() {
-  console.log('App2 bootstrap');
-}
+export function bootstrap() {}
 
-export async function mount(props: IQiankunProps) {
-  console.log('App2 mount', props);
+export function mount(props: IQiankunProps): void {
   props.onGlobalStateChange(
     (value, prev) => console.log(`[onGlobalStateChange - ${props.name}]:`, value, prev),
     true,
   );
 
-  ReactDOM.render(
-    <App />,
-    props.container ? props.container.querySelector('#root') : document.getElementById('root'),
+  const root = ReactDOM.createRoot(
+    props.container ? props.container.querySelector('#root')! : document.getElementById('root')!,
   );
+
+  root.render(<App />);
 }
 
-export async function unmount(props: IQiankunProps) {
-  console.log('App2 unmount');
+export function unmount(props: IQiankunProps): void {
   const { container } = props;
 
-  ReactDOM.unmountComponentAtNode(
-    container ? container.querySelector('#root') : document.getElementById('root'),
+  const root = ReactDOM.createRoot(
+    props.container ? container.querySelector('#root')! : document.getElementById('root')!,
   );
+
+  root.unmount();
 }

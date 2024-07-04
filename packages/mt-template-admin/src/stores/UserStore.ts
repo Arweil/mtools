@@ -1,5 +1,5 @@
-import { DollarOutlined } from '@ant-design/icons';
-import type { IBaseMenuInfo } from '@m-tools/antd-ext/es/LayoutExt/LayoutExt';
+import { DollarOutlined } from '@m-tools/antd-ext/es/icon';
+import { IBaseMenuInfo } from '@m-tools/antd-ext/es/LayoutExt/LayoutHermesExt';
 import { getFullPath, getSelectedMenu, simple2Tree } from '@m-tools/browser-utils';
 import { action, makeAutoObservable, runInAction } from 'malganis/mobx';
 import React from 'react';
