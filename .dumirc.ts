@@ -7,6 +7,7 @@ export default defineConfig({
     name: 'NW-WOW',
     nav: [
       { title: 'antd-ext', link: '/antd-ext' },
+      { title: '设计', link: '/design' },
       { title: 'GitHub', link: 'https://github.com/Arweil/mtools' },
     ],
   },
