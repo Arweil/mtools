@@ -1,7 +1,8 @@
 import { CloseOutlined, LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { css } from '@emotion/css';
+import type { MenuProps } from 'antd';
 import { ConfigProvider, Flex, Layout, Menu } from 'antd';
-import type { ItemType, MenuItemGroupType, SubMenuType } from 'antd/es/menu/hooks/useItems';
+import type { ItemType, MenuItemGroupType, SubMenuType } from 'antd/es/menu/interface';
 import classNames from 'classnames';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { usePrefixCls } from '../utils';
@@ -35,6 +36,7 @@ const tabContentStyle = css`
 const tabItemActiveStyle = css`
   > span {
     color: #016eff !important;
+    font-weight: bold;
   }
   font-weight: 500;
   background: #d6e5ff;
@@ -247,23 +249,19 @@ export default function LayoutZeusExt<IMenuInfo extends IBaseMenuInfo>(
         // popupClassName: popupMenuStyle(prefixCls),
         icon: _menu.icon,
         ...base,
-        label:
-          _menu.children && _menu.children.length > 0 ? (
-            _menu.name
-          ) : (
-            <div onClick={() => props.history.push(_menu.url)}>{_menu.name}</div>
-          ),
+        label: _menu.name,
       } as SubMenuType;
     },
-    [props.history],
+    [],
   );
 
   const onSelect = useCallback(
-    (data: { selectedKeys: string[] }) => {
-      const { selectedKeys: _selectedKeys } = data;
+    (data: Parameters<MenuProps['onSelect']>[number]) => {
+      const { key, selectedKeys: _selectedKeys } = data;
       setSelectedKeys(_selectedKeys);
+      props.history.push(key);
     },
-    [setSelectedKeys],
+    [props.history, setSelectedKeys],
   );
 
   const onFirstLevelMenuSelect = useCallback(

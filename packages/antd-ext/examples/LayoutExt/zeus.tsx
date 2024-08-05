@@ -72,11 +72,9 @@ export default function Index() {
           const newTabs = tabs.filter(item => item.code !== key);
 
           if (tabActive === key) {
-            if (index === tabs.length - 1) {
-              setTabActive(newTabs[newTabs.length - 1].code);
-            } else {
-              setTabActive(newTabs[index].code);
-            }
+            const active = newTabs[index - 1].code;
+            setTabActive(active);
+            setSelectedKeys([active + '']);
           }
 
           setTabs(newTabs);
