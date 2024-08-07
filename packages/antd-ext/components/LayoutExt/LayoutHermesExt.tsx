@@ -212,8 +212,6 @@ export default function AppLayoutExt<IMenuInfo extends IBaseMenuInfo>(
   } = props;
   const [collapsed, setCollapsed] = useState(false);
 
-  console.log('tabs============', tabs);
-
   const { token, prefixCls, mtPrefixCls } = usePrefixCls();
 
   useEffect(() => {
