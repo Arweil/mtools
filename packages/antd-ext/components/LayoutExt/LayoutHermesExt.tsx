@@ -16,27 +16,6 @@ const { Header, Content, Sider } = Layout;
  * @returns 所有结点的数组
  */
 export type typeBaseTreeNode<T> = T & { children?: typeBaseTreeNode<T>[] };
-function levelOrder<T>(tree: typeBaseTreeNode<T>): T[] {
-  if (tree === null) {
-    return [];
-  }
-
-  const res = [];
-  let stack = [tree];
-  while (stack.length) {
-    const item = stack.shift();
-    if (item && item.children && item.children.length > 0) {
-      stack = [...stack, ...item.children] as typeBaseTreeNode<T>[];
-    }
-
-    if (item) {
-      // Reflect.deleteProperty(item, 'children');
-      res.push(item);
-    }
-  }
-
-  return res;
-}
 
 const headerExtraStyle = (token: GlobalToken, prefixCls: string) => css`
   display: flex;
@@ -274,24 +253,6 @@ export default function AppLayoutExt<IMenuInfo extends IBaseMenuInfo>(
     setCollapsed(!collapsed);
   }, [collapsed]);
 
-  // const simpleMenu: IBaseMenuInfo[] = useMemo(
-  //   () =>
-  //     menu.reduce((pre, cur) => {
-  //       return [...pre, ...levelOrder(cur)];
-  //     }, [] as IBaseMenuInfo[]),
-  //   [menu],
-  // );
-
-  // useEffect(() => {
-  //   if (headerContent === false) {
-  //     return;
-  //   }
-  //   const _menuItems: string[] = JSON.parse(
-  //     window.sessionStorage.getItem('mt-antdext-cached-menu-item') || '[]',
-  //   );
-  //   setCachedMenuItems(_menuItems.length > 0 ? _menuItems : selectedKeys);
-  // }, [selectedKeys, headerContent]);
-
   const onSelect = useCallback(
     (data: Parameters<MenuProps['onSelect']>[number]) => {
       const { key, selectedKeys: _selectedKeys } = data;
@@ -300,24 +261,6 @@ export default function AppLayoutExt<IMenuInfo extends IBaseMenuInfo>(
     },
     [props.history, setSelectedKeys],
   );
-
-  // const onRemove = useCallback(
-  //   (key: string) => {
-  //     const index = cachedMenuItems.findIndex(item => item === key);
-  //     if (index > -1) {
-  //       cachedMenuItems.splice(index, 1);
-  //       window.sessionStorage.setItem(
-  //         'mt-antdext-cached-menu-item',
-  //         JSON.stringify([...cachedMenuItems]),
-  //       );
-  //       setCachedMenuItems([...cachedMenuItems]);
-  //       const lastEle = cachedMenuItems[cachedMenuItems.length - 1];
-  //       setSelectedKeys([lastEle]);
-  //       props.history.push(lastEle);
-  //     }
-  //   },
-  //   [cachedMenuItems, setSelectedKeys, props.history],
-  // );
 
   return (
     <Layout style={{ height: '100%' }} className={className}>
