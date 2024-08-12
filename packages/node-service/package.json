@@ -1,6 +1,6 @@
 {
   "name": "@m-tools/node-service",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "bin": {
     "node-service": "./bin/node-service.js"
   },
