@@ -42,7 +42,6 @@ export default function RangeNumberExt(props: RangeNumberExtProps) {
 
   const { status: contextStatus } = useContext(FormItemInputContext);
 
-  console.log(token.colorPrimary);
   const classname = useMemo(
     () =>
       classNames(

@@ -1,6 +1,7 @@
 ---
 title: ModalExt
 toc: menu
+debug: true
 ---
 
 # ModalExt

@@ -44,8 +44,6 @@ export default function TreeExt(props: TreeExtProps) {
   } = props;
 
   const _treeData = useMemo(() => {
-    console.log(treeRef);
-    // debugger
     if (!getNodeMore) {
       return treeData;
     }
