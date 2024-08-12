@@ -77,8 +77,8 @@ export async function javaApiDele(
 // 分页请求 分页数据同级
 export async function javaApiPagerPost1(
   data: Partial<JavaRequestDTO> & BasePaginationRequestOutsideParams,
-): Promise<BaseApiResponse<BasePaginationResponse<Partial<JavaResponseDTO>[]>>> {
-  const res = await post<BaseApiResponse<BasePaginationResponse<Partial<JavaResponseDTO>[]>>>({
+): Promise<BaseApiResponse<BasePaginationResponse<Partial<JavaResponseDTO>>>> {
+  const res = await post<BaseApiResponse<BasePaginationResponse<Partial<JavaResponseDTO>>>>({
     url: `${commonUrl}/path/of/java/api`,
     data,
   });
@@ -89,8 +89,8 @@ export async function javaApiPagerPost1(
 // 分页请求 分页数据在params中
 export async function javaApiPagerPost2(
   data: BasePaginationRequest<Partial<JavaRequestDTO>>,
-): Promise<BaseApiResponse<BasePaginationResponse<Partial<JavaResponseDTO>[]>>> {
-  const res = await post<BaseApiResponse<BasePaginationResponse<Partial<JavaResponseDTO>[]>>>({
+): Promise<BaseApiResponse<BasePaginationResponse<Partial<JavaResponseDTO>>>> {
+  const res = await post<BaseApiResponse<BasePaginationResponse<Partial<JavaResponseDTO>>>>({
     url: `${commonUrl}/path/of/java/api`,
     data,
   });

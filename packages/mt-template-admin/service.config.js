@@ -1,4 +1,7 @@
 module.exports = {
+  envList: ['test', 'pre', 'prd'],
+  useCookieEnv: true,
+  DEPLOY_ENV: 'DEPLOY_ENV',
   proxy: [
     {
       context: ['/api'],
@@ -15,5 +18,4 @@ module.exports = {
       $(eleList[0]).after(`<script>window.a=1</script>`);
     }
   },
-  useCookieEnv: false,
 };

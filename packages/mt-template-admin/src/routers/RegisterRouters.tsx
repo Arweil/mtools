@@ -25,7 +25,7 @@ function DynamicComponent(props: KeepAliveHOCProps) {
         models,
         fetchingComp,
       }),
-    [app, component, fetchingComp, models],
+    [],
   );
 
   return <D {...p} />;
