@@ -13,10 +13,13 @@ const style = (prefixCls: string) => css`
   }
   .${prefixCls}-input-affix-wrapper{
     padding: 4px 0;
-
+    
     &:focus-within {
       box-shadow: none;
     }
+  }
+  .${prefixCls}-input-show-count-suffix {
+    color: rgba(0, 0, 0, 0.25);
   }
 `;
 

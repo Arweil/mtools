@@ -1,3 +1,7 @@
+## 1.0.0
+1. 修改了 LayoutExt zeus 主题的样式
+2. 更新了 LayoutExt hermes 主题的API
+
 ## 0.10.2
 1. 库版本升级
   a. antd@5.19.0

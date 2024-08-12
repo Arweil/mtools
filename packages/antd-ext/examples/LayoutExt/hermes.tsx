@@ -1,7 +1,7 @@
 import { css as reactcss, Global } from '@emotion/react';
-import { LayoutExt } from '@m-tools/antd-ext';
+import { Flex, LayoutExt } from '@m-tools/antd-ext';
 import type { ITab } from '@m-tools/antd-ext/LayoutExt/LayoutHermesExt';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import menu from './menu.json';
 
 type MenuItem = {
@@ -33,6 +33,14 @@ export default function Index() {
   const [tabs, setTabs] = useState<ITab[]>([]);
   const [tabActive, setTabActive] = useState<string | number>('');
 
+  useEffect(() => {
+    // setTimeout(() => {
+    //   setTabs(['/first-level02/second-level01']);
+    //   setTabActive('/first-level02/second-level01');
+    //   setSelectedKeys(['/first-level02/second-level01']);
+    // }, 2000);
+  }, []);
+
   return (
     <>
       <Global
@@ -43,12 +51,38 @@ export default function Index() {
           `}
       />
       <LayoutExt
-        setTitle={collapsed => {
-          return <div style={{ textAlign: 'center', color: '#FFF' }}>ZEUS</div>;
+        tabs={tabs}
+        tabActive={tabActive}
+        onTabClick={key => {
+          setSelectedKeys([key as string]);
+          setTabActive(key as string);
         }}
-        theme="zeus"
+        onTabRemove={key => {
+          const index = tabs.findIndex(item => item.code === key);
+          const newTabs = tabs.filter(item => item.code !== key);
+
+          if (tabActive === key) {
+            const active = newTabs[index - 1].code;
+            setTabActive(active);
+            setSelectedKeys([active + '']);
+          }
+
+          setTabs(newTabs);
+        }}
+        setTitle={collapsed => {
+          return (
+            <Flex
+              align="center"
+              justify="center"
+              style={{ height: '100%', fontSize: 24, color: '#666' }}
+            >
+              Hermes
+            </Flex>
+          );
+        }}
+        theme="hermes"
         headerExtra={
-          <div style={{ display: 'flex', color: '#FFF', marginRight: 8 }}>
+          <div style={{ display: 'flex', color: '#666', marginRight: 8 }}>
             <div>超级管理员</div>
           </div>
         }
@@ -61,25 +95,6 @@ export default function Index() {
           push: url => {
             window.history.pushState(undefined, '', url);
           },
-        }}
-        tabActive={tabActive}
-        onTabClick={key => {
-          setSelectedKeys([key as string]);
-          setTabActive(key);
-        }}
-        onTabRemove={key => {
-          const index = tabs.findIndex(item => item.code === key);
-          const newTabs = tabs.filter(item => item.code !== key);
-
-          if (tabActive === key) {
-            if (index === tabs.length - 1) {
-              setTabActive(newTabs[newTabs.length - 1].code);
-            } else {
-              setTabActive(newTabs[index].code);
-            }
-          }
-
-          setTabs(newTabs);
         }}
         openKeys={layoutOpenKeys}
         selectedKeys={layoutSelectedKeys}
@@ -102,7 +117,6 @@ export default function Index() {
           setTabActive(key);
           setSelectedKeys(keys);
         }}
-        tabs={tabs}
       />
     </>
   );

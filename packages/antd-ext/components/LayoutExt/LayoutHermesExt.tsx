@@ -1,7 +1,7 @@
 import { css } from '@emotion/css';
-import type { GlobalToken } from 'antd';
+import type { GlobalToken, MenuProps } from 'antd';
 import { Layout, Menu } from 'antd';
-import type { ItemType, MenuItemGroupType, SubMenuType } from 'antd/es/menu/hooks/useItems';
+import type { ItemType, MenuItemGroupType, SubMenuType } from 'antd/es/menu/interface';
 import classNames from 'classnames';
 import type { ReactNode } from 'react';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -16,27 +16,6 @@ const { Header, Content, Sider } = Layout;
  * @returns 所有结点的数组
  */
 export type typeBaseTreeNode<T> = T & { children?: typeBaseTreeNode<T>[] };
-function levelOrder<T>(tree: typeBaseTreeNode<T>): T[] {
-  if (tree === null) {
-    return [];
-  }
-
-  const res = [];
-  let stack = [tree];
-  while (stack.length) {
-    const item = stack.shift();
-    if (item && item.children && item.children.length > 0) {
-      stack = [...stack, ...item.children] as typeBaseTreeNode<T>[];
-    }
-
-    if (item) {
-      Reflect.deleteProperty(item, 'children');
-      res.push(item);
-    }
-  }
-
-  return res;
-}
 
 const headerExtraStyle = (token: GlobalToken, prefixCls: string) => css`
   display: flex;
@@ -147,13 +126,13 @@ const popupMenuStyle = (prefixCls: string) => css`
 `;
 
 function TabItem(props: {
-  activeUrl: string;
-  url: string;
+  activeUrl: string | number;
+  url: string | number;
   children: React.ReactNode;
   showRemoveIcon: boolean;
   history?: any;
-  onSelect: (key: string) => void;
-  onRemove: (key: string) => void;
+  onSelect: (key: string | number) => void;
+  onRemove: (key: string | number) => void;
 }) {
   const { activeUrl, url, children, showRemoveIcon, history, onRemove, onSelect } = props;
   const refSpan = useRef<HTMLSpanElement>(null);
@@ -178,7 +157,7 @@ function TabItem(props: {
   }, [onSelect, history, url]);
 
   return (
-    <div className={classes} onClick={_onSelect}>
+    <div className={classes} onClick={_onSelect} id={url + ''}>
       <span style={!showRemoveIcon ? { marginLeft: 0 } : {}} ref={refSpan}>
         {children}
       </span>
@@ -193,6 +172,10 @@ export default function AppLayoutExt<IMenuInfo extends IBaseMenuInfo>(
   props: LayoutExtProps<IMenuInfo>,
 ): JSX.Element {
   const {
+    tabs,
+    tabActive,
+    onTabClick,
+    onTabRemove,
     headerExtra,
     menu,
     children,
@@ -207,9 +190,18 @@ export default function AppLayoutExt<IMenuInfo extends IBaseMenuInfo>(
     setTitle,
   } = props;
   const [collapsed, setCollapsed] = useState(false);
-  const [cachedMenuItems, setCachedMenuItems] = useState<string[]>([]);
 
   const { token, prefixCls, mtPrefixCls } = usePrefixCls();
+
+  useEffect(() => {
+    try {
+      setTimeout(() => {
+        document.getElementById(tabActive + '')?.scrollIntoView({
+          block: 'nearest',
+        });
+      });
+    } catch (error) {}
+  }, [tabActive]);
 
   const bindMenu: (data: { menu?: IBaseMenuInfo; isGroup: boolean }) => ItemType = useCallback(
     (data: { menu?: IBaseMenuInfo; isGroup: boolean }) => {
@@ -243,15 +235,10 @@ export default function AppLayoutExt<IMenuInfo extends IBaseMenuInfo>(
         popupClassName: popupMenuStyle(prefixCls),
         icon: _menu.icon,
         ...base,
-        label:
-          _menu.children && _menu.children.length > 0 ? (
-            _menu.name
-          ) : (
-            <div onClick={() => props.history.push(_menu.url)}>{_menu.name}</div>
-          ),
+        label: _menu.name,
       } as SubMenuType;
     },
-    [prefixCls, props.history],
+    [prefixCls],
   );
 
   const menuItems = useMemo(
@@ -266,57 +253,13 @@ export default function AppLayoutExt<IMenuInfo extends IBaseMenuInfo>(
     setCollapsed(!collapsed);
   }, [collapsed]);
 
-  const simpleMenu: IBaseMenuInfo[] = useMemo(
-    () =>
-      menu.reduce((pre, cur) => {
-        return [...pre, ...levelOrder(cur)];
-      }, [] as IBaseMenuInfo[]),
-    [menu],
-  );
-
-  useEffect(() => {
-    if (headerContent === false) {
-      return;
-    }
-    const _menuItems: string[] = JSON.parse(
-      window.sessionStorage.getItem('mt-antdext-cached-menu-item') || '[]',
-    );
-    setCachedMenuItems(_menuItems.length > 0 ? _menuItems : selectedKeys);
-  }, [selectedKeys, headerContent]);
-
   const onSelect = useCallback(
-    (data: { selectedKeys: string[] }) => {
-      const { selectedKeys: _selectedKeys } = data;
-      if (_selectedKeys.length > 0 && cachedMenuItems.includes(_selectedKeys[0])) {
-        setSelectedKeys(_selectedKeys);
-        return;
-      }
-      window.sessionStorage.setItem(
-        'mt-antdext-cached-menu-item',
-        JSON.stringify([...cachedMenuItems, ..._selectedKeys]),
-      );
-      setCachedMenuItems([...cachedMenuItems, ..._selectedKeys]);
+    (data: Parameters<MenuProps['onSelect']>[number]) => {
+      const { key, selectedKeys: _selectedKeys } = data;
       setSelectedKeys(_selectedKeys);
+      props.history.push(key);
     },
-    [cachedMenuItems, setSelectedKeys],
-  );
-
-  const onRemove = useCallback(
-    (key: string) => {
-      const index = cachedMenuItems.findIndex(item => item === key);
-      if (index > -1) {
-        cachedMenuItems.splice(index, 1);
-        window.sessionStorage.setItem(
-          'mt-antdext-cached-menu-item',
-          JSON.stringify([...cachedMenuItems]),
-        );
-        setCachedMenuItems([...cachedMenuItems]);
-        const lastEle = cachedMenuItems[cachedMenuItems.length - 1];
-        setSelectedKeys([lastEle]);
-        props.history.push(lastEle);
-      }
-    },
-    [cachedMenuItems, setSelectedKeys, props.history],
+    [props.history, setSelectedKeys],
   );
 
   return (
@@ -366,19 +309,18 @@ export default function AppLayoutExt<IMenuInfo extends IBaseMenuInfo>(
                 tabStyle(token, prefixCls, mtPrefixCls),
               ])}
             >
-              {cachedMenuItems.map((item: string) => {
-                const ele = simpleMenu.find(_menuItem => item === _menuItem.url);
+              {tabs.map((item: ITab) => {
                 return (
                   <TabItem
-                    key={ele?.url}
-                    activeUrl={selectedKeys.length > 0 ? selectedKeys[0] : ''}
-                    url={ele?.url || ''}
-                    showRemoveIcon={cachedMenuItems.length > 1 ? true : false}
-                    onSelect={(key: string) => onSelect({ selectedKeys: [key] })}
-                    onRemove={(key: string) => onRemove(key)}
+                    key={item.code}
+                    activeUrl={tabActive}
+                    url={(item.code as string) || ''}
+                    showRemoveIcon={tabs.length > 1}
+                    onSelect={(key: string) => onTabClick(key)}
+                    onRemove={onTabRemove}
                     history={props.history}
                   >
-                    {ele?.name}
+                    {item.label}
                   </TabItem>
                 );
               })}

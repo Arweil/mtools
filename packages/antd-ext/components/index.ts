@@ -17,6 +17,7 @@ import {
   MixinInputOutLineExt as InputOutLineExt,
 } from './InputExt';
 import LayoutExt, { BaseLayoutExt } from './LayoutExt';
+import ModalExt from './ModalExt';
 import notificationExt from './Notification';
 import { BaseProInputNumber, ProInputNumber, ProInputNumberOutLine } from './ProInputNumber';
 import RadioGroupExt from './RadioGroupExt';
@@ -68,6 +69,7 @@ export {
   RangeNumberOutLineExt,
   ProInputNumberOutLine,
   UploadExt,
+  ModalExt,
   Theme,
   notificationExt,
 };

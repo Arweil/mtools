@@ -5,8 +5,11 @@ toc: menu
 
 # LayoutExt
 
-## 示例
-<code src="../../packages/antd-ext/examples/LayoutExt" iframe="500"></code>
+## 示例（zeus）
+<code src="../../packages/antd-ext/examples/LayoutExt/zeus" iframe="500"></code>
+
+## 示例（hermes）
+<code src="../../packages/antd-ext/examples/LayoutExt/hermes" iframe="500"></code>
 
 ## 逻辑拓展
 

@@ -2,15 +2,16 @@ import { css as reactcss, Global } from '@emotion/react';
 import { notification } from 'antd';
 import type { ArgsProps } from 'antd/es/notification';
 import type { GlobalConfigProps, NotificationConfig } from 'antd/es/notification/interface';
+import classNames from 'classnames';
 import type { MouseEventHandler } from 'react';
 import React from 'react';
+import error from '../../assets/img/error.svg';
+import info from '../../assets/img/info.svg';
+import success from '../../assets/img/success.svg';
+import warning from '../../assets/img/warning.svg';
 import ButtonExt from '../ButtonExt/ButtonExt';
 import type { Theme } from '../ConfigProviderExt/context';
 import type { ThemeColor } from '../theme/type';
-import error from './img/error.svg';
-import info from './img/info.svg';
-import success from './img/success.svg';
-import warning from './img/warning.svg';
 
 interface ArgsPropsExt extends ArgsProps {
   theme?: 'default' | 'hermes' | 'zeus';
@@ -38,24 +39,55 @@ export function NotificationGlobalStyle(props: {
                   padding: 12px 20px;
                 }
 
+                .not-description {
+                  padding: 14px;
+                  .${prefixCls}-notification-notice-with-icon {
+                   .${prefixCls}-notification-notice-icon {
+                      .icon {
+                        margin: 4px;
+                        height: 16px;
+                        line-height: 0;
+                      }
+                    }
+
+                    .${prefixCls}-notification-notice-message {
+                      margin-inline-start: 26px;
+                      padding-top: 0;
+                      line-height: 24px;
+                    }
+                    .${prefixCls}-notification-notice-description {
+                      display: none;
+                    }
+                  }
+                }
+
                 .${prefixCls}-notification-notice-with-icon {
+                  line-height: 0;
+                  .${prefixCls}-notification-notice-icon {
+                    .icon {
+                      margin: 6px;
+                      height: 40px;
+                    }
+                  }
                   .${prefixCls}-notification-notice-message {
-                    margin-bottom: 4px;
-                    padding-top: 2px;
-                    font-weight: 500;
+                    margin-bottom: 0;
+                    padding-top: 5px;
+                    font-weight: bold;
                     font-size: 15px;
                     margin-inline-start: ${52 + 12}px;
+                    line-height: 21px;
                   }
               
                   .${prefixCls}-notification-notice-description {
+                    padding: 6px 0 3px;
                     color: #666666;
                     font-size: 12px;
                     margin-inline-start: ${52 + 12}px;
+                    line-height: 17px;
                   }
                 }
               }
               .${prefixCls}-notification-notice-content {
-                min-height: 52px;
               }
             }
           `}
@@ -85,15 +117,14 @@ const notificationExt = (() => {
 
   const api = (notificationInst: any, type: 'success' | 'error' | 'info' | 'warning' | 'open') => {
     const icon = {
-      success: <img src={success} style={{ width: 52 }} />,
-      error: <img src={error} style={{ width: 52 }} />,
-      info: <img src={info} style={{ width: 52 }} />,
-      warning: <img src={warning} style={{ width: 52 }} />,
+      success: <img className="icon" src={success} />,
+      error: <img className="icon" src={error} />,
+      info: <img className="icon" src={info} />,
+      warning: <img className="icon" src={warning} />,
     }[type];
 
     return (config: ArgsPropsExt) => {
-      const { theme, btn, needBtn, ...restProps } = config;
-      console.log(config);
+      const { theme, btn, needBtn, className, ...restProps } = config;
 
       const hasBtn = needBtn || btn !== undefined;
 
@@ -129,6 +160,7 @@ const notificationExt = (() => {
         key: `${key++}`,
         ...baseConfig,
         ...restProps,
+        className: classNames(className, { 'not-description': !restProps.description }),
       });
     };
   };

@@ -1,8 +1,8 @@
-import type React from 'react';
 import { css } from '@emotion/css';
 import type { GlobalToken } from 'antd';
-import { mtPrefixCls } from '../utils/config';
+import type React from 'react';
 import type { ThemeColor } from '../theme/type';
+import { mtPrefixCls } from '../utils/config';
 
 export interface ThemeDrawerExtProps {
   children: React.ReactNode;
@@ -29,7 +29,7 @@ export const customStyle = (
 
     .${prefixCls}-drawer-title {
       color: ${tokenExt.colorBlackL1};
-      font-weight: 500;
+      font-weight: 600;
     }
 
     .${prefixCls}-drawer-body {

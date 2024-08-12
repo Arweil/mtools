@@ -66,9 +66,16 @@ export const customStyleWithLayoutExt = (
   }
 
   .${prefixCls}-${mtPrefixCls}-menu {
+    margin-top: 8px;
     & > .${prefixCls}-menu-submenu {
       color: #333333;
       font-weight: 500;
+
+      &-selected {
+        .${prefixCls}-menu-item-selected {
+          font-weight: bold;
+        }
+      }
       > .${prefixCls}-menu {
         color: #666666;
         font-weight: 400;
@@ -81,6 +88,7 @@ export const customStyleWithLayoutExt = (
 
       &.${prefixCls}-menu-item-selected {
         color: #016eff;
+        font-weight: bold;
       }
     }
   }
