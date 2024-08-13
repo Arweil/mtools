@@ -3,10 +3,10 @@ import { Modal } from 'antd';
 import type { HookAPI } from 'antd/es/modal/useModal';
 import classNames from 'classnames';
 import React from 'react';
-import error from '../../assets/img/error.svg';
-import info from '../../assets/img/info.svg';
-import success from '../../assets/img/success.svg';
-import warning from '../../assets/img/warning.svg';
+import error from '../assets/img/error.svg';
+import info from '../assets/img/info.svg';
+import success from '../assets/img/success.svg';
+import warning from '../assets/img/warning.svg';
 import { useMapTheme } from '../utils';
 import { ThemeZeus } from './ThemeZeus';
 

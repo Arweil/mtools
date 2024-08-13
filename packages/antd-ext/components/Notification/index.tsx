@@ -5,10 +5,10 @@ import type { GlobalConfigProps, NotificationConfig } from 'antd/es/notification
 import classNames from 'classnames';
 import type { MouseEventHandler } from 'react';
 import React from 'react';
-import error from '../../assets/img/error.svg';
-import info from '../../assets/img/info.svg';
-import success from '../../assets/img/success.svg';
-import warning from '../../assets/img/warning.svg';
+import error from '../assets/img/error.svg';
+import info from '../assets/img/info.svg';
+import success from '../assets/img/success.svg';
+import warning from '../assets/img/warning.svg';
 import ButtonExt from '../ButtonExt/ButtonExt';
 import type { Theme } from '../ConfigProviderExt/context';
 import type { ThemeColor } from '../theme/type';
