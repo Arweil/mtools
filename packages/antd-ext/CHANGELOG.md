@@ -1,3 +1,6 @@
+## 1.0.1
+1. 修正了 Notifaction 的 SVG 引用问题
+
 ## 1.0.0
 1. 修改了 LayoutExt zeus 主题的样式
 2. 更新了 LayoutExt hermes 主题的API
