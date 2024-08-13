@@ -1,7 +1,7 @@
 import { css } from '@emotion/css';
 import type { GlobalToken, MenuProps } from 'antd';
 import { Layout, Menu } from 'antd';
-import type { ItemType, MenuItemGroupType, SubMenuType } from 'antd/es/menu/hooks/useItems';
+import type { ItemType, MenuItemGroupType, SubMenuType } from 'antd/es/menu/interface';
 import classNames from 'classnames';
 import type { ReactNode } from 'react';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';

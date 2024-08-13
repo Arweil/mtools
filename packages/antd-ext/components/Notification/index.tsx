@@ -125,7 +125,6 @@ const notificationExt = (() => {
 
     return (config: ArgsPropsExt) => {
       const { theme, btn, needBtn, className, ...restProps } = config;
-      console.log(config);
 
       const hasBtn = needBtn || btn !== undefined;
 

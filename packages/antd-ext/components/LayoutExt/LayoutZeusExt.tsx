@@ -282,8 +282,6 @@ export default function LayoutZeusExt<IMenuInfo extends IBaseMenuInfo>(
     (key: string | number) => {
       const { pathname } = props.history.location || {};
 
-      console.log(pathname, key, firstLevelMenuKey);
-
       const arr = (pathname || '').split('/');
       if (`/${arr[1]}` !== firstLevelMenuKey) {
         onFirstLevelMenuSelect({ key: `/${arr[1]}` });
