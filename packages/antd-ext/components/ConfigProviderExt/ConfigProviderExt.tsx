@@ -1,6 +1,6 @@
 import { ConfigProvider } from 'antd';
-import type { ConfigProviderProps, ThemeConfig } from 'antd/es/config-provider';
-import type { Theme as AntdTheme } from 'antd/es/config-provider/context';
+import type { ConfigProviderProps } from 'antd/es/config-provider';
+import { globalConfig } from 'antd/es/config-provider';
 import React, { useMemo } from 'react';
 import GlobalStyle from '../GlobalStyle';
 import * as hermesDefaultColor from '../theme/hermes';
@@ -14,6 +14,18 @@ export interface ConfigProviderExtProps extends ConfigProviderProps {
   themeExt?: Theme;
   tokenExt?: ThemeColor;
 }
+
+type GlobalConfigProps = Parameters<(typeof ConfigProvider)['config']>[0];
+export interface ConfigProviderExtConfig extends GlobalConfigProps {
+  themeExt?: Theme;
+}
+
+let globalThemeExt: string;
+
+const globalConfigExt = () => ({
+  getThemeExt: () => globalThemeExt,
+  ...globalConfig(),
+});
 
 export default function ConfigProviderExt(props: ConfigProviderExtProps) {
   const { children, themeExt = 'hermes', tokenExt, ...restConfigProviderProps } = props;
@@ -37,15 +49,13 @@ export default function ConfigProviderExt(props: ConfigProviderExtProps) {
   );
 }
 
-export interface GlobalConfigProps {
-  prefixCls?: string;
-  iconPrefixCls?: string;
-  theme?: AntdTheme | ThemeConfig;
-  holderRender?: (children: React.ReactNode) => React.ReactNode;
-}
-
-ConfigProviderExt.config = (config: GlobalConfigProps) => {
-  return ConfigProvider.config(config);
+ConfigProviderExt.config = (config: ConfigProviderExtConfig) => {
+  const { themeExt, ...rest } = config;
+  if (themeExt !== undefined) {
+    globalThemeExt = themeExt;
+  }
+  return ConfigProvider.config(rest);
 };
-
 ConfigProviderExt.useConfig = ConfigProvider.useConfig;
+
+export { globalConfigExt as globalConfig };
