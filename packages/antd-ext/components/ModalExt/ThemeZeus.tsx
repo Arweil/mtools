@@ -71,15 +71,17 @@ export const ThemeZeus = (
   }
 
   .${prefixCls}-modal-confirm-btns {
-    margin: 21px 0 4px;
+    display: flex;
+    gap: 12px;
+    margin: 21px 24px 4px;
     text-align: center;
 
     .${prefixCls}-btn {
-      min-width: 120px;
+      width: 100%;
       font-size: 12px;
 
       & + .${prefixCls}-btn {
-        margin-inline-start: 12px;
+        margin-inline-start: 0;
       }
     }
   }

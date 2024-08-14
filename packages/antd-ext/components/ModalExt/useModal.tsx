@@ -1,32 +1,10 @@
-import type { ModalFuncProps } from 'antd';
 import { Modal } from 'antd';
-import type { HookAPI } from 'antd/es/modal/useModal';
 import classNames from 'classnames';
 import React from 'react';
-import error from '../assets/img/error.svg';
-import info from '../assets/img/info.svg';
-import success from '../assets/img/success.svg';
-import warning from '../assets/img/warning.svg';
 import { useMapTheme } from '../utils';
+import { ICONMAP } from './config';
 import { ThemeZeus } from './ThemeZeus';
-
-type ModalReturnType = ReturnType<(typeof Modal)['useModal']>;
-
-export interface ModalFuncPropsExt extends ModalFuncProps {
-  type?: 'info' | 'success' | 'error' | 'warning' | 'confirm';
-  backgroundImg?: React.ReactNode;
-}
-
-interface HookAPIExt extends Omit<HookAPI, 'confirm'> {
-  confirm: (config: ModalFuncPropsExt) => void;
-}
-
-const ICONMAP = {
-  info,
-  success,
-  error,
-  warning,
-};
+import type { HookAPIExt, ModalFuncPropsExt, ModalReturnType } from './types';
 
 export default function useModal(): [HookAPIExt, ModalReturnType[1]] {
   const [api, contextHolder] = Modal.useModal();
@@ -39,24 +17,29 @@ export default function useModal(): [HookAPIExt, ModalReturnType[1]] {
 
     const { icon, type = 'confirm', title, content, className, backgroundImg, ...rest } = config;
 
-    return api.confirm({
+    const _content = (
+      <>
+        {backgroundImg && <div className="background-img">{backgroundImg}</div>}
+        {icon || (ICONMAP[type] && <img className="icon" src={ICONMAP[type]} />)}
+        <div className="title">{title}</div>
+        <div className="content">{content}</div>
+      </>
+    );
+
+    return api[type]({
       icon: null,
       className: classNames(classes, className),
-      content: (
-        <>
-          {backgroundImg && <div className="background-img">{backgroundImg}</div>}
-          {icon || (ICONMAP[type] && <img className="icon" src={ICONMAP[type]} />)}
-          <div className="title">{title}</div>
-          <div className="content">{content}</div>
-        </>
-      ),
+      content: _content,
       ...rest,
     });
   };
 
   const fn: HookAPIExt = {
-    ...api,
     confirm: config => confirm(config),
+    error: config => confirm({ ...config, type: 'error' }),
+    info: config => confirm({ ...config, type: 'info' }),
+    success: config => confirm({ ...config, type: 'success' }),
+    warning: config => confirm({ ...config, type: 'warning' }),
   };
 
   return [fn, contextHolder];
