@@ -2,7 +2,6 @@ import { ConfigProvider } from 'antd';
 import type { ConfigProviderProps } from 'antd/es/config-provider';
 import { globalConfig } from 'antd/es/config-provider';
 import React, { useMemo } from 'react';
-import GlobalStyle from '../GlobalStyle';
 import * as hermesDefaultColor from '../theme/hermes';
 import type { ThemeColor } from '../theme/type';
 import * as zeusDefaultColor from '../theme/zeus';
@@ -42,7 +41,6 @@ export default function ConfigProviderExt(props: ConfigProviderExtProps) {
   return (
     <ConfigProvider {...restConfigProviderProps}>
       <AntdExtGlobalContext.Provider value={{ themeExt, mergedTokenExt }}>
-        <GlobalStyle />
         {children}
       </AntdExtGlobalContext.Provider>
     </ConfigProvider>
