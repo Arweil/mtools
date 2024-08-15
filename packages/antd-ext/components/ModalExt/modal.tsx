@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import React from 'react';
 import { globalConfig } from '../ConfigProviderExt/ConfigProviderExt';
 import { ICONMAP } from './config';
-import { ThemeZeus } from './ThemeZeus';
+import { styles } from './styles';
 import type { ModalFuncPropsExt } from './types';
 
 export default function modal(config: ModalFuncPropsExt) {
@@ -11,7 +11,7 @@ export default function modal(config: ModalFuncPropsExt) {
   const global = globalConfig();
   const prefix = global.getPrefixCls();
 
-  if (global.getThemeExt() === 'zeus') {
+  if (['zeus', 'hermes'].includes(global.getThemeExt())) {
     const _content = (
       <>
         <>
@@ -27,7 +27,7 @@ export default function modal(config: ModalFuncPropsExt) {
 
     return Modal[type]({
       icon: null,
-      className: classNames(ThemeZeus(undefined, global.getPrefixCls(), undefined), className),
+      className: classNames(styles(undefined, global.getPrefixCls(), undefined), className),
       content: _content,
       ...rest,
     });

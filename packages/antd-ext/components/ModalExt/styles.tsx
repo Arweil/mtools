@@ -2,11 +2,7 @@ import { css } from '@emotion/css';
 import type { GlobalToken } from 'antd';
 import type { ThemeColor } from '../theme/type';
 
-export const ThemeZeus = (
-  token: GlobalToken,
-  prefixCls: string,
-  tokenExt: Partial<ThemeColor>,
-) => css`
+export const styles = (token: GlobalToken, prefixCls: string, tokenExt: Partial<ThemeColor>) => css`
   width: 360px !important;
 
   .${prefixCls}-modal-content {
