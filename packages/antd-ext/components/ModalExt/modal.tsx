@@ -6,7 +6,7 @@ import { ICONMAP } from './config';
 import { ThemeZeus } from './ThemeZeus';
 import type { ModalFuncPropsExt } from './types';
 
-export default function confirm(config: ModalFuncPropsExt) {
+export default function modal(config: ModalFuncPropsExt) {
   const { icon, type = 'confirm', title, content, className, backgroundImg, ...rest } = config;
   const global = globalConfig();
 
@@ -28,5 +28,5 @@ export default function confirm(config: ModalFuncPropsExt) {
     });
   }
 
-  return Modal.confirm(config);
+  return Modal[type](config);
 }

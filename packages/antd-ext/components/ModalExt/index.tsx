@@ -1,7 +1,7 @@
 import type { ModalProps } from 'antd';
 import { Modal } from 'antd';
 import React from 'react';
-import confirm from './confirm';
+import modal from './modal';
 import type { ModalFuncPropsExt } from './types';
 import useModal from './useModal';
 
@@ -10,18 +10,18 @@ const Mix = function (props: ModalProps) {
 };
 
 Mix.useModal = useModal;
-Mix.confirm = confirm;
+Mix.confirm = modal;
 Mix.info = function (config: ModalFuncPropsExt) {
-  return confirm({ ...config, type: 'info' });
+  return modal({ ...config, type: 'info' });
 };
 Mix.success = function (config: ModalFuncPropsExt) {
-  return confirm({ ...config, type: 'success' });
+  return modal({ ...config, type: 'success' });
 };
 Mix.warning = function (config: ModalFuncPropsExt) {
-  return confirm({ ...config, type: 'warning' });
+  return modal({ ...config, type: 'warning' });
 };
 Mix.error = function (config: ModalFuncPropsExt) {
-  return confirm({ ...config, type: 'error' });
+  return modal({ ...config, type: 'error' });
 };
 
 export default Mix;
