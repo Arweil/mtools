@@ -12,8 +12,8 @@ export default function useModal(): [HookAPIExt, ModalReturnType[1]] {
     emotioncss: { zeus: ThemeZeus },
   });
 
-  const confirm = (config: ModalFuncPropsExt) => {
-    if (theme !== 'zeus') return api.confirm(config);
+  const modal = (config: ModalFuncPropsExt) => {
+    if (theme !== 'zeus') return api[config.type || 'confirm'](config);
 
     const { icon, type = 'confirm', title, content, className, backgroundImg, ...rest } = config;
 
@@ -37,11 +37,11 @@ export default function useModal(): [HookAPIExt, ModalReturnType[1]] {
   };
 
   const fn: HookAPIExt = {
-    confirm: config => confirm(config),
-    error: config => confirm({ ...config, type: 'error' }),
-    info: config => confirm({ ...config, type: 'info' }),
-    success: config => confirm({ ...config, type: 'success' }),
-    warning: config => confirm({ ...config, type: 'warning' }),
+    confirm: config => modal(config),
+    error: config => modal({ ...config, type: 'error' }),
+    info: config => modal({ ...config, type: 'info' }),
+    success: config => modal({ ...config, type: 'success' }),
+    warning: config => modal({ ...config, type: 'warning' }),
   };
 
   return [fn, contextHolder];
