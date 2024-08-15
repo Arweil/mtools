@@ -47,7 +47,6 @@ const App = () => {
   return (
     <>
       {context}
-      <h4>使用hook调用</h4>
       <Space>
         <Button onClick={confirm}>Confirm</Button>
         <Button onClick={info}>Info</Button>

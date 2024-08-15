@@ -7,9 +7,9 @@ debug: true
 # ModalExt
 
 ## 示例
-<code src="../../packages/antd-ext/examples/ModalExt/hook"></code>
-<code src="../../packages/antd-ext/examples/ModalExt/static"></code>
-<code src="../../packages/antd-ext/examples/ModalExt/custom"></code>
+<code src="../../packages/antd-ext/examples/ModalExt/hook">使用hook调用</code>
+<code src="../../packages/antd-ext/examples/ModalExt/static">静态方法调用</code>
+<code src="../../packages/antd-ext/examples/ModalExt/custom">自定义icon和背景</code>
 
 ## Modal.method()
 包括：

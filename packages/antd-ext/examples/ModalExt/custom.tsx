@@ -23,7 +23,6 @@ const App = () => {
   return (
     <>
       {context}
-      <h4>自定义icon和背景</h4>
       <Space>
         <Button onClick={() => openCustomModal()}>Custom</Button>
       </Space>

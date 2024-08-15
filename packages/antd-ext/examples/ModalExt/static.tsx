@@ -42,7 +42,6 @@ const App = () => {
 
   return (
     <>
-      <h4>静态方法调用</h4>
       <Space>
         <Button onClick={confirm}>Confirm</Button>
         <Button onClick={info}>Info</Button>
