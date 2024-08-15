@@ -8,7 +8,7 @@ import type { HookAPIExt, ModalFuncPropsExt, ModalReturnType } from './types';
 
 export default function useModal(): [HookAPIExt, ModalReturnType[1]] {
   const [api, contextHolder] = Modal.useModal();
-  const { classes, theme } = useMapTheme({
+  const { classes, theme, prefix } = useMapTheme({
     emotioncss: { zeus: ThemeZeus },
   });
 
@@ -19,10 +19,12 @@ export default function useModal(): [HookAPIExt, ModalReturnType[1]] {
 
     const _content = (
       <>
-        {backgroundImg && <div className="background-img">{backgroundImg}</div>}
-        {icon === undefined ? ICONMAP[type] && <img className="icon" src={ICONMAP[type]} /> : icon}
-        <div className="title">{title}</div>
-        <div className="content">{content}</div>
+        {backgroundImg && <div className={`${prefix}-background-img`}>{backgroundImg}</div>}
+        {icon === undefined
+          ? ICONMAP[type] && <img className={`${prefix}-icon`} src={ICONMAP[type]} />
+          : icon}
+        <div className={`${prefix}-title`}>{title}</div>
+        <div className={`${prefix}-content`}>{content}</div>
       </>
     );
 

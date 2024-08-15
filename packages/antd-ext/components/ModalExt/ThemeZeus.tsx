@@ -28,7 +28,7 @@ export const ThemeZeus = (
       z-index: 0;
       line-height: 0;
 
-      .background-img {
+      .${prefixCls}-background-img {
         position: absolute;
         top: 0;
         right: 0;
@@ -42,12 +42,12 @@ export const ThemeZeus = (
         }
       }
 
-      .icon {
+      .${prefixCls}-icon {
         width: 52px;
         margin: 8px 0;
       }
 
-      .title {
+      .${prefixCls}-title {
         margin-top: 16px;
         color: #333333;
         font-weight: bold;
@@ -57,7 +57,7 @@ export const ThemeZeus = (
         text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
       }
 
-      .content {
+      .${prefixCls}-content {
         min-height: 34px;
         margin-top: 8px;
         color: #666666;
