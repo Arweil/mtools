@@ -1,5 +1,4 @@
 import { Button, ConfigProviderExt, ModalExt, Space } from '@m-tools/antd-ext';
-import type { ModalFuncPropsExt } from '@m-tools/antd-ext/ModalExt';
 import React from 'react';
 import backgroundImg from './background.png';
 import icon from './icon.png';
@@ -7,10 +6,9 @@ import icon from './icon.png';
 const App = () => {
   const [api, context] = ModalExt.useModal();
 
-  const openCustomModal = (type: ModalFuncPropsExt['type']) => {
+  const openCustomModal = () => {
     api.confirm({
       title: '这是一个title',
-      type,
       content: '这是副文案描述',
       okText: '确认',
       cancelText: '取消',
@@ -27,7 +25,7 @@ const App = () => {
       {context}
       <h4>自定义icon和背景</h4>
       <Space>
-        <Button onClick={() => openCustomModal('warning')}>Custom</Button>
+        <Button onClick={() => openCustomModal()}>Custom</Button>
       </Space>
     </>
   );

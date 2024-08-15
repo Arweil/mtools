@@ -20,7 +20,7 @@ export default function useModal(): [HookAPIExt, ModalReturnType[1]] {
     const _content = (
       <>
         {backgroundImg && <div className="background-img">{backgroundImg}</div>}
-        {icon === null ? null : ICONMAP[type] && <img className="icon" src={ICONMAP[type]} />}
+        {icon === undefined ? ICONMAP[type] && <img className="icon" src={ICONMAP[type]} /> : icon}
         <div className="title">{title}</div>
         <div className="content">{content}</div>
       </>
