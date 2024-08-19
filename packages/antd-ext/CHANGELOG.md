@@ -1,3 +1,6 @@
+## 1.1.0
+1. TableExt 中 emptyDesc 文案由 “没有数据” 改为 “暂无数据”
+
 ## 1.0.0
 1. 修改了 LayoutExt zeus 主题的样式
 2. 更新了 LayoutExt hermes 主题的API
