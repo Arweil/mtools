@@ -9,7 +9,7 @@ import type { HookAPIExt, ModalFuncPropsExt, ModalReturnType } from './types';
 export default function useModal(): [HookAPIExt, ModalReturnType[1]] {
   const [api, contextHolder] = Modal.useModal();
   const { classes, theme, prefix } = useMapTheme({
-    emotioncss: { zeus: styles },
+    emotioncss: { zeus: styles, hermes: styles },
   });
 
   const modal = (config: ModalFuncPropsExt) => {
