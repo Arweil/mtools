@@ -2,6 +2,7 @@ import { Modal } from 'antd';
 import classNames from 'classnames';
 import React from 'react';
 import { globalConfig } from '../ConfigProviderExt/ConfigProviderExt';
+import { mtPrefixCls } from '../utils/config';
 import { ICONMAP } from './config';
 import { styles } from './styles';
 import type { ModalFuncPropsExt } from './types';
@@ -15,12 +16,16 @@ export default function modal(config: ModalFuncPropsExt) {
     const _content = (
       <>
         <>
-          {backgroundImg && <div className={`${prefix}-background-img`}>{backgroundImg}</div>}
+          {backgroundImg && (
+            <div className={`${prefix}-${mtPrefixCls}-background-img`}>{backgroundImg}</div>
+          )}
           {icon === undefined
-            ? ICONMAP[type] && <img className={`${prefix}-icon`} src={ICONMAP[type]} />
+            ? ICONMAP[type] && (
+                <img className={`${prefix}-${mtPrefixCls}-icon`} src={ICONMAP[type]} />
+              )
             : icon}
-          <div className={`${prefix}-title`}>{title}</div>
-          <div className={`${prefix}-content`}>{content}</div>
+          <div className={`${prefix}-${mtPrefixCls}-title`}>{title}</div>
+          <div className={`${prefix}-${mtPrefixCls}-content`}>{content}</div>
         </>
       </>
     );

@@ -31,6 +31,9 @@ const notificationExt = (() => {
   let key = 0;
   let g_theme = 'hermes';
 
+  /**
+   * @deprecated use ConfigProviderExt.config.themeExt instead
+   */
   function setTheme(p: Theme) {
     g_theme = p;
   }
@@ -119,6 +122,9 @@ const notificationExt = (() => {
     config: (config: GlobalConfigProps) => {
       notification.config(config);
     },
+    /**
+     * @deprecated use ConfigProviderExt.config.themeExt instead
+     */
     setTheme,
   };
 })();

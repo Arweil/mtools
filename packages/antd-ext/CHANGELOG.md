@@ -1,7 +1,8 @@
 ## 1.1.0
 1. TableExt 中 emptyDesc 文案由 “没有数据” 改为 “暂无数据”
+2. 新增 ModalExt 组件
 
-## 1.0.0
+## 1.0.0 - deprecated
 1. 修改了 LayoutExt zeus 主题的样式
 2. 更新了 LayoutExt hermes 主题的API
 

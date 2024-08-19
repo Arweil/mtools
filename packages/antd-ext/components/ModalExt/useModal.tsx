@@ -1,16 +1,17 @@
 import { Modal } from 'antd';
 import classNames from 'classnames';
 import React from 'react';
-import { useMapTheme } from '../utils';
+import { useMapTheme, usePrefixCls } from '../utils';
 import { ICONMAP } from './config';
 import { styles } from './styles';
 import type { HookAPIExt, ModalFuncPropsExt, ModalReturnType } from './types';
 
 export default function useModal(): [HookAPIExt, ModalReturnType[1]] {
   const [api, contextHolder] = Modal.useModal();
-  const { classes, theme, prefix } = useMapTheme({
+  const { classes, theme } = useMapTheme({
     emotioncss: { zeus: styles, hermes: styles },
   });
+  const { prefixCls, mtPrefixCls } = usePrefixCls();
 
   const modal = (config: ModalFuncPropsExt) => {
     if (['zeus', 'hermes'].includes(theme)) {
@@ -18,12 +19,16 @@ export default function useModal(): [HookAPIExt, ModalReturnType[1]] {
 
       const _content = (
         <>
-          {backgroundImg && <div className={`${prefix}-background-img`}>{backgroundImg}</div>}
+          {backgroundImg && (
+            <div className={`${prefixCls}-${mtPrefixCls}-background-img`}>{backgroundImg}</div>
+          )}
           {icon === undefined
-            ? ICONMAP[type] && <img className={`${prefix}-icon`} src={ICONMAP[type]} />
+            ? ICONMAP[type] && (
+                <img className={`${prefixCls}-${mtPrefixCls}-icon`} src={ICONMAP[type]} />
+              )
             : icon}
-          <div className={`${prefix}-title`}>{title}</div>
-          <div className={`${prefix}-content`}>{content}</div>
+          <div className={`${prefixCls}-${mtPrefixCls}-title`}>{title}</div>
+          <div className={`${prefixCls}-${mtPrefixCls}-content`}>{content}</div>
         </>
       );
 

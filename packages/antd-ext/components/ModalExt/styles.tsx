@@ -1,6 +1,7 @@
 import { css } from '@emotion/css';
 import type { GlobalToken } from 'antd';
 import type { ThemeColor } from '../theme/type';
+import { mtPrefixCls } from '../utils/config';
 
 export const styles = (token: GlobalToken, prefixCls: string, tokenExt: Partial<ThemeColor>) => css`
   width: 360px !important;
@@ -24,7 +25,7 @@ export const styles = (token: GlobalToken, prefixCls: string, tokenExt: Partial<
       z-index: 0;
       line-height: 0;
 
-      .${prefixCls}-background-img {
+      .${prefixCls}-${mtPrefixCls}-background-img {
         position: absolute;
         top: 0;
         right: 0;
@@ -38,12 +39,12 @@ export const styles = (token: GlobalToken, prefixCls: string, tokenExt: Partial<
         }
       }
 
-      .${prefixCls}-icon {
+      .${prefixCls}-${mtPrefixCls}-icon {
         width: 52px;
         margin: 8px 0;
       }
 
-      .${prefixCls}-title {
+      .${prefixCls}-${mtPrefixCls}-title {
         margin-top: 16px;
         color: #333333;
         font-weight: bold;
@@ -53,7 +54,7 @@ export const styles = (token: GlobalToken, prefixCls: string, tokenExt: Partial<
         text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
       }
 
-      .${prefixCls}-content {
+      .${prefixCls}-${mtPrefixCls}-content {
         min-height: 34px;
         margin-top: 8px;
         color: #666666;

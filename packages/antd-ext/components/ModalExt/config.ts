@@ -4,7 +4,7 @@ import success from '../assets/img/success.svg';
 import warning from '../assets/img/warning.svg';
 
 export const ICONMAP = {
-  confirm: info,
+  confirm: warning,
   info,
   success,
   error,
