@@ -25,7 +25,7 @@ export default function modal(config: ModalFuncPropsExt) {
               )
             : icon}
           <div className={`${prefix}-${mtPrefixCls}-title`}>{title}</div>
-          <div className={`${prefix}-${mtPrefixCls}-content`}>{content}</div>
+          {content && <div className={`${prefix}-${mtPrefixCls}-content`}>{content}</div>}
         </>
       </>
     );

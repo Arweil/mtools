@@ -1,3 +1,6 @@
+## 1.1.1
+1. 修复ModalExt组件content没有值的时候存在带高度的空div问题
+
 ## 1.1.0
 1. TableExt 中 emptyDesc 文案由 “没有数据” 改为 “暂无数据”
 2. 新增 ModalExt 组件
