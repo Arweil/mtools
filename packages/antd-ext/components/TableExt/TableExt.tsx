@@ -98,7 +98,7 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
     columns,
     dataSource,
     tdTooltip,
-    emptyDesc = '没有数据',
+    emptyDesc = '暂无数据',
     loading,
     useSkeleton = false,
     useEmpty = false,

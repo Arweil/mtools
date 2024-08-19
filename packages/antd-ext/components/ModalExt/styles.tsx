@@ -1,12 +1,9 @@
 import { css } from '@emotion/css';
 import type { GlobalToken } from 'antd';
 import type { ThemeColor } from '../theme/type';
+import { mtPrefixCls } from '../utils/config';
 
-export const ThemeZeus = (
-  token: GlobalToken,
-  prefixCls: string,
-  tokenExt: Partial<ThemeColor>,
-) => css`
+export const styles = (token: GlobalToken, prefixCls: string, tokenExt: Partial<ThemeColor>) => css`
   width: 360px !important;
 
   .${prefixCls}-modal-content {
@@ -28,7 +25,7 @@ export const ThemeZeus = (
       z-index: 0;
       line-height: 0;
 
-      .background-img {
+      .${prefixCls}-${mtPrefixCls}-background-img {
         position: absolute;
         top: 0;
         right: 0;
@@ -42,12 +39,12 @@ export const ThemeZeus = (
         }
       }
 
-      .icon {
+      .${prefixCls}-${mtPrefixCls}-icon {
         width: 52px;
         margin: 8px 0;
       }
 
-      .title {
+      .${prefixCls}-${mtPrefixCls}-title {
         margin-top: 16px;
         color: #333333;
         font-weight: bold;
@@ -57,7 +54,7 @@ export const ThemeZeus = (
         text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
       }
 
-      .content {
+      .${prefixCls}-${mtPrefixCls}-content {
         min-height: 34px;
         margin-top: 8px;
         color: #666666;
@@ -71,15 +68,17 @@ export const ThemeZeus = (
   }
 
   .${prefixCls}-modal-confirm-btns {
-    margin: 21px 0 4px;
+    display: flex;
+    gap: 12px;
+    margin: 21px 24px 4px;
     text-align: center;
 
     .${prefixCls}-btn {
-      min-width: 120px;
+      width: 100%;
       font-size: 12px;
 
       & + .${prefixCls}-btn {
-        margin-inline-start: 12px;
+        margin-inline-start: 0;
       }
     }
   }

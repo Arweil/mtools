@@ -1,4 +1,3 @@
-import { css as reactcss, Global } from '@emotion/react';
 import { notification } from 'antd';
 import type { ArgsProps } from 'antd/es/notification';
 import type { GlobalConfigProps, NotificationConfig } from 'antd/es/notification/interface';
@@ -10,92 +9,13 @@ import info from '../assets/img/info.svg';
 import success from '../assets/img/success.svg';
 import warning from '../assets/img/warning.svg';
 import ButtonExt from '../ButtonExt/ButtonExt';
+import { globalConfig } from '../ConfigProviderExt/ConfigProviderExt';
 import type { Theme } from '../ConfigProviderExt/context';
-import type { ThemeColor } from '../theme/type';
+import { styles } from './styles';
 
 interface ArgsPropsExt extends ArgsProps {
   theme?: 'default' | 'hermes' | 'zeus';
   needBtn?: boolean;
-}
-
-export function NotificationGlobalStyle(props: {
-  prefixCls: string;
-  theme: Theme;
-  tokenExt: Partial<ThemeColor>;
-}): JSX.Element {
-  const { prefixCls, theme } = props;
-
-  switch (theme) {
-    case 'hermes':
-    case 'zeus':
-      return (
-        <Global
-          styles={reactcss`
-            .${prefixCls}-notification {
-              .${prefixCls}-notification-notice-wrapper {
-                border-radius: 12px;
-
-                .${prefixCls}-notification-notice {
-                  padding: 12px 20px;
-                }
-
-                .not-description {
-                  padding: 14px;
-                  .${prefixCls}-notification-notice-with-icon {
-                   .${prefixCls}-notification-notice-icon {
-                      .icon {
-                        margin: 4px;
-                        height: 16px;
-                        line-height: 0;
-                      }
-                    }
-
-                    .${prefixCls}-notification-notice-message {
-                      margin-inline-start: 26px;
-                      padding-top: 0;
-                      line-height: 24px;
-                    }
-                    .${prefixCls}-notification-notice-description {
-                      display: none;
-                    }
-                  }
-                }
-
-                .${prefixCls}-notification-notice-with-icon {
-                  line-height: 0;
-                  .${prefixCls}-notification-notice-icon {
-                    .icon {
-                      margin: 6px;
-                      height: 40px;
-                    }
-                  }
-                  .${prefixCls}-notification-notice-message {
-                    margin-bottom: 0;
-                    padding-top: 5px;
-                    font-weight: bold;
-                    font-size: 15px;
-                    margin-inline-start: ${52 + 12}px;
-                    line-height: 21px;
-                  }
-              
-                  .${prefixCls}-notification-notice-description {
-                    padding: 6px 0 3px;
-                    color: #666666;
-                    font-size: 12px;
-                    margin-inline-start: ${52 + 12}px;
-                    line-height: 17px;
-                  }
-                }
-              }
-              .${prefixCls}-notification-notice-content {
-              }
-            }
-          `}
-        />
-      );
-    case 'default':
-      return null;
-  }
 }
 
 function BtnIKnow(props: { onClick?: MouseEventHandler }) {
@@ -111,11 +31,16 @@ const notificationExt = (() => {
   let key = 0;
   let g_theme = 'hermes';
 
+  /**
+   * @deprecated use ConfigProviderExt.config.themeExt instead
+   */
   function setTheme(p: Theme) {
     g_theme = p;
   }
 
   const api = (notificationInst: any, type: 'success' | 'error' | 'info' | 'warning' | 'open') => {
+    const global = globalConfig();
+
     const icon = {
       success: <img className="icon" src={success} />,
       error: <img className="icon" src={error} />,
@@ -132,6 +57,9 @@ const notificationExt = (() => {
         hermes: {
           icon,
           closeIcon: null,
+          className: classNames(className, styles(global.getPrefixCls()), {
+            'not-description': !restProps.description,
+          }),
           style: { width: hasBtn ? 360 : 300 },
           duration: hasBtn ? 0 : 3,
           btn: ((k: number) =>
@@ -144,6 +72,9 @@ const notificationExt = (() => {
         zeus: {
           icon,
           closeIcon: null,
+          className: classNames(className, styles(global.getPrefixCls()), {
+            'not-description': !restProps.description,
+          }),
           style: { width: hasBtn ? 360 : 300 },
           duration: hasBtn ? 0 : 3,
           btn: ((k: number) =>
@@ -154,13 +85,12 @@ const notificationExt = (() => {
             ) : undefined)(key),
         },
         default: {},
-      }[theme || g_theme];
+      }[theme || global.getThemeExt() || g_theme];
 
       notificationInst[type]({
         key: `${key++}`,
         ...baseConfig,
         ...restProps,
-        className: classNames(className, { 'not-description': !restProps.description }),
       });
     };
   };
@@ -192,6 +122,9 @@ const notificationExt = (() => {
     config: (config: GlobalConfigProps) => {
       notification.config(config);
     },
+    /**
+     * @deprecated use ConfigProviderExt.config.themeExt instead
+     */
     setTheme,
   };
 })();

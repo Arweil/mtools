@@ -6,9 +6,6 @@ type NotificationType = 'success' | 'info' | 'warning' | 'error' | 'open';
 
 let num = 0;
 
-// 默认为 hermes
-notificationExt.setTheme('hermes');
-
 export default function App() {
   const openNotification = useCallback((type: NotificationType) => {
     notificationExt[type]({
