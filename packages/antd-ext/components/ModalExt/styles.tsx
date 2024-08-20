@@ -11,6 +11,7 @@ export const styles = (token: GlobalToken, prefixCls: string, tokenExt: Partial<
     flex-direction: column;
     // min-height: 240px;
     padding: 20px 30px;
+    border-radius: 12px;
   }
 
   .${prefixCls}-modal-body {
