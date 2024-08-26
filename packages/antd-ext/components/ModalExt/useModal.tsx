@@ -28,7 +28,7 @@ export default function useModal(): [HookAPIExt, ModalReturnType[1]] {
               )
             : icon}
           <div className={`${prefixCls}-${mtPrefixCls}-title`}>{title}</div>
-          <div className={`${prefixCls}-${mtPrefixCls}-content`}>{content}</div>
+          {content && <div className={`${prefixCls}-${mtPrefixCls}-content`}>{content}</div>}
         </>
       );
 
