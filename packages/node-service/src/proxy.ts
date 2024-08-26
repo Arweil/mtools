@@ -1,5 +1,5 @@
-import { createProxyMiddleware } from 'http-proxy-middleware';
 import type { Express } from 'express';
+import { createProxyMiddleware } from 'http-proxy-middleware';
 import type { ProxyConfigArrayItem } from './types';
 import { getConfig } from './utils';
 
@@ -23,7 +23,7 @@ const getProxyMiddleware = (proxyConfig: ProxyConfigArrayItem) => {
 export default (app: Express) => {
   if (proxy && proxy.length > 0) {
     proxy.forEach(proxyItem => {
-      let proxyConfig = typeof proxyItem === 'function' ? proxyItem() : proxyItem;
+      const proxyConfig = typeof proxyItem === 'function' ? proxyItem() : proxyItem;
       app.use(getProxyMiddleware(proxyConfig));
     });
   }
