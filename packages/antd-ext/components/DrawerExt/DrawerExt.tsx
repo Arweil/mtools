@@ -1,10 +1,10 @@
-import React from 'react';
-import { Drawer, Space } from 'antd';
 import type { DrawerProps } from 'antd';
+import { Drawer, Space } from 'antd';
+import React from 'react';
 import ButtonExt from '../ButtonExt';
+import type { ButtonExtMixinProps } from '../ButtonExt/Mix';
 import { CloseOutlined } from '../icon';
 import { usePrefixCls } from '../utils';
-import type { ButtonExtMixinProps } from '../ButtonExt/Mix';
 
 interface _DrawerExtProps extends DrawerProps {
   cancelText?: string;
@@ -13,6 +13,7 @@ interface _DrawerExtProps extends DrawerProps {
   okButtonProps?: ButtonExtMixinProps;
   onCancel?: () => void;
   onOk?: () => void;
+  footerStyle?: React.CSSProperties;
 }
 
 export type DrawerExtProps = Omit<_DrawerExtProps, 'onClose'>;
@@ -36,18 +37,25 @@ export default function DrawerExt(props: DrawerExtProps) {
   return (
     <Drawer
       footer={
-        <Space size={8}>
-          <ButtonExt isAsyncClick {...cancelButtonProps} onClick={onCancel}>
-            {cancelText}
-          </ButtonExt>
-          <ButtonExt isAsyncClick type="primary" {...okButtonProps} onClick={onOk}>
-            {okText}
-          </ButtonExt>
-        </Space>
+        <div style={{ textAlign: 'right', ...footerStyle }}>
+          <Space size={8}>
+            <ButtonExt isAsyncClick {...cancelButtonProps} onClick={onCancel}>
+              {cancelText}
+            </ButtonExt>
+            <ButtonExt isAsyncClick debounce type="primary" {...okButtonProps} onClick={onOk}>
+              {okText}
+            </ButtonExt>
+          </Space>
+        </div>
       }
-      footerStyle={{ textAlign: 'right', ...footerStyle }}
       extra={
-        <CloseOutlined className={`${prefixCls}-${mtPrefixCls}-drawer-close`} onClick={onCancel} />
+        <div>
+          {extra}
+          <CloseOutlined
+            className={`${prefixCls}-${mtPrefixCls}-drawer-close`}
+            onClick={onCancel}
+          />
+        </div>
       }
       {...restProps}
       onClose={onCancel}

@@ -1,8 +1,7 @@
 import { Modal } from 'antd';
 import classNames from 'classnames';
-import React from 'react';
 import { useMapTheme, usePrefixCls } from '../utils';
-import { ICONMAP } from './config';
+import process from './process';
 import { styles } from './styles';
 import type { HookAPIExt, ModalFuncPropsExt, ModalReturnType } from './types';
 
@@ -15,27 +14,17 @@ export default function useModal(): [HookAPIExt, ModalReturnType[1]] {
 
   const modal = (config: ModalFuncPropsExt) => {
     if (['zeus', 'hermes'].includes(theme)) {
-      const { icon, type = 'confirm', title, content, className, backgroundImg, ...rest } = config;
-
-      const _content = (
-        <>
-          {backgroundImg && (
-            <div className={`${prefixCls}-${mtPrefixCls}-background-img`}>{backgroundImg}</div>
-          )}
-          {icon === undefined
-            ? ICONMAP[type] && (
-                <img className={`${prefixCls}-${mtPrefixCls}-icon`} src={ICONMAP[type]} />
-              )
-            : icon}
-          <div className={`${prefixCls}-${mtPrefixCls}-title`}>{title}</div>
-          {content && <div className={`${prefixCls}-${mtPrefixCls}-content`}>{content}</div>}
-        </>
-      );
+      const {
+        type = 'confirm',
+        content,
+        className,
+        ...rest
+      } = process({ ...config, prefixCls, mtPrefixCls });
 
       return api[type]({
         icon: null,
         className: classNames(classes, className),
-        content: _content,
+        content,
         ...rest,
       });
     }
