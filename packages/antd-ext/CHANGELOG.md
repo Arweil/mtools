@@ -1,3 +1,10 @@
+## 1.2.0
+1. 新增的防抖函数 debounce，能够在点击执行，默认300ms
+  1.1 ButtonExt
+  1.2 ModalExt 确认按钮
+  1.3 DrawerExt 确认按钮
+  1.4 TableExt 分页
+
 ## 1.1.1
 1. 修正了 ModalExt 组件 content 没有值的时候存在带高度的空节点问题
 2. 修正了 ModalExt 组件样式圆角问题
