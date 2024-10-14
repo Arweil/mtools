@@ -15,11 +15,11 @@ const initLogger = (params?: log4js.FileAppender) => {
     categories: {
       default: {
         appenders: ['console'],
-        level: 'info',
+        level: 'debug',
       },
       console: {
         appenders: ['console'],
-        level: 'info',
+        level: 'debug',
       },
     },
   });
@@ -27,4 +27,6 @@ const initLogger = (params?: log4js.FileAppender) => {
   return log4js.getLogger('console');
 };
 
-export default initLogger;
+const logger = initLogger();
+
+export default logger;

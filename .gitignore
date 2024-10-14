@@ -19,3 +19,4 @@ packages/mt-template-admin-hermes/*
 .dumi/tmp-test
 .dumi/tmp-production
 .idea/
+.DS_Store

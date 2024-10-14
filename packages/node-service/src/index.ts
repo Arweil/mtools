@@ -7,7 +7,6 @@ import cookieParser from 'cookie-parser';
 import express from 'express';
 import fs from 'fs';
 import path from 'path';
-import initLogger from './logger';
 import proxy from './proxy';
 import { appDirectory, getConfig } from './utils';
 
@@ -35,8 +34,6 @@ function getEnv() {
   return value;
 }
 
-const logger = initLogger();
-
 const app = express();
 
 app.disable('x-powered-by');
@@ -57,14 +54,6 @@ app.use(
     index: false,
   }),
 );
-
-app.use((req, res, next) => {
-  if (req.url !== `${baseRouter}/health`) {
-    logger.info(`[request] ${req.method} ${req.originalUrl}`);
-  }
-
-  next();
-});
 
 // 把环境变量返回给前端
 // 不推荐使用 _e
