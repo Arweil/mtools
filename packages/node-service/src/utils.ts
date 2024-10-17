@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-
 import type { NodeServiceConfig } from './types';
 
 export const appDirectory = fs.realpathSync(process.cwd());
@@ -34,4 +33,12 @@ export function getConfig(): NodeServiceConfig {
     useCookieEnv: true,
     ...customConfig,
   };
+}
+
+export function getEnv() {
+  const { DEPLOY_ENV, envList } = getConfig();
+  const ENV = process.env[DEPLOY_ENV] || 'dev';
+  const list = ['dev', ...envList];
+  const value = list.indexOf(ENV);
+  return value;
 }

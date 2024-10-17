@@ -1,5 +1,6 @@
-import type { Express, Request } from 'express';
 import type { CheerioAPI } from 'cheerio';
+import type { Express, Request } from 'express';
+import type log4js from 'log4js';
 
 type HttpProxyMiddlewareOptionsFilter = import('http-proxy-middleware').Filter;
 type HttpProxyMiddlewareOptions = import('http-proxy-middleware').Options;
@@ -52,4 +53,14 @@ export type NodeServiceConfig = {
   // 是否需要注入 _e 到 cookie中判断环境
   // 目前可以通过 window.$$_e 来获取环境，推荐使用此方法
   useCookieEnv?: boolean;
+
+  logger: {
+    // default: 'console';
+    category?: 'file' | 'console';
+    file: log4js.FileAppender; // 日志文件配置
+  };
+
+  gzip?: {
+    exclude?: string[]; // 需要排除Content-type的文件
+  };
 };
