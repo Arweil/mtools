@@ -27,6 +27,10 @@ import {
   MixinRangeNumberOutLineExt as RangeNumberOutLineExt,
 } from './RangeNumberExt';
 import {
+  MixinCascaderExt as CascaderExt,
+  MixinCascaderOutLineExt as CascaderOutLineExt,
+} from './SelCascader';
+import {
   BaseSelectExt,
   MixinSelectExt as SelectExt,
   MixinSelectOutLineExt as SelectOutLineExt,
@@ -69,6 +73,8 @@ export {
   RangeNumberOutLineExt,
   ProInputNumberOutLine,
   UploadExt,
+  CascaderExt,
+  CascaderOutLineExt,
   ModalExt,
   Theme,
   notificationExt,

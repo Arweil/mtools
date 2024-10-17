@@ -1,20 +1,22 @@
-import React, { useMemo, useState } from 'react';
+import type { Theme } from '@m-tools/antd-ext';
 import {
-  ConfigProviderExt,
-  locale,
-  Form,
-  SelectExt,
-  Input,
   ButtonExt,
-  Radio,
   Card,
+  CascaderExt,
+  CascaderOutLineExt,
+  Col,
+  ConfigProviderExt,
+  Form,
+  Input,
+  locale,
+  Radio,
+  Row,
+  SelectExt,
   SelectOutLineExt,
   Space,
-  Row,
-  Col,
 } from '@m-tools/antd-ext';
-import type { Theme } from '@m-tools/antd-ext';
 import type { FormLayout } from 'antd/es/form/Form';
+import React, { useMemo, useState } from 'react';
 
 export default function App() {
   const [layout, setLayout] = useState<FormLayout>('horizontal');
@@ -82,6 +84,68 @@ export default function App() {
         >
           <Form.Item name={['form1', 'labelInsideValueA']} rules={[{ required: true }]}>
             <SelectOutLineExt label="文本" placeholder="请选择" />
+          </Form.Item>
+          <Form.Item name={['form1', 'labelInsideValueA']} rules={[{ required: true }]}>
+            <CascaderOutLineExt
+              label="aaaa"
+              options={[
+                {
+                  value: 'zhejiang',
+                  label: 'ZhejiangZhejiangZhejiangZhejiangZhejiangZhejiang',
+                  children: [
+                    {
+                      value: 'hangzhou',
+                      label: 'Hangzhou',
+                      disabled: true,
+                      children: [
+                        {
+                          value: 'xihu',
+                          label: 'West Lake',
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  value: 'jiangsu',
+                  label: 'Jiangsu',
+                  children: [
+                    {
+                      value: 'nanjing',
+                      label: 'Nanjing',
+                      children: [
+                        {
+                          value: 'zhonghuamen',
+                          label: 'Zhong Hua Men',
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  value: 'qqq',
+                  label: 'qqq',
+                  children: [
+                    {
+                      value: 'nanwwwjing',
+                      label: 'Nanjeeing',
+                    },
+                  ],
+                },
+                {
+                  value: 'rrr',
+                  label: 'tttt',
+                  children: [
+                    {
+                      value: '222',
+                      label: '333',
+                    },
+                  ],
+                },
+              ]}
+              placeholder="请选择"
+              maxTagCount
+            />
           </Form.Item>
           <Form.Item name={['form1', 'labelInsideValueB']}>
             <SelectOutLineExt
@@ -183,6 +247,70 @@ export default function App() {
 
           <Form.Item label="SelectExt一个选项" name={['form2', 'valueA2']}>
             <SelectExt placeholder="请选择" options={[{ label: 'ItemA', value: 'ItemA' }]} />
+          </Form.Item>
+          <Form.Item
+            label="级联选项"
+            name={['form1', 'labelInsideValueA']}
+            rules={[{ required: true }]}
+          >
+            <CascaderExt
+              options={[
+                {
+                  value: 'zhejiang',
+                  label: 'ZhejiangZhejiangZhejiangZhejiangZhejiangZhejiang',
+                  children: [
+                    {
+                      value: 'hangzhou',
+                      label: 'Hangzhou',
+                      disabled: true,
+                      children: [
+                        {
+                          value: 'xihu',
+                          label: 'West Lake',
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  value: 'jiangsu',
+                  label: 'Jiangsu',
+                  children: [
+                    {
+                      value: 'nanjing',
+                      label: 'Nanjing',
+                      children: [
+                        {
+                          value: 'zhonghuamen',
+                          label: 'Zhong Hua Men',
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  value: 'qqq',
+                  label: 'qqq',
+                  children: [
+                    {
+                      value: 'nanwwwjing',
+                      label: 'Nanjeeing',
+                    },
+                  ],
+                },
+                {
+                  value: 'rrr',
+                  label: 'tttt',
+                  children: [
+                    {
+                      value: '222',
+                      label: '333',
+                    },
+                  ],
+                },
+              ]}
+              placeholder="请选择"
+            />
           </Form.Item>
           <Form.Item label="SelectExt长选项" name={['form2', 'valueA3']}>
             <SelectExt

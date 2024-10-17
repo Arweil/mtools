@@ -84,6 +84,12 @@ export function createHermesTheme(theme: ThemeColor) {
         colorFillSecondary: colorGreyL4,
         colorSplit: colorGreyL4,
       },
+      Cascader: {
+        controlItemBgHover: colorGreyL4,
+        controlItemBgActive: colorGreyL4,
+        borderRadiusLG: 2,
+        borderRadiusSM: 2,
+      },
       Table: {
         borderRadiusLG: 0,
         controlItemBgActive: colorWhite,
