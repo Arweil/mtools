@@ -3,6 +3,7 @@
  */
 
 import express from 'express';
+import log4js from 'log4js';
 import logger from './logger';
 import middleware from './middleware';
 import { router } from './router';
@@ -28,12 +29,16 @@ app.use((err, req, res, next) => {
 
 process.on('uncaughtException', error => {
   logger.error('uncaughtException', error);
-  process.exit(1);
+  log4js.shutdown(() => {
+    process.exit(1);
+  });
 });
 
 process.on('unhandledRejection', (reason, promise) => {
   logger.error('unhandledRejection', 'Unhandled Rejection at:', promise, 'reason:', reason);
-  process.exit(1);
+  log4js.shutdown(() => {
+    process.exit(1);
+  });
 });
 
 // 启动服务，监听端口
