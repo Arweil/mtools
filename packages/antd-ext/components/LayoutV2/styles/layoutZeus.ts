@@ -73,6 +73,8 @@ const styles = (token: GlobalToken, prefixCls: string, tokenExt: Partial<ThemeCo
 
     & > .${prefixCls}-menu-item {
       height: 32px;
+      line-height: 32px;
+
       &:not(:first-child) {
         margin-top: 4px;
       }
@@ -116,7 +118,7 @@ const styles = (token: GlobalToken, prefixCls: string, tokenExt: Partial<ThemeCo
 
     & > .${prefixCls}-menu-item {
       color: #333333;
-      font-weight: 500;
+      font-weight: bold;
 
       &.${prefixCls}-menu-item-selected {
         color: #016eff;

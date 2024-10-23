@@ -241,7 +241,7 @@ function useMenu(data: {
   );
 
   // 移除tabbar
-  const removeTab = (key: string) => {
+  const removeTab = useLatest((key: string) => {
     setTabbar(prev => {
       // 关闭的是选中的tab需要切换到下一个tab
       if (selectedTabbar === key) {
@@ -253,7 +253,7 @@ function useMenu(data: {
       }
       return prev.filter(({ key: k }) => k !== key);
     });
-  };
+  });
 
   // 菜单信息初始化
   useEffect(() => {

@@ -29,8 +29,9 @@ const sideMenuStyle = {
       itemHoverBg: '#DFEBFF',
       itemColor: '#666666',
       fontSize: 12,
-      iconSize: 12,
+      iconSize: 16,
       itemMarginBlock: 0,
+      iconMarginInlineEnd: 4,
     },
   },
 };
@@ -75,9 +76,10 @@ const LayoutZeus: React.FC<LayoutProps> = React.forwardRef((props, ref) => {
       activeNav,
       activeMenu,
       addTab,
+      removeTab,
       setOpenKey,
     }),
-    [activeNav, activeMenu, addTab, setOpenKey],
+    [activeNav, activeMenu, addTab, removeTab, setOpenKey],
   );
 
   return (

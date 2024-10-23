@@ -63,7 +63,7 @@ const menuData = [
 
 function Page() {
   console.log('renderpage.................................');
-  const { activeNav, addTab, activeMenu, setOpenKey } = LayoutV2.useLayout();
+  const { activeNav, addTab, activeMenu, setOpenKey, removeTab } = LayoutV2.useLayout();
   const [count, setCount] = React.useState(0);
 
   return (
@@ -90,6 +90,14 @@ function Page() {
         }}
       >
         addTab 添加Tab
+      </Button>
+      <Button
+        type="primary"
+        onClick={() => {
+          removeTab(`lllll${count - 1}`);
+        }}
+      >
+        removeTab 移除Tab
       </Button>
     </Space>
   );

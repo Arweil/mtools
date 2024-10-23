@@ -29,10 +29,14 @@ toc: menu
 当你需要控制LayoutV2的状态，如：导航激活\菜单打开\菜单激活\tab等状态时，可以使用useLayout。
 
 `LayoutV2.useLayout`返回一个对象，包含以下方法：
-  - `activeNav`：设置导航激活的key
-  - `activeMenu`：设置菜单激活的key
-  - `setOpenKey`：设置菜单打开的key
-  - `addTab`：添加tab
+
+| 方法 | 说明 | 类型 |
+| --- | --- | --- |
+| activeNav | 设置导航激活的key | (key: string) => void |
+| activeMenu | 设置菜单激活的key | (key: string) => void |
+| setOpenKey | 设置菜单打开的key | (key: string) => void |
+| addTab | 添加tab，入参为string时会从menu中查找 | (key: string \| { key: string, label: string }) => void |
+| removeTab | 移除tab | (key: string) => void |
 
 
 

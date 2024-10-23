@@ -2,12 +2,13 @@ import { useContext } from 'react';
 import { LayoutContext } from '../context';
 
 function useLayout() {
-  const { activeNav, activeMenu, addTab, setOpenKey } = useContext(LayoutContext);
+  const { activeNav, activeMenu, addTab, removeTab, setOpenKey } = useContext(LayoutContext);
 
   return {
     activeNav,
     activeMenu,
     addTab,
+    removeTab,
     setOpenKey,
   };
 }
