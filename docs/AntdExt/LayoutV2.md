@@ -1,0 +1,39 @@
+---
+title: LayoutV2
+toc: menu
+---
+
+# LayoutV2
+
+## 示例（zeus）
+<code src="../../packages/antd-ext/examples/LayoutV2/zeus" iframe="500"></code>
+
+## API
+
+布局容器。
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| className | 容器className | string | - |
+| collapsible | 侧边栏是否可收起 | boolean | false |
+| collapsedWidth | 侧边栏收缩宽度 | string \| number | 62 |
+| defaultActiveMenu | 默认激活的菜单 | string | - |
+| extra | 顶部header右侧拓展内容 | React.ReactNode | - |
+| logo | 侧边栏上方logo设置 | (collapsed: boolean) => ReactNode | - |
+| menu | 菜单，同antd Menu组件的items<br>key会被作为跳转时的url使用 | [ItemType[]][1] | - |
+| onSelect | 菜单及tab选中时触发的回调 | (info: { key: string }) => void | - |
+| siderWidth | 侧边栏宽度 | string \| number | 134 |
+| trigger | 自定义 trigger，设置为 null 时隐藏 trigger | (collapsed: boolean) => ReactNode | - |
+
+## LayoutV2.useLayout
+
+当你需要控制LayoutV2的状态，如：导航激活\菜单打开\菜单激活\tab等状态时，可以使用useLayout。
+
+`LayoutV2.useLayout`返回一个对象，包含以下方法：
+  - `activeNav`：设置导航激活的key
+  - `activeMenu`：设置菜单激活的key
+  - `setOpenKey`：设置菜单打开的key
+  - `addTab`：添加tab
+
+
+
+[1]: https://ant-design.antgroup.com/components/menu-cn#itemtype
