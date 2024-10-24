@@ -110,7 +110,7 @@ const LayoutZeus: React.FC<LayoutProps> = React.forwardRef((props, ref) => {
                   className={`${prefixCls}-second-menu`}
                   items={menu}
                   selectedKeys={selectedMenu}
-                  onSelect={onSelectedMenu}
+                  onClick={onSelectedMenu}
                   openKeys={openKeys}
                   onOpenChange={onMenuOpenChange}
                   style={{ marginTop: 8, borderInlineEnd: 0 }}

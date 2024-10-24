@@ -16,10 +16,10 @@ toc: menu
 | className | 容器className | string | - |
 | collapsible | 侧边栏是否可收起 | boolean | false |
 | collapsedWidth | 侧边栏收缩宽度 | string \| number | 62 |
-| defaultActiveMenu | 默认激活的菜单 | string | - |
+| defaultActiveMenu | 默认激活的菜单key | string | - |
 | extra | 顶部header右侧拓展内容 | React.ReactNode | - |
 | logo | 侧边栏上方logo设置 | (collapsed: boolean) => ReactNode | - |
-| menu | 菜单，同antd Menu组件的items<br>key会被作为跳转时的url使用 | [ItemType[]][1] | - |
+| menu | 菜单，同antd Menu组件的items<br>key通常存储url | [ItemType[]][1] | - |
 | onSelect | 菜单及tab选中时触发的回调 | (info: { key: string }) => void | - |
 | siderWidth | 侧边栏宽度 | string \| number | 134 |
 | trigger | 自定义 trigger，设置为 null 时隐藏 trigger | (collapsed: boolean) => ReactNode | - |
@@ -35,7 +35,7 @@ toc: menu
 | activeNav | 设置导航激活的key | (key: string) => void |
 | activeMenu | 设置菜单激活的key | (key: string) => void |
 | setOpenKey | 设置菜单打开的key | (key: string) => void |
-| addTab | 添加tab，入参为string时会从menu中查找 | (key: string \| { key: string, label: string }) => void |
+| addTab | 添加tab，入参为string时会从menu中查找<br>若不传递key信息，默认使用当前path信息 | (key?: string \| { key?: string, label: string }) => void |
 | removeTab | 移除tab | (key: string) => void |
 
 

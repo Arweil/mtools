@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import type { LayoutProps, MenuType, SelectInfo, Tabbar } from '../types';
 import useLatest from './useLatest';
 import useMergeState from './useMergeState';
+import useUpdateEffect from './useUpdateEffect';
 
 /**
  * 导航栏获取
@@ -71,15 +72,17 @@ function useMenu(data: {
   // 导航栏变化回调
   const onNavChangeMemo = useLatest((selected: string) => {
     if (!selected) return;
-    const navKey = originMenu?.find(item => selected.startsWith(`${item.key}`))?.key as string;
+    // 如果找不到默认打开第一个
+    const navKey = (originMenu?.find(item => selected.startsWith(`${item.key}`))?.key ??
+      originMenu[0]?.key) as string;
+    const newMenu = getMenu(originMenu, navKey);
     // 选中项和当前选中项一致则不处理
     if (navKey !== innerSelectedNav[0]) {
       setSelectedNav([navKey]);
       // 更新二级菜单信息
-      const newMenu = getMenu(originMenu, navKey);
       setMenu(newMenu);
-      return newMenu;
     }
+    return newMenu;
   });
 
   // 导航栏选中
@@ -92,11 +95,15 @@ function useMenu(data: {
   );
 
   // tabbar变化回调
-  const onTabbarChangeMemo = useLatest((info: string | { key: string; label: string }) => {
-    const selected = typeof info === 'string' ? info : info.key;
+  const onTabbarChangeMemo = useLatest((info?: string | { key?: string; label: string }) => {
+    const { pathname, search } = location;
+    // 如果传入的info是string类型，则直接使用，否则使用info.key，info.key为空则使用当前location
+    const selected = typeof info === 'string' ? info : info.key ?? `${pathname}${search}`;
     setTabbar(prev => {
       const index = prev.findIndex(item => item.key === selected);
+      // 查找label信息
       const item = findMenuInfo(selected, originMenu) as Exclude<ItemType, MenuDividerType>;
+      // 优先使用传入的label
       const label = typeof info === 'object' ? info.label : (item?.label as string);
       if (!label) return prev;
 
@@ -114,12 +121,12 @@ function useMenu(data: {
 
   // 找到最相近的菜单
   const findClosestMenu = useLatest((path: string, subMenu?: MenuType): MenuType[number] => {
-    const curPathSegments = path.split('/');
+    const curPathSegments = path.split('/').slice(1);
     let closestMenu = undefined;
     let maxMatchingSegments = 0;
 
     subMenu?.forEach(item => {
-      const pathSegments = (item.key as string).split('/');
+      const pathSegments = (item.key as string).split('/').slice(1);
 
       // 找到共有的最大层级
       let matchingSegments = 0;
@@ -201,7 +208,7 @@ function useMenu(data: {
     setOpenKeys(keys);
   }, []);
 
-  // ====================================对应用暴露的api===========================================
+  // ==================================== start 对应用暴露的api===========================================
   // 导航栏激活
   const activeNav = useCallback(
     (key: string) => {
@@ -216,10 +223,10 @@ function useMenu(data: {
       // 更新顶部菜单
       const sMenu = onNavChangeMemo(key);
       // 更新侧边菜单
-      setSelectedMenu([key]);
+      setSelectedMenu(findMenuKeyPathMemo(key, sMenu));
       onMenuOpenChangeMemo(key, sMenu);
     },
-    [onMenuOpenChangeMemo, onNavChangeMemo],
+    [onMenuOpenChangeMemo, onNavChangeMemo, findMenuKeyPathMemo],
   );
 
   // 侧边菜单展开
@@ -254,15 +261,25 @@ function useMenu(data: {
       return prev.filter(({ key: k }) => k !== key);
     });
   });
+  // ==================================== end 对应用暴露的api===========================================
 
   // 菜单信息初始化
   useEffect(() => {
-    // 导航栏
-    const newNavbar = getNavbar(originMenu);
-    setNavbar(newNavbar);
-    activeMenu(defaultActiveMenu);
-    addTab(defaultActiveMenu);
-  }, [originMenu, defaultActiveMenu, activeMenu, addTab]);
+    if (originMenu?.length > 0) {
+      // 导航栏
+      const newNavbar = getNavbar(originMenu);
+      setNavbar(newNavbar);
+      const activeKey = defaultActiveMenu ?? location.pathname;
+      activeMenu(activeKey);
+      addTab(activeKey);
+    }
+  }, [activeMenu, addTab, originMenu, defaultActiveMenu]);
+
+  // 监听地址变化激活菜单及tabbar
+  const pathname = location.pathname;
+  useUpdateEffect(() => {
+    activeMenu(pathname);
+  }, [pathname, activeMenu, addTab]);
 
   return {
     navbar,
