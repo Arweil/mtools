@@ -1,14 +1,14 @@
 import type { MenuProps } from 'antd';
+import type React from 'react';
 import type { Theme } from '../ConfigProviderExt/context';
 import type useLayout from './hooks/useLayout';
-import type LayoutV2 from './LayoutV2';
 
 export type MenuType = MenuProps['items'];
 export type SelectInfo = Parameters<MenuProps['onSelect']>[number];
 export type Tabbar = { key: string; label: string };
 
-export type LayoutV2Type = typeof LayoutV2 & {
-  useLayout: typeof useLayout;
+export type LayoutV2Type = React.FC<LayoutProps> & {
+  useLayout: useLayout;
 };
 
 export interface LayoutProps {

@@ -2,7 +2,8 @@ import useLayout from './hooks/useLayout';
 import OriginLayoutV2 from './LayoutV2';
 import type { LayoutV2Type } from './types';
 
-const LayoutV2 = OriginLayoutV2 as LayoutV2Type;
+type LayoutV2 = LayoutV2Type;
+const LayoutV2 = OriginLayoutV2 as LayoutV2;
 
 LayoutV2.useLayout = useLayout;
 

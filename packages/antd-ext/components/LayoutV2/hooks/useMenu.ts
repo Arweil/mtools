@@ -3,7 +3,6 @@ import { useCallback, useEffect, useState } from 'react';
 import type { LayoutProps, MenuType, SelectInfo, Tabbar } from '../types';
 import useLatest from './useLatest';
 import useMergeState from './useMergeState';
-import useUpdateEffect from './useUpdateEffect';
 
 /**
  * 导航栏获取
@@ -263,7 +262,7 @@ function useMenu(data: {
   });
   // ==================================== end 对应用暴露的api===========================================
 
-  // 菜单信息初始化
+  // 初始化
   useEffect(() => {
     if (originMenu?.length > 0) {
       // 导航栏
@@ -276,10 +275,17 @@ function useMenu(data: {
   }, [activeMenu, addTab, originMenu, defaultActiveMenu]);
 
   // 监听地址变化激活菜单及tabbar
-  const pathname = location.pathname;
-  useUpdateEffect(() => {
-    activeMenu(pathname);
-  }, [pathname, activeMenu, addTab]);
+  useEffect(() => {
+    const callback = () => {
+      addTab(location.pathname);
+      activeMenu(location.pathname);
+    };
+    window.addEventListener('popstate', callback);
+
+    return () => {
+      window.removeEventListener('popstate', callback);
+    };
+  }, [activeMenu, addTab]);
 
   return {
     navbar,
