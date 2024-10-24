@@ -1,5 +1,5 @@
 import type { ItemType, MenuDividerType, MenuItemType } from 'antd/es/menu/interface';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { LayoutProps, MenuType, SelectInfo, Tabbar } from '../types';
 import useLatest from './useLatest';
 import useMergeState from './useMergeState';
@@ -64,6 +64,8 @@ function useMenu(data: {
   // tabbar(访问记录)
   const [tabbar, setTabbar] = useState<Tabbar[]>([]);
   const [selectedTabbar, setSelectedTabbar] = useState<string>();
+  // 选择逻辑是否在执行中，通常用于防止重复触发
+  const selectLogicRunning = useRef(false);
 
   // 侧边菜单/tabbar选择回调
   const onSelectMemo = useLatest(onSelect);
@@ -173,6 +175,7 @@ function useMenu(data: {
   // 侧边菜单选中
   const onSelectedMenu = useCallback(
     (info: SelectInfo | { key: string }) => {
+      selectLogicRunning.current = true;
       const { key } = info;
       // 1、选中菜单
       setSelectedMenu([key]);
@@ -180,6 +183,7 @@ function useMenu(data: {
       onTabbarChangeMemo(key);
       // 3、触发业务应用回调
       onSelectMemo({ key });
+      selectLogicRunning.current = false;
     },
     [onSelectMemo, onTabbarChangeMemo],
   );
@@ -268,7 +272,9 @@ function useMenu(data: {
       // 导航栏
       const newNavbar = getNavbar(originMenu);
       setNavbar(newNavbar);
-      const activeKey = defaultActiveMenu ?? location.pathname;
+      // 菜单、tab激活
+      const { pathname, search } = location;
+      const activeKey = defaultActiveMenu ?? `${pathname}${search}`;
       activeMenu(activeKey);
       addTab(activeKey);
     }
@@ -277,8 +283,12 @@ function useMenu(data: {
   // 监听地址变化激活菜单及tabbar
   useEffect(() => {
     const callback = () => {
-      addTab(location.pathname);
-      activeMenu(location.pathname);
+      // 选择菜单逻辑在onSelectedMenu中一定会触发地址变更，这里需要过滤掉，防止重复触发
+      if (selectLogicRunning.current) return;
+      const { pathname, search } = location;
+      const key = `${pathname}${search}`;
+      addTab(key);
+      activeMenu(key);
     };
     window.addEventListener('popstate', callback);
 
