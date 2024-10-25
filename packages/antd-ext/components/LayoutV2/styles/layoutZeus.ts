@@ -18,6 +18,27 @@ const styles = (token: GlobalToken, prefixCls: string, tokenExt: Partial<ThemeCo
   .menuBox {
     height: calc(100vh - ${logoBoxHeight}px - ${triggerHeight}px);
     overflow: auto;
+
+    ::-webkit-scrollbar {
+      width: 11px; // 纵向滚动条
+      height: 11px; // 横向滚动条
+      background-color: transparent;
+    }
+    ::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: rgba(50, 50, 50, 0.6);
+      background-clip: content-box;
+      border: 2px solid transparent;
+      border-radius: 8px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background-color: rgba(50, 50, 50, 0.8);
+    }
+    ::-webkit-scrollbar-track:hover {
+      background-color: rgba(255, 255, 255, 0.5);
+    }
   }
 
   .${prefixCls}-layout-sider-has-trigger {
