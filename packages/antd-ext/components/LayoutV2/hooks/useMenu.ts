@@ -112,7 +112,7 @@ function useMenu(data: {
       // 存在则替换，不存在则新增
       if (index > -1) {
         prev.splice(index, 1, tab);
-        return prev;
+        return [...prev];
       }
       return [...prev, tab];
     });
@@ -173,20 +173,18 @@ function useMenu(data: {
   });
 
   // 侧边菜单选中
-  const onSelectedMenu = useCallback(
-    (info: SelectInfo | { key: string }) => {
-      selectLogicRunning.current = true;
-      const { key } = info;
-      // 1、选中菜单
-      setSelectedMenu([key]);
-      // 2、更新tabbar信息
-      onTabbarChangeMemo(key);
-      // 3、触发业务应用回调
-      onSelectMemo({ key });
-      selectLogicRunning.current = false;
-    },
-    [onSelectMemo, onTabbarChangeMemo],
-  );
+  const onSelectedMenu = useLatest((info: SelectInfo | { key: string }) => {
+    selectLogicRunning.current = true;
+    const { key } = info;
+    // 1、选中菜单
+    setSelectedMenu([key]);
+    // 2、更新tabbar信息，如果tabbar中存在tab信息优先取用
+    const tabInfo = tabbar.find(item => item.key === key);
+    onTabbarChangeMemo(tabInfo ? tabInfo : key);
+    // 3、触发业务应用回调
+    onSelectMemo({ key });
+    selectLogicRunning.current = false;
+  });
 
   const isNotUpdateTabbar = useLatest((key: string) => {
     return key === selectedTabbar;
