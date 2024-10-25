@@ -149,7 +149,6 @@ const LayoutZeus: React.FC<LayoutProps> = React.forwardRef((props, ref) => {
                 style={{
                   position: 'relative',
                   background: '#d6e5ff',
-                  padding: '8px',
                   overflow: 'auto',
                 }}
               >
