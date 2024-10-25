@@ -173,11 +173,12 @@ function useMenu(data: {
   });
 
   // 侧边菜单选中
-  const onSelectedMenu = useLatest((info: SelectInfo | { key: string }) => {
+  const onSelectedMenu = useLatest((info: SelectInfo | { key: string }, subMenu?: MenuType) => {
     selectLogicRunning.current = true;
     const { key } = info;
-    // 1、选中菜单
-    setSelectedMenu([key]);
+    // 1、选中菜单，需要查找最接近的菜单
+    const selected = findMenuKeyPathMemo(key, subMenu || menu).slice(-1);
+    setSelectedMenu(selected);
     // 2、更新tabbar信息，如果tabbar中存在tab信息优先取用
     const tabInfo = tabbar.find(item => item.key === key);
     onTabbarChangeMemo(tabInfo ? tabInfo : key);
@@ -197,7 +198,7 @@ function useMenu(data: {
         // 触发一级菜单回调
         const sMenu = onNavChangeMemo(key);
         // 触发二级菜单回调
-        onSelectedMenu({ key });
+        onSelectedMenu({ key }, sMenu);
         onMenuOpenChangeMemo(key, sMenu);
       }
     },
