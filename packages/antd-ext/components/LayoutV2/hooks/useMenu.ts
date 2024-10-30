@@ -120,7 +120,7 @@ function useMenu(data: {
     if (selected !== selectedTabbar) setSelectedTabbar(selected);
   });
 
-  // 找到最相近的菜单
+  // 找到最相近的上下级关系菜单
   const findClosestMenu = useLatest((path: string, subMenu?: MenuType): MenuType[number] => {
     const curPathSegments = path.split('/').slice(1);
     let closestMenu = undefined;
@@ -137,6 +137,11 @@ function useMenu(data: {
         curPathSegments[matchingSegments] === pathSegments[matchingSegments]
       ) {
         matchingSegments++;
+      }
+
+      // 如果当前路径匹配的层级数少于pathSegments的长度，说明不是上下级关系，则跳过
+      if (matchingSegments < pathSegments.length) {
+        matchingSegments = 0;
       }
 
       // 如果当前路径匹配的层级数更多，则更新最接近的路径

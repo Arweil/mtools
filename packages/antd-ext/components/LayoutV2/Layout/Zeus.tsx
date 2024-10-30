@@ -1,3 +1,4 @@
+import type { SiderProps } from 'antd';
 import { ConfigProvider, Flex, Layout, Menu } from 'antd';
 import React, { useMemo, useState } from 'react';
 import { usePrefixCls } from '../../utils';
@@ -45,6 +46,7 @@ const LayoutZeus: React.FC<LayoutProps> = React.forwardRef((props, ref) => {
     extra,
     logo,
     menu: originMenu,
+    onCollapse,
     onSelect,
     siderWidth = 134,
     trigger,
@@ -82,6 +84,10 @@ const LayoutZeus: React.FC<LayoutProps> = React.forwardRef((props, ref) => {
     [activeNav, activeMenu, addTab, removeTab, setOpenKey],
   );
 
+  const onInnerCollapse: SiderProps['onCollapse'] = (_collapsed, type) => {
+    onCollapse(_collapsed, { type, siderWidth, collapsedWidth });
+  };
+
   return (
     <ConfigProvider>
       <LayoutContext.Provider value={layoutProviderValue}>
@@ -98,6 +104,7 @@ const LayoutZeus: React.FC<LayoutProps> = React.forwardRef((props, ref) => {
                 onClick={() => setCollapsed(!collapsed)}
               />
             }
+            onCollapse={onInnerCollapse}
           >
             <Flex className="logoBox" align="center" justify="center">
               {logo?.(collapsed)}

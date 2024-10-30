@@ -15,13 +15,14 @@ toc: menu
 | --- | --- | --- | --- |
 | className | 容器className | string | - |
 | collapsible | 侧边栏是否可收起 | boolean | false |
-| collapsedWidth | 侧边栏收缩宽度 | string \| number | 62 |
+| collapsedWidth | 侧边栏收缩宽度 | number | 62 |
 | defaultActiveMenu | 默认激活的菜单key | string | - |
 | extra | 顶部header右侧拓展内容 | React.ReactNode | - |
 | logo | 侧边栏上方logo设置 | (collapsed: boolean) => ReactNode | - |
 | menu | 菜单，同antd Menu组件的items<br>key通常存储url | [ItemType[]][1] | - |
+| onCollapse | 点击trigger的回调 | (collapsed: boolean; info: { type: CollapseType, siderWidth: number, collapsedWidth: number }) => void | - |
 | onSelect | 菜单及tab选中时触发的回调 | (info: { key: string }) => void | - |
-| siderWidth | 侧边栏宽度 | string \| number | 134 |
+| siderWidth | 侧边栏宽度 | number | 134 |
 | trigger | 自定义 trigger，设置为 null 时隐藏 trigger | (collapsed: boolean) => ReactNode | - |
 
 ## LayoutV2.useLayout

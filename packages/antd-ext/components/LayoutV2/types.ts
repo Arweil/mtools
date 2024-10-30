@@ -1,4 +1,5 @@
 import type { MenuProps } from 'antd';
+import type { CollapseType } from 'antd/es/layout/Sider';
 import type React from 'react';
 import type { Theme } from '../ConfigProviderExt/context';
 import type useLayout from './hooks/useLayout';
@@ -15,13 +16,21 @@ export interface LayoutProps {
   children?: React.ReactNode;
   className?: string;
   collapsible?: boolean;
-  collapsedWidth?: string | number;
+  collapsedWidth?: number;
   defaultActiveMenu?: string;
   extra?: React.ReactNode;
   logo?: (collapsed: boolean) => React.ReactNode;
   menu?: MenuType;
+  onCollapse?: (
+    collapsed: boolean,
+    info: {
+      type: CollapseType;
+      siderWidth: number;
+      collapsedWidth: number;
+    },
+  ) => void;
   onSelect?: (info: { key: string }) => void;
-  siderWidth?: string | number;
+  siderWidth?: number;
   trigger?: (collapsed: boolean) => React.ReactNode;
 }
 
