@@ -154,7 +154,7 @@ function useMenu(data: {
     return closestMenu;
   });
 
-  // 查找给定key的父级路径
+  // 通过层级关系查找给定key的路径
   const findMenuKeyPathMemo = useLatest((key: string, subMenu?: MenuType): string[] => {
     const info = findClosestMenu(key, subMenu);
     const currentKey = `${info?.key}`;
@@ -169,9 +169,42 @@ function useMenu(data: {
     return [currentKey];
   });
 
+  // 从菜单树中查找给定key的路径
+  const findKeyPathByMenu = useLatest((key: string): string[] => {
+    const path = [];
+
+    const findPath = (subMenu?: MenuType) => {
+      for (let i = 0; i < subMenu?.length; i++) {
+        const item = subMenu[i];
+        if (item.key === key) {
+          path.unshift(item.key as string);
+          return item;
+        }
+        if ('children' in item) {
+          const info = findPath(item.children as MenuType);
+          if (info) {
+            path.unshift(item.key as string);
+            return info;
+          }
+        }
+      }
+    };
+
+    findPath(originMenu);
+
+    return path;
+  });
+
+  // 查找给定key的菜单信息，优先从菜单树中查找，找不到则找相近菜单
+  const findKeyPath = useLatest((key: string, subMenu?: MenuType) => {
+    const pathByMenu = findKeyPathByMenu(key);
+    const pathByClosest = findMenuKeyPathMemo(key, subMenu);
+    return pathByMenu.length ? pathByMenu : pathByClosest;
+  });
+
   // 侧边菜单展开
   const onMenuOpenChangeMemo = useLatest((key: string, subMenu?: MenuType) => {
-    const path = findMenuKeyPathMemo(key, subMenu);
+    const path = findKeyPath(key, subMenu);
     if (path.length) {
       setOpenKeys(pre => Array.from(new Set([...pre, ...path])));
     }
@@ -182,7 +215,7 @@ function useMenu(data: {
     selectLogicRunning.current = true;
     const { key } = info;
     // 1、选中菜单，需要查找最接近的菜单
-    const selected = findMenuKeyPathMemo(key, subMenu || menu).slice(-1);
+    const selected = findKeyPath(key, subMenu || menu).slice(-1);
     setSelectedMenu(selected);
     // 2、更新tabbar信息，如果tabbar中存在tab信息优先取用
     const tabInfo = tabbar.find(item => item.key === key);
@@ -230,10 +263,10 @@ function useMenu(data: {
       // 更新顶部菜单
       const sMenu = onNavChangeMemo(key);
       // 更新侧边菜单
-      setSelectedMenu(findMenuKeyPathMemo(key, sMenu));
+      setSelectedMenu(findKeyPath(key, sMenu));
       onMenuOpenChangeMemo(key, sMenu);
     },
-    [onMenuOpenChangeMemo, onNavChangeMemo, findMenuKeyPathMemo],
+    [onMenuOpenChangeMemo, onNavChangeMemo, findKeyPath],
   );
 
   // 侧边菜单展开
