@@ -66,8 +66,8 @@ function useMenu(data: LayoutProps) {
 
   // 预加工菜单，主要为了兼容老版本layout数据类型
   const preprocessMenu = useMemo(() => {
-    function recursive(menu: MenuType | IBaseMenuInfo[]) {
-      if (menu.length === 0) return undefined;
+    function recursive(menu?: MenuType | IBaseMenuInfo[]) {
+      if (!menu || menu?.length === 0) return undefined;
       return menu.map(item => {
         const newItem = { ...item };
         if ('url' in item) {
