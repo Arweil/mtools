@@ -201,7 +201,6 @@ function useMenu(data: LayoutProps) {
     if (!selected) return;
     // 如果找不到默认打开第一个
     const navKey = (findKeyPath(selected)[0] ?? preprocessMenu[0]?.key) as string;
-    console.log('onNavChangeMemo==========================', typeof findKeyPath(selected)[0]);
     const newMenu = getMenu(preprocessMenu, navKey);
     // 选中项和当前选中项一致则不处理
     if (navKey !== selectedNav[0]) {
@@ -242,8 +241,6 @@ function useMenu(data: LayoutProps) {
       }
       return [...prev, tab];
     });
-    console.log('selectedTabbar==============================', selectedTabbar);
-    console.log('selected==============================', selected);
     // 选中的tab有变化才更新
     if (selected !== selectedTabbar) setSelectedTabbar(selected);
   });
