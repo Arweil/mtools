@@ -100,7 +100,7 @@ function useMenu(data: LayoutProps) {
   );
   const [tabbar, setTabbar] = useMergeState<Tabbar[]>([], { value: originTabbar });
   const [selectedTabbar, setSelectedTabbar] = useMergeState<string>(undefined, {
-    value: `${tabActive}`,
+    value: tabActive ? `${tabActive}` : undefined,
   });
   // 选择逻辑是否在执行中，通常用于防止重复触发
   const selectLogicRunning = useRef(false);
@@ -242,6 +242,8 @@ function useMenu(data: LayoutProps) {
       }
       return [...prev, tab];
     });
+    console.log('selectedTabbar==============================', selectedTabbar);
+    console.log('selected==============================', selected);
     // 选中的tab有变化才更新
     if (selected !== selectedTabbar) setSelectedTabbar(selected);
   });
@@ -321,7 +323,7 @@ function useMenu(data: LayoutProps) {
       setSelectedMenu(findKeyPath(key, sMenu));
       onMenuOpenChangeMemo(key, sMenu);
     },
-    [onMenuOpenChangeMemo, onNavChangeMemo, findKeyPath],
+    [onNavChangeMemo, setSelectedMenu, findKeyPath, onMenuOpenChangeMemo],
   );
 
   // 侧边菜单展开
