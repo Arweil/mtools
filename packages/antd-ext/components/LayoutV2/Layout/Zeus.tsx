@@ -42,21 +42,22 @@ const LayoutZeus: React.FC<LayoutProps> = React.forwardRef((props, ref) => {
     className,
     collapsible,
     collapsedWidth = 62,
-    defaultActiveMenu,
     extra,
+    hideTabbar,
     logo,
-    menu: originMenu,
     onCollapse,
-    onSelect,
     siderWidth = 134,
     trigger,
     children,
+    // 以下旧版本属性兼容
+    headerExtra,
+    setTitle,
   } = props;
   const { prefixCls } = usePrefixCls();
   const [collapsed, setCollapsed] = useState(false);
   const {
     navbar,
-    innerSelectedNav,
+    selectedNav,
     onSelectedNav,
     activeNav,
     menu,
@@ -71,7 +72,7 @@ const LayoutZeus: React.FC<LayoutProps> = React.forwardRef((props, ref) => {
     addTab,
     removeTab,
     setOpenKey,
-  } = useMenu({ menu: originMenu, onSelect, defaultActiveMenu });
+  } = useMenu(props);
 
   const layoutProviderValue = useMemo(
     () => ({
@@ -89,83 +90,87 @@ const LayoutZeus: React.FC<LayoutProps> = React.forwardRef((props, ref) => {
   };
 
   return (
-    <ConfigProvider>
-      <LayoutContext.Provider value={layoutProviderValue}>
-        <Layout className={className}>
-          <Sider
-            collapsed={collapsed}
-            collapsible={collapsible}
-            width={siderWidth}
-            collapsedWidth={collapsedWidth}
-            trigger={
-              <TriggerElement
-                collapsed={collapsed}
-                trigger={trigger}
-                onClick={() => setCollapsed(!collapsed)}
+    <LayoutContext.Provider value={layoutProviderValue}>
+      <Layout className={className}>
+        <Sider
+          collapsed={collapsed}
+          collapsible={collapsible}
+          width={siderWidth}
+          collapsedWidth={collapsedWidth}
+          trigger={
+            <TriggerElement
+              collapsed={collapsed}
+              trigger={trigger}
+              onClick={() => setCollapsed(!collapsed)}
+            />
+          }
+          onCollapse={onInnerCollapse}
+        >
+          <Flex className={`${prefixCls}-logoBox`} align="center" justify="center">
+            {logo?.(collapsed) || setTitle?.({ collapsed })}
+          </Flex>
+          <div className={`${prefixCls}-menuBox`}>
+            <ConfigProvider theme={sideMenuStyle}>
+              <Menu
+                theme="light"
+                mode="inline"
+                className={`${prefixCls}-second-menu`}
+                items={menu}
+                selectedKeys={selectedMenu}
+                onClick={onSelectedMenu}
+                openKeys={openKeys}
+                onOpenChange={onMenuOpenChange}
+                style={{ marginTop: 8, borderInlineEnd: 0 }}
+                inlineIndent={6}
               />
-            }
-            onCollapse={onInnerCollapse}
-          >
-            <Flex className="logoBox" align="center" justify="center">
-              {logo?.(collapsed)}
+            </ConfigProvider>
+          </div>
+        </Sider>
+        <Layout>
+          <Header>
+            <Flex justify="space-between" align="center" style={{ padding: '0 16px 0 0' }}>
+              <div style={{ flex: '1 1 auto' }}>
+                <ConfigProvider theme={topMenuStyle}>
+                  <Menu
+                    mode="horizontal"
+                    items={navbar}
+                    selectedKeys={selectedNav}
+                    onSelect={onSelectedNav}
+                    style={{ height: 40, paddingBottom: 6 }}
+                  />
+                </ConfigProvider>
+              </div>
+              {extra || headerExtra}
             </Flex>
-            <div className="menuBox">
-              <ConfigProvider theme={sideMenuStyle}>
-                <Menu
-                  theme="light"
-                  mode="inline"
-                  className={`${prefixCls}-second-menu`}
-                  items={menu}
-                  selectedKeys={selectedMenu}
-                  onClick={onSelectedMenu}
-                  openKeys={openKeys}
-                  onOpenChange={onMenuOpenChange}
-                  style={{ marginTop: 8, borderInlineEnd: 0 }}
-                  inlineIndent={6}
-                />
-              </ConfigProvider>
-            </div>
-          </Sider>
+          </Header>
           <Layout>
-            <Header>
-              <Flex justify="space-between" align="center" style={{ padding: '0 16px 0 0' }}>
-                <div style={{ flex: '1 1 auto' }}>
-                  <ConfigProvider theme={topMenuStyle}>
-                    <Menu
-                      mode="horizontal"
-                      items={navbar}
-                      selectedKeys={innerSelectedNav}
-                      onSelect={onSelectedNav}
-                      style={{ height: 40, paddingBottom: 6 }}
-                    />
-                  </ConfigProvider>
-                </div>
-                {extra}
-              </Flex>
+            <Header
+              style={{
+                height: 36,
+                overflow: 'hidden',
+                display: hideTabbar ? 'none' : 'block',
+              }}
+            >
+              <TabBar
+                tabbar={tabbar}
+                selected={selectedTabbar}
+                onSelect={onSelectTarbar}
+                onRemove={removeTab}
+              />
             </Header>
-            <Layout>
-              <Header style={{ height: 36, overflow: 'hidden' }}>
-                <TabBar
-                  tabbar={tabbar}
-                  selected={selectedTabbar}
-                  onSelect={onSelectTarbar}
-                  onRemove={removeTab}
-                />
-              </Header>
-              <Content
-                style={{
-                  position: 'relative',
-                  background: '#d6e5ff',
-                  overflow: 'auto',
-                }}
-              >
-                {children}
-              </Content>
-            </Layout>
+            <Content
+              style={{
+                position: 'relative',
+                background: '#d6e5ff',
+                overflow: 'auto',
+              }}
+            >
+              {children}
+            </Content>
           </Layout>
         </Layout>
-      </LayoutContext.Provider>
-    </ConfigProvider>
+      </Layout>
+    </LayoutContext.Provider>
   );
 });
 

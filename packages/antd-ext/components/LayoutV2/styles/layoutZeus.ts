@@ -9,13 +9,13 @@ const headerBg = '#1b2d55';
 const styles = (token: GlobalToken, prefixCls: string, tokenExt: Partial<ThemeColor>) => css`
   height: 100vh;
 
-  .logoBox {
+  .${prefixCls}-logoBox {
     display: flex;
     height: ${logoBoxHeight}px;
     background: ${headerBg};
   }
 
-  .menuBox {
+  .${prefixCls}-menuBox {
     height: calc(100vh - ${logoBoxHeight}px - ${triggerHeight}px);
     overflow: auto;
 

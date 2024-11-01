@@ -7,6 +7,62 @@ export interface ThemeProps {
   children: React.ReactNode;
 }
 
+export const tabItemActiveStyle = css`
+  background: #eff4ff !important;
+  color: #3370ff !important;
+  span:first-child {
+    margin-left: 6px;
+  }
+  span:last-child {
+    display: inline-flex;
+  }
+`;
+
+export const tabItemStyle = css`
+  height: 32px;
+  min-width: 100px;
+  line-height: 32px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #646a73;
+  border-radius: 20px;
+  font-size: 14px;
+  span:last-child {
+    display: none;
+  }
+  &:hover {
+    color: #646a73;
+    background: #f2f3f5;
+
+    span:first-child {
+      margin-left: 6px;
+    }
+
+    span:last-child {
+      display: inline-flex;
+    }
+  }
+`;
+
+export const tabStyle = (token: GlobalToken, prefixCls: string, mtPrefixCls: string) => css`
+  &.${prefixCls}-${mtPrefixCls}-tabs {
+    display: flex;
+    flex: 1;
+    gap: 4px;
+    align-items: center;
+    padding: 8px 0;
+    overflow: auto;
+  }
+`;
+
+export const headerExtraStyle = css`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 const styles = (token: GlobalToken, prefixCls: string, tokenExt: Partial<ThemeColor>) => css`
   &.${prefixCls}-layout {
     .${prefixCls}-layout-sider-light {

@@ -1,6 +1,6 @@
 import type { ItemType, MenuDividerType, MenuItemType } from 'antd/es/menu/interface';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import type { LayoutProps, MenuType, SelectInfo, Tabbar } from '../types';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import type { IBaseMenuInfo, LayoutProps, MenuType, SelectInfo, Tabbar } from '../types';
 import useLatest from './useLatest';
 import useMergeState from './useMergeState';
 
@@ -48,77 +48,71 @@ function findMenuInfo(key: string, menu?: MenuType) {
  * @param menu
  * @returns
  */
-function useMenu(data: {
-  menu: MenuType;
-  defaultActiveMenu?: LayoutProps['defaultActiveMenu'];
-  onSelect?: LayoutProps['onSelect'];
-}) {
-  const { menu: originMenu, defaultActiveMenu, onSelect } = data;
+function useMenu(data: LayoutProps) {
+  const {
+    menu: originMenu,
+    defaultActiveMenu,
+    openKeys: originOpenKeys,
+    onSelect,
+    onTabClick,
+    onTabRemove,
+    selectedKeys,
+    setOpenKeys: setOriginOpenKeys,
+    setSelectedKeys,
+    tabActive,
+    tabs,
+    history,
+  } = data;
+
+  // 预加工菜单，主要为了兼容老版本layout数据类型
+  const preprocessMenu = useMemo(() => {
+    function recursive(menu: MenuType | IBaseMenuInfo[]) {
+      if (menu.length === 0) return undefined;
+      return menu.map(item => {
+        const newItem = { ...item };
+        if ('url' in item) {
+          newItem.key = item.url;
+        }
+        if ('name' in item) {
+          newItem.label = item.name;
+        }
+        if ('children' in item) {
+          newItem.children = recursive(item.children);
+        }
+        return newItem;
+      });
+    }
+
+    return recursive(originMenu);
+  }, [originMenu]);
+
   // 顶部导航栏
   const [navbar, setNavbar] = useState<MenuItemType[]>();
-  const [innerSelectedNav, setSelectedNav] = useMergeState<string[]>([]);
+  const [selectedNav, setSelectedNav] = useMergeState<string[]>([]);
   // 菜单信息
   const [menu, setMenu] = useState<ItemType[]>();
-  const [openKeys, setOpenKeys] = useState<string[]>([]);
-  const [selectedMenu, setSelectedMenu] = useState<string[]>([]);
+  const [openKeys, setOpenKeys] = useMergeState<string[]>([], { value: originOpenKeys });
+  const [selectedMenu, setSelectedMenu] = useMergeState<string[]>([], { value: selectedKeys });
   // tabbar(访问记录)
-  const [tabbar, setTabbar] = useState<Tabbar[]>([]);
-  const [selectedTabbar, setSelectedTabbar] = useState<string>();
+  const originTabbar = useMemo<Tabbar[]>(
+    () => tabs?.map(item => ({ key: `${item.code}`, label: item.label })),
+    [tabs],
+  );
+  const [tabbar, setTabbar] = useMergeState<Tabbar[]>([], { value: originTabbar });
+  const [selectedTabbar, setSelectedTabbar] = useMergeState<string>(undefined, {
+    value: `${tabActive}`,
+  });
   // 选择逻辑是否在执行中，通常用于防止重复触发
   const selectLogicRunning = useRef(false);
 
   // 侧边菜单/tabbar选择回调
   const onSelectMemo = useLatest(onSelect);
-
-  // 导航栏变化回调
-  const onNavChangeMemo = useLatest((selected: string) => {
-    if (!selected) return;
-    // 如果找不到默认打开第一个
-    const navKey = (originMenu?.find(item => selected.startsWith(`${item.key}`))?.key ??
-      originMenu[0]?.key) as string;
-    const newMenu = getMenu(originMenu, navKey);
-    // 选中项和当前选中项一致则不处理
-    if (navKey !== innerSelectedNav[0]) {
-      setSelectedNav([navKey]);
-      // 更新二级菜单信息
-      setMenu(newMenu);
-    }
-    return newMenu;
-  });
-
-  // 导航栏选中
-  const onSelectedNav = useCallback(
-    (info: SelectInfo) => {
-      const { key } = info;
-      onNavChangeMemo(key);
-    },
-    [onNavChangeMemo],
-  );
-
-  // tabbar变化回调
-  const onTabbarChangeMemo = useLatest((info?: string | { key?: string; label: string }) => {
-    const { pathname, search } = location;
-    // 如果传入的info是string类型，则直接使用，否则使用info.key，info.key为空则使用当前location
-    const selected = typeof info === 'string' ? info : info.key ?? `${pathname}${search}`;
-    setTabbar(prev => {
-      const index = prev.findIndex(item => item.key === selected);
-      // 查找label信息
-      const item = findMenuInfo(selected, originMenu) as Exclude<ItemType, MenuDividerType>;
-      // 优先使用传入的label
-      const label = typeof info === 'object' ? info.label : (item?.label as string);
-      if (!label) return prev;
-
-      const tab = { key: selected, label };
-      // 存在则替换，不存在则新增
-      if (index > -1) {
-        prev.splice(index, 1, tab);
-        return [...prev];
-      }
-      return [...prev, tab];
-    });
-    // 选中的tab有变化才更新
-    if (selected !== selectedTabbar) setSelectedTabbar(selected);
-  });
+  // tabbar点击回调
+  const onTabClickMeno = useLatest(onTabClick);
+  // tabbar移除回调
+  const onTabRemoveMeno = useLatest(onTabRemove);
+  // openKeys设置
+  const setOriginOpenKeysMemo = useLatest(setOriginOpenKeys);
 
   // 找到最相近的上下级关系菜单
   const findClosestMenu = useLatest((path: string, subMenu?: MenuType): MenuType[number] => {
@@ -157,7 +151,7 @@ function useMenu(data: {
   // 通过层级关系查找给定key的路径
   const findMenuKeyPathMemo = useLatest((key: string, subMenu?: MenuType): string[] => {
     const info = findClosestMenu(key, subMenu);
-    const currentKey = `${info?.key}`;
+    const currentKey = info?.key ? `${info.key}` : undefined;
 
     if (!currentKey) return [];
 
@@ -190,7 +184,7 @@ function useMenu(data: {
       }
     };
 
-    findPath(originMenu);
+    findPath(preprocessMenu);
 
     return path;
   });
@@ -200,6 +194,56 @@ function useMenu(data: {
     const pathByMenu = findKeyPathByMenu(key);
     const pathByClosest = findMenuKeyPathMemo(key, subMenu);
     return pathByMenu.length ? pathByMenu : pathByClosest;
+  });
+
+  // 导航栏变化回调
+  const onNavChangeMemo = useLatest((selected: string) => {
+    if (!selected) return;
+    // 如果找不到默认打开第一个
+    const navKey = (findKeyPath(selected)[0] ?? preprocessMenu[0]?.key) as string;
+    console.log('onNavChangeMemo==========================', typeof findKeyPath(selected)[0]);
+    const newMenu = getMenu(preprocessMenu, navKey);
+    // 选中项和当前选中项一致则不处理
+    if (navKey !== selectedNav[0]) {
+      setSelectedNav([navKey]);
+      // 更新二级菜单信息
+      setMenu(newMenu);
+    }
+    return newMenu;
+  });
+
+  // 导航栏选中
+  const onSelectedNav = useCallback(
+    (info: SelectInfo) => {
+      const { key } = info;
+      onNavChangeMemo(key);
+    },
+    [onNavChangeMemo],
+  );
+
+  // tabbar变化回调
+  const onTabbarChangeMemo = useLatest((info?: string | { key?: string; label: string }) => {
+    const { pathname, search } = location;
+    // 如果传入的info是string类型，则直接使用，否则使用info.key，info.key为空则使用当前location
+    const selected = typeof info === 'string' ? info : info.key ?? `${pathname}${search}`;
+    setTabbar(prev => {
+      const index = prev.findIndex(item => item.key === selected);
+      // 查找label信息
+      const item = findMenuInfo(selected, preprocessMenu) as Exclude<ItemType, MenuDividerType>;
+      // 优先使用传入的label
+      const label = typeof info === 'object' ? info.label : (item?.label as string);
+      if (!label) return prev;
+
+      const tab = { key: selected, label };
+      // 存在则替换，不存在则新增
+      if (index > -1) {
+        prev.splice(index, 1, tab);
+        return [...prev];
+      }
+      return [...prev, tab];
+    });
+    // 选中的tab有变化才更新
+    if (selected !== selectedTabbar) setSelectedTabbar(selected);
   });
 
   // 侧边菜单展开
@@ -221,7 +265,13 @@ function useMenu(data: {
     const tabInfo = tabbar.find(item => item.key === key);
     onTabbarChangeMemo(tabInfo ? tabInfo : key);
     // 3、触发业务应用回调
-    onSelectMemo({ key });
+    onSelectMemo?.({ key });
+    // 旧版本layout的onSelect回调兼容
+    setSelectedKeys?.([key]);
+    // 旧版本layout的跳转逻辑兼容
+    if (history) {
+      history.push(key);
+    }
     selectLogicRunning.current = false;
   });
 
@@ -233,6 +283,7 @@ function useMenu(data: {
   const onSelectTarbar = useCallback(
     (key: string) => {
       if (!isNotUpdateTabbar(key)) {
+        onTabClickMeno?.(key);
         // 触发一级菜单回调
         const sMenu = onNavChangeMemo(key);
         // 触发二级菜单回调
@@ -240,13 +291,17 @@ function useMenu(data: {
         onMenuOpenChangeMemo(key, sMenu);
       }
     },
-    [onSelectedMenu, onMenuOpenChangeMemo, onNavChangeMemo, isNotUpdateTabbar],
+    [onSelectedMenu, onMenuOpenChangeMemo, onNavChangeMemo, isNotUpdateTabbar, onTabClickMeno],
   );
 
   // 侧边菜单展开
-  const onMenuOpenChange = useCallback((keys: string[]) => {
-    setOpenKeys(keys);
-  }, []);
+  const onMenuOpenChange = useCallback(
+    (keys: string[]) => {
+      setOpenKeys(keys);
+      setOriginOpenKeysMemo?.(keys);
+    },
+    [setOpenKeys, setOriginOpenKeysMemo],
+  );
 
   // ==================================== start 对应用暴露的api===========================================
   // 导航栏激活
@@ -270,14 +325,17 @@ function useMenu(data: {
   );
 
   // 侧边菜单展开
-  const setOpenKey = useCallback((key: string | ((keys: string[]) => string[])) => {
-    setOpenKeys(pre => {
-      if (typeof key === 'function') {
-        return Array.from(new Set(key(pre)));
-      }
-      return Array.from(new Set([...pre, key]));
-    });
-  }, []);
+  const setOpenKey = useCallback(
+    (key: string | ((keys: string[]) => string[])) => {
+      setOpenKeys(pre => {
+        if (typeof key === 'function') {
+          return Array.from(new Set(key(pre)));
+        }
+        return Array.from(new Set([...pre, key]));
+      });
+    },
+    [setOpenKeys],
+  );
 
   // 添加tabbar
   const addTab = useCallback(
@@ -289,6 +347,7 @@ function useMenu(data: {
 
   // 移除tabbar
   const removeTab = useLatest((key: string) => {
+    onTabRemoveMeno?.(key);
     setTabbar(prev => {
       // 关闭的是选中的tab需要切换到下一个tab
       if (selectedTabbar === key) {
@@ -296,7 +355,7 @@ function useMenu(data: {
         const newSelectedTabbar = prev[index - 1]?.key ?? prev[index + 1]?.key;
         setSelectedTabbar(newSelectedTabbar);
         // 如果切换了新的tab需要通知应用
-        onSelectMemo({ key: newSelectedTabbar });
+        onSelectMemo?.({ key: newSelectedTabbar });
       }
       return prev.filter(({ key: k }) => k !== key);
     });
@@ -305,9 +364,9 @@ function useMenu(data: {
 
   // 初始化
   useEffect(() => {
-    if (originMenu?.length > 0) {
+    if (preprocessMenu?.length > 0) {
       // 导航栏
-      const newNavbar = getNavbar(originMenu);
+      const newNavbar = getNavbar(preprocessMenu);
       setNavbar(newNavbar);
       // 菜单、tab激活
       const { pathname, search } = location;
@@ -315,7 +374,7 @@ function useMenu(data: {
       activeMenu(activeKey);
       addTab(activeKey);
     }
-  }, [activeMenu, addTab, originMenu, defaultActiveMenu]);
+  }, [activeMenu, addTab, preprocessMenu, defaultActiveMenu]);
 
   // 监听地址变化激活菜单及tabbar
   useEffect(() => {
@@ -336,7 +395,7 @@ function useMenu(data: {
 
   return {
     navbar,
-    innerSelectedNav,
+    selectedNav,
     onSelectedNav,
     activeNav,
     menu,
