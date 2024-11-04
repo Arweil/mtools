@@ -200,7 +200,7 @@ function useMenu(data: LayoutProps) {
   const onNavChangeMemo = useLatest((selected: string) => {
     if (!selected) return;
     // 如果找不到默认打开第一个
-    const navKey = (findKeyPath(selected)[0] ?? preprocessMenu[0]?.key) as string;
+    const navKey = (findKeyPath(selected)?.[0] ?? preprocessMenu[0]?.key) as string;
     const newMenu = getMenu(preprocessMenu, navKey);
     // 选中项和当前选中项一致则不处理
     if (navKey !== selectedNav[0]) {

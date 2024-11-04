@@ -2,6 +2,7 @@ import type { SiderProps } from 'antd';
 import { ConfigProvider, Flex, Layout, Menu } from 'antd';
 import React, { useMemo, useState } from 'react';
 import { usePrefixCls } from '../../utils';
+import NavBar from '../components/NavBar';
 import TabBar from '../components/TabBar';
 import TriggerElement from '../components/TriggerElement';
 import { LayoutContext } from '../context';
@@ -10,18 +11,7 @@ import type { LayoutProps } from '../types';
 
 const { Sider, Header, Content } = Layout;
 
-const topMenuStyle = {
-  components: {
-    Menu: {
-      fontSize: 12,
-      itemHoverColor: '#FFFFFF',
-      itemColor: '#BBC0CC',
-      horizontalItemSelectedColor: '#fff',
-    },
-  },
-};
-
-const sideMenuStyle = {
+const theme = {
   components: {
     Menu: {
       subMenuItemBg: 'transparent',
@@ -110,7 +100,7 @@ const LayoutZeus: React.FC<LayoutProps> = React.forwardRef((props, ref) => {
             {logo?.(collapsed) || setTitle?.({ collapsed })}
           </Flex>
           <div className={`${prefixCls}-menuBox`}>
-            <ConfigProvider theme={sideMenuStyle}>
+            <ConfigProvider theme={theme}>
               <Menu
                 theme="light"
                 mode="inline"
@@ -129,27 +119,13 @@ const LayoutZeus: React.FC<LayoutProps> = React.forwardRef((props, ref) => {
         <Layout>
           <Header>
             <Flex justify="space-between" align="center" style={{ padding: '0 16px 0 0' }}>
-              <div style={{ flex: '1 1 auto' }}>
-                <ConfigProvider theme={topMenuStyle}>
-                  <Menu
-                    mode="horizontal"
-                    items={navbar}
-                    selectedKeys={selectedNav}
-                    onSelect={onSelectedNav}
-                    style={{ height: 40, paddingBottom: 6 }}
-                  />
-                </ConfigProvider>
-              </div>
-              {extra || headerExtra}
+              <NavBar items={navbar} selectedKeys={selectedNav} onSelect={onSelectedNav} />
+              <div style={{ flex: '0 0 auto' }}>{extra || headerExtra}</div>
             </Flex>
           </Header>
           <Layout>
             <Header
-              style={{
-                height: 36,
-                overflow: 'hidden',
-                display: hideTabbar ? 'none' : 'block',
-              }}
+              style={{ height: 36, overflow: 'hidden', display: hideTabbar ? 'none' : 'block' }}
             >
               <TabBar
                 tabbar={tabbar}
@@ -158,13 +134,7 @@ const LayoutZeus: React.FC<LayoutProps> = React.forwardRef((props, ref) => {
                 onRemove={removeTab}
               />
             </Header>
-            <Content
-              style={{
-                position: 'relative',
-                background: '#d6e5ff',
-                overflow: 'auto',
-              }}
-            >
+            <Content style={{ position: 'relative', background: '#d6e5ff', overflow: 'auto' }}>
               {children}
             </Content>
           </Layout>
