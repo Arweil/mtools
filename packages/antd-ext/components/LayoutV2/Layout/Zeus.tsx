@@ -32,14 +32,11 @@ const LayoutZeus: React.FC<LayoutProps> = React.forwardRef((props, ref) => {
     className,
     collapsible,
     collapsedWidth = 62,
-    extra,
-    hideTabbar,
-    logo,
     onCollapse,
     siderWidth = 134,
     trigger,
     children,
-    // 以下旧版本属性兼容
+    headerContent,
     headerExtra,
     setTitle,
   } = props;
@@ -76,8 +73,17 @@ const LayoutZeus: React.FC<LayoutProps> = React.forwardRef((props, ref) => {
   );
 
   const onInnerCollapse: SiderProps['onCollapse'] = (_collapsed, type) => {
-    onCollapse(_collapsed, { type, siderWidth, collapsedWidth });
+    onCollapse?.(_collapsed, { type, siderWidth, collapsedWidth });
   };
+
+  const tabbarContent = headerContent || (
+    <TabBar
+      tabbar={tabbar}
+      selected={selectedTabbar}
+      onSelect={onSelectTarbar}
+      onRemove={removeTab}
+    />
+  );
 
   return (
     <LayoutContext.Provider value={layoutProviderValue}>
@@ -97,7 +103,7 @@ const LayoutZeus: React.FC<LayoutProps> = React.forwardRef((props, ref) => {
           onCollapse={onInnerCollapse}
         >
           <Flex className={`${prefixCls}-logoBox`} align="center" justify="center">
-            {logo?.(collapsed) || setTitle?.({ collapsed })}
+            {setTitle?.({ collapsed })}
           </Flex>
           <div className={`${prefixCls}-menuBox`}>
             <ConfigProvider theme={theme}>
@@ -120,19 +126,12 @@ const LayoutZeus: React.FC<LayoutProps> = React.forwardRef((props, ref) => {
           <Header>
             <Flex justify="space-between" align="center" style={{ padding: '0 16px 0 0' }}>
               <NavBar items={navbar} selectedKeys={selectedNav} onSelect={onSelectedNav} />
-              <div style={{ flex: '0 0 auto' }}>{extra || headerExtra}</div>
+              <div style={{ flex: '0 0 auto' }}>{headerExtra}</div>
             </Flex>
           </Header>
           <Layout>
-            <Header
-              style={{ height: 36, overflow: 'hidden', display: hideTabbar ? 'none' : 'block' }}
-            >
-              <TabBar
-                tabbar={tabbar}
-                selected={selectedTabbar}
-                onSelect={onSelectTarbar}
-                onRemove={removeTab}
-              />
+            <Header style={{ height: 36, overflow: 'hidden', backgroundColor: '#eef4ff' }}>
+              {tabbarContent}
             </Header>
             <Content style={{ position: 'relative', background: '#d6e5ff', overflow: 'auto' }}>
               {children}

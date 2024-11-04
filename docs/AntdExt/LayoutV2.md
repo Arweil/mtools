@@ -17,9 +17,9 @@ toc: menu
 | collapsible | 侧边栏是否可收起 | boolean | false |
 | collapsedWidth | 侧边栏收缩宽度 | number | 62 |
 | defaultActiveMenu | 默认激活的菜单key | string | - |
-| extra | 顶部header右侧拓展内容 | React.ReactNode | - |
-| hideTabbar | 是否隐藏tabbar | boolean | false |
-| logo | 侧边栏上方logo设置 | (collapsed: boolean) => ReactNode | - |
+| headerExtra | 顶部header右侧拓展内容 | React.ReactNode | - |
+| headerContent | 自定义tabbar区域内容，不传展示默认tabbar | ReactNode | - |
+| setTitle | 侧边栏上方logo设置 | (data: { collapsed: boolean }) => ReactNode | - |
 | menu | 菜单，同antd Menu组件的items<br>key通常存储url | [ItemType[]][1] | - |
 | onCollapse | 点击trigger的回调 | (collapsed: boolean; info: { type: CollapseType, siderWidth: number, collapsedWidth: number }) => void | - |
 | onSelect | 菜单及tab选中时触发的回调 | (info: { key: string }) => void | - |

@@ -108,11 +108,11 @@ export default function Index() {
     <ConfigProviderExt prefixCls="ant-ext-zeus" themeExt="zeus">
       <LayoutV2
         collapsible
-        logo={collapsed =>
+        setTitle={({ collapsed }) =>
           collapsed ? <span style={{ color: '#fff' }}>Zues</span> : <img src={logo} />
         }
         menu={menuData}
-        extra={<div style={{ color: '#fff' }}>开发人员</div>}
+        headerExtra={<div style={{ color: '#fff' }}>开发人员</div>}
         defaultActiveMenu="/first-level02/second-level02/third-level01"
         onSelect={() => {}}
       >

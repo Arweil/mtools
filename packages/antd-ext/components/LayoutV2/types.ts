@@ -26,18 +26,12 @@ export interface LayoutProps {
   collapsible?: boolean;
   collapsedWidth?: number;
   defaultActiveMenu?: string;
-  extra?: React.ReactNode;
-  /**
-   * @deprecated 使用extra替代
-   */
   headerExtra?: React.ReactNode;
   headerContent?: React.ReactNode | false;
-  hideTabbar?: boolean;
   /**
    * @deprecated 不建议通过传入history来控制路由，建议通过onSelect回调在应用内处理路由逻辑
    */
   history?: { push: (url: string) => void; [key: string]: any };
-  logo?: (collapsed: boolean) => React.ReactNode;
   menu?: MenuType;
   onCollapse?: (
     collapsed: boolean,
@@ -54,9 +48,6 @@ export interface LayoutProps {
   selectedKeys?: string[];
   setOpenKeys?: (openKeys: string[]) => void;
   setSelectedKeys?: (selectedKeys: string[]) => void;
-  /**
-   * @deprecated 使用logo替代
-   */
   setTitle?: (data: { collapsed: boolean }) => React.ReactNode;
   siderWidth?: number;
   tabActive?: string | number;

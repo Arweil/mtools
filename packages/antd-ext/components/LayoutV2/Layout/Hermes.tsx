@@ -17,9 +17,6 @@ const LayoutHermes: React.FC<LayoutProps> = props => {
     className,
     collapsible = true,
     collapsedWidth = 52,
-    extra,
-    hideTabbar,
-    logo,
     onCollapse,
     siderWidth = 180,
     trigger,
@@ -59,7 +56,7 @@ const LayoutHermes: React.FC<LayoutProps> = props => {
   );
 
   const onInnerCollapse: SiderProps['onCollapse'] = (_collapsed, type) => {
-    onCollapse(_collapsed, { type, siderWidth, collapsedWidth });
+    onCollapse?.(_collapsed, { type, siderWidth, collapsedWidth });
   };
 
   return (
@@ -86,7 +83,7 @@ const LayoutHermes: React.FC<LayoutProps> = props => {
             style={{ height: token.controlHeight * 2 }}
             className={`${prefixCls}-${mtPrefixCls}-sider-header`}
           >
-            {logo?.(collapsed) || setTitle?.({ collapsed })}
+            {setTitle?.({ collapsed })}
           </div>
           <Menu
             style={{ overflowY: 'auto' }}
@@ -110,7 +107,6 @@ const LayoutHermes: React.FC<LayoutProps> = props => {
                   `${prefixCls}-${mtPrefixCls}-tabs`,
                   tabStyle(token, prefixCls, mtPrefixCls),
                 ])}
-                style={{ display: hideTabbar ? 'none' : 'block' }}
               >
                 {tabbar.map(item => {
                   return (
@@ -129,7 +125,7 @@ const LayoutHermes: React.FC<LayoutProps> = props => {
                 })}
               </div>
             )}
-            {extra || headerExtra}
+            {headerExtra}
           </Header>
           <Content style={{ overflow: 'auto' }}>{children}</Content>
         </Layout>
