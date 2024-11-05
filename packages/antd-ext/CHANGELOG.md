@@ -1,3 +1,7 @@
+## 1.3.0
+1. LayoutExt 组件优化，新增 hooks：useLayout
+2. 优化了 LayoutExt 相关的代码以及逻辑处理方式
+
 ## 1.2.0
 1. 新增的防抖函数 debounce，能够在点击执行，默认300ms
   1.1 ButtonExt
