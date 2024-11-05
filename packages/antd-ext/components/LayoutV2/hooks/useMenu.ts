@@ -48,7 +48,7 @@ function findMenuInfo(key: string, menu?: MenuType) {
  * @param menu
  * @returns
  */
-function useMenu(data: LayoutProps) {
+function useMenu(data: LayoutProps, collapsed: boolean) {
   const {
     menu: originMenu,
     defaultActiveMenu,
@@ -279,19 +279,19 @@ function useMenu(data: LayoutProps) {
   });
 
   // tabbar选中(比侧边菜单选中多一个行为：顶部菜单可能需要切换)
-  const onSelectTarbar = useCallback(
-    (key: string) => {
-      if (!isNotUpdateTabbar(key)) {
-        onTabClickMeno?.(key);
-        // 触发一级菜单回调
-        const sMenu = onNavChangeMemo(key);
-        // 触发二级菜单回调
-        onSelectedMenu({ key }, sMenu);
+  const onSelectTarbar = useLatest((key: string) => {
+    if (!isNotUpdateTabbar(key)) {
+      onTabClickMeno?.(key);
+      // 触发一级菜单回调
+      const sMenu = onNavChangeMemo(key);
+      // 触发二级菜单回调
+      onSelectedMenu({ key }, sMenu);
+      // 侧边菜单收齐时不触发openchange，否则悬浮菜单会突然抖动
+      if (!collapsed) {
         onMenuOpenChangeMemo(key, sMenu);
       }
-    },
-    [onSelectedMenu, onMenuOpenChangeMemo, onNavChangeMemo, isNotUpdateTabbar, onTabClickMeno],
-  );
+    }
+  });
 
   // 侧边菜单展开
   const onMenuOpenChange = useCallback(
