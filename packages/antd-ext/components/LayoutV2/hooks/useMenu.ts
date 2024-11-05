@@ -200,7 +200,7 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
   const onNavChangeMemo = useLatest((selected: string) => {
     if (!selected) return;
     // 如果找不到默认打开第一个
-    const navKey = (findKeyPath(selected)?.[0] ?? preprocessMenu[0]?.key) as string;
+    const navKey = (findKeyPath(selected, preprocessMenu)?.[0] ?? preprocessMenu[0]?.key) as string;
     const newMenu = getMenu(preprocessMenu, navKey);
     // 选中项和当前选中项一致则不处理
     if (navKey !== selectedNav[0]) {
@@ -248,7 +248,8 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
   // 侧边菜单展开
   const onMenuOpenChangeMemo = useLatest((key: string, subMenu?: MenuType) => {
     const path = findKeyPath(key, subMenu);
-    if (path.length) {
+    // 侧边菜单收齐时不触发open，否则悬浮菜单会突然抖动
+    if (path.length && !collapsed) {
       setOpenKeys(pre => Array.from(new Set([...pre, ...path])));
     }
   });
@@ -286,10 +287,7 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
       const sMenu = onNavChangeMemo(key);
       // 触发二级菜单回调
       onSelectedMenu({ key }, sMenu);
-      // 侧边菜单收齐时不触发openchange，否则悬浮菜单会突然抖动
-      if (!collapsed) {
-        onMenuOpenChangeMemo(key, sMenu);
-      }
+      onMenuOpenChangeMemo(key, sMenu);
     }
   });
 
@@ -324,17 +322,16 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
   );
 
   // 侧边菜单展开
-  const setOpenKey = useCallback(
-    (key: string | ((keys: string[]) => string[])) => {
+  const setOpenKey = useLatest((key: string | ((keys: string[]) => string[])) => {
+    if (!collapsed) {
       setOpenKeys(pre => {
         if (typeof key === 'function') {
           return Array.from(new Set(key(pre)));
         }
         return Array.from(new Set([...pre, key]));
       });
-    },
-    [setOpenKeys],
-  );
+    }
+  });
 
   // 添加tabbar
   const addTab = useCallback(
