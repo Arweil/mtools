@@ -1,5 +1,5 @@
 import { AccountBookOutlined } from '@ant-design/icons';
-import { Button, ConfigProviderExt, LayoutV2, Space } from '@m-tools/antd-ext';
+import { Button, ConfigProviderExt, LayoutExt, Space } from '@m-tools/antd-ext';
 import React from 'react';
 import logo from './logo.png';
 
@@ -63,7 +63,7 @@ const menuData = [
 
 function Page() {
   console.log('renderpage.................................');
-  const { activeNav, addTab, activeMenu, setOpenKey, removeTab } = LayoutV2.useLayout();
+  const { activeNav, addTab, activeMenu, setOpenKey, removeTab } = LayoutExt.useLayout();
   const [count, setCount] = React.useState(0);
 
   return (
@@ -106,7 +106,7 @@ function Page() {
 export default function Index() {
   return (
     <ConfigProviderExt prefixCls="ant-ext-zeus" themeExt="zeus">
-      <LayoutV2
+      <LayoutExt
         collapsible
         setTitle={({ collapsed }) =>
           collapsed ? <span style={{ color: '#fff' }}>Zues</span> : <img src={logo} />
@@ -117,7 +117,7 @@ export default function Index() {
         onSelect={() => {}}
       >
         <Page />
-      </LayoutV2>
+      </LayoutExt>
     </ConfigProviderExt>
   );
 }

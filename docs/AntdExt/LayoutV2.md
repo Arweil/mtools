@@ -8,6 +8,10 @@ toc: menu
 ## 示例（zeus）
 <code src="../../packages/antd-ext/examples/LayoutV2/zeus" iframe="500"></code>
 
+
+## 示例（hermes）
+<code src="../../packages/antd-ext/examples/LayoutV2/hermes.tsx" iframe="500"></code>
+
 ## API
 
 布局容器。

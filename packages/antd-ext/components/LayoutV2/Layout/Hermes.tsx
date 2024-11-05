@@ -21,7 +21,6 @@ const LayoutHermes: React.FC<LayoutProps> = props => {
     siderWidth = 180,
     trigger,
     children,
-    // 以下旧版本属性兼容
     headerExtra,
     setTitle,
     headerContent,

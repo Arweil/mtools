@@ -1,5 +1,5 @@
 import { css as reactcss, Global } from '@emotion/react';
-import { LayoutExt } from '@m-tools/antd-ext';
+import { Flex, LayoutExt } from '@m-tools/antd-ext';
 import type { ITab } from '@m-tools/antd-ext/LayoutExt/LayoutHermesExt';
 import React, { useEffect, useState } from 'react';
 import menu from './menu.json';
@@ -70,7 +70,15 @@ export default function Index() {
           setTabs(newTabs);
         }}
         setTitle={collapsed => {
-          return <div style={{ textAlign: 'center', color: '#FFF' }}>ZEUS</div>;
+          return (
+            <Flex
+              align="center"
+              justify="center"
+              style={{ height: '100%', fontSize: 24, color: '#666' }}
+            >
+              Hermes
+            </Flex>
+          );
         }}
         theme="hermes"
         headerExtra={

@@ -16,8 +16,8 @@ import {
   MixinInputExt as InputExt,
   MixinInputOutLineExt as InputOutLineExt,
 } from './InputExt';
-import LayoutExt, { BaseLayoutExt } from './LayoutExt';
-import LayoutV2 from './LayoutV2';
+// import LayoutExt, { BaseLayoutExt } from './LayoutExt';
+import LayoutExt from './LayoutV2';
 import ModalExt from './ModalExt';
 import notificationExt from './Notification';
 import { BaseProInputNumber, ProInputNumber, ProInputNumberOutLine } from './ProInputNumber';
@@ -45,7 +45,7 @@ export {
   BaseSelectExt,
   BaseDrawerExt,
   BaseRangeNumberExt,
-  BaseLayoutExt,
+  // BaseLayoutExt,
   BaseCascaderExt,
   ButtonExt,
   BaseUploadExt,
@@ -59,7 +59,6 @@ export {
   SelectExt,
   RangeNumberExt,
   LayoutExt,
-  LayoutV2,
   RadioGroupExt,
   FormItemExt,
   ProInputNumber,
