@@ -81,7 +81,12 @@ export default function NavBar(props: MenuProps) {
             style={{ transform: `translateX(${transform}px)` }}
           >
             <ConfigProvider theme={theme}>
-              <Menu {...props} mode="horizontal" style={{ height: 40, paddingBottom: 6 }} />
+              <Menu
+                {...props}
+                disabledOverflow
+                mode="horizontal"
+                style={{ display: 'flex', height: 40, paddingBottom: 6 }}
+              />
             </ConfigProvider>
           </div>
         </ResizeObserver>
