@@ -56,6 +56,7 @@ export interface LayoutProps {
     label: string;
   }[];
   trigger?: (collapsed: boolean) => React.ReactNode;
+  needMenuGroup?: boolean; // 对宙斯主题无效
 }
 
 export interface LayoutV2Props extends LayoutProps {

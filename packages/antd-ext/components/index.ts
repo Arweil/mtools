@@ -16,8 +16,8 @@ import {
   MixinInputExt as InputExt,
   MixinInputOutLineExt as InputOutLineExt,
 } from './InputExt';
-// import LayoutExt, { BaseLayoutExt } from './LayoutExt';
 import LayoutExt from './LayoutV2';
+import BaseLayoutExt from './LayoutV2/Layout/Hermes';
 import ModalExt from './ModalExt';
 import notificationExt from './Notification';
 import { BaseProInputNumber, ProInputNumber, ProInputNumberOutLine } from './ProInputNumber';
@@ -45,7 +45,7 @@ export {
   BaseSelectExt,
   BaseDrawerExt,
   BaseRangeNumberExt,
-  // BaseLayoutExt,
+  BaseLayoutExt,
   BaseCascaderExt,
   ButtonExt,
   BaseUploadExt,

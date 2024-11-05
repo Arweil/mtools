@@ -48,7 +48,7 @@ function findMenuInfo(key: string, menu?: MenuType) {
  * @param menu
  * @returns
  */
-function useMenu(data: LayoutProps, collapsed: boolean) {
+function useMenu(data: LayoutProps & { firstLevelTabbar?: boolean }, collapsed: boolean) {
   const {
     menu: originMenu,
     defaultActiveMenu,
@@ -62,6 +62,8 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
     tabActive,
     tabs,
     history,
+    needMenuGroup = true, // 一级菜单是否使用分组
+    firstLevelTabbar = false, // 是否使用一级菜单作为tabbar
   } = data;
 
   // 预加工菜单，主要为了兼容老版本layout数据类型
@@ -201,7 +203,9 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
     if (!selected) return;
     // 如果找不到默认打开第一个
     const navKey = (findKeyPath(selected, preprocessMenu)?.[0] ?? preprocessMenu[0]?.key) as string;
-    const newMenu = getMenu(preprocessMenu, navKey);
+    const newMenu = firstLevelTabbar
+      ? getMenu(preprocessMenu, navKey)
+      : preprocessMenu.map(itm => ({ ...itm, type: needMenuGroup ? 'group' : 'item' }));
     // 选中项和当前选中项一致则不处理
     if (navKey !== selectedNav[0]) {
       setSelectedNav([navKey]);
