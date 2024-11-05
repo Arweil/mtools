@@ -41,7 +41,7 @@ const LayoutHermes: React.FC<LayoutProps> = props => {
     addTab,
     removeTab,
     setOpenKey,
-  } = useMenu(props);
+  } = useMenu(props, collapsed);
 
   const layoutProviderValue = useMemo(
     () => ({
