@@ -1,10 +1,10 @@
-import { css } from '@emotion/css';
 import type { GlobalToken } from 'antd';
 import useLocale from 'antd/es/locale/useLocale';
 import classNames from 'classnames';
 import React from 'react';
 import type { ThemeColor } from '../theme/type';
 import { mtPrefixCls as _mtPrefixCls } from '../utils/config';
+import { css } from '../utils/emotion';
 import useMapTheme from '../utils/useMapTheme';
 import usePrefixCls from '../utils/usePrefixCls';
 import NotFound from './img/NotFound';

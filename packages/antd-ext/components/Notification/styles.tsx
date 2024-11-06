@@ -1,4 +1,4 @@
-import { css } from '@emotion/css';
+import { css } from '../utils/emotion';
 
 export const styles = (prefixCls: string) => css`
   border-radius: 12px;

@@ -1,7 +1,7 @@
-import { css } from '@emotion/css';
 import React from 'react';
 import type { OutLineWrapperProps } from '../OutLineWrapper';
 import OutLineWrapper from '../OutLineWrapper';
+import { css } from '../utils/emotion';
 import type { RangeNumberExtProps } from './RangeNumberExt';
 import RangeNumberExt from './RangeNumberExt';
 

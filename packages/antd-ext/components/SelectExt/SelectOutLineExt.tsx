@@ -1,7 +1,7 @@
-import { css } from '@emotion/css';
 import React, { useCallback, useRef, useState } from 'react';
 import type { OutLineWrapperProps } from '../OutLineWrapper';
 import OutLineWrapper from '../OutLineWrapper';
+import { css } from '../utils/emotion';
 import type { SelectExtProps } from './SelectExt';
 import SelectExt from './SelectExt';
 

@@ -1,4 +1,3 @@
-import { css } from '@emotion/css';
 import type { GlobalToken } from 'antd';
 import { Empty, Skeleton, Table, Typography } from 'antd';
 import type { ColumnType, TablePaginationConfig, TableProps } from 'antd/es/table';
@@ -7,6 +6,7 @@ import type { SpinProps } from 'antd/lib/spin';
 import classNames from 'classnames';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { usePrefixCls } from '../utils';
+import { css } from '../utils/emotion';
 import TypographyRowOne from './TypographyRowOne';
 
 const emptyClass = (token: GlobalToken) => css`

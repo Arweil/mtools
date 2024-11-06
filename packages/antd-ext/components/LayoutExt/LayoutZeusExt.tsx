@@ -1,11 +1,11 @@
 import { CloseOutlined, LeftOutlined, RightOutlined } from '@ant-design/icons';
-import { css } from '@emotion/css';
 import type { MenuProps } from 'antd';
 import { ConfigProvider, Flex, Layout, Menu } from 'antd';
 import type { ItemType, MenuItemGroupType, SubMenuType } from 'antd/es/menu/interface';
 import classNames from 'classnames';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { usePrefixCls } from '../utils';
+import { css } from '../utils/emotion';
 import type { IBaseMenuInfo, LayoutExtProps } from './LayoutHermesExt';
 import { TriggerElement } from './LayoutHermesExt';
 

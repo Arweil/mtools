@@ -1,7 +1,7 @@
-import { css } from '@emotion/css';
 import type { InputProps } from 'antd';
 import React from 'react';
 import OutLineWrapper from '../OutLineWrapper';
+import { css } from '../utils/emotion';
 import { InputExt } from './InputExt';
 
 const style = (prefixCls: string) => css`

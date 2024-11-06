@@ -1,6 +1,6 @@
 import type { GlobalToken } from 'antd';
-import { css } from '@emotion/css';
 import type { ThemeColor } from '../theme/type';
+import { css } from '../utils/emotion';
 
 export const customStyle = (
   token: GlobalToken,

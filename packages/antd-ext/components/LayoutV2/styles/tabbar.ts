@@ -1,4 +1,4 @@
-import { css } from '@emotion/css';
+import { css } from '../../utils/emotion';
 
 const paddingTop = 4;
 

@@ -1,7 +1,7 @@
-import { css } from '@emotion/css';
 import type { TooltipProps } from 'antd';
 import { Tooltip } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
+import { css } from '../utils/emotion';
 
 const row1 = css`
   overflow: hidden;

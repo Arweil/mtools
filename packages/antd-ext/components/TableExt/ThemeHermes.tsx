@@ -1,7 +1,7 @@
-import { css } from '@emotion/css';
 import type { GlobalToken } from 'antd/es/theme';
 import type { ThemeColor } from '../theme/type';
 import { mtPrefixCls } from '../utils/config';
+import { css } from '../utils/emotion';
 
 export const customStyle = (
   token: GlobalToken,

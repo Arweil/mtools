@@ -1,6 +1,6 @@
-import { css } from '@emotion/css';
 import type { GlobalToken } from 'antd';
 import type { ThemeColor } from '../theme/type';
+import { css } from '../utils/emotion';
 
 export const customStyleWithInputOutLineExt = (
   token: GlobalToken,
