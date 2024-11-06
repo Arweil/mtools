@@ -1,5 +1,6 @@
 import type { Express } from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
+import logger from './logger';
 import type { ProxyConfigArrayItem } from './types';
 import { getConfig } from './utils';
 
@@ -7,6 +8,16 @@ const { proxy } = getConfig();
 
 const getProxyMiddleware = (proxyConfig: ProxyConfigArrayItem) => {
   proxyConfig.logLevel = 'debug';
+
+  proxyConfig.logProvider = () => {
+    return {
+      log: logger.log.bind(logger),
+      debug: logger.debug.bind(logger),
+      info: logger.info.bind(logger),
+      warn: logger.warn.bind(logger),
+      error: logger.error.bind(logger),
+    };
+  };
 
   if (proxyConfig.target) {
     const context = proxyConfig.context || proxyConfig.path;

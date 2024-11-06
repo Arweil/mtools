@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { usePrefixCls } from '../utils';
 import { css } from '../utils/emotion';
+import { debounce } from '../utils/useDebounceFn';
 import TypographyRowOne from './TypographyRowOne';
 
 const emptyClass = (token: GlobalToken) => css`
@@ -102,7 +103,7 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
     loading,
     useSkeleton = false,
     useEmpty = false,
-    pagination,
+    pagination: _pagination,
     rowSelection,
     summary,
     cellEllipsisRows = 1,
@@ -113,6 +114,17 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
   const isFirstTimeRendered = useRef(false);
   const cacheLoadingState = useRef<boolean | undefined>(undefined);
   const [fetching, setFetching] = useState(useSkeleton);
+  // 翻页防抖处理
+  const pagination = useMemo(() => {
+    if (_pagination && _pagination.onChange) {
+      return {
+        ..._pagination,
+        onChange: debounce(_pagination.onChange, 300),
+      };
+    }
+
+    return _pagination;
+  }, [_pagination]);
 
   // 获取当前loading的状态，loading可以为spinprops
   const curLoadingState = useMemo(() => {

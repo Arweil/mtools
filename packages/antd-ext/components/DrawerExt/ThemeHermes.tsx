@@ -14,6 +14,7 @@ export const customStyle = (
   tokenExt: Partial<ThemeColor>,
 ) => css`
   .${prefixCls}-${mtPrefixCls}-drawer-close {
+    padding-left: 8px;
     color: ${tokenExt.colorBlackL4};
     font-size: 14px;
   }

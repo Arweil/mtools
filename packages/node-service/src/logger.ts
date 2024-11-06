@@ -1,30 +1,43 @@
 import log4js from 'log4js';
+import { getConfig } from './utils';
 
-const initLogger = (params?: log4js.FileAppender) => {
-  log4js.configure({
+const { logger: loggerConfig } = getConfig();
+
+const initLogger = (params: { category?: 'file' | 'console'; file?: log4js.FileAppender }) => {
+  const { category, file } = params;
+  const { filename, ...fileRestProps } = file || {};
+  const config = {
     appenders: {
       console: { type: 'console' },
-      // file: {
-      //   type: 'file',
-      //   maxLogSize: '10M',
-      //   backups: 10,
-      //   filename: 'logs/app.log',
-      //   ...params,
-      // },
+      file: {
+        type: 'file',
+        maxLogSize: '100M',
+        backups: 10,
+        filename: filename ?? 'logs/app.log',
+        ...fileRestProps,
+      },
     },
     categories: {
       default: {
         appenders: ['console'],
-        level: 'info',
+        level: 'debug',
+      },
+      file: {
+        appenders: ['console', 'file'],
+        level: 'debug',
       },
       console: {
         appenders: ['console'],
-        level: 'info',
+        level: 'debug',
       },
     },
-  });
+  };
 
-  return log4js.getLogger('console');
+  log4js.configure(config);
+
+  return log4js.getLogger(category ?? 'console');
 };
 
-export default initLogger;
+const logger = initLogger(loggerConfig || {});
+
+export default logger;
