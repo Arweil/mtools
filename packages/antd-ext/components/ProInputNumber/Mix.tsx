@@ -1,10 +1,10 @@
-import { css } from '@emotion/css';
 import type { GlobalToken } from 'antd';
 import React from 'react';
 import type { Theme } from '../ConfigProviderExt/context';
 import ThemeWrapper from '../theme/ThemeWrapper';
 import type { ThemeColor } from '../theme/type';
 import { useMapTheme } from '../utils';
+import { css } from '../utils/emotion';
 import type { ProInputNumberProps } from './ProInputNumber';
 import ProInputNumber from './ProInputNumber';
 import type { ProInputNumberOutLineProps } from './ProInputNumberOutLine';

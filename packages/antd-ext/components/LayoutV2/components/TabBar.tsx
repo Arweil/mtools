@@ -1,9 +1,9 @@
 import { CloseOutlined, LeftOutlined, RightOutlined } from '@ant-design/icons';
-import { cx } from '@emotion/css';
 import { Flex } from 'antd';
 import type { OnResize } from 'rc-resize-observer';
 import ResizeObserver from 'rc-resize-observer';
 import React, { useEffect, useRef, useState } from 'react';
+import { cx } from '../../utils/emotion';
 import useLatest from '../hooks/useLatest';
 import style from '../styles/tabbar';
 import type { Tabbar } from '../types';

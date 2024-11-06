@@ -1,4 +1,4 @@
-import { css } from '@emotion/css';
+import { css } from '../../utils/emotion';
 
 const wrap = css`
   flex: 1 1 auto;

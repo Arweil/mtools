@@ -1,10 +1,10 @@
-import { css } from '@emotion/css';
 import type { GlobalToken } from 'antd';
 import { Col, Row } from 'antd';
 import classNames from 'classnames';
 import React, { useMemo } from 'react';
 import type { ThemeColor } from '../theme/type';
 import { useMapTheme, usePrefixCls } from '../utils';
+import { css } from '../utils/emotion';
 
 export interface OutLineWrapperProps {
   label: string;

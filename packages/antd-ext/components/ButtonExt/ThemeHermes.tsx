@@ -1,7 +1,7 @@
-import { css } from '@emotion/css';
 import { TinyColor } from '@ctrl/tinycolor';
 import type { GlobalToken } from 'antd/es/theme/interface';
 import type { ThemeColor } from '../theme/type';
+import { css } from '../utils/emotion';
 
 export const customStyle = (
   token: GlobalToken,

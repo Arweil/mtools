@@ -1,6 +1,6 @@
-import { css } from '@emotion/css';
 import type { GlobalToken } from 'antd';
 import { mtPrefixCls } from '../../utils/config';
+import { css } from '../../utils/emotion';
 
 export const getRangeNumberStyle = (token: GlobalToken, prefixCls: string) => css`
   border: 1px solid ${token.colorBorder};

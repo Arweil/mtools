@@ -1,4 +1,3 @@
-import { css } from '@emotion/css';
 import type { GlobalToken, MenuProps } from 'antd';
 import { Layout, Menu } from 'antd';
 import type { ItemType, MenuItemGroupType, SubMenuType } from 'antd/es/menu/interface';
@@ -7,6 +6,7 @@ import type { ReactNode } from 'react';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { CloseOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '../icon';
 import { usePrefixCls } from '../utils';
+import { css } from '../utils/emotion';
 
 const { Header, Content, Sider } = Layout;
 

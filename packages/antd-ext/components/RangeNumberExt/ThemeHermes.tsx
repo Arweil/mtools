@@ -1,8 +1,8 @@
-import { css } from '@emotion/css';
 import type { GlobalToken } from 'antd';
 import type React from 'react';
 import type { ThemeColor } from '../theme/type';
 import { mtPrefixCls } from '../utils/config';
+import { css } from '../utils/emotion';
 
 export interface ThemeRangeNumberExtProps {
   children: React.ReactNode;
