@@ -1,3 +1,6 @@
+## 1.3.1
+1. 修改了 emotion 的行为，speedy 默认为 false
+
 ## 1.3.0
 1. LayoutExt 组件优化，新增 hooks：useLayout
 2. 优化了 LayoutExt 相关的代码以及逻辑处理方式
