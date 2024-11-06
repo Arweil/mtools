@@ -28,6 +28,7 @@ export function getConfig(): NodeServiceConfig {
     // 配置 listen 端口
     port: '8080',
     apis: undefined,
+    middlewares: undefined,
     injectScript: undefined,
     CSP: undefined,
     useCookieEnv: true,

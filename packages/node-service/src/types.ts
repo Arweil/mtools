@@ -40,8 +40,13 @@ export type NodeServiceConfig = {
   port: string;
   // 部署到 node 环境变量 KEY 名称
   DEPLOY_ENV: string;
+
   // 自定义node接口
   apis?: (app: Express) => void;
+
+  // 自定义中间件
+  middlewares?: (app: Express) => void;
+
   // 可以动态修改HTML标签在返回html的时候
   // 有时候我们往往希望注入一些运行时才存在的，必要的变量
   // 或者做一些页面配置化的时候

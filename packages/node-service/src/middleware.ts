@@ -7,10 +7,15 @@ import path from 'path';
 import { appDirectory, getConfig, getEnv } from './utils';
 
 function middleware(app: Express) {
-  const { assetsServiceDir, assetsDir, useCookieEnv, gzip } = getConfig();
+  const { assetsServiceDir, assetsDir, useCookieEnv, gzip, middlewares } = getConfig();
 
   app.disable('x-powered-by');
   app.enable('trust proxy');
+
+  // 自定义中间件
+  if (middlewares) {
+    middlewares(app);
+  }
 
   app.use(
     compression({
