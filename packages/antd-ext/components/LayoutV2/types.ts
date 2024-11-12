@@ -26,7 +26,7 @@ export interface LayoutProps {
   collapsible?: boolean;
   collapsedWidth?: number;
   defaultActiveMenu?: string;
-  haveNavbar?: boolean;
+  hasNavbar?: boolean;
   headerExtra?: React.ReactNode;
   headerContent?: React.ReactNode | false;
   /**

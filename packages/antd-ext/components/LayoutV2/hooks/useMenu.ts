@@ -70,7 +70,7 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
     tabs,
     history,
     needMenuGroup = true, // 一级菜单是否使用分组
-    haveNavbar, // 是否有导航栏
+    hasNavbar, // 是否有导航栏
   } = data;
 
   // 预加工菜单，主要为了兼容老版本layout数据类型
@@ -211,7 +211,7 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
     // 如果找不到默认打开第一个
     const navKey = (findKeyPath(selected, preprocessMenu)?.[0] ?? preprocessMenu[0]?.key) as string;
     // 是否需要一级导航
-    let newMenu = haveNavbar ? getMenu(preprocessMenu, navKey) : preprocessMenu;
+    let newMenu = hasNavbar ? getMenu(preprocessMenu, navKey) : preprocessMenu;
     // 左侧菜单分组
     newMenu = newMenu?.map(itm => ({
       ...itm,

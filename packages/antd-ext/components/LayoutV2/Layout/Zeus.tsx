@@ -58,7 +58,7 @@ const LayoutZeus: React.FC<LayoutProps> = React.forwardRef((props, ref) => {
     addTab,
     removeTab,
     setOpenKey,
-  } = useMenu({ ...props, needMenuGroup: false, haveNavbar: true }, collapsed);
+  } = useMenu({ ...props, needMenuGroup: false, hasNavbar: true }, collapsed);
 
   const layoutProviderValue = useMemo(
     () => ({
