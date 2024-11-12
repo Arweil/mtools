@@ -1,3 +1,6 @@
+## 1.3.2
+1. 优化了 LayoutExt 组件的 zeus 主题样式，以及 navbar 的滚动交互
+
 ## 1.3.1
 1. 修改了 emotion 的行为，speedy 默认为 false
 
