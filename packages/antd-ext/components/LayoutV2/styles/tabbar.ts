@@ -70,6 +70,7 @@ const selected = css`
   font-size: 12px;
   color: #016eff;
   border-radius: 8px 8px 0px 0px;
+  z-index: 1;
 
   &::after,
   &::before {
@@ -82,12 +83,13 @@ const selected = css`
 
   &::after {
     right: -8px;
-    background: radial-gradient(at 8px 0px, rgb(238, 244, 255) 8px, rgb(214, 229, 255) 8px);
+    z-index: 1;
+    background: radial-gradient(at 8px 0px, rgba(238, 244, 255, 0) 8px, rgb(214, 229, 255) 8px);
   }
 
   &::before {
     left: -8px;
-    background: radial-gradient(at 0px 0px, rgb(238, 244, 255) 8px, rgb(214, 229, 255) 8px);
+    background: radial-gradient(at 0px 0px, rgba(238, 244, 255, 0) 8px, rgb(214, 229, 255) 8px);
   }
 
   .tab {
@@ -97,9 +99,29 @@ const selected = css`
   }
 `;
 
+const tabNode = css`
+  :hover {
+    ${selected};
+    z-index: 0;
+    color: #333333;
+    font-weight: unset;
+    background: #dfebff;
+
+    &::after {
+      right: -8px;
+      background: radial-gradient(at 8px 0px, rgba(223, 235, 255, 0) 8px, rgb(223, 235, 255) 8px);
+    }
+
+    &::before {
+      left: -8px;
+      background: radial-gradient(at 0px 0px, rgba(223, 235, 255, 0) 8px, rgb(223, 235, 255) 8px);
+    }
+  }
+`;
+
 const close = css`
   margin-left: 12px;
   font-size: 10px;
 `;
 
-export default { wrap, leftBtn, rightBtn, list, tab, selected, close };
+export default { wrap, leftBtn, rightBtn, list, tab, tabNode, selected, close };

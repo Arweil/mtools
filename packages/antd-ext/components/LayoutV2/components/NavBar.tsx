@@ -1,9 +1,10 @@
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { ConfigProvider, Menu } from 'antd';
+import { ConfigProvider, Flex, Menu } from 'antd';
 import ResizeObserver from 'rc-resize-observer';
 import React, { useEffect, useRef, useState } from 'react';
-import { cx } from '../../utils/emotion';
 import useLatest from '../hooks/useLatest';
+import useMove from '../hooks/useMove';
 import styles from '../styles/navbar';
 
 const theme = {
@@ -22,13 +23,15 @@ export default function NavBar(props: MenuProps) {
   const [contentWidth, setContentWidth] = useState(0);
   const [transform, setTransform] = useState(0);
   const wrapRef = useRef<HTMLDivElement>(null);
+  const leftBtnRef = useRef<HTMLDivElement>(null);
+  const rightBtnRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const needScroll = wrapperWidth < contentWidth;
 
   const transformMin = Math.min(0, wrapperWidth - contentWidth);
   const transformMax = 0;
 
-  const alignInRange = (value: number) => {
+  const alignInRange = useLatest((value: number) => {
     if (value < transformMin) {
       return transformMin;
     }
@@ -36,44 +39,37 @@ export default function NavBar(props: MenuProps) {
       return transformMax;
     }
     return value;
-  };
-
-  const onWheel = useLatest((e: WheelEvent) => {
-    const { deltaX, deltaY } = e;
-
-    let mixed = 0;
-    const absX = Math.abs(deltaX);
-    const absY = Math.abs(deltaY);
-    if (absX > absY) {
-      mixed = deltaX;
-    } else {
-      mixed = deltaY;
-    }
-
-    if (needScroll) {
-      e.preventDefault();
-      setTransform(alignInRange(transform - mixed));
-    }
   });
 
-  useEffect(() => {
-    const ref = wrapRef.current;
-    ref?.addEventListener('wheel', onWheel, { passive: false });
+  useMove(
+    wrapRef,
+    offsetX => {
+      if (needScroll) {
+        setTransform(alignInRange(transform + offsetX));
+        return true;
+      }
+      return false;
+    },
+    leftBtnRef,
+    rightBtnRef,
+  );
 
-    return () => {
-      ref?.removeEventListener('wheel', onWheel);
-    };
-  }, [onWheel]);
+  useEffect(() => {
+    setTransform(alignInRange(transform));
+  }, [transformMax, transformMin]);
 
   return (
     <ResizeObserver onResize={size => setWrapperWidth(size.width)}>
-      <div
-        ref={wrapRef}
-        className={cx(styles.wrap, {
-          [styles.transformLeft]: transform < 0,
-          [styles.transformRight]: transform > -contentWidth + wrapperWidth,
-        })}
-      >
+      <div ref={wrapRef} className={styles.wrap}>
+        <Flex
+          className={styles.leftBtn}
+          align="center"
+          ref={leftBtnRef}
+          style={{ display: transform >= 0 ? 'none' : 'flex' }}
+        >
+          <LeftOutlined />
+        </Flex>
+
         <ResizeObserver onResize={size => setContentWidth(size.width)}>
           <div
             ref={contentRef}
@@ -90,6 +86,16 @@ export default function NavBar(props: MenuProps) {
             </ConfigProvider>
           </div>
         </ResizeObserver>
+
+        <Flex
+          className={styles.rightBtn}
+          align="center"
+          justify="right"
+          ref={rightBtnRef}
+          style={{ display: transform <= -contentWidth + wrapperWidth ? 'none' : 'flex' }}
+        >
+          <RightOutlined />
+        </Flex>
       </div>
     </ResizeObserver>
   );

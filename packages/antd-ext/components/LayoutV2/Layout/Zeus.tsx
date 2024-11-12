@@ -21,7 +21,6 @@ const theme = {
       itemColor: '#666666',
       fontSize: 12,
       iconSize: 16,
-      itemMarginBlock: 0,
       iconMarginInlineEnd: 4,
     },
   },
@@ -47,7 +46,7 @@ const LayoutZeus: React.FC<LayoutProps> = React.forwardRef((props, ref) => {
     selectedNav,
     onSelectedNav,
     activeNav,
-    menu,
+    menuByCollapsed,
     openKeys,
     selectedMenu,
     onSelectedMenu,
@@ -59,7 +58,7 @@ const LayoutZeus: React.FC<LayoutProps> = React.forwardRef((props, ref) => {
     addTab,
     removeTab,
     setOpenKey,
-  } = useMenu({ ...props, needMenuGroup: false, firstLevelTabbar: true }, collapsed);
+  } = useMenu({ ...props, needMenuGroup: false, hasNavbar: true }, collapsed);
 
   const layoutProviderValue = useMemo(
     () => ({
@@ -89,6 +88,7 @@ const LayoutZeus: React.FC<LayoutProps> = React.forwardRef((props, ref) => {
     <LayoutContext.Provider value={layoutProviderValue}>
       <Layout className={className}>
         <Sider
+          className={`${prefixCls}-zeus-sider`}
           collapsed={collapsed}
           collapsible={collapsible}
           width={siderWidth}
@@ -111,7 +111,7 @@ const LayoutZeus: React.FC<LayoutProps> = React.forwardRef((props, ref) => {
                 theme="light"
                 mode="inline"
                 className={`${prefixCls}-second-menu`}
-                items={menu}
+                items={menuByCollapsed}
                 selectedKeys={selectedMenu}
                 onClick={onSelectedMenu}
                 openKeys={openKeys}
@@ -124,7 +124,7 @@ const LayoutZeus: React.FC<LayoutProps> = React.forwardRef((props, ref) => {
         </Sider>
         <Layout>
           <Header>
-            <Flex justify="space-between" align="center" style={{ padding: '0 16px 0 0' }}>
+            <Flex justify="space-between" align="center">
               <NavBar items={navbar} selectedKeys={selectedNav} onSelect={onSelectedNav} />
               <div style={{ flex: '0 0 auto' }}>{headerExtra}</div>
             </Flex>
