@@ -5,6 +5,7 @@ import ResizeObserver from 'rc-resize-observer';
 import React, { useEffect, useRef, useState } from 'react';
 import { cx } from '../../utils/emotion';
 import useLatest from '../hooks/useLatest';
+import useMove from '../hooks/useMove';
 import style from '../styles/tabbar';
 import type { Tabbar } from '../types';
 
@@ -22,12 +23,14 @@ function TabBar(props: {
   const [transform, setTransform] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
-  const preTabListWidth = useRef(0);
+  const leftBtnRef = useRef<HTMLDivElement>(null);
+  const rightBtnRef = useRef<HTMLDivElement>(null);
+  const needScroll = wrapperWidth < tabListWidth;
 
   const transformMin = Math.min(0, wrapperWidth - tabListWidth - rightPadding);
   const transformMax = 0;
 
-  const alignInRange = (value: number) => {
+  const alignInRange = useLatest((value: number) => {
     if (value < transformMin) {
       return transformMin;
     }
@@ -35,35 +38,37 @@ function TabBar(props: {
       return transformMax;
     }
     return value;
-  };
-
-  const onTransformChange = useLatest(() => {
-    const { current: preWidth } = preTabListWidth;
-    if (preWidth < tabListWidth) {
-      setTransform(alignInRange(transform - (tabListWidth - preWidth)));
-    } else if (preWidth > tabListWidth && transform < transformMin) {
-      setTransform(alignInRange(transform));
-    }
   });
 
+  useMove(
+    wrapRef,
+    offsetX => {
+      if (needScroll) {
+        setTransform(alignInRange(transform + offsetX));
+        return true;
+      }
+      return false;
+    },
+    leftBtnRef,
+    rightBtnRef,
+  );
+
+  // 容器变化，重新调整transform位置
   useEffect(() => {
-    onTransformChange();
-  }, [tabListWidth, onTransformChange]);
+    setTransform(alignInRange(transform));
+  }, [transformMax, transformMin]);
+
+  // tabbar变化，重新调整transform位置
+  useEffect(() => {
+    setTransform(alignInRange(transformMin));
+  }, [tabListWidth]);
 
   const onWrapResize: OnResize = size => {
     setWrapperWidth(size.width);
   };
 
   const onListResize: OnResize = size => {
-    preTabListWidth.current = tabListWidth;
     setTabListWidth(size.width);
-  };
-
-  const onMove = (e: React.MouseEvent, direction: 'L' | 'R') => {
-    e.stopPropagation();
-    const move = direction === 'L' ? 100 : -100;
-    const newTransform = Math.min(transformMax, transform + move);
-    setTransform(alignInRange(newTransform));
   };
 
   const onClose = (e: React.MouseEvent, key: string) => {
@@ -71,31 +76,14 @@ function TabBar(props: {
     onRemove(key);
   };
 
-  const leftBtn = () => {
-    if (transform >= 0) return null;
-
-    return (
-      <Flex className={style.leftBtn} align="center" onClick={e => onMove(e, 'L')}>
-        <LeftOutlined />
-      </Flex>
-    );
-  };
-
-  const rightBtn = () => {
-    if (transform <= -tabListWidth + wrapperWidth) return null;
-
-    return (
-      <Flex className={style.rightBtn} align="center" justify="right" onClick={e => onMove(e, 'R')}>
-        <RightOutlined />
-      </Flex>
-    );
-  };
-
   const tabNodes = tabbar.map(item => (
     <div
       key={item.key}
       aria-selected={selected === item.key}
-      className={cx({ [style.selected]: selected === item.key })}
+      className={cx({
+        [style.selected]: selected === item.key,
+        [style.tabNode]: selected !== item.key,
+      })}
       onClick={() => onSelect(item.key)}
     >
       <Flex className={cx('tab', style.tab)} align="center">
@@ -110,7 +98,15 @@ function TabBar(props: {
   return (
     <ResizeObserver onResize={onWrapResize}>
       <div className={style.wrap} ref={containerRef}>
-        {leftBtn()}
+        <Flex
+          className={style.leftBtn}
+          align="center"
+          ref={leftBtnRef}
+          style={{ display: transform >= 0 ? 'none' : 'flex' }}
+        >
+          <LeftOutlined />
+        </Flex>
+
         <ResizeObserver onResize={onListResize}>
           <Flex
             className={style.list}
@@ -125,7 +121,16 @@ function TabBar(props: {
             {tabNodes}
           </Flex>
         </ResizeObserver>
-        {rightBtn()}
+
+        <Flex
+          className={style.rightBtn}
+          align="center"
+          justify="right"
+          ref={rightBtnRef}
+          style={{ display: transform <= -tabListWidth + wrapperWidth ? 'none' : 'flex' }}
+        >
+          <RightOutlined />
+        </Flex>
       </div>
     </ResizeObserver>
   );

@@ -48,10 +48,44 @@ const styles = (token: GlobalToken, prefixCls: string, tokenExt: Partial<ThemeCo
   .${prefixCls}-layout-sider {
     background: radial-gradient(circle at 0% 0%, #e5e5ff, rgb(229, 229, 255, 0) 30%),
       radial-gradient(circle at 0% 100%, #dbdeff, #daefff, rgb(218, 239, 255, 0) 60%) #eef4ff;
+
+    &.${prefixCls}-zeus-sider {
+      .${prefixCls}-menu-submenu-popup {
+        top: ${logoBoxHeight}px !important;
+        height: calc(100% - ${logoBoxHeight}px);
+
+        .${prefixCls}-menu {
+          max-width: 100%;
+          height: 100%;
+          background: rgba(255, 255, 255, 0.3);
+          backdrop-filter: blur(20px);
+        }
+      }
+    }
   }
 
   .${prefixCls}-menu-light {
     background: transparent;
+  }
+
+  // 收起后的样式
+  .${prefixCls}-menu-inline-collapsed {
+    .${prefixCls}-menu-item {
+      height: 44px !important;
+      padding-inline: unset;
+    }
+    .${prefixCls}-menu-submenu {
+      .${prefixCls}-menu-submenu-title {
+        height: 44px !important;
+        padding-inline: unset !important;
+      }
+    }
+
+    .${prefixCls}-menu-submenu-selected, .${prefixCls}-menu-item-selected {
+      .${prefixCls}-collapsed-menu-item {
+        background-color: #fff;
+      }
+    }
   }
 
   .${prefixCls}-layout-sider-trigger {
@@ -81,6 +115,7 @@ const styles = (token: GlobalToken, prefixCls: string, tokenExt: Partial<ThemeCo
         }
 
         > .${prefixCls}-menu-item {
+          font-size: 14px;
           &::after {
             inset-inline: 24px;
           }
@@ -99,6 +134,10 @@ const styles = (token: GlobalToken, prefixCls: string, tokenExt: Partial<ThemeCo
       &:not(:first-child) {
         margin-top: 4px;
       }
+    }
+
+    .${prefixCls}-menu-item-icon {
+      color: #9aa0a8;
     }
 
     & > .${prefixCls}-menu-submenu {
@@ -129,10 +168,13 @@ const styles = (token: GlobalToken, prefixCls: string, tokenExt: Partial<ThemeCo
       .${prefixCls}-menu-sub {
         .${prefixCls}-menu-item {
           height: 28px;
-          padding-left: 22px !important;
+          padding-left: 26px !important;
         }
         .${prefixCls}-menu-item-selected {
           font-weight: bold;
+        }
+        .${prefixCls}-menu-item-active:not(.${prefixCls}-menu-item-selected) {
+          color: inherit;
         }
       }
     }
@@ -144,6 +186,11 @@ const styles = (token: GlobalToken, prefixCls: string, tokenExt: Partial<ThemeCo
       &.${prefixCls}-menu-item-selected {
         color: #016eff;
         font-weight: bold;
+      }
+    }
+    &.${prefixCls}-menu-inline {
+      .${prefixCls}-menu-submenu-title, .${prefixCls}-menu-item {
+        margin-block: 0 !important;
       }
     }
   }

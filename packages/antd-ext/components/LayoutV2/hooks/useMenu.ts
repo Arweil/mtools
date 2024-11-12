@@ -1,5 +1,8 @@
-import type { ItemType, MenuDividerType, MenuItemType } from 'antd/es/menu/interface';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import useDebounceFn from '@m-tools/antd-ext/utils/useDebounceFn';
+import { Typography } from 'antd';
+import type { ItemType, MenuDividerType, MenuItemType, SubMenuType } from 'antd/es/menu/interface';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import CollapsedMenuItem from '../components/CollapsedMenuItem';
 import type { IBaseMenuInfo, LayoutProps, MenuType, SelectInfo, Tabbar } from '../types';
 import useLatest from './useLatest';
 import useMergeState from './useMergeState';
@@ -43,12 +46,16 @@ function findMenuInfo(key: string, menu?: MenuType) {
   return undefined;
 }
 
+function isMenu(menu: ItemType): menu is MenuItemType | SubMenuType {
+  return 'key' in menu && 'label' in menu;
+}
+
 /**
  * 菜单操作hook
  * @param menu
  * @returns
  */
-function useMenu(data: LayoutProps & { firstLevelTabbar?: boolean }, collapsed: boolean) {
+function useMenu(data: LayoutProps, collapsed: boolean) {
   const {
     menu: originMenu,
     defaultActiveMenu,
@@ -63,11 +70,11 @@ function useMenu(data: LayoutProps & { firstLevelTabbar?: boolean }, collapsed: 
     tabs,
     history,
     needMenuGroup = true, // 一级菜单是否使用分组
-    firstLevelTabbar = false, // 是否使用一级菜单作为tabbar
+    haveNavbar, // 是否有导航栏
   } = data;
 
   // 预加工菜单，主要为了兼容老版本layout数据类型
-  const preprocessMenu = useMemo(() => {
+  const preprocessMenu = useMemo((): MenuType => {
     function recursive(menu?: MenuType | IBaseMenuInfo[]) {
       if (!menu || menu?.length === 0) return undefined;
       return menu.map(item => {
@@ -108,7 +115,7 @@ function useMenu(data: LayoutProps & { firstLevelTabbar?: boolean }, collapsed: 
   const selectLogicRunning = useRef(false);
 
   // 侧边菜单/tabbar选择回调
-  const onSelectMemo = useLatest(onSelect);
+  const onSelectMemo = useDebounceFn(onSelect, 500);
   // tabbar点击回调
   const onTabClickMeno = useLatest(onTabClick);
   // tabbar移除回调
@@ -203,9 +210,13 @@ function useMenu(data: LayoutProps & { firstLevelTabbar?: boolean }, collapsed: 
     if (!selected) return;
     // 如果找不到默认打开第一个
     const navKey = (findKeyPath(selected, preprocessMenu)?.[0] ?? preprocessMenu[0]?.key) as string;
-    const newMenu = firstLevelTabbar
-      ? getMenu(preprocessMenu, navKey)
-      : preprocessMenu.map(itm => ({ ...itm, type: needMenuGroup ? 'group' : 'item' }));
+    // 是否需要一级导航
+    let newMenu = haveNavbar ? getMenu(preprocessMenu, navKey) : preprocessMenu;
+    // 左侧菜单分组
+    newMenu = newMenu?.map(itm => ({
+      ...itm,
+      type: needMenuGroup ? 'group' : 'item',
+    })) as MenuType;
     // 选中项和当前选中项一致则不处理
     if (navKey !== selectedNav[0]) {
       setSelectedNav([navKey]);
@@ -215,14 +226,15 @@ function useMenu(data: LayoutProps & { firstLevelTabbar?: boolean }, collapsed: 
     return newMenu;
   });
 
-  // 导航栏选中
-  const onSelectedNav = useCallback(
-    (info: SelectInfo) => {
-      const { key } = info;
-      onNavChangeMemo(key);
-    },
-    [onNavChangeMemo],
-  );
+  // 查找第一个叶子菜单
+  const findLeafMenu = useLatest((subMenu: MenuType) => {
+    if (!subMenu?.length) return undefined;
+    const first = subMenu[0];
+    if ('children' in first) {
+      return findLeafMenu(first.children as MenuType);
+    }
+    return first;
+  });
 
   // tabbar变化回调
   const onTabbarChangeMemo = useLatest((info?: string | { key?: string; label: string }) => {
@@ -346,21 +358,43 @@ function useMenu(data: LayoutProps & { firstLevelTabbar?: boolean }, collapsed: 
   );
 
   // 移除tabbar
-  const removeTab = useLatest((key: string) => {
-    onTabRemoveMeno?.(key);
-    setTabbar(prev => {
-      // 关闭的是选中的tab需要切换到下一个tab
-      if (selectedTabbar === key) {
-        const index = prev.findIndex(({ key: k }) => k === key);
-        const newSelectedTabbar = prev[index - 1]?.key ?? prev[index + 1]?.key;
-        setSelectedTabbar(newSelectedTabbar);
-        // 如果切换了新的tab需要通知应用
-        onSelectMemo?.({ key: newSelectedTabbar });
-      }
-      return prev.filter(({ key: k }) => k !== key);
-    });
+  const removeTab = useLatest((key?: string) => {
+    if (key) {
+      onTabRemoveMeno?.(key);
+      setTabbar(prev => {
+        // 关闭的是选中的tab需要切换到下一个tab
+        if (selectedTabbar === key) {
+          const index = prev.findIndex(({ key: k }) => k === key);
+          const newSelectedTabbar = prev[index - 1]?.key ?? prev[index + 1]?.key;
+          setSelectedTabbar(newSelectedTabbar);
+          activeMenu(newSelectedTabbar);
+          // 如果切换了新的tab需要通知应用
+          onSelectMemo?.({ key: newSelectedTabbar });
+        }
+        return prev.filter(({ key: k }) => k !== key);
+      });
+    } else {
+      // 不传默认移除全部
+      setTabbar([]);
+    }
   });
   // ==================================== end 对应用暴露的api===========================================
+
+  // 导航栏选中
+  const onSelectedNav = useCallback(
+    (info: SelectInfo) => {
+      const { key } = info;
+      const newMenu = onNavChangeMemo(key);
+      // 默认打开第一个
+      const first = findLeafMenu(newMenu);
+      if (first) {
+        activeMenu(first.key);
+        addTab(first.key);
+        onSelectMemo?.({ key: first.key });
+      }
+    },
+    [onNavChangeMemo, findLeafMenu, activeMenu, addTab, onSelectMemo],
+  );
 
   // 初始化
   useEffect(() => {
@@ -393,12 +427,42 @@ function useMenu(data: LayoutProps & { firstLevelTabbar?: boolean }, collapsed: 
     };
   }, [activeMenu, addTab]);
 
+  // 侧边栏的label处理，根据是否收起显示不同的label
+  const menuByCollapsed = useMemo(
+    () =>
+      menu?.map(item => {
+        if (isMenu(item)) {
+          const { icon, label, ...rest } = item;
+          if (collapsed) {
+            return {
+              ...rest,
+              label: React.createElement(CollapsedMenuItem, { icon, label }),
+            };
+          }
+          return {
+            ...item,
+            label: React.createElement(
+              Typography.Text,
+              {
+                ellipsis: { tooltip: { placement: 'right' } },
+                style: { display: 'block', width: '100%', fontSize: 'inherit', color: 'inherit' },
+              },
+              label,
+            ),
+          };
+        }
+        return item;
+      }),
+    [menu, collapsed],
+  );
+
   return {
     navbar,
     selectedNav,
     onSelectedNav,
     activeNav,
     menu,
+    menuByCollapsed,
     openKeys,
     selectedMenu,
     onSelectedMenu,
