@@ -1,7 +1,7 @@
-import useDebounceFn from '@m-tools/antd-ext/utils/useDebounceFn';
 import { Typography } from 'antd';
 import type { ItemType, MenuDividerType, MenuItemType, SubMenuType } from 'antd/es/menu/interface';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import useDebounceFn from '../../utils/useDebounceFn';
 import CollapsedMenuItem from '../components/CollapsedMenuItem';
 import type { IBaseMenuInfo, LayoutProps, MenuType, SelectInfo, Tabbar } from '../types';
 import useLatest from './useLatest';
