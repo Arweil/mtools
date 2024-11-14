@@ -179,8 +179,7 @@ export default function Index() {
           collapsed ? <span style={{ color: '#fff' }}>Zues</span> : <img src={logo} />
         }
         menu={menuData}
-        headerExtra={<div style={{ color: '#fff', padding: '0 10px' }}>开发人员</div>}
-        defaultActiveMenu="/first-level02/second-level02/third-level01"
+        headerExtra={<div style={{ color: '#fff' }}>开发人员</div>}
         onSelect={() => console.log('onSelect========================')}
       >
         <Page />

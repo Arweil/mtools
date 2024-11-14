@@ -23,7 +23,6 @@ toc: menu
 | className | 容器className | string | - |
 | collapsible | 侧边栏是否可收起 | boolean | false |
 | collapsedWidth | 侧边栏收缩宽度 | number | 62 |
-| defaultActiveMenu | 默认激活的菜单key | string | - |
 | headerExtra | 顶部header右侧拓展内容 | React.ReactNode | - |
 | headerContent | 自定义tabbar区域内容，不传展示默认tabbar | ReactNode | - |
 | setTitle | 侧边栏上方logo设置 | (data: { collapsed: boolean }) => ReactNode | - |
