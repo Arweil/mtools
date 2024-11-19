@@ -58,7 +58,6 @@ function isMenu(menu: ItemType): menu is MenuItemType | SubMenuType {
 function useMenu(data: LayoutProps, collapsed: boolean) {
   const {
     menu: originMenu,
-    defaultActiveMenu,
     openKeys: originOpenKeys,
     onSelect,
     onTabClick,
@@ -125,7 +124,7 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
 
   // 找到最相近的上下级关系菜单
   const findClosestMenu = useLatest((path: string, subMenu?: MenuType): MenuType[number] => {
-    const curPathSegments = path.split('/').slice(1);
+    const curPathSegments = path?.split('/').slice(1);
     let closestMenu = undefined;
     let maxMatchingSegments = 0;
 
@@ -376,6 +375,7 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
     } else {
       // 不传默认移除全部
       setTabbar([]);
+      setSelectedTabbar('');
     }
   });
   // ==================================== end 对应用暴露的api===========================================
@@ -404,11 +404,11 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
       setNavbar(newNavbar);
       // 菜单、tab激活
       const { pathname, search } = location;
-      const activeKey = defaultActiveMenu ?? `${pathname}${search}`;
+      const activeKey = `${pathname}${search}`;
       activeMenu(activeKey);
       addTab(activeKey);
     }
-  }, [activeMenu, addTab, preprocessMenu, defaultActiveMenu]);
+  }, [activeMenu, addTab, preprocessMenu]);
 
   // 监听地址变化激活菜单及tabbar
   useEffect(() => {
@@ -445,7 +445,13 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
               Typography.Text,
               {
                 ellipsis: { tooltip: { placement: 'right' } },
-                style: { display: 'block', width: '100%', fontSize: 'inherit', color: 'inherit' },
+                style: {
+                  display: 'block',
+                  width: '100%',
+                  fontSize: 'inherit',
+                  color: 'inherit',
+                  lineHeight: 'inherit',
+                },
               },
               label,
             ),

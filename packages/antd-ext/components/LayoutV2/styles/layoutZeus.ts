@@ -127,6 +127,13 @@ const styles = (token: GlobalToken, prefixCls: string, tokenExt: Partial<ThemeCo
   .${prefixCls}-second-menu {
     user-select: none;
 
+    .${prefixCls}-menu-item:not(&.${prefixCls}-menu-item-selected),
+    .${prefixCls}-menu-submenu {
+      .${prefixCls}-menu-item-icon {
+        color: #9aa0a8;
+      }
+    }
+
     & > .${prefixCls}-menu-item {
       height: 32px;
       line-height: 32px;
@@ -134,10 +141,6 @@ const styles = (token: GlobalToken, prefixCls: string, tokenExt: Partial<ThemeCo
       &:not(:first-child) {
         margin-top: 4px;
       }
-    }
-
-    .${prefixCls}-menu-item-icon {
-      color: #9aa0a8;
     }
 
     & > .${prefixCls}-menu-submenu {

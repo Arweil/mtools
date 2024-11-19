@@ -4,7 +4,7 @@ export interface LayoutContextProps {
   activeNav: (key: string) => void;
   activeMenu: (key: string) => void;
   addTab: (info: string | { key?: string; label: string }) => void;
-  removeTab: (key: string) => void;
+  removeTab: (key?: string) => void;
   setOpenKey: (key: string) => void;
 }
 
