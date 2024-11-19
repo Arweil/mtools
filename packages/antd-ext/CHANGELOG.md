@@ -1,3 +1,6 @@
+## 1.3.3
+1. 修正了 LayoutExt 组件 removeKey 没有清空所选 key 的 bug
+
 ## 1.3.2
 1. 优化了 LayoutExt 组件的 zeus 主题样式，以及 navbar 的滚动交互
 
