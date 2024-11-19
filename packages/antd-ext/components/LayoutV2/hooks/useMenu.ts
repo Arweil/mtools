@@ -375,6 +375,7 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
     } else {
       // 不传默认移除全部
       setTabbar([]);
+      setSelectedTabbar('');
     }
   });
   // ==================================== end 对应用暴露的api===========================================
