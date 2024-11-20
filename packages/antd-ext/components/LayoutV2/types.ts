@@ -28,10 +28,11 @@ export interface LayoutProps {
   hasNavbar?: boolean;
   headerExtra?: React.ReactNode;
   headerContent?: React.ReactNode | false;
-  /**
-   * @deprecated 不建议通过传入history来控制路由，建议通过onSelect回调在应用内处理路由逻辑
-   */
-  history?: { push: (url: string) => void; [key: string]: any };
+  history?: {
+    push: (url: string) => void;
+    listen: (cb: (location: any, action: string) => void) => () => void;
+    [key: string]: any;
+  };
   menu?: MenuType;
   onCollapse?: (
     collapsed: boolean,

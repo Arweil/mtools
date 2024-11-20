@@ -112,6 +112,7 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
   });
   // 选择逻辑是否在执行中，通常用于防止重复触发
   const selectLogicRunning = useRef(false);
+  const historyRef = useRef(history);
 
   // 侧边菜单/tabbar选择回调
   const onSelectMemo = useDebounceFn(onSelect, 500);
@@ -284,8 +285,8 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
     // 旧版本layout的onSelect回调兼容
     setSelectedKeys?.([key]);
     // 旧版本layout的跳转逻辑兼容
-    if (history) {
-      history.push(key);
+    if (historyRef.current) {
+      historyRef.current.push(key);
     }
     selectLogicRunning.current = false;
   });
@@ -420,12 +421,20 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
       addTab(key);
       activeMenu(key);
     };
-    window.addEventListener('popstate', callback);
+
+    const innerHistory = historyRef.current;
+
+    // 优先使用react-router的history监听
+    if (innerHistory) {
+      innerHistory.listen(callback);
+    } else {
+      window.addEventListener('popstate', callback);
+    }
 
     return () => {
-      window.removeEventListener('popstate', callback);
+      if (!innerHistory) window.removeEventListener('popstate', callback);
     };
-  }, [activeMenu, addTab]);
+  }, [historyRef, activeMenu, addTab]);
 
   // 侧边栏的label处理，根据是否收起显示不同的label
   const menuByCollapsed = useMemo(
