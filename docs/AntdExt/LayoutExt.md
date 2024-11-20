@@ -25,6 +25,7 @@ toc: menu
 | collapsedWidth | 侧边栏收缩宽度 | number | 62 |
 | headerExtra | 顶部header右侧拓展内容 | React.ReactNode | - |
 | headerContent | 自定义tabbar区域内容，不传展示默认tabbar | ReactNode | - |
+| history | react-router的history对象(用于layout内部监听路由变化做菜单定位) | History | - |
 | setTitle | 侧边栏上方logo设置 | (data: { collapsed: boolean }) => ReactNode | - |
 | menu | 菜单，同antd Menu组件的items<br>key通常存储url | [ItemType[]][1] | - |
 | onCollapse | 点击trigger的回调 | (collapsed: boolean; info: { type: CollapseType, siderWidth: number, collapsedWidth: number }) => void | - |
