@@ -92,6 +92,7 @@ export default function Index() {
           location: {
             pathname: '/first-level01/second-level01/third-level01',
           },
+          listen: callback => {},
           push: url => {
             window.history.pushState(undefined, '', url);
           },

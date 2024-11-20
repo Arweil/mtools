@@ -59,7 +59,7 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
   const {
     menu: originMenu,
     openKeys: originOpenKeys,
-    onSelect,
+    onSelect = () => undefined,
     onTabClick,
     onTabRemove,
     selectedKeys,
@@ -423,16 +423,21 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
     };
 
     const innerHistory = historyRef.current;
+    let unlisten = null;
 
     // 优先使用react-router的history监听
     if (innerHistory) {
-      innerHistory.listen(callback);
+      unlisten = innerHistory.listen(callback);
     } else {
       window.addEventListener('popstate', callback);
     }
 
     return () => {
-      if (!innerHistory) window.removeEventListener('popstate', callback);
+      if (innerHistory) {
+        unlisten();
+      } else {
+        window.removeEventListener('popstate', callback);
+      }
     };
   }, [historyRef, activeMenu, addTab]);
 

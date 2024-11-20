@@ -1,3 +1,7 @@
+## 1.3.4
+1. 新增了 LayoutExt 组件的路由变更监听处理（history.listen的处理）；
+2. 修正了 onSelect 为 undefined 时的兼容；
+
 ## 1.3.3
 1. 修正了 LayoutExt 组件 removeKey 没有清空所选 key 的 bug
 
