@@ -21,6 +21,7 @@ export interface IBaseMenuInfo {
 }
 
 export interface LayoutProps {
+  autoSelectFirstMenuOnNavbar?: boolean;
   children?: React.ReactNode;
   className?: string;
   collapsible?: boolean;

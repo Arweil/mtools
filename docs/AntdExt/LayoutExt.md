@@ -20,6 +20,7 @@ toc: menu
 布局容器。
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
+| autoSelectFirstMenuOnNavbar | 导航栏选中是否激活第一个子菜单 | boolean | false |
 | className | 容器className | string | - |
 | collapsible | 侧边栏是否可收起 | boolean | false |
 | collapsedWidth | 侧边栏收缩宽度 | number | 62 |
