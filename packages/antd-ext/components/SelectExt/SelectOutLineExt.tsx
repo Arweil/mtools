@@ -37,6 +37,8 @@ export interface SelectOutLineExtProps
 }
 
 export default function SelectOutLineExt(props: SelectOutLineExtProps) {
+  console.log(props, '11111');
+
   const { label, disabled, ...restProps } = props;
   const refSelectOutLine = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState<number>(refSelectOutLine.current?.offsetWidth);
@@ -45,11 +47,12 @@ export default function SelectOutLineExt(props: SelectOutLineExtProps) {
       setWidth(refSelectOutLine?.current?.offsetWidth || 0);
     }
   }, []);
+  console.log(refSelectOutLine?.current?.offsetWidth);
 
   return (
     <OutLineWrapper
       label={label}
-      injectStyle={style}
+      // injectStyle={style}
       ref={refSelectOutLine}
       disabled={disabled}
       isRequired={restProps['aria-required'] === 'true'}

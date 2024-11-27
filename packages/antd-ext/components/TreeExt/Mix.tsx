@@ -22,6 +22,9 @@ export default function Mixin(props: TreeExtMixinProps) {
       zeus: customStyleHermes,
     },
   });
+
+  console.log(classes, themeConfig);
+
   return (
     <ThemeWrapper theme={themeConfig} type={['Tree', 'Dropdown']}>
       <TreeExt className={classes} {...restProps} />

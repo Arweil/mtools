@@ -14,6 +14,8 @@ import {
   SelectExt,
   SelectOutLineExt,
   Space,
+  TreeSelectExt,
+  TreeSelectOutLineExt,
 } from '@m-tools/antd-ext';
 import type { FormLayout } from 'antd/es/form/Form';
 import React, { useMemo, useState } from 'react';
@@ -85,9 +87,9 @@ export default function App() {
           <Form.Item name={['form1', 'labelInsideValueA']} rules={[{ required: true }]}>
             <SelectOutLineExt label="文本" placeholder="请选择" />
           </Form.Item>
-          <Form.Item name={['form1', 'labelInsideValueA']} rules={[{ required: true }]}>
+          <Form.Item name={['form1', 'labelValueA']} rules={[{ required: false }]}>
             <CascaderOutLineExt
-              label="aaaa"
+              label="级联单选"
               options={[
                 {
                   value: 'zhejiang',
@@ -139,6 +141,126 @@ export default function App() {
                     {
                       value: '222',
                       label: '333',
+                    },
+                  ],
+                },
+              ]}
+              placeholder="请选择"
+              maxTagCount
+            />
+          </Form.Item>
+          <Form.Item name={['form1', 'labelInside']} rules={[{ required: false }]}>
+            <CascaderOutLineExt
+              multiple
+              label="级联多选"
+              options={[
+                {
+                  value: 'zhejiang',
+                  label: 'ZhejiangZhejiangZhejiangZhejiangZhejiangZhejiang',
+                  children: [
+                    {
+                      value: 'hangzhou',
+                      label: 'Hangzhou',
+                      disabled: true,
+                      children: [
+                        {
+                          value: 'xihu',
+                          label: 'West Lake',
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  value: 'jiangsu',
+                  label: 'Jiangsu',
+                  children: [
+                    {
+                      value: 'nanjing',
+                      label: 'Nanjing',
+                      children: [
+                        {
+                          value: 'zhonghuamen',
+                          label: 'Zhong Hua Men',
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  value: 'qqq',
+                  label: 'qqq',
+                  children: [
+                    {
+                      value: 'nanwwwjing',
+                      label: 'Nanjeeing',
+                    },
+                  ],
+                },
+                {
+                  value: 'rrr',
+                  label: 'tttt',
+                  children: [
+                    {
+                      value: '222',
+                      label: '333',
+                    },
+                  ],
+                },
+              ]}
+              placeholder="请选择"
+              maxTagCount
+            />
+          </Form.Item>
+          <Form.Item name={['form1', 'labelInsideA']} rules={[{ required: true }]}>
+            <TreeSelectOutLineExt
+              label="树选择"
+              treeCheckable
+              treeData={[
+                {
+                  value: 'parent 1',
+                  title: 'parent 1',
+                  children: [
+                    {
+                      value: 'parent 1-0',
+                      title: 'parent 1-0',
+                      children: [
+                        {
+                          value: 'leaf1',
+                          title: 'leaf1',
+                          disabled: true,
+                        },
+                        {
+                          value: 'leaf2',
+                          title: 'leaf2',
+                        },
+                        {
+                          value: 'leaf3',
+                          title: 'leaf3',
+                        },
+                        {
+                          value: 'leaf4',
+                          title: 'leaf4',
+                        },
+                        {
+                          value: 'leaf5',
+                          title: 'leaf5',
+                        },
+                        {
+                          value: 'leaf6',
+                          title: 'leaf6',
+                        },
+                      ],
+                    },
+                    {
+                      value: 'parent 1-1',
+                      title: 'parent 1-1',
+                      children: [
+                        {
+                          value: 'leaf11',
+                          title: <b style={{ color: '#08c' }}>leaf11</b>,
+                        },
+                      ],
                     },
                   ],
                 },
@@ -305,6 +427,64 @@ export default function App() {
                     {
                       value: '222',
                       label: '333',
+                    },
+                  ],
+                },
+              ]}
+              placeholder="请选择"
+            />
+          </Form.Item>
+          <Form.Item
+            label="树选择"
+            name={['form1', 'labelInsideValueAA']}
+            rules={[{ required: true }]}
+          >
+            <TreeSelectExt
+              treeCheckable
+              treeData={[
+                {
+                  value: 'parent 1',
+                  title: 'parent 1',
+                  children: [
+                    {
+                      value: 'parent 1-0',
+                      title: 'parent 1-0',
+                      children: [
+                        {
+                          value: 'leaf1',
+                          title: 'leaf1',
+                        },
+                        {
+                          value: 'leaf2',
+                          title: 'leaf2',
+                        },
+                        {
+                          value: 'leaf3',
+                          title: 'leaf3',
+                        },
+                        {
+                          value: 'leaf4',
+                          title: 'leaf4',
+                        },
+                        {
+                          value: 'leaf5',
+                          title: 'leaf5',
+                        },
+                        {
+                          value: 'leaf6',
+                          title: 'leaf6',
+                        },
+                      ],
+                    },
+                    {
+                      value: 'parent 1-1',
+                      title: 'parent 1-1',
+                      children: [
+                        {
+                          value: 'leaf11',
+                          title: <b style={{ color: '#08c' }}>leaf11</b>,
+                        },
+                      ],
                     },
                   ],
                 },

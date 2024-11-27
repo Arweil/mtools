@@ -63,6 +63,10 @@ export function createHermesTheme(theme: ThemeColor) {
       colorBgContainerDisabled: colorGreyL3,
 
       colorBorder: colorGreyL1,
+
+      colorTextDescription: colorGreyL4,
+      colorTextLabel: colorBlackL2,
+      colorArrow: colorBlackL3,
     },
     components: {
       Button: {
@@ -87,8 +91,16 @@ export function createHermesTheme(theme: ThemeColor) {
       Cascader: {
         controlItemBgHover: colorGreyL4,
         controlItemBgActive: colorGreyL4,
+        optionSelectedBg: colorGreyL4,
         borderRadiusLG: 2,
         borderRadiusSM: 2,
+      },
+      TreeSelect: {
+        nodeHoverBg: colorGreyL4,
+        nodeSelectedBg: colorGreyL4,
+        colorTextDisabled: colorGreyL1,
+        titleHeight: 30,
+        borderRadius: 2,
       },
       Table: {
         borderRadiusLG: 0,

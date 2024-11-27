@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
 import type { Theme } from '@m-tools/antd-ext';
 import {
-  FormItemExt,
-  BaseCascaderExt,
-  Form,
-  InputExt,
-  ProInputNumber,
-  DatePickerExt,
-  SelectExt,
   Button,
-  Col,
-  Row,
-  Switch,
-  TreeSelect,
   Checkbox,
+  Col,
+  ConfigProviderExt,
+  DatePickerExt,
+  // BaseCascaderExt,
+  Form,
+  FormItemExt,
+  InputExt,
+  locale,
+  ProInputNumber,
   Radio,
   RangeNumberExt,
-  locale,
-  ConfigProviderExt,
+  Row,
+  SelectExt,
+  Switch,
+  TreeSelect,
 } from '@m-tools/antd-ext';
+import React, { useState } from 'react';
 import { treeSelectOptions } from '../constants';
 
 export default function () {
@@ -37,13 +37,13 @@ export default function () {
           </FormItemExt>
         </div>
         <Form form={form}>
-          <FormItemExt
+          {/* <FormItemExt
             name="dir"
             label="BaseCascaderExt"
             rules={[{ required: true, message: '请选择地名' }]}
           >
             <BaseCascaderExt options={options} multiple />
-          </FormItemExt>
+          </FormItemExt> */}
           <FormItemExt name="InputExt" label="InputExt" rules={[{ required: true }]}>
             <InputExt placeholder="请输入..." />
           </FormItemExt>

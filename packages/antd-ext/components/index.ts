@@ -1,7 +1,10 @@
 import en_US from 'antd/es/locale/en_US';
 import zh_CN from 'antd/es/locale/zh_CN';
 import ButtonExt, { BaseButtonExt } from './ButtonExt';
-import { BaseCascaderExt } from './CascaderExt';
+import {
+  MixinCascaderExt as CascaderExt,
+  MixinCascaderOutLineExt as CascaderOutLineExt,
+} from './CascaderExt';
 import ConfigProviderExt from './ConfigProviderExt';
 import type { Theme } from './ConfigProviderExt/context';
 import DatePickerExt, {
@@ -27,16 +30,16 @@ import {
   MixinRangeNumberOutLineExt as RangeNumberOutLineExt,
 } from './RangeNumberExt';
 import {
-  MixinCascaderExt as CascaderExt,
-  MixinCascaderOutLineExt as CascaderOutLineExt,
-} from './SelCascader';
-import {
   BaseSelectExt,
   MixinSelectExt as SelectExt,
   MixinSelectOutLineExt as SelectOutLineExt,
 } from './SelectExt';
 import TableExt, { BaseTableExt } from './TableExt';
 import { BaseTreeExt, default as TreeExt } from './TreeExt';
+import {
+  MixinTreeSelectExt as TreeSelectExt,
+  MixinTreeSelectOutLineExt as TreeSelectOutLineExt,
+} from './TreeSelectExt';
 import UploadExt, { BaseUploadExt } from './UploadExt';
 
 export * from 'antd';
@@ -49,7 +52,6 @@ export {
   BaseDrawerExt,
   BaseRangeNumberExt,
   BaseLayoutExt,
-  BaseCascaderExt,
   ButtonExt,
   BaseUploadExt,
   ConfigProviderExt,
@@ -75,6 +77,8 @@ export {
   UploadExt,
   CascaderExt,
   CascaderOutLineExt,
+  TreeSelectExt,
+  TreeSelectOutLineExt,
   ModalExt,
   Theme,
   notificationExt,

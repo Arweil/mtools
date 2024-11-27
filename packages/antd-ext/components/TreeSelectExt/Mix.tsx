@@ -5,12 +5,12 @@ import type { Theme } from '../ConfigProviderExt/context';
 import ThemeWrapper from '../theme/ThemeWrapper';
 import useMapTheme from '../utils/useMapTheme';
 import useTokenExt from '../utils/useTokenExt';
-import type { SelectExtProps } from './SelectExt';
-import SelectExt from './SelectExt';
-import type { SelectOutLineExtProps } from './SelectOutLineExt';
-import SelectOutLineExt from './SelectOutLineExt';
+import type { TreeSelectExtProps } from './TreeSelectExt';
+import TreeSelectExt from './TreeSelectExt';
+import type { TreeSelectOutLineExtProps } from './TreeSelectOutLineExt';
+import TreeSelectOutLineExt from './TreeSelectOutLineExt';
 
-export function useSelectTooltipStyle(data: { theme?: Theme; tooltip?: TooltipProps }) {
+export function useTreeSelectTooltipStyle(data: { theme?: Theme; tooltip?: TooltipProps }) {
   const { theme, tooltip } = data;
   const tokenExt = useTokenExt(theme);
 
@@ -20,13 +20,13 @@ export function useSelectTooltipStyle(data: { theme?: Theme; tooltip?: TooltipPr
       ({
         hermes: {
           color: tokenExt.colorWhite,
-          overlayStyle: { maxWidth: 280 },
+          overlayStyle: { maxWidth: 240 },
           overlayInnerStyle: { color: tokenExt.colorBlackL1 },
           ...tooltip,
         },
         zeus: {
           color: tokenExt.colorWhite,
-          overlayStyle: { maxWidth: 280 },
+          overlayStyle: { maxWidth: 240 },
           overlayInnerStyle: { color: tokenExt.colorBlackL1 },
           ...tooltip,
         },
@@ -38,7 +38,38 @@ export function useSelectTooltipStyle(data: { theme?: Theme; tooltip?: TooltipPr
   return tooltipStyle;
 }
 
-export function useSelectExtPopupStyle(data: {
+export function useTreeSelectItemStyle(data: { theme?: Theme; tooltip?: TooltipProps }) {
+  const { theme, tooltip } = data;
+  const tokenExt = useTokenExt(theme);
+
+  // tooltip 默认样式
+  const tooltipStyle = useMemo(
+    () =>
+      ({
+        hermes: {
+          dropdownMenuColumnStyle: { padding: '5px 8px' },
+          ...tooltip,
+        },
+        zeus: {
+          dropdownMenuColumnStyle: { padding: '5px 8px' },
+        },
+        default: {},
+      }[theme]),
+    [theme, tooltip, tokenExt],
+  );
+
+  return tooltipStyle;
+}
+
+export function useTreeSelectRenderStyle(option) {
+  return (
+    <div style={{ color: 'blue' }}>
+      {option.label} {option.value === 'hangzhou' && <span>(推荐)</span>}
+    </div>
+  );
+}
+
+export function useTreeSelectExtPopupStyle(data: {
   token: GlobalToken;
   prefix: string;
   popupClassName?: string;
@@ -64,11 +95,11 @@ export function useSelectExtPopupStyle(data: {
   return popupStyle;
 }
 
-export interface SelectExtMixinProps extends SelectExtProps {
+export interface TreeSelectExtMixinProps extends TreeSelectExtProps {
   theme?: Theme;
 }
 
-export function MixinSelectExt(props: SelectExtMixinProps) {
+export function MixinTreeSelectExt(props: TreeSelectExtMixinProps) {
   const { className, theme, tooltip, popupClassName, ...restProps } = props;
   const {
     classes,
@@ -82,12 +113,20 @@ export function MixinSelectExt(props: SelectExtMixinProps) {
     emotioncss: {},
   });
 
-  const tooltipStyle = useSelectTooltipStyle({
+  const tokenExt = useTokenExt(theme);
+
+  const tooltipStyle = useTreeSelectTooltipStyle({
+    // 提示样式
     theme: customTheme,
     tooltip,
   });
 
-  const popupStyle = useSelectExtPopupStyle({
+  const itemStyle = useTreeSelectItemStyle({
+    // 提示样式
+    theme: customTheme,
+  });
+
+  const popupStyle = useTreeSelectExtPopupStyle({
     token,
     prefix,
     popupClassName,
@@ -95,28 +134,30 @@ export function MixinSelectExt(props: SelectExtMixinProps) {
   });
 
   return (
-    <ThemeWrapper theme={themeConfig} type="Select">
-      <SelectExt
+    <ThemeWrapper theme={themeConfig} type="TreeSelect">
+      <TreeSelectExt
+        tokenExt={tokenExt}
         tooltip={tooltipStyle}
+        itemStyle={itemStyle}
+        customTheme={customTheme}
         {...restProps}
         popupClassName={popupStyle}
         className={classes}
-        multipleCheckbox={customTheme === 'hermes'}
       />
     </ThemeWrapper>
   );
 }
 
-export interface MixinSelectOutLineExtProps extends SelectOutLineExtProps {
+export interface MixinTreeSelectOutLineExtProps extends TreeSelectOutLineExtProps {
   theme?: Theme;
 }
 
-export function MixinSelectOutLineExt(props: MixinSelectOutLineExtProps) {
+export function MixinTreeSelectOutLineExt(props: MixinTreeSelectOutLineExtProps) {
   const { className, theme, tooltip, popupClassName, ...restProps } = props;
   const {
-    classes,
-    theme: customTheme,
-    themeConfig,
+    classes, // 类名
+    theme: customTheme, // 主题
+    themeConfig, // 主题
     token,
     prefix,
   } = useMapTheme({
@@ -127,28 +168,31 @@ export function MixinSelectOutLineExt(props: MixinSelectOutLineExtProps) {
     },
   });
 
-  const tooltipStyle = useSelectTooltipStyle({
+  const tokenExt = useTokenExt(theme);
+
+  const tooltipStyle = useTreeSelectTooltipStyle({
+    // 提示样式
     theme: customTheme,
     tooltip,
   });
 
-  const popupStyle = useSelectExtPopupStyle({
+  const popupStyle = useTreeSelectExtPopupStyle({
+    // 弹出阿框样式
     token,
     prefix,
     popupClassName,
     theme: customTheme,
   });
 
-  console.log(customTheme, themeConfig);
-
   return (
-    <ThemeWrapper theme={themeConfig} type="Select">
-      <SelectOutLineExt
+    <ThemeWrapper theme={themeConfig} type="TreeSelect">
+      <TreeSelectOutLineExt
+        tokenExt={tokenExt}
+        customTheme={customTheme}
         tooltip={tooltipStyle}
         {...restProps}
         popupClassName={popupStyle}
         className={classes}
-        multipleCheckbox={customTheme === 'hermes'}
       />
     </ThemeWrapper>
   );

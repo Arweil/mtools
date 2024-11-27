@@ -1,3 +1,4 @@
-import BaseCascaderExt from './CascaderExt';
+import { MixinCascaderExt, MixinCascaderOutLineExt } from './Mix';
+// import BaseSelectExt from './SelectExt';
 
-export { BaseCascaderExt };
+export { MixinCascaderExt, MixinCascaderOutLineExt };

@@ -7,11 +7,13 @@ import useMapTheme from '../utils/useMapTheme';
 import useTokenExt from '../utils/useTokenExt';
 import type { CascaderExtProps } from './CascaderExt';
 import CascaderExt from './CascaderExt';
+import type { CascaderOutLineExtProps } from './CascaderOutLineExt';
 import CascaderOutLineExt from './CascaderOutLineExt';
 
 export function useCascaderTooltipStyle(data: { theme?: Theme; tooltip?: TooltipProps }) {
   const { theme, tooltip } = data;
   const tokenExt = useTokenExt(theme);
+  // console.log(theme, tokenExt);
 
   // tooltip 默认样式
   const tooltipStyle = useMemo(
@@ -132,6 +134,9 @@ export function MixinCascaderExt(props: CascaderExtMixinProps) {
     theme: customTheme,
   });
 
+  console.log(themeConfig);
+  console.log(classes);
+
   return (
     <ThemeWrapper theme={themeConfig} type="Cascader">
       <CascaderExt
@@ -146,10 +151,6 @@ export function MixinCascaderExt(props: CascaderExtMixinProps) {
   );
 }
 
-// export function MixinCascaderOutLineExt() {
-
-// }
-
 export interface MixinCascaderOutLineExtProps extends CascaderOutLineExtProps {
   theme?: Theme;
 }
@@ -157,9 +158,9 @@ export interface MixinCascaderOutLineExtProps extends CascaderOutLineExtProps {
 export function MixinCascaderOutLineExt(props: MixinCascaderOutLineExtProps) {
   const { className, theme, tooltip, popupClassName, ...restProps } = props;
   const {
-    classes, // 类名
-    theme: customTheme, // 主题
-    themeConfig, // 主题
+    classes,
+    theme: customTheme,
+    themeConfig,
     token,
     prefix,
   } = useMapTheme({

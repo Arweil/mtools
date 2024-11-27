@@ -1,9 +1,9 @@
-import React, { useCallback, useMemo } from 'react';
-import { Select, Typography, theme } from 'antd';
-import type { GlobalToken, SelectProps, TooltipProps } from 'antd';
 import { css } from '@emotion/css';
-import classNames from 'classnames';
+import type { GlobalToken, SelectProps, TooltipProps } from 'antd';
+import { Select, theme, Typography } from 'antd';
 import type { BaseOptionType, DefaultOptionType } from 'antd/es/select';
+import classNames from 'classnames';
+import React, { useCallback, useMemo } from 'react';
 import NotFoundContent from '../NotFoundContent';
 import { usePrefixCls } from '../utils';
 
@@ -243,6 +243,7 @@ export default function SelectExt<ValueType = any>(props: SelectExtProps) {
     () => (listHeight !== undefined ? listHeight : 220),
     [listHeight],
   );
+  console.log(popupClassName);
 
   return (
     <Select<ValueType, DefaultOptionExtType>
