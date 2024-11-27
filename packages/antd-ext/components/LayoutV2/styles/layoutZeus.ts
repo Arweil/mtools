@@ -127,6 +127,23 @@ const styles = (token: GlobalToken, prefixCls: string, tokenExt: Partial<ThemeCo
   .${prefixCls}-second-menu {
     user-select: none;
 
+    &.${prefixCls}-menu-inline {
+      .${prefixCls}-menu-item {
+        margin-block: 0;
+      }
+
+      & > li:not(:first-child) {
+        margin-top: 4px;
+        margin-block-end: 0;
+      }
+
+      & > .${prefixCls}-menu-submenu {
+        .${prefixCls}-menu-submenu-title {
+          margin-block: 0;
+        }
+      }
+    }
+
     .${prefixCls}-menu-item:not(&.${prefixCls}-menu-item-selected),
     .${prefixCls}-menu-submenu {
       .${prefixCls}-menu-item-icon {
@@ -137,10 +154,6 @@ const styles = (token: GlobalToken, prefixCls: string, tokenExt: Partial<ThemeCo
     & > .${prefixCls}-menu-item {
       height: 32px;
       line-height: 32px;
-
-      &:not(:first-child) {
-        margin-top: 4px;
-      }
     }
 
     & > .${prefixCls}-menu-submenu {
@@ -189,11 +202,6 @@ const styles = (token: GlobalToken, prefixCls: string, tokenExt: Partial<ThemeCo
       &.${prefixCls}-menu-item-selected {
         color: #016eff;
         font-weight: bold;
-      }
-    }
-    &.${prefixCls}-menu-inline {
-      .${prefixCls}-menu-submenu-title, .${prefixCls}-menu-item {
-        margin-block: 0 !important;
       }
     }
   }
