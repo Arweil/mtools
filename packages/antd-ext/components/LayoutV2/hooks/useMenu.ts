@@ -57,6 +57,7 @@ function isMenu(menu: ItemType): menu is MenuItemType | SubMenuType {
  */
 function useMenu(data: LayoutProps, collapsed: boolean) {
   const {
+    autoSelectFirstMenuOnNavbar,
     menu: originMenu,
     openKeys: originOpenKeys,
     onSelect = () => undefined,
@@ -386,15 +387,17 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
     (info: SelectInfo) => {
       const { key } = info;
       const newMenu = onNavChangeMemo(key);
-      // 默认打开第一个
-      const first = findLeafMenu(newMenu);
-      if (first) {
-        activeMenu(first.key);
-        addTab(first.key);
-        onSelectMemo?.({ key: first.key });
+      if (autoSelectFirstMenuOnNavbar) {
+        // 默认打开第一个
+        const first = findLeafMenu(newMenu);
+        if (first) {
+          activeMenu(first.key);
+          addTab(first.key);
+          onSelectMemo?.({ key: first.key });
+        }
       }
     },
-    [onNavChangeMemo, findLeafMenu, activeMenu, addTab, onSelectMemo],
+    [onNavChangeMemo, findLeafMenu, activeMenu, addTab, onSelectMemo, autoSelectFirstMenuOnNavbar],
   );
 
   // 初始化
