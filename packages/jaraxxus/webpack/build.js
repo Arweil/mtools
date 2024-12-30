@@ -23,4 +23,11 @@ webpack(webpackConfig, function (err, stats) {
   );
 
   console.log(chalk.cyan('  Build complete.\n'));
+
+  if (stats.hasErrors()) {
+    // 如果有错误，以非零状态码退出
+    process.exit(1);
+  }
+  // 正常退出
+  process.exit(0);
 });

@@ -17,17 +17,22 @@ module.exports = {
   bundleAnalyzerReport: false,
   babelExtends: 'babel.config.js', // 可以指定babel文件，默认为babel.config.js
   devServer: {
-    publicPath: '/',
     port: 9999,
-    clientLogLevel: 'info',
     historyApiFallback: true,
     compress: true,
-    hot: true, // 修改css不会reload，而修改js会reload页面
+    hot: true,
     open: true,
-    overlay: { warnings: false, errors: true },
-    contentBase: undefined,
-    quiet: false,
-    logLevel: 'error', // webpack-dev-server ~> webpack-log 中配置的level选项
+    static: {
+      directory: undefined,
+      publicPath: '/'
+    },
+    client: {
+      overlay: {
+        errors: true,
+        warnings: false
+      },
+      logging: 'info'
+    }
   },
   css: {
     extract: true,

@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const ora = require('ora');
 const chalk = require('chalk');
 const webpackDevServer = require('webpack-dev-server');
@@ -18,6 +18,7 @@ const devConf = merge(baseConf, {
   // 会将 process.env.NODE_ENV 的值设为 development
   // 启用 NamedChunksPlugin 和 NamedModulesPlugin
   mode: 'development',
+  stats: 'errors-only',
   entry: utils.entryHandler([
     config.needPolyfill ? require.resolve('core-js/stable') : undefined,
     config.needPolyfill ? require.resolve('regenerator-runtime/runtime') : undefined,
@@ -30,13 +31,29 @@ const devConf = merge(baseConf, {
     filename: utils.assetsPath('js/[name].js'),
     chunkFilename: utils.assetsPath('js/[name].js'),
   },
-  devtool: 'cheap-module-source-map', // 配置生成Source Maps，选择合适的选项
+  devtool: 'eval-cheap-module-source-map', // webpack5推荐的开发环境配置
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new ReactRefreshWebpackPlugin({
       overlay: false,
     }),
   ],
+  devServer: {
+    ...config.devServer,
+    // webpack5中的devServer配置有变化
+    static: {
+      directory: config.contentBase,
+      publicPath: config.publicPath
+    },
+    // hot: true 现在默认启用
+    client: {
+      overlay: {
+        errors: true,
+        warnings: false
+      },
+      logging: config.devServer.clientLogLevel
+    }
+  }
 });
 
 if (config.indexPath) {
@@ -60,7 +77,7 @@ async function run() {
 
     const compiler = webpack(merge(devConf, config.configureWebpack));
 
-    const server = new webpackDevServer(compiler, devServerConf);
+    const server = new webpackDevServer(devServerConf, compiler);
 
     let spinner;
     let spinnerFlag = false;

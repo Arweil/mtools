@@ -1,10 +1,10 @@
 const path = require('path');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const webpack = require('webpack');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
-const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const GenerateAssetPlugin = require('./generate-asset-webpack-plugin');
 
@@ -33,7 +33,6 @@ let webpackProdConfig = merge(baseConf, {
     new MiniCssExtractPlugin({
       filename: utils.assetsPath('css/[name].[contenthash:8].css'),
     }),
-    new OptimizeCSSPlugin(), // css优化最小化
     new GenerateAssetPlugin({
       filename: 'app.json',
       fn: (compilation, cb) => {
@@ -53,16 +52,16 @@ let webpackProdConfig = merge(baseConf, {
     minimizer: [
       new TerserWebpackPlugin({
         terserOptions: {
-          safari10: true,
           format: {
             comments: false,
-            ascii_only: true,
-            safari10: true,
           },
-          sourceMap: config.productionSourceMap,
         },
+        extractComments: false,
       }),
+      new CssMinimizerPlugin(),
     ],
+    moduleIds: 'deterministic',
+    chunkIds: 'deterministic',
   },
 });
 

@@ -4,7 +4,7 @@
 
 ## Usage
 
-- 创建 React 项目后，在根目录添加*jaraxxus.config.js*配置文件进行 webpack 的基本配置；（在 v4.0.0 版本后已经不需要 jaraxxus.config.js 文件了，会使用默认配置）
+- 创建 React 项目后，在根目录添加 *jaraxxus.config.js* 配置文件进行 webpack 的基本配置；（在 v4.0.0 版本后已经不需要 jaraxxus.config.js 文件了，会使用默认配置）
 - _jaraxxus start_ 命令用作 dev 环境；
 - _jaraxxus build_ 命令用作项目打包。
 - dev 环境中需要 node >= 10.X
@@ -28,17 +28,23 @@ module.exports = {
   configureWebpack: {}, // webpack 配置，最后通过webpack-merge合并配置
   bundleAnalyzerReport: false, // webpack-bundle-analyzer 是否启用
   devServer: {
-    // 和devServer配置相同，可以全量配置
-    publicPath: '/',
+    // webpack-dev-server 配置
     port: 9999,
-    clientLogLevel: 'info',
     historyApiFallback: true,
     compress: true,
-    hot: true,
+    hot: true, // 热更新，默认启用
     open: true,
-    overlay: { warnings: false, errors: true },
-    contentBase: undefined,
-    quiet: true,
+    static: {
+      directory: undefined, // 静态文件目录
+      publicPath: '/'      // 公共路径
+    },
+    client: {
+      overlay: {
+        errors: true,
+        warnings: false
+      },
+      logging: 'info'     // 日志级别
+    }
   },
   css: {
     extract: true, // production 环境下，
@@ -54,9 +60,9 @@ module.exports = {
 
 ## 配置 babel
 
-此版本已经不需要额外的配置*babel.config.js*文件了。
+此版本已经不需要额外的配置 *babel.config.js* 文件了。
 
-如果需要额外的配置，默认使用*babel*中的*extends*配置项去拓展配置。
+如果需要额外的配置，默认使用 *babel* 中的 *extends* 配置项去拓展配置。
 
 babel.config.js 参考文件
 
@@ -104,9 +110,10 @@ module.exports = {
 
 ## 关于 postcss
 
-此版本已经不需要格外的配置*postcss.config.js*文件了。
+此版本已经不需要格外的配置 *postcss.config.js* 文件了。
 
-如果需要额外的配置，可以另外声明*postcss.config.js*，将会覆盖已有的默认配置（_postcss-preset-env_ & _postcss-normalize_）。
+如果需要额外的配置，可以另外声明 *postcss.config.js*，将会覆盖已有的默认配置（_postcss-preset-env_ & _postcss-normalize_）。
+
 
 ## What means Jaraxxus
 

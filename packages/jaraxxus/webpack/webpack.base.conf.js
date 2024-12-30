@@ -24,15 +24,13 @@ const baseConf = {
     alias: {
       '@': path.resolve(process.cwd(), 'src'),
     },
+    fallback: {
+      // "path": require.resolve("path-browserify"),
+      // 根据需要添加其他 polyfill
+    }
   },
   module: {
     rules: [
-      // Disable require.ensure as it's not a standard language feature.
-      {
-        parser: {
-          requireEnsure: false,
-        },
-      },
       ...(config.eslintConfigFile ? [createLintingRule()] : []),
       {
         test: /\.(js|jsx|ts|tsx)$/,
@@ -77,32 +75,43 @@ const baseConf = {
       },
       {
         test: /\.svg$/,
-        use: [require.resolve('@svgr/webpack'), require.resolve('url-loader')],
+        type: 'asset',
+        use: ['@svgr/webpack']
       },
       {
         test: /\.(png|jpe?g|gif|bmp)(\?.*)?$/,
-        loader: require.resolve('url-loader'),
-        options: {
-          limit: 10000,
-          name: utils.assetsPath('img/[name].[hash:7].[ext]'),
+        type: 'asset',
+        parser: {
+          dataUrlCondition: {
+            maxSize: 10 * 1024 // 10kb
+          }
         },
+        generator: {
+          filename: utils.assetsPath('img/[name].[hash:7][ext]')
+        }
       },
       ...utils.createAllStyleConfig(),
       {
         test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-        loader: require.resolve('file-loader'),
-        options: {
-          name: utils.assetsPath('media/[name].[hash:7].[ext]'),
-        },
+        type: 'asset/resource',
+        generator: {
+          filename: utils.assetsPath('media/[name].[hash:7][ext]')
+        }
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: require.resolve('file-loader'),
-        options: {
-          name: utils.assetsPath('fonts/[name].[hash:7].[ext]'),
-        },
+        type: 'asset/resource',
+        generator: {
+          filename: utils.assetsPath('fonts/[name].[hash:7][ext]')
+        }
       },
     ],
+  },
+  cache: {
+    type: 'filesystem',
+    buildDependencies: {
+      config: [__filename]
+    }
   },
 };
 
