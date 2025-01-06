@@ -9,8 +9,8 @@ type NextFunction = import('express').NextFunction;
 type ByPass = (req: Request, res: Response, proxyConfig: ProxyConfigArrayItem) => any;
 
 export type ProxyConfigArrayItem = {
-  path?: HttpProxyMiddlewareOptionsFilter | undefined;
-  context?: HttpProxyMiddlewareOptionsFilter | undefined;
+  path?: string[] | string | undefined; // express 路由路径
+  context?: HttpProxyMiddlewareOptionsFilter | undefined; // http-proxy-middleware 的 context
 } & {
   bypass?: ByPass;
 } & HttpProxyMiddlewareOptions;

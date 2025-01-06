@@ -1,3 +1,6 @@
+## 1.0.0
+1. 修改了 proxyConfig 的配置信息，path 参数变更为 express 路由
+
 ## 0.2.0
 1. 新增了middlewares的配置项用于自定义中间件配置
 
