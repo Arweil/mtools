@@ -3,7 +3,6 @@ import {
   ButtonExt,
   Card,
   CascaderExt,
-  CascaderOutLineExt,
   Col,
   ConfigProviderExt,
   Form,
@@ -86,131 +85,6 @@ export default function App() {
         >
           <Form.Item name={['form1', 'labelInsideValueA']} rules={[{ required: true }]}>
             <SelectOutLineExt label="文本" placeholder="请选择" />
-          </Form.Item>
-          <Form.Item name={['form1', 'labelValueA']} rules={[{ required: false }]}>
-            <CascaderOutLineExt
-              label="级联单选"
-              options={[
-                {
-                  value: 'zhejiang',
-                  label: 'ZhejiangZhejiangZhejiangZhejiangZhejiangZhejiang',
-                  children: [
-                    {
-                      value: 'hangzhou',
-                      label: 'Hangzhou',
-                      disabled: true,
-                      children: [
-                        {
-                          value: 'xihu',
-                          label: 'West Lake',
-                        },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  value: 'jiangsu',
-                  label: 'Jiangsu',
-                  children: [
-                    {
-                      value: 'nanjing',
-                      label: 'Nanjing',
-                      children: [
-                        {
-                          value: 'zhonghuamen',
-                          label: 'Zhong Hua Men',
-                        },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  value: 'qqq',
-                  label: 'qqq',
-                  children: [
-                    {
-                      value: 'nanwwwjing',
-                      label: 'Nanjeeing',
-                    },
-                  ],
-                },
-                {
-                  value: 'rrr',
-                  label: 'tttt',
-                  children: [
-                    {
-                      value: '222',
-                      label: '333',
-                    },
-                  ],
-                },
-              ]}
-              placeholder="请选择"
-              maxTagCount
-            />
-          </Form.Item>
-          <Form.Item name={['form1', 'labelInside']} rules={[{ required: false }]}>
-            <CascaderOutLineExt
-              multiple
-              label="级联多选"
-              options={[
-                {
-                  value: 'zhejiang',
-                  label: 'ZhejiangZhejiangZhejiangZhejiangZhejiangZhejiang',
-                  children: [
-                    {
-                      value: 'hangzhou',
-                      label: 'Hangzhou',
-                      disabled: true,
-                      children: [
-                        {
-                          value: 'xihu',
-                          label: 'West Lake',
-                        },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  value: 'jiangsu',
-                  label: 'Jiangsu',
-                  children: [
-                    {
-                      value: 'nanjing',
-                      label: 'Nanjing',
-                      children: [
-                        {
-                          value: 'zhonghuamen',
-                          label: 'Zhong Hua Men',
-                        },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  value: 'qqq',
-                  label: 'qqq',
-                  children: [
-                    {
-                      value: 'nanwwwjing',
-                      label: 'Nanjeeing',
-                    },
-                  ],
-                },
-                {
-                  value: 'rrr',
-                  label: 'tttt',
-                  children: [
-                    {
-                      value: '222',
-                      label: '333',
-                    },
-                  ],
-                },
-              ]}
-              placeholder="请选择"
-              maxTagCount
-            />
           </Form.Item>
           <Form.Item name={['form1', 'labelInsideA']} rules={[{ required: true }]}>
             <TreeSelectOutLineExt

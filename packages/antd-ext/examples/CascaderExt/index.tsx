@@ -88,8 +88,24 @@ export default function App() {
       ],
     },
     {
-      value: 'jiangsu',
-      label: 'Jiangsu',
+      value: 'jiangsu5',
+      label: 'Jiangsu5',
+      children: [
+        {
+          value: 'nanjing',
+          label: 'Nanjing',
+          children: [
+            {
+              value: 'zhonghuamen',
+              label: 'Zhong Hua Men',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      value: 'jiangsu1',
+      label: 'Jiangsu1',
       children: [
         {
           value: 'nanjing',
@@ -177,6 +193,13 @@ export default function App() {
             rules={[{ required: true }]}
           >
             <CascaderExt options={options} placeholder="请选择" />
+          </Form.Item>
+          <Form.Item
+            label="级联多选"
+            name={['form1', 'labelInsideValueB']}
+            rules={[{ required: true }]}
+          >
+            <CascaderExt multiple options={options} placeholder="请选择" />
           </Form.Item>
           <Form.Item
             label="树选择"

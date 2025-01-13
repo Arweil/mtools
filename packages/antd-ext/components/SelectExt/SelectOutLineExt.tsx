@@ -52,7 +52,7 @@ export default function SelectOutLineExt(props: SelectOutLineExtProps) {
   return (
     <OutLineWrapper
       label={label}
-      // injectStyle={style}
+      injectStyle={style}
       ref={refSelectOutLine}
       disabled={disabled}
       isRequired={restProps['aria-required'] === 'true'}

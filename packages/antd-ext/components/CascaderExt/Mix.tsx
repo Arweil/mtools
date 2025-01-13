@@ -13,7 +13,6 @@ import CascaderOutLineExt from './CascaderOutLineExt';
 export function useCascaderTooltipStyle(data: { theme?: Theme; tooltip?: TooltipProps }) {
   const { theme, tooltip } = data;
   const tokenExt = useTokenExt(theme);
-  // console.log(theme, tokenExt);
 
   // tooltip 默认样式
   const tooltipStyle = useMemo(
@@ -41,7 +40,6 @@ export function useCascaderTooltipStyle(data: { theme?: Theme; tooltip?: Tooltip
 
 export function useCascaderItemStyle(data: { theme?: Theme; tooltip?: TooltipProps }) {
   const { theme, tooltip } = data;
-  const tokenExt = useTokenExt(theme);
 
   // tooltip 默认样式
   const tooltipStyle = useMemo(
@@ -56,18 +54,10 @@ export function useCascaderItemStyle(data: { theme?: Theme; tooltip?: TooltipPro
         },
         default: {},
       }[theme]),
-    [theme, tooltip, tokenExt],
+    [theme, tooltip],
   );
 
   return tooltipStyle;
-}
-
-export function useCascaderRenderStyle(option) {
-  return (
-    <div style={{ color: 'blue' }}>
-      {option.label} {option.value === 'hangzhou' && <span>(推荐)</span>}
-    </div>
-  );
 }
 
 export function useCascaderExtPopupStyle(data: {
@@ -134,11 +124,8 @@ export function MixinCascaderExt(props: CascaderExtMixinProps) {
     theme: customTheme,
   });
 
-  console.log(themeConfig);
-  console.log(classes);
-
   return (
-    <ThemeWrapper theme={themeConfig} type="Cascader">
+    <ThemeWrapper theme={themeConfig} type={['Cascader', 'Select']}>
       <CascaderExt
         tokenExt={tokenExt}
         tooltip={tooltipStyle}
@@ -166,9 +153,7 @@ export function MixinCascaderOutLineExt(props: MixinCascaderOutLineExtProps) {
   } = useMapTheme({
     className,
     theme,
-    emotioncss: {
-      // hermes: customStyleWithSelectExt,
-    },
+    emotioncss: {},
   });
 
   const tokenExt = useTokenExt(theme);
@@ -180,7 +165,7 @@ export function MixinCascaderOutLineExt(props: MixinCascaderOutLineExtProps) {
   });
 
   const popupStyle = useCascaderExtPopupStyle({
-    // 弹出阿框样式
+    // 弹出框样式
     token,
     prefix,
     popupClassName,
@@ -188,7 +173,7 @@ export function MixinCascaderOutLineExt(props: MixinCascaderOutLineExtProps) {
   });
 
   return (
-    <ThemeWrapper theme={themeConfig} type="Cascader">
+    <ThemeWrapper theme={themeConfig} type={['Cascader', 'Select']}>
       <CascaderOutLineExt
         tokenExt={tokenExt}
         tooltip={tooltipStyle}
