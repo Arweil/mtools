@@ -2,12 +2,12 @@ import type { Theme } from '@m-tools/antd-ext';
 import {
   ButtonExt,
   Card,
-  CascaderExt,
-  CascaderOutLineExt,
   ConfigProviderExt,
   Form,
   locale,
   Radio,
+  TreeSelectExt,
+  TreeSelectOutLineExt,
 } from '@m-tools/antd-ext';
 import React, { useState } from 'react';
 
@@ -52,6 +52,22 @@ export default function App() {
               value: 'leaf6',
               title: 'leaf6',
             },
+            {
+              value: 'leaf7',
+              title: 'leaf7',
+            },
+            {
+              value: 'leaf8',
+              title: 'leaf8',
+            },
+            {
+              value: 'leaf9',
+              title: 'leaf9',
+            },
+            {
+              value: 'leaf10',
+              title: 'leaf10',
+            },
           ],
         },
         {
@@ -63,78 +79,6 @@ export default function App() {
               title: <b style={{ color: '#08c' }}>leaf11</b>,
             },
           ],
-        },
-      ],
-    },
-  ];
-
-  const options = [
-    {
-      value: 'zhejiang',
-      label: 'ZhejiangZhejiangZhejiangZhejiangZhejiangZhejiang',
-      children: [
-        {
-          value: 'hangzhou',
-          label: 'Hangzhou',
-          disabled: true,
-          children: [
-            {
-              value: 'xihu',
-              label: 'West Lake',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      value: 'jiangsu5',
-      label: 'Jiangsu5',
-      children: [
-        {
-          value: 'nanjing',
-          label: 'Nanjing',
-          children: [
-            {
-              value: 'zhonghuamen',
-              label: 'Zhong Hua Men',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      value: 'jiangsu1',
-      label: 'Jiangsu1',
-      children: [
-        {
-          value: 'nanjing',
-          label: 'Nanjing',
-          children: [
-            {
-              value: 'zhonghuamen',
-              label: 'Zhong Hua Men',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      value: 'qqq',
-      label: 'qqq',
-      children: [
-        {
-          value: 'nanwwwjing',
-          label: 'Nanjeeing',
-        },
-      ],
-    },
-    {
-      value: 'rrr',
-      label: 'tttt',
-      children: [
-        {
-          value: '222',
-          label: '333',
         },
       ],
     },
@@ -156,22 +100,33 @@ export default function App() {
 
       <Card title="CascaderOutLineExt" style={{ marginBottom: 24 }}>
         <Form form={form1} {...formItemLayout}>
-          <Form.Item name={['form1', 'labelValueA']} rules={[{ required: false }]}>
-            <CascaderOutLineExt label="空数据" options={[]} placeholder="请选择" maxTagCount />
+          <Form.Item name={['form1', 'labelInside']} rules={[{ required: true }]}>
+            <TreeSelectOutLineExt label="空树" treeData={[]} placeholder="请选择" />
           </Form.Item>
-          <Form.Item name={['form1', 'labelValueB']} rules={[{ required: false }]}>
-            <CascaderOutLineExt
-              label="级联单选"
-              options={options}
+          <Form.Item name={['form1', 'labelInsideA']} rules={[{ required: true }]}>
+            <TreeSelectOutLineExt
+              label="树单选"
+              open
+              treeData={treeData}
               placeholder="请选择"
               maxTagCount
             />
           </Form.Item>
-          <Form.Item name={['form1', 'labelInsideC']} rules={[{ required: false }]}>
-            <CascaderOutLineExt
+          <Form.Item name={['form1', 'labelInsideB']} rules={[{ required: true }]}>
+            <TreeSelectOutLineExt
+              label="树多选"
+              treeData={treeData}
+              placeholder="请选择"
+              maxTagCount
+              // open
               multiple
-              label="级联多选"
-              options={options}
+            />
+          </Form.Item>
+          <Form.Item name={['form1', 'labelInsideC']} rules={[{ required: true }]}>
+            <TreeSelectOutLineExt
+              label="树勾选框"
+              treeCheckable
+              treeData={treeData}
               placeholder="请选择"
               maxTagCount
             />
@@ -187,18 +142,25 @@ export default function App() {
       <Card title="CascaderExt" style={{ marginBottom: 24 }}>
         <Form form={form2} {...formItemLayout}>
           <Form.Item
-            label="级联选项"
+            label="树单选"
             name={['form2', 'labelInsideValueA']}
             rules={[{ required: true }]}
           >
-            <CascaderExt options={options} placeholder="请选择" />
+            <TreeSelectExt treeData={treeData} placeholder="请选择" />
           </Form.Item>
           <Form.Item
-            label="级联多选"
+            label="树多选"
             name={['form2', 'labelInsideValueB']}
             rules={[{ required: true }]}
           >
-            <CascaderExt multiple options={options} placeholder="请选择" />
+            <TreeSelectExt multiple treeData={treeData} placeholder="请选择" />
+          </Form.Item>
+          <Form.Item
+            label="树选择框"
+            name={['form2', 'labelInsideValueC']}
+            rules={[{ required: true }]}
+          >
+            <TreeSelectExt treeCheckable treeData={treeData} placeholder="请选择" />
           </Form.Item>
         </Form>
       </Card>

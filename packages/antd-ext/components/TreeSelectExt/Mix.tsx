@@ -40,7 +40,6 @@ export function useTreeSelectTooltipStyle(data: { theme?: Theme; tooltip?: Toolt
 
 export function useTreeSelectItemStyle(data: { theme?: Theme; tooltip?: TooltipProps }) {
   const { theme, tooltip } = data;
-  const tokenExt = useTokenExt(theme);
 
   // tooltip 默认样式
   const tooltipStyle = useMemo(
@@ -55,18 +54,10 @@ export function useTreeSelectItemStyle(data: { theme?: Theme; tooltip?: TooltipP
         },
         default: {},
       }[theme]),
-    [theme, tooltip, tokenExt],
+    [theme, tooltip],
   );
 
   return tooltipStyle;
-}
-
-export function useTreeSelectRenderStyle(option) {
-  return (
-    <div style={{ color: 'blue' }}>
-      {option.label} {option.value === 'hangzhou' && <span>(推荐)</span>}
-    </div>
-  );
 }
 
 export function useTreeSelectExtPopupStyle(data: {
@@ -79,14 +70,8 @@ export function useTreeSelectExtPopupStyle(data: {
   const popupStyle = useMemo(
     () =>
       ({
-        hermes: c(
-          popupClassName,
-          // customStyleWithPopup(token, prefix),
-        ),
-        zeus: c(
-          popupClassName,
-          // customStyleWithPopup(token, prefix),
-        ),
+        hermes: c(popupClassName),
+        zeus: c(popupClassName),
         default: '',
       }[theme]),
     [theme, popupClassName],
@@ -134,7 +119,7 @@ export function MixinTreeSelectExt(props: TreeSelectExtMixinProps) {
   });
 
   return (
-    <ThemeWrapper theme={themeConfig} type="TreeSelect">
+    <ThemeWrapper theme={themeConfig} type={['TreeSelect', 'Select']}>
       <TreeSelectExt
         tokenExt={tokenExt}
         tooltip={tooltipStyle}
@@ -163,9 +148,7 @@ export function MixinTreeSelectOutLineExt(props: MixinTreeSelectOutLineExtProps)
   } = useMapTheme({
     className,
     theme,
-    emotioncss: {
-      // hermes: customStyleWithSelectExt,
-    },
+    emotioncss: {},
   });
 
   const tokenExt = useTokenExt(theme);
@@ -185,7 +168,7 @@ export function MixinTreeSelectOutLineExt(props: MixinTreeSelectOutLineExtProps)
   });
 
   return (
-    <ThemeWrapper theme={themeConfig} type="TreeSelect">
+    <ThemeWrapper theme={themeConfig} type={['TreeSelect', 'Select']}>
       <TreeSelectOutLineExt
         tokenExt={tokenExt}
         customTheme={customTheme}

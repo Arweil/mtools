@@ -37,8 +37,6 @@ export interface SelectOutLineExtProps
 }
 
 export default function SelectOutLineExt(props: SelectOutLineExtProps) {
-  console.log(props, '11111');
-
   const { label, disabled, ...restProps } = props;
   const refSelectOutLine = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState<number>(refSelectOutLine.current?.offsetWidth);
