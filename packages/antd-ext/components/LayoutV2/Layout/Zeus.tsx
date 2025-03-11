@@ -108,7 +108,6 @@ const LayoutZeus: React.FC<LayoutProps> = React.forwardRef((props, ref) => {
           <div className={`${prefixCls}-menuBox`}>
             <ConfigProvider theme={theme}>
               <Menu
-                theme="light"
                 mode="inline"
                 className={`${prefixCls}-second-menu`}
                 items={menuByCollapsed}

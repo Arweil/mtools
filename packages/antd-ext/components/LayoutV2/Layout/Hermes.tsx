@@ -86,7 +86,6 @@ const LayoutHermes: React.FC<LayoutProps> = props => {
           </div>
           <Menu
             style={{ overflowY: 'auto' }}
-            theme="light"
             mode="inline"
             openKeys={openKeys}
             inlineIndent={16}

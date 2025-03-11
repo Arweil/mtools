@@ -17,7 +17,10 @@ export default function TabItem(props: {
 
   const isActive = activeUrl === url;
 
-  const classes = classNames([tabItemStyle, isActive ? tabItemActiveStyle : '']);
+  const classes = classNames(
+    tabItemStyle,
+    isActive ? `tab-item-selected ${tabItemActiveStyle}` : '',
+  );
 
   const _onRemove: React.MouseEventHandler<HTMLSpanElement> = useCallback(
     e => {

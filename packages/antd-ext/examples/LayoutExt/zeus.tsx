@@ -86,7 +86,7 @@ export default function Index() {
           const key = keys[0];
 
           const ele = tabs.find(item => item.code === key);
-          if (!ele) {
+          if (!ele && key) {
             const node = findNodeByUrl(menu, key);
             setTabs([
               ...tabs,

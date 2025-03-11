@@ -65,7 +65,7 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
     onTabRemove,
     selectedKeys,
     setOpenKeys: setOriginOpenKeys,
-    setSelectedKeys,
+    setSelectedKeys: setOriginSelectedKeys,
     tabActive,
     tabs,
     history,
@@ -121,8 +121,10 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
   const onTabClickMeno = useLatest(onTabClick);
   // tabbar移除回调
   const onTabRemoveMeno = useLatest(onTabRemove);
-  // openKeys设置
+  // openKeys设置回调
   const setOriginOpenKeysMemo = useLatest(setOriginOpenKeys);
+  // selectedKeys设置回调
+  const setOriginSelectedKeysMemo = useLatest(setOriginSelectedKeys);
 
   // 找到最相近的上下级关系菜单
   const findClosestMenu = useLatest((path: string, subMenu?: MenuType): MenuType[number] => {
@@ -284,7 +286,7 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
     // 3、触发业务应用回调
     onSelectMemo?.({ key });
     // 旧版本layout的onSelect回调兼容
-    setSelectedKeys?.([key]);
+    setOriginSelectedKeysMemo?.([key]);
     // 旧版本layout的跳转逻辑兼容
     if (historyRef.current) {
       historyRef.current.push(key);
@@ -308,7 +310,7 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
     }
   });
 
-  // 侧边菜单展开
+  // 侧边菜单展开回调
   const onMenuOpenChange = useCallback(
     (keys: string[]) => {
       setOpenKeys(keys);
@@ -331,11 +333,17 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
     (key: string) => {
       // 更新顶部菜单
       const sMenu = onNavChangeMemo(key);
-      // 更新侧边菜单
-      setSelectedMenu(findKeyPath(key, sMenu));
-      onMenuOpenChangeMemo(key, sMenu);
+      setTimeout(() => {
+        // 更新侧边菜单
+        const keys = findKeyPath(key, sMenu);
+        setSelectedMenu(keys);
+        // 打开侧边菜单
+        onMenuOpenChange(keys);
+        // 触发应用回调
+        setOriginSelectedKeysMemo?.(keys);
+      }, 0);
     },
-    [onNavChangeMemo, setSelectedMenu, findKeyPath, onMenuOpenChangeMemo],
+    [onNavChangeMemo, setSelectedMenu, findKeyPath, onMenuOpenChange, setOriginSelectedKeysMemo],
   );
 
   // 侧边菜单展开
