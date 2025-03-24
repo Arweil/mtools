@@ -1,3 +1,6 @@
+## 1.4.1
+1. 修正了 LayoutExt 菜单选中异常；
+
 ## 1.4.0
 1. 新增了 LayoutExt 组件属性 autoSelectFirstMenuOnNavbar 用于控制导航栏选中是否激活第一个子菜单（宙斯主题），默认为不激活；
 
