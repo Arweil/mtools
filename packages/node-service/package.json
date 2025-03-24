@@ -9,8 +9,7 @@
   },
   "description": "",
   "scripts": {
-    "build": "father build",
-    "test": "node bin/node-service.js test"
+    "build": "father build"
   },
   "publishConfig": {
     "access": "public"

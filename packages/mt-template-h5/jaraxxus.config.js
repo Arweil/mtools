@@ -5,6 +5,15 @@ module.exports = {
     port: 9999,
     open: false,
   },
+  configureWebpack: {
+    resolve: {
+      symlinks: false,
+      extensions: ['.js', '.jsx', '.ts', '.tsx', '.scss', '.less'],
+      alias: {
+        'antd-mobile': 'antd-mobile/2x',
+      },
+    },
+  },
   css: {
     // postcssPX2ViewportConfig: {
     //   unitToConvert: 'px',

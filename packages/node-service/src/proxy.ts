@@ -19,6 +19,34 @@ const getProxyMiddleware = (proxyConfig: ProxyConfigArrayItem) => {
     };
   };
 
+  if (!proxyConfig.onError) {
+    proxyConfig.onError = (err, req, res) => {
+      // Re-throw error. Not recoverable since req & res are empty.
+      if (!req && !res) {
+        throw err; // "Error: Must provide a proper URL as target"
+      }
+      const host = req.headers && req.headers.host;
+      const code = err.code;
+      if (res.writeHead && !res.headersSent) {
+        if (/HPE_INVALID/.test(code)) {
+          res.writeHead(502);
+        } else {
+          switch (code) {
+            case 'ECONNRESET':
+            case 'ENOTFOUND':
+            case 'ECONNREFUSED':
+            case 'ETIMEDOUT':
+              res.writeHead(504);
+              break;
+            default:
+              res.writeHead(500);
+          }
+        }
+        res.end(`Error occurred while trying to proxy: ${host}${req.url}`);
+      }
+    };
+  }
+
   if (proxyConfig.router) {
     return createProxyMiddleware(proxyConfig);
   }
