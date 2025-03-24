@@ -1,6 +1,7 @@
 import { CloseOutlined } from '@ant-design/icons';
 import classNames from 'classnames';
 import React, { useCallback, useRef } from 'react';
+import { usePrefixCls } from '../../utils';
 import { tabItemActiveStyle, tabItemStyle } from '../styles/layoutHermes';
 
 export default function TabItem(props: {
@@ -15,9 +16,14 @@ export default function TabItem(props: {
   const { activeUrl, url, children, showRemoveIcon, history, onRemove, onSelect } = props;
   const refSpan = useRef<HTMLSpanElement>(null);
 
+  const { prefixCls, mtPrefixCls } = usePrefixCls();
+
   const isActive = activeUrl === url;
 
-  const classes = classNames([tabItemStyle, isActive ? tabItemActiveStyle : '']);
+  const classes = classNames(
+    tabItemStyle,
+    isActive ? `${prefixCls}-${mtPrefixCls}-tab-item-selected ${tabItemActiveStyle}` : '',
+  );
 
   const _onRemove: React.MouseEventHandler<HTMLSpanElement> = useCallback(
     e => {

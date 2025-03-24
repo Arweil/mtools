@@ -7,17 +7,6 @@ export interface ThemeProps {
   children: React.ReactNode;
 }
 
-export const tabItemActiveStyle = css`
-  background: #eff4ff !important;
-  color: #3370ff !important;
-  span:first-child {
-    margin-left: 6px;
-  }
-  span:last-child {
-    display: inline-flex;
-  }
-`;
-
 export const tabItemStyle = css`
   height: 32px;
   min-width: 100px;
@@ -29,12 +18,9 @@ export const tabItemStyle = css`
   color: #646a73;
   border-radius: 20px;
   font-size: 14px;
-  span:last-child {
-    display: none;
-  }
   &:hover {
-    color: #646a73;
-    background: #f2f3f5;
+    color: #3370ff;
+    background: #eff4ff;
 
     span:first-child {
       margin-left: 6px;
@@ -43,6 +29,17 @@ export const tabItemStyle = css`
     span:last-child {
       display: inline-flex;
     }
+  }
+`;
+
+export const tabItemActiveStyle = css`
+  background: #eff4ff;
+  color: #3370ff;
+  span:first-child {
+    margin-left: 6px;
+  }
+  span:last-child {
+    display: inline-flex;
   }
 `;
 
