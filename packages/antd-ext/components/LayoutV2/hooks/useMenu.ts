@@ -340,7 +340,7 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
         // 打开侧边菜单
         onMenuOpenChange(keys);
         // 触发应用回调
-        setOriginSelectedKeysMemo?.(keys);
+        setOriginSelectedKeysMemo?.(keys.slice(-1));
       }, 0);
     },
     [onNavChangeMemo, setSelectedMenu, findKeyPath, onMenuOpenChange, setOriginSelectedKeysMemo],
