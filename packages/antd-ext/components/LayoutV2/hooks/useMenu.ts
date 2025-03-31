@@ -204,8 +204,7 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
   // 查找给定key的菜单信息，优先从菜单树中查找，找不到则找相近菜单
   const findKeyPath = useLatest((key: string, subMenu?: MenuType) => {
     const pathByMenu = findKeyPathByMenu(key);
-    const pathByClosest = findMenuKeyPathMemo(key, subMenu);
-    return pathByMenu.length ? pathByMenu : pathByClosest;
+    return pathByMenu.length ? pathByMenu : findMenuKeyPathMemo(key, subMenu);
   });
 
   // 导航栏变化回调
