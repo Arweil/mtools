@@ -1,6 +1,7 @@
 import en_US from 'antd/es/locale/en_US';
 import zh_CN from 'antd/es/locale/zh_CN';
 import ButtonExt, { BaseButtonExt } from './ButtonExt';
+import CardExt from './CardExt';
 import { BaseCascaderExt } from './CascaderExt';
 import ConfigProviderExt from './ConfigProviderExt';
 import type { Theme } from './ConfigProviderExt/context';
@@ -48,6 +49,7 @@ export {
   BaseLayoutExt,
   BaseCascaderExt,
   ButtonExt,
+  CardExt,
   BaseUploadExt,
   ConfigProviderExt,
   DatePickerExt,

@@ -60,6 +60,7 @@
     "lerna-changelog": "^2.1.0",
     "lint-staged": "^13.2.2",
     "prettier": "^2.8.8",
+    "react-refresh": "^0.17.0",
     "rollup": "^2.56.2",
     "ts-node": "^10.2.1",
     "tslib": "^2.3.0",
