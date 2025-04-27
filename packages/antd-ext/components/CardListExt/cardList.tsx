@@ -9,6 +9,89 @@ import { useThemeExt } from '../theme';
 import { usePrefixCls } from '../utils';
 import { css } from '../utils/emotion';
 import { customStyle } from './ThemeHerme';
+
+// 数据转换和兼容处理函数
+const normalizeProps = (props: CardListExtProps): CardListExtProps => {
+  const normalized = { ...props };
+
+  // 确保 dataSource 是数组
+  if (!Array.isArray(normalized.dataSource)) {
+    console.warn('CardListExt: dataSource should be an array, converting to empty array');
+    normalized.dataSource = [];
+  }
+
+  // 确保 columns 是正整数
+  if (normalized.columns !== undefined) {
+    const parsedColumns = Number(normalized.columns);
+    if (isNaN(parsedColumns) || parsedColumns <= 0) {
+      console.warn('CardListExt: columns should be a positive number, using default value 4');
+      normalized.columns = 4;
+    } else {
+      normalized.columns = Math.floor(parsedColumns);
+    }
+  }
+
+  // 确保 rowGap 是非负数
+  if (normalized.rowGap !== undefined) {
+    const parsedRowGap = Number(normalized.rowGap);
+    if (isNaN(parsedRowGap) || parsedRowGap < 0) {
+      console.warn('CardListExt: rowGap should be a non-negative number, using default value 16');
+      normalized.rowGap = 16;
+    } else {
+      normalized.rowGap = parsedRowGap;
+    }
+  }
+
+  // 确保 columnGap 是非负数
+  if (normalized.columnGap !== undefined) {
+    const parsedColumnGap = Number(normalized.columnGap);
+    if (isNaN(parsedColumnGap) || parsedColumnGap < 0) {
+      console.warn(
+        'CardListExt: columnGap should be a non-negative number, using default value 16',
+      );
+      normalized.columnGap = 16;
+    } else {
+      normalized.columnGap = parsedColumnGap;
+    }
+  }
+
+  // 确保 renderItem 是函数
+  if (typeof normalized.renderItem !== 'function') {
+    console.warn('CardListExt: renderItem must be a function, using default empty render');
+    normalized.renderItem = () => null;
+  }
+
+  // 确保 renderDetail 是函数或 undefined
+  if (normalized.renderDetail !== undefined && typeof normalized.renderDetail !== 'function') {
+    console.warn('CardListExt: renderDetail must be a function, removing invalid render');
+    normalized.renderDetail = undefined;
+  }
+
+  // 处理 pagination
+  if (normalized.pagination !== false && normalized.pagination !== undefined) {
+    if (typeof normalized.pagination !== 'object') {
+      console.warn(
+        'CardListExt: pagination should be false or an object, using default pagination',
+      );
+      normalized.pagination = { position: 'bottom' };
+    } else {
+      // 确保 position 值合法
+      if (
+        normalized.pagination.position &&
+        !['top', 'bottom', 'both'].includes(normalized.pagination.position)
+      ) {
+        console.warn('CardListExt: invalid pagination position, using default "bottom"');
+        normalized.pagination.position = 'bottom';
+      }
+    }
+  }
+
+  // 确保 isCollapse 是布尔值
+  normalized.isCollapse = Boolean(normalized.isCollapse);
+
+  return normalized;
+};
+
 export interface CardListExtProps {
   dataSource: any[];
   columns?: number;
@@ -17,26 +100,27 @@ export interface CardListExtProps {
   cardProps?: CardProps;
   renderItem: (item: any, index: number) => React.ReactNode;
   renderDetail?: (item: any) => React.ReactNode;
-  // 分页属性
   pagination?: false | (PaginationProps & { position?: 'top' | 'bottom' | 'both' });
   className?: string;
-  // 再次点击 是否收起
   isCollapse?: boolean;
   cardSelectedStyle?: React.CSSProperties;
 }
 
-export const CardListExt: React.FC<CardListExtProps> = ({
-  dataSource = [],
-  columns = 4,
-  rowGap = 16,
-  columnGap = 16,
-  renderItem,
-  renderDetail,
-  pagination,
-  className,
-  cardSelectedStyle,
-  isCollapse = false,
-}) => {
+export const CardListExt: React.FC<CardListExtProps> = props => {
+  // 规范化处理传入的属性
+  const {
+    dataSource = [],
+    columns = 4,
+    rowGap = 16,
+    columnGap = 16,
+    renderItem,
+    renderDetail,
+    pagination,
+    className,
+    cardSelectedStyle,
+    isCollapse = false,
+  } = normalizeProps(props);
+
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [selectedItem, setSelectedItem] = React.useState<any>(null);
   const [cardWidth, setCardWidth] = React.useState<number>(0);
