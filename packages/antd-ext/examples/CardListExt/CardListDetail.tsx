@@ -75,12 +75,6 @@ const CardListDetail = () => {
         width: 100%;
       }
     `,
-    selectedCard: css`
-      box-shadow: 0px 1px 7px 0px rgba(51, 112, 255, 0.3);
-      border-radius: 8px !important;
-      border: 1px solid #3370ff !important;
-      background: linear-gradient(180deg, #eef5ff 0%, #ffffff 100%);
-    `,
   };
 
   return (
@@ -88,6 +82,7 @@ const CardListDetail = () => {
       <Space direction="vertical" size="large">
         <div style={{ height: 800, border: '1px solid #e4e9ec', padding: 10 }}>
           <CardListExt
+            columns={3}
             dataSource={mockData}
             className={'db-card-list'}
             renderItem={item => (
@@ -95,7 +90,6 @@ const CardListDetail = () => {
                 hoverable
                 title={item.title}
                 onClick={() => handleCardClick(item)}
-                className={selectedId === item.id ? styles.selectedCard : ''}
                 footerLabels={[
                   {
                     icon: 'https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg',

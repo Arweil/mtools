@@ -2,7 +2,7 @@ import type { PaginationProps } from 'antd';
 import { Pagination } from 'antd';
 import type { CardProps } from 'antd/lib/card';
 import classNames from 'classnames';
-import React from 'react';
+import React, { useEffect } from 'react';
 import left from '../assets/img/left.svg';
 import right from '../assets/img/right.svg';
 import { useThemeExt } from '../theme';
@@ -20,6 +20,9 @@ export interface CardListExtProps {
   // 分页属性
   pagination?: false | (PaginationProps & { position?: 'top' | 'bottom' | 'both' });
   className?: string;
+  // 再次点击 是否收起
+  isCollapse?: boolean;
+  cardSelectedStyle?: React.CSSProperties;
 }
 
 export const CardListExt: React.FC<CardListExtProps> = ({
@@ -31,6 +34,8 @@ export const CardListExt: React.FC<CardListExtProps> = ({
   renderDetail,
   pagination,
   className,
+  cardSelectedStyle,
+  isCollapse = false,
 }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [selectedItem, setSelectedItem] = React.useState<any>(null);
@@ -125,9 +130,11 @@ export const CardListExt: React.FC<CardListExtProps> = ({
 
   const handleItemClick = (item: any, index: number) => {
     if (renderDetail) {
-      const _item = selectedItem?.id === item.id ? null : item;
-      setSelectedItem(_item);
-      if (!item) return;
+      const _item = JSON.stringify(selectedItem) === JSON.stringify(item) ? null : item;
+      if (isCollapse || (!isCollapse && _item)) {
+        setSelectedItem(_item);
+      }
+      if (!_item) return;
       // 滚动到选中的卡片
       setTimeout(() => {
         const itemElement = document.querySelector(`.${styles} #cardList-item-${index}`);
@@ -151,7 +158,9 @@ export const CardListExt: React.FC<CardListExtProps> = ({
       </div>
     );
   };
-
+  useEffect(() => {
+    console.log('pagination', pagination);
+  }, [pagination]);
   return (
     <div
       className={classNames(prefixCls, styles, className, {
@@ -175,8 +184,18 @@ export const CardListExt: React.FC<CardListExtProps> = ({
               <div
                 key={index}
                 id={`cardList-item-${index}`}
+                style={
+                  selectedItem &&
+                  JSON.stringify(selectedItem) === JSON.stringify(item) &&
+                  renderDetail
+                    ? cardSelectedStyle || {}
+                    : undefined
+                }
                 className={classNames(`${prefixCls}-item`, {
-                  clickable: renderDetail,
+                  selected:
+                    selectedItem &&
+                    JSON.stringify(selectedItem) === JSON.stringify(item) &&
+                    renderDetail,
                 })}
                 onClick={() => handleItemClick(item, index)}
               >

@@ -13,8 +13,8 @@ export const customStyle = (
     .ant-card-head {
       min-height: 46px;
       padding: 0 16px;
-      border-bottom: 1px solid ${token.colorBorder};
-      background: ${token.colorBgContainer};
+      border-bottom: 1px solid #d9d9d9;
+      background: #ffffff
       border-radius: 8px 8px 0 0;
       
       .ant-card-head-wrapper {
@@ -109,7 +109,7 @@ export const customStyle = (
         }
 
         .${prefixCls}-foot-label-right {
-          color: ${token.colorError};
+          color: #ff4d4f;
           cursor: pointer;
         }
       }
@@ -117,7 +117,7 @@ export const customStyle = (
     
     .ant-card-actions {
       padding: 0 16px;
-      border-top: 1px solid ${token.colorBorder};
+      border-top: 1px solid #E7E9EE;
       background: #ffffff;
       border-radius: 0 0 8px 8px;
       

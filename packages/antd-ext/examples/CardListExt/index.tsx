@@ -35,6 +35,7 @@ const Demo = () => {
       pagination={{
         total: mockData.length,
         pageSize,
+        position: 'bottom',
         current: currentPage,
         onChange: page => setCurrentPage(page),
       }}

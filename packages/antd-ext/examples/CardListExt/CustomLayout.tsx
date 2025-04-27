@@ -33,7 +33,6 @@ const mockData = Array.from({ length: 8 }, (_, index) => ({
 const CustomLayout = () => {
   const [columns, setColumns] = React.useState(3);
   const [gap, setGap] = React.useState(24);
-  const [selectedId, setSelectedId] = React.useState<number | null>(null);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -61,9 +60,7 @@ const CustomLayout = () => {
     }
   };
 
-  const handleCardClick = (item: any) => {
-    setSelectedId(selectedId === item.id ? null : item.id);
-  };
+  const handleCardClick = (item: any) => {};
 
   const styles = {
     root: css`
@@ -76,12 +73,6 @@ const CustomLayout = () => {
       .ant-space-item {
         width: 100%;
       }
-    `,
-    selectedCard: css`
-      box-shadow: 0px 1px 7px 0px rgba(51, 112, 255, 0.3);
-      border-radius: 8px !important;
-      border: 1px solid #3370ff !important;
-      background: linear-gradient(180deg, #eef5ff 0%, #ffffff 100%);
     `,
   };
 
@@ -113,7 +104,6 @@ const CustomLayout = () => {
                 hoverable
                 title={item.title}
                 onClick={() => handleCardClick(item)}
-                className={selectedId === item.id ? styles.selectedCard : ''}
                 footerLabels={[
                   {
                     icon: 'https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg',

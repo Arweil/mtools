@@ -48,11 +48,12 @@ export const customStyle = (
     .${prefixCls}-card-list-item {
       transition: all 0.3s ease;
 
-      &.clickable {
+      &.selected {
+        background: linear-gradient(180deg, #eef5ff 0%, #ffffff 100%);
+        border: 1px solid #3370ff;
+        border-radius: 8px;
+        box-shadow: 0px 1px 7px 0px rgba(51, 112, 255, 0.3);
         cursor: pointer;
-
-        &:hover {
-        }
       }
     }
 
