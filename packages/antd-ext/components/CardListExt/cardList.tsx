@@ -2,7 +2,7 @@ import type { PaginationProps } from 'antd';
 import { Pagination } from 'antd';
 import type { CardProps } from 'antd/lib/card';
 import classNames from 'classnames';
-import React, { useEffect } from 'react';
+import React from 'react';
 import left from '../assets/img/left.svg';
 import right from '../assets/img/right.svg';
 import { useThemeExt } from '../theme';
@@ -242,9 +242,7 @@ export const CardListExt: React.FC<CardListExtProps> = props => {
       </div>
     );
   };
-  useEffect(() => {
-    console.log('pagination', pagination);
-  }, [pagination]);
+
   return (
     <div
       className={classNames(prefixCls, styles, className, {
@@ -266,7 +264,7 @@ export const CardListExt: React.FC<CardListExtProps> = props => {
           >
             {dataSource.map((item, index) => (
               <div
-                key={index}
+                key={JSON.stringify(item)}
                 id={`cardList-item-${index}`}
                 style={
                   selectedItem &&
