@@ -12,6 +12,8 @@ interface FooterLabel {
   icon: string;
   /** 标签文本 */
   label: string;
+  /** 标签样式 */
+  labelStyle?: React.CSSProperties;
 }
 
 type FooterAlignType = 'left' | 'center' | 'right' | 'space-between';
@@ -127,7 +129,7 @@ const CardExt: React.FC<CardExtProps> = props => {
                   e.currentTarget.style.display = 'none';
                 }}
               />
-              <span>{item.label}</span>
+              <span style={item.labelStyle}>{item.label}</span>
             </div>
           ))}
         </div>
