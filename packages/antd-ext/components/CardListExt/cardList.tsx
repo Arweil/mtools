@@ -131,7 +131,9 @@ export const CardListExt: React.FC<CardListExtProps> = props => {
   React.useEffect(() => {
     if (containerRef.current) {
       const containerWidth = containerRef.current.offsetWidth;
-      const calculatedWidth = (containerWidth - (columns - 1) * columnGap) / columns;
+      const scrollbarWidth = 4;
+      const calculatedWidth =
+        (containerWidth - scrollbarWidth * 2 - (columns - 1) * columnGap) / columns;
       setCardWidth(calculatedWidth);
     }
   }, [columns, columnGap]);
@@ -171,14 +173,15 @@ export const CardListExt: React.FC<CardListExtProps> = props => {
     }
 
     .${prefixCls}-item {
+      flex-shrink: 0;
       width: ${cardWidth}px;
       cursor: pointer;
     }
 
     .${prefixCls}-detail {
       position: relative;
-      width: calc(100% - ${cardWidth}px - ${columnGap}px);
-      margin-right: calc(-1 * (100% - ${cardWidth}px - ${columnGap}px));
+      width: calc(100% - ${cardWidth}px - 21px);
+      margin-right: calc(-1 * (100% - ${cardWidth}px + 12px));
       transform: translateX(20px);
       transition: all 1s ease;
       &.visible {

@@ -111,51 +111,45 @@ const CardListDetail = () => {
               </CardExt>
             )}
             renderDetail={item => (
-              <CardExt
-                title={`${item.title} - 详细信息`}
-                contentHeight="auto"
-                style={{ height: '100%' }}
-              >
-                <Space direction="vertical" size="large" style={{ width: '100%' }}>
-                  <div>
-                    <h3>基本信息</h3>
-                    <p>状态：{item.status}</p>
-                    <p>优先级：{item.priority}</p>
-                    <p>进度：{item.progress}%</p>
-                    <p>截止日期：{item.deadline}</p>
-                  </div>
+              <div style={{ height: '100%', width: '100%', overflowY: 'auto' }}>
+                <div>
+                  <h3>基本信息</h3>
+                  <p>状态：{item.status}</p>
+                  <p>优先级：{item.priority}</p>
+                  <p>进度：{item.progress}%</p>
+                  <p>截止日期：{item.deadline}</p>
+                </div>
 
-                  <div>
-                    <h3>团队信息</h3>
-                    <p>负责人：{item.details.owner}</p>
-                    <p>所属部门：{item.details.department}</p>
-                    <p>团队成员：{item.details.members.join('、')}</p>
-                  </div>
+                <div>
+                  <h3>团队信息</h3>
+                  <p>负责人：{item.details.owner}</p>
+                  <p>所属部门：{item.details.department}</p>
+                  <p>团队成员：{item.details.members.join('、')}</p>
+                </div>
 
-                  <div>
-                    <h3>里程碑</h3>
-                    {item.details.milestones.map((milestone, index) => (
-                      <p key={index}>
-                        {milestone.time}：{milestone.content}
-                      </p>
-                    ))}
-                  </div>
+                <div>
+                  <h3>里程碑</h3>
+                  {item.details.milestones.map((milestone, index) => (
+                    <p key={index}>
+                      {milestone.time}：{milestone.content}
+                    </p>
+                  ))}
+                </div>
 
-                  <div>
-                    <h3>相关附件</h3>
-                    {item.details.attachments.map((file, index) => (
-                      <p key={index}>
-                        {file.name}（{file.size}）
-                      </p>
-                    ))}
-                  </div>
+                <div>
+                  <h3>相关附件</h3>
+                  {item.details.attachments.map((file, index) => (
+                    <p key={index}>
+                      {file.name}（{file.size}）
+                    </p>
+                  ))}
+                </div>
 
-                  <div>
-                    <h3>任务描述</h3>
-                    <p>{item.description}</p>
-                  </div>
-                </Space>
-              </CardExt>
+                <div>
+                  <h3>任务描述</h3>
+                  <p>{item.description}</p>
+                </div>
+              </div>
             )}
           />
         </div>

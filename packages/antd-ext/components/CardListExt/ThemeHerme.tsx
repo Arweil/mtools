@@ -28,15 +28,17 @@ export const customStyle = (
       &.selected {
         flex-shrink: 0;
       }
+      &::webkit-scrollbar {
+        width: 1px;
+      }
     }
 
     .${prefixCls}-card-list-detail {
-      flex: 1;
       min-width: 0;
-      padding: ${token.padding}px;
+      padding: 16px;
       overflow: hidden;
-      background: ${token.colorBgContainer};
-      border-left: 1px solid ${token.colorBorder};
+      background: #ffffff;
+      border-left: 1px solid #d9d9d9;
       transform: translateX(50px);
       transition: all 0.3s ease;
 
