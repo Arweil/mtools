@@ -34,7 +34,7 @@ function getMenu(menu: MenuType, key: string): ItemType[] {
  * @param key
  * @returns
  */
-function findMenuInfo(key: string, menu?: MenuType) {
+function findMenuInfo(key: string, menu?: MenuType): MenuType[number] {
   if (!menu) return undefined;
   for (const item of menu) {
     if (item.key === key) return item;
@@ -279,17 +279,28 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
     // 1、选中菜单，需要查找最接近的菜单
     const selected = findKeyPath(key, subMenu || menu).slice(-1);
     setSelectedMenu(selected);
-    // 2、更新tabbar信息，如果tabbar中存在tab信息优先取用
-    const tabInfo = tabbar.find(item => item.key === key);
-    onTabbarChangeMemo(tabInfo ? tabInfo : key);
+
+    // 查找当前菜单项信息
+    const menuItem = findMenuInfo(key, preprocessMenu);
+    const navigationMode = menuItem?.navigationMode;
+
     // 3、触发业务应用回调
     onSelectMemo?.({ key });
-    // 旧版本layout的onSelect回调兼容
-    setOriginSelectedKeysMemo?.([key]);
-    // 旧版本layout的跳转逻辑兼容
-    if (historyRef.current) {
-      historyRef.current.push(key);
+
+    if (navigationMode === 'open') {
+      window.open(key);
+    } else {
+      // 2、更新tabbar信息，如果tabbar中存在tab信息优先取用
+      const tabInfo = tabbar.find(item => item.key === key);
+      onTabbarChangeMemo(tabInfo ? tabInfo : key);
+      // 旧版本layout的onSelect回调兼容
+      setOriginSelectedKeysMemo?.([key]);
+      // 旧版本layout的跳转逻辑兼容
+      if (historyRef.current && navigationMode !== 'none') {
+        historyRef.current.push(key);
+      }
     }
+
     selectLogicRunning.current = false;
   });
 
