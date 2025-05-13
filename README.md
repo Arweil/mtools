@@ -21,6 +21,10 @@
 
    ```bash
    $ lerna publish
+
+   $ lerna publish from-package
+
+   $ lerna publish from-git
    ```
 
 5. 发布文档

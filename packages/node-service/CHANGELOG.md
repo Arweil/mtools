@@ -1,3 +1,6 @@
+## 1.0.1
+1. 修改了 proxyConfig.onError 方法，兼容异常导致的服务重启
+
 ## 1.0.0
 1. 修改了 proxyConfig 的配置信息，path 参数变更为 express 路由
 
