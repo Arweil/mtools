@@ -4,7 +4,13 @@ import type React from 'react';
 import type { Theme } from '../ConfigProviderExt/context';
 import type useLayout from './hooks/useLayout';
 
-export type MenuType = MenuProps['items'];
+export type NavigationMode = 'push' | 'open' | 'none';
+
+export type MenuType = ({
+  navigationMode?: NavigationMode;
+  children?: MenuType;
+} & MenuProps['items'][number])[];
+
 export type SelectInfo = Parameters<MenuProps['onSelect']>[number];
 export type Tabbar = { key: string; label: string };
 
@@ -17,6 +23,7 @@ export interface IBaseMenuInfo {
   children?: IBaseMenuInfo[];
   url?: string;
   name?: React.ReactNode;
+  navigationMode?: NavigationMode;
   [key: string]: any;
 }
 
