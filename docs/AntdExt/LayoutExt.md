@@ -28,7 +28,7 @@ toc: menu
 | headerContent | 自定义tabbar区域内容，不传展示默认tabbar | ReactNode | - |
 | history | react-router的history对象(用于layout内部监听路由变化做菜单定位) | History | - |
 | setTitle | 侧边栏上方logo设置 | (data: { collapsed: boolean }) => ReactNode | - |
-| menu | 菜单，同antd Menu组件的items<br>key通常存储url | [ItemType[]][1] | - |
+| menu | 菜单数据，详见下方 MenuType 说明 | [MenuType](#menutype-说明) | - |
 | onCollapse | 点击trigger的回调 | (collapsed: boolean; info: { type: CollapseType, siderWidth: number, collapsedWidth: number }) => void | - |
 | onSelect | 菜单及tab选中时触发的回调 | (info: { key: string }) => void | - |
 | siderWidth | 侧边栏宽度 | number | 134 |
@@ -48,6 +48,30 @@ toc: menu
 | addTab | 添加tab，入参为string时会从menu中查找<br>若不传递key信息，默认使用当前path信息 | (key?: string \| { key?: string, label: string }) => void |
 | removeTab | 移除tab | (key: string) => void |
 
+## MenuType 说明
 
+`MenuType` 是对 antd Menu items 的扩展，支持递归结构，并增加了 `navigationMode` 字段用于控制菜单项的跳转方式。
+
+```ts
+export type NavigationMode = 'push' | 'open' | 'none';
+
+export type MenuType = ({
+  navigationMode?: NavigationMode; // 跳转方式，'push'（默认）、'open'（新窗口）、'none'（禁用）
+  children?: MenuType;
+} & ItemType)[];
+```
+
+- `push`：内部路由跳转（默认）
+- `open`：新窗口打开
+- `none`：禁用跳转，仅触发回调
+
+**示例：**
+```ts
+const menu: MenuType = [
+  { key: '/a', label: 'A' },
+  { key: '/b', label: 'B', navigationMode: 'open' },
+  { key: '/c', label: 'C', navigationMode: 'none' }
+];
+```
 
 [1]: https://ant-design.antgroup.com/components/menu-cn#itemtype

@@ -31,6 +31,7 @@ const menuData = [
       {
         key: '/first-level01/second-level02',
         label: '二级菜单02',
+        navigationMode: 'open',
         icon: <IconFont type="icon-Promptbianpai" />,
         children: [
           {
@@ -38,6 +39,12 @@ const menuData = [
             label: '三级菜单01',
           },
         ],
+      },
+      {
+        key: 'http://www.baidu.com',
+        label: 'window.open菜单',
+        navigationMode: 'open',
+        icon: <IconFont type="icon-Promptbianpai" />,
       },
     ],
   },
