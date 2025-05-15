@@ -379,7 +379,6 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
   // 移除tabbar
   const removeTab = useLatest((key?: string) => {
     if (key) {
-      onTabRemoveMeno?.(key);
       setTabbar(prev => {
         // 关闭的是选中的tab需要切换到下一个tab
         if (selectedTabbar === key) {
@@ -392,6 +391,7 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
         }
         return prev.filter(({ key: k }) => k !== key);
       });
+      onTabRemoveMeno?.(key);
     } else {
       // 不传默认移除全部
       setTabbar([]);
