@@ -23,8 +23,8 @@ export const customStyle = (
       &.not-showline .${prefixCls}-tree-treenode {
         .${prefixCls}-tree-switcher {
           z-index: 1;
-          margin-right: -7px;  / 4
           z-index: 1;
+          margin-right: -7px;
         }
         .${prefixCls}-tree-iconEle {
           margin-left: -7px; // 组件token titleHeight / 4
@@ -35,38 +35,29 @@ export const customStyle = (
       &.not-showline.is-blockNode .${prefixCls}-tree-treenode {
         position: relative;
 
-        &:before {
-          position: absolute;
-          top: 0;
-          bottom: 4px; end: 0;
-          transition: background-color ${token.motionDurationMid};
-          content: '';
-          pointer-events: none;
-          inset-inline-end: 0;
-          inset-inline-start: 0;
-        }
-        // hover
-        &:hover {
-          &:before {
-            background: ${tokenExt.colorWeakPrimary};
-            border-radius: ${token.borderRadiusSM}px;
-          }
-          .${prefixCls}-tree-node-content-wrapper, .${prefixCls}-tree-switcher {
-            &:hover {
-              background: transparent;
-            }
-          }
-        }
-        // selected
         &.${prefixCls}-tree-treenode-selected {
-          color: ${tokenExt.colorPrimaryL3};
-          &:before {
-            background: ${tokenExt.colorWeakPrimary};
-            border-radius: ${token.borderRadiusSM}px;
+          background-color: ${tokenExt.colorWeakPrimary};
+          border-radius: ${token.borderRadiusSM}px;
+        }
+
+        & > .${prefixCls}-tree-node-content-wrapper {
+          &.${prefixCls}-tree-node-selected {
+            color: ${tokenExt.colorPrimaryL3};
+            background-color: transparent;
           }
-          .${prefixCls}-tree-node-selected {
-            background: transparent;
+
+          &:hover {
+            background-color: transparent;
           }
+        }
+
+        &:hover {
+          background-color: ${tokenExt.colorWeakPrimary};
+          border-radius: ${token.borderRadiusSM}px;
+        }
+
+        & > .${prefixCls}-tree-switcher:hover::before {
+          background-color: transparent;
         }
       }
     }
