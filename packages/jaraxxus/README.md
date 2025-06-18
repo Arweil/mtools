@@ -16,12 +16,10 @@ jaraxxus.config.js
 ```javascript
 module.exports = {
   entry: 'src/index.js', // webpack entry
-  needPolyfill: true, // 是否需要自动引入polyfill
   publicPath: '/', // output.publicPath
   assetsDir: 'static', // 资源目录
   outputDir: 'dist', // 打包目录
   srcDir: 'src', // 开发目录
-  eslintConfigFile: undefined, // eslint.rules.js为根目录文件
   indexPath: 'public/index.html', // SPA入口HTML
   favicon: 'public/favicon.ico', // 站点favicon
   productionSourceMap: false, // 生成环境是否需要sourcemap js
@@ -43,11 +41,7 @@ module.exports = {
   css: {
     extract: true, // production 环境下，
     cssModules: false, // 是否启用css模块化
-    sourceMap: false, // css sourceMap
     lessModifyVars: {}, // less modifyVars 配置
-    loaderOptions: {
-      style: {}, // style-loader options
-    },
   },
 };
 ```
