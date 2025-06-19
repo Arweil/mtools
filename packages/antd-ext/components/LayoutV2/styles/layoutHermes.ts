@@ -84,39 +84,23 @@ const styles = (token: GlobalToken, prefixCls: string, tokenExt: Partial<ThemeCo
     font-size: 12px;
   }
 
-  .${prefixCls}-menu-inline
-    .${prefixCls}-menu-sub.${prefixCls}-menu-inline>.${prefixCls}-menu-submenu>.${prefixCls}-menu-submenu-title {
-    width: 100%;
-    height: 40px;
-    margin: 0;
-    line-height: 40px;
+  .${prefixCls}-menu-title-content {
+    transition: initial !important;
   }
 
-  .${prefixCls}-menu-inline, .${prefixCls}-menu-vertical {
-    .${prefixCls}-menu-submenu-title, .${prefixCls}-menu-item {
-      width: 100%;
+  :not(.${prefixCls}-menu-inline-collapsed) {
+    .${prefixCls}-menu-inline
+      .${prefixCls}-menu-submenu-title,
+      .${prefixCls}-menu-inline
+      .${prefixCls}-menu-item {
       height: 40px;
-      margin: 0;
       line-height: 40px;
+      margin-inline: 0;
     }
   }
 
-  .${prefixCls}-menu {
-    .${prefixCls}-menu-title-content {
-      transition: initial !important;
-    }
-
-    .${prefixCls}-menu-item-group
-      .${prefixCls}-menu-item-group-list
-      .${prefixCls}-menu-submenu-title {
-      width: 100%;
-      height: 40px;
-      margin: 0;
-    }
-
-    .${prefixCls}-menu-item {
-      border-radius: 0;
-    }
+  .${prefixCls}-menu-item {
+    border-radius: 0;
   }
 
   .${prefixCls}-menu-light {
@@ -154,6 +138,12 @@ const styles = (token: GlobalToken, prefixCls: string, tokenExt: Partial<ThemeCo
     line-height: 48px;
     text-align: left;
     box-shadow: inset 0px 1px 0px 0px ${tokenExt.colorGreyL1};
+  }
+
+  .${prefixCls}-menu-item-group
+    .${prefixCls}-menu-item-group-list
+    .${prefixCls}-menu-submenu-title {
+    padding-inline: 28px 30px;
   }
 
   .${prefixCls}-layout-sider-collapsed {

@@ -1,8 +1,6 @@
-import { Typography } from 'antd';
 import type { ItemType, MenuDividerType, MenuItemType, SubMenuType } from 'antd/es/menu/interface';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import useDebounceFn from '../../utils/useDebounceFn';
-import CollapsedMenuItem from '../components/CollapsedMenuItem';
 import type { IBaseMenuInfo, LayoutProps, MenuType, SelectInfo, Tabbar } from '../types';
 import useLatest from './useLatest';
 import useMergeState from './useMergeState';
@@ -462,48 +460,12 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
     };
   }, [historyRef, activeMenu, addTab]);
 
-  // 侧边栏的label处理，根据是否收起显示不同的label
-  const menuByCollapsed = useMemo(
-    () =>
-      menu?.map(item => {
-        if (isMenu(item)) {
-          const { icon, label, ...rest } = item;
-          if (collapsed) {
-            return {
-              ...rest,
-              label: React.createElement(CollapsedMenuItem, { icon, label }),
-            };
-          }
-          return {
-            ...item,
-            label: React.createElement(
-              Typography.Text,
-              {
-                ellipsis: { tooltip: { placement: 'right' } },
-                style: {
-                  display: 'block',
-                  width: '100%',
-                  fontSize: 'inherit',
-                  color: 'inherit',
-                  lineHeight: 'inherit',
-                },
-              },
-              label,
-            ),
-          };
-        }
-        return item;
-      }),
-    [menu, collapsed],
-  );
-
   return {
     navbar,
     selectedNav,
     onSelectedNav,
     activeNav,
     menu,
-    menuByCollapsed,
     openKeys,
     selectedMenu,
     onSelectedMenu,
