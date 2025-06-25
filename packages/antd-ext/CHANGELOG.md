@@ -1,3 +1,6 @@
+## 1.5.3
+1. LayoutExt 中 hermes 主题菜单项超长时支持tooltips
+
 ## 1.5.2
 1. 修正了 TreeExt 组件的样式问题；
 

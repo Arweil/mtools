@@ -8,6 +8,7 @@ import TriggerElement from '../components/TriggerElement';
 import { LayoutContext } from '../context';
 import useMenu from '../hooks/useMenu';
 import type { LayoutProps } from '../types';
+import { processZeusMenuLabels } from '../utils';
 
 const { Sider, Header, Content } = Layout;
 
@@ -46,7 +47,7 @@ const LayoutZeus: React.FC<LayoutProps> = React.forwardRef((props, ref) => {
     selectedNav,
     onSelectedNav,
     activeNav,
-    menuByCollapsed,
+    menu,
     openKeys,
     selectedMenu,
     onSelectedMenu,
@@ -59,6 +60,8 @@ const LayoutZeus: React.FC<LayoutProps> = React.forwardRef((props, ref) => {
     removeTab,
     setOpenKey,
   } = useMenu({ ...props, needMenuGroup: false, hasNavbar: true }, collapsed);
+
+  const menuByCollapsed = useMemo(() => processZeusMenuLabels(menu, collapsed), [menu, collapsed]);
 
   const layoutProviderValue = useMemo(
     () => ({
