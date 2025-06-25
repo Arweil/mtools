@@ -7,7 +7,7 @@ import type { Configuration, RuleSetRule } from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import merge from 'webpack-merge';
 import type { CssLoaderOptions, JaraxxusConfig } from '../../types';
-import { resolveApp } from '../utils';
+import { isString, resolveApp } from '../utils';
 import GenerateAssetPlugin from './generate-asset-plugin';
 
 const imageInlineSizeLimit = 10000;
@@ -99,13 +99,13 @@ export default function (
 
   const webpackConfig: Configuration = {
     mode: webpackEnv,
-    // stats: 'none',
+    stats: 'errors-only',
     devtool: isEnvProduction
       ? productionSourceMap
         ? 'source-map'
         : false
       : isEnvDevelopment && 'cheap-module-source-map',
-    entry,
+    entry: isString(entry) ? resolveApp(entry) : entry,
     output: {
       publicPath,
       path: resolveApp(outputDir),
@@ -125,9 +125,12 @@ export default function (
     //     config: [__filename],
     //   },
     // },
-    infrastructureLogging: {
-      level: 'none',
-    },
+    infrastructureLogging: isEnvDevelopment
+      ? {
+          level: 'info',
+          debug: ['webpack-dev-server'],
+        }
+      : undefined,
     optimization: {
       concatenateModules: bundleAnalyzerReport ? false : isEnvProduction,
       minimize: false,

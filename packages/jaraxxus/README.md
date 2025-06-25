@@ -4,10 +4,10 @@
 
 ## Usage
 
-- 创建 React 项目后，在根目录添加*jaraxxus.config.js*配置文件进行 webpack 的基本配置；（在 v4.0.0 版本后已经不需要 jaraxxus.config.js 文件了，会使用默认配置）
+- 创建 React 项目后，在根目录添加*jaraxxus.config.js*配置文件进行 webpack 的基本配置；
 - _jaraxxus start_ 命令用作 dev 环境；
 - _jaraxxus build_ 命令用作项目打包。
-- dev 环境中需要 node >= 10.X
+- dev 环境中需要 node >= 18.20
 
 ## API
 
@@ -25,19 +25,7 @@ module.exports = {
   productionSourceMap: false, // 生成环境是否需要sourcemap js
   configureWebpack: {}, // webpack 配置，最后通过webpack-merge合并配置
   bundleAnalyzerReport: false, // webpack-bundle-analyzer 是否启用
-  devServer: {
-    // 和devServer配置相同，可以全量配置
-    publicPath: '/',
-    port: 9999,
-    clientLogLevel: 'info',
-    historyApiFallback: true,
-    compress: true,
-    hot: true,
-    open: true,
-    overlay: { warnings: false, errors: true },
-    contentBase: undefined,
-    quiet: true,
-  },
+  devServer: WebpackDevServerConfiguration,
   css: {
     extract: true, // production 环境下，
     cssModules: false, // 是否启用css模块化

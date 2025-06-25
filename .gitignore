@@ -20,3 +20,5 @@ packages/mt-template-admin-hermes/*
 .dumi/tmp-production
 .idea/
 .DS_Store
+
+packages/jaraxxus/bin/*.js

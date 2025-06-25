@@ -1,3 +1,6 @@
+## v5.0.0-alpha.0
+1. webpack 4 升级到了 webpack 5
+
 ## v4.2.2
 1. 修复了配置中 css.extract 的问题
 
