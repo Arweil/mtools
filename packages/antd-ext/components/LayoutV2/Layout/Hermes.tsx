@@ -9,6 +9,7 @@ import { LayoutContext } from '../context';
 import useMenu from '../hooks/useMenu';
 import { headerExtraStyle, tabStyle } from '../styles/layoutHermes';
 import type { LayoutProps } from '../types';
+import { processHermesMenuLabels } from '../utils';
 
 const { Sider, Header, Content } = Layout;
 
@@ -42,6 +43,12 @@ const LayoutHermes: React.FC<LayoutProps> = props => {
     removeTab,
     setOpenKey,
   } = useMenu(props, collapsed);
+
+  // 处理菜单标签，Hermes主题特殊处理
+  const menuByCollapsed = useMemo(
+    () => processHermesMenuLabels(menu, collapsed),
+    [menu, collapsed],
+  );
 
   const layoutProviderValue = useMemo(
     () => ({
@@ -90,7 +97,7 @@ const LayoutHermes: React.FC<LayoutProps> = props => {
             openKeys={openKeys}
             inlineIndent={16}
             selectedKeys={selectedMenu}
-            items={menu}
+            items={menuByCollapsed}
             onOpenChange={onMenuOpenChange}
             onClick={onSelectedMenu}
           />

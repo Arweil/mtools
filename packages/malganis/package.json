@@ -1,6 +1,6 @@
 {
   "name": "malganis",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "description": "",
   "main": "./lib/index.js",
   "browser": "./lib/index.js",
@@ -33,6 +33,7 @@
     "npm": ">=7.0.0"
   },
   "dependencies": {
+    "@types/react-router-dom": "^5.1.9",
     "history": "^4.10.1",
     "mobx": "^6.3.3",
     "mobx-react": "7.6.0",
@@ -49,7 +50,6 @@
     "@rollup/plugin-typescript": "^8.2.5",
     "@types/react": "^17.0.21",
     "@types/react-dom": "^17.0.9",
-    "@types/react-router-dom": "^5.1.9",
     "rimraf": "^3.0.2",
     "rollup": "^2.56.3"
   }

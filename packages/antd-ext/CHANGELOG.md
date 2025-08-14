@@ -1,3 +1,15 @@
+## 1.5.4
+1. 升级了 antd 的版本，从 5.25.1 ~> 5.25.4
+
+## 1.5.3
+1. LayoutExt 中 hermes 主题菜单项超长时支持tooltips
+
+## 1.5.2
+1. 修正了 TreeExt 组件的样式问题；
+
+## 1.5.1
+1. 修正了 LayoutExt 在应用层删除tab，组件内部处理 activeKey 的逻辑问题；
+
 ## 1.5.0
 1. 升级了 antd 的版本，从 5.19.0 ~> 5.25.1
 2. 新增了 LayoutExt 中菜单项的 navigationMode 属性，用来控制菜单项的打开方式
