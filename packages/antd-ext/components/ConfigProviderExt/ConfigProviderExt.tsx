@@ -11,7 +11,7 @@ import { AntdExtGlobalContext } from './context';
 export interface ConfigProviderExtProps extends ConfigProviderProps {
   children?: React.ReactNode;
   themeExt?: Theme;
-  tokenExt?: ThemeColor;
+  tokenExt?: Partial<ThemeColor>;
 }
 
 type GlobalConfigProps = Parameters<(typeof ConfigProvider)['config']>[0];
