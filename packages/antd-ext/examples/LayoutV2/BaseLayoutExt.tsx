@@ -1,16 +1,12 @@
 import { css as reactcss, Global } from '@emotion/react';
 import { BaseLayoutExt, Flex } from '@m-tools/antd-ext';
 import type { ITab } from '@m-tools/antd-ext/LayoutExt/LayoutHermesExt';
-import React, { useEffect, useState } from 'react';
-import menu from './menu.json';
+import type { IBaseMenuInfo } from '@m-tools/antd-ext/LayoutV2/types';
+import { Button } from 'antd';
+import React, { useCallback, useEffect, useState } from 'react';
+import menuData from './menu.json';
 
-type MenuItem = {
-  url: string;
-  name: string;
-  children?: MenuItem[];
-};
-
-function findNodeByUrl(menuTree: MenuItem[], targetUrl: string): MenuItem | null {
+function findNodeByUrl(menuTree: IBaseMenuInfo[], targetUrl: string): IBaseMenuInfo | null {
   for (const item of menuTree) {
     if (item.url === targetUrl) {
       return item; // 直接匹配到目标URL时返回节点
@@ -32,6 +28,33 @@ export default function Index() {
   const [layoutSelectedKeys, setSelectedKeys] = useState<string[]>();
   const [tabs, setTabs] = useState<ITab[]>([]);
   const [tabActive, setTabActive] = useState<string | number>('');
+  const [menu, setMenu] = useState<IBaseMenuInfo[]>(menuData as IBaseMenuInfo[]);
+
+  // 递归更新菜单项名称的函数
+  const updateMenuNames = useCallback((menuItems: IBaseMenuInfo[]): IBaseMenuInfo[] => {
+    return menuItems.map(item => ({
+      ...item,
+      name: `${item.name}-edit`,
+      children: item.children ? updateMenuNames(item.children) : [],
+    }));
+  }, []);
+
+  // 处理编辑按钮点击事件
+  const handleEditMenuNames = useCallback(() => {
+    const updatedMenu = updateMenuNames(menu);
+    setMenu(updatedMenu);
+
+    // 更新当前 tabs 的 label，根据 code 匹配菜单中的 name
+    setTabs(prevTabs =>
+      prevTabs.map(tab => {
+        const node = findNodeByUrl(updatedMenu, String(tab.code));
+        return {
+          ...tab,
+          label: String(node?.name || tab.label),
+        };
+      }),
+    );
+  }, [updateMenuNames, menu]);
 
   useEffect(() => {
     // setTimeout(() => {
@@ -82,7 +105,15 @@ export default function Index() {
           );
         }}
         headerExtra={
-          <div style={{ display: 'flex', color: '#FFF', marginRight: 8 }}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'flex-end',
+              color: '#FFF',
+              marginRight: 8,
+              gap: 12,
+            }}
+          >
             <div>超级管理员</div>
           </div>
         }
@@ -110,7 +141,7 @@ export default function Index() {
               ...tabs,
               {
                 code: key,
-                label: node.name,
+                label: String(node?.name || ''),
               },
             ]);
           }
@@ -118,7 +149,11 @@ export default function Index() {
           setTabActive(key);
           setSelectedKeys(keys);
         }}
-      />
+      >
+        <Button type="primary" size="small" onClick={handleEditMenuNames}>
+          编辑菜单
+        </Button>
+      </BaseLayoutExt>
     </>
   );
 }

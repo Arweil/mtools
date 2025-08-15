@@ -218,11 +218,9 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
       type: needMenuGroup ? 'group' : 'item',
     })) as MenuType;
     // 选中项和当前选中项一致则不处理
-    if (navKey !== selectedNav[0]) {
-      setSelectedNav([navKey]);
-      // 更新二级菜单信息
-      setMenu(newMenu);
-    }
+    if (navKey !== selectedNav[0]) setSelectedNav([navKey]);
+    // 更新二级菜单信息
+    if (newMenu !== menu) setMenu(newMenu);
     return newMenu;
   });
 
@@ -416,19 +414,33 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
     [onNavChangeMemo, findLeafMenu, activeMenu, addTab, onSelectMemo, autoSelectFirstMenuOnNavbar],
   );
 
-  // 初始化
+  // 更新tabbar信息
+  const updateTabbar = useLatest(() => {
+    if (!tabbar.length) return;
+    const newTabbar: Tabbar[] = tabbar.map(item => {
+      const label =
+        ((findMenuInfo(item.key, preprocessMenu) as Exclude<ItemType, MenuDividerType>)
+          ?.label as string) || item.label;
+      return { ...item, label };
+    });
+    setTabbar(newTabbar);
+  });
+
+  // 初始化（监听菜单数据源变化）
   useEffect(() => {
     if (preprocessMenu?.length > 0) {
       // 导航栏
       const newNavbar = getNavbar(preprocessMenu);
       setNavbar(newNavbar);
+      // 如果存在tabbar，更新tabbar数据
+      updateTabbar();
       // 菜单、tab激活
       const { pathname, search } = location;
       const activeKey = `${pathname}${search}`;
       activeMenu(activeKey);
       addTab(activeKey);
     }
-  }, [activeMenu, addTab, preprocessMenu]);
+  }, [activeMenu, addTab, updateTabbar, preprocessMenu]);
 
   // 监听地址变化激活菜单及tabbar
   useEffect(() => {

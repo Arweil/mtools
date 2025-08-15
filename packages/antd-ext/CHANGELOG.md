@@ -1,3 +1,7 @@
+## 1.5.5
+1. 修正了 LayoutExt menu 状态为受控的；
+2. 修正了 ConfigProviderExt 的 tokenExt 类型；
+
 ## 1.5.4
 1. 升级了 antd 的版本，从 5.25.1 ~> 5.25.4
 
