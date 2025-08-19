@@ -1,5 +1,6 @@
 import { createFromIconfontCN } from '@ant-design/icons';
 import { Button, ConfigProviderExt, LayoutExt, Space } from '@m-tools/antd-ext';
+import type { LayoutV2Props } from '@m-tools/antd-ext/LayoutV2/types';
 import React from 'react';
 import logo from './logo.png';
 
@@ -7,7 +8,7 @@ const IconFont = createFromIconfontCN({
   scriptUrl: ['//at.alicdn.com/t/c/font_4484456_l3b00arq9u.js'],
 });
 
-const menuData = [
+const menuData: LayoutV2Props['menu'] = [
   {
     key: '/first-level01',
     label: '一级菜单01',
@@ -104,10 +105,6 @@ const menuData = [
   {
     key: '/first-level13',
     label: '一级菜单13',
-  },
-  {
-    key: '/first-level13',
-    label: '一级菜单113',
   },
   {
     key: '/first-level23',

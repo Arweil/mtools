@@ -1,58 +1,7 @@
 import type { GlobalToken } from 'antd';
-import type React from 'react';
 import type { ThemeColor } from '../../theme/type';
+import { mtPrefixCls } from '../../utils/config';
 import { css } from '../../utils/emotion';
-
-export interface ThemeProps {
-  children: React.ReactNode;
-}
-
-export const tabItemStyle = css`
-  height: 32px;
-  min-width: 100px;
-  line-height: 32px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #646a73;
-  border-radius: 20px;
-  font-size: 14px;
-  &:hover {
-    color: #3370ff;
-    background: #eff4ff;
-
-    span:first-child {
-      margin-left: 6px;
-    }
-
-    span:last-child {
-      display: inline-flex;
-    }
-  }
-`;
-
-export const tabItemActiveStyle = css`
-  background: #eff4ff;
-  color: #3370ff;
-  span:first-child {
-    margin-left: 6px;
-  }
-  span:last-child {
-    display: inline-flex;
-  }
-`;
-
-export const tabStyle = (token: GlobalToken, prefixCls: string, mtPrefixCls: string) => css`
-  &.${prefixCls}-${mtPrefixCls}-tabs {
-    display: flex;
-    flex: 1;
-    gap: 4px;
-    align-items: center;
-    padding: 8px 0;
-    overflow: auto;
-  }
-`;
 
 export const headerExtraStyle = css`
   display: flex;
@@ -72,6 +21,9 @@ const styles = (token: GlobalToken, prefixCls: string, tokenExt: Partial<ThemeCo
   }
 
   .${prefixCls}-layout-header {
+    height: auto;
+    min-height: 56px;
+    line-height: unset;
     background-color: ${tokenExt.colorWhite} !important;
     border-top-left-radius: 16px;
     padding-inline: 20px;
@@ -151,6 +103,119 @@ const styles = (token: GlobalToken, prefixCls: string, tokenExt: Partial<ThemeCo
       display: none;
     }
   }
+
+  .${prefixCls}-${mtPrefixCls}-header-extra-wrap {
+    z-index: 1;
+    height: 100%;
+
+    &.canScroll {
+      box-shadow: -2px 0px 4px -1px rgba(146, 149, 163, 0.18);
+    }
+  }
 `;
 
 export default styles;
+
+// --------------------------tabbar style--------------------------
+
+const wrap = css`
+  position: relative;
+  width: 100%;
+  padding: 14px 0 10px;
+  background-color: #eef4ff;
+  background: #ffffff;
+  border-radius: 16px 0px 0px 0px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  white-space: nowrap;
+`;
+
+const leftBtn = css`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 28px;
+  padding-left: 7px;
+  z-index: 1;
+  cursor: pointer;
+`;
+
+const rightBtn = css`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  width: 28px;
+  padding-right: 7px;
+  z-index: 1;
+  text-align: right;
+  cursor: pointer;
+`;
+
+const list = css`
+  gap: 4px;
+`;
+
+const tab = css`
+  position: relative;
+  padding: 6px 22px;
+  line-height: normal;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 20px;
+  font-size: 14px;
+`;
+
+const selected = css`
+  position: relative;
+  background: #eff4ff;
+  font-weight: bold;
+  color: #3370ff;
+  line-height: 20px;
+  border-radius: 20px;
+  z-index: 1;
+
+  .close {
+    display: block;
+  }
+
+  .tab {
+    padding: 6px 13px 6px 15px;
+  }
+`;
+
+const tabNode = css`
+  color: #646a73;
+
+  :hover {
+    ${selected};
+    z-index: 0;
+    color: #646a73;
+    font-weight: unset;
+    background: #f2f3f5;
+  }
+
+  .close {
+    display: none;
+  }
+`;
+
+const close = css`
+  margin-left: 7px;
+  font-size: 9px;
+`;
+
+const tabbarStyle = {
+  wrap,
+  leftBtn,
+  rightBtn,
+  list,
+  tab,
+  tabNode,
+  selected,
+  close,
+};
+
+export { tabbarStyle };

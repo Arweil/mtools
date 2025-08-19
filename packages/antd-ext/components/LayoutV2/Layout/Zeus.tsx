@@ -7,6 +7,7 @@ import TabBar from '../components/TabBar';
 import TriggerElement from '../components/TriggerElement';
 import { LayoutContext } from '../context';
 import useMenu from '../hooks/useMenu';
+import { tabbarStyle } from '../styles/layoutZeus';
 import type { LayoutProps } from '../types';
 import { processZeusMenuLabels } from '../utils';
 
@@ -80,6 +81,7 @@ const LayoutZeus: React.FC<LayoutProps> = React.forwardRef((props, ref) => {
 
   const tabbarContent = headerContent || (
     <TabBar
+      styles={tabbarStyle}
       tabbar={tabbar}
       selected={selectedTabbar}
       onSelect={onSelectTarbar}
