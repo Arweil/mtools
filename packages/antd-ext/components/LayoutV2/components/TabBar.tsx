@@ -21,7 +21,7 @@ function TabBar(props: {
 }) {
   const { tabbar, selected, showScrollBtn = true, styles, onSelect, onRemove, onCanScroll } = props;
   const [transform, setTransform] = useState(0);
-  const prevTabbarLengthRef = useRef(tabbar.length); // 记录上一次 tabbar 的长度
+  const prevTabbarRef = useRef(tabbar); // 记录上一次 tabbar 数据
   const scrollToEndRef = useRef(false); // 标记需要滚动到末尾
   const adjustPositionRef = useRef(false); // 标记需要调整位置
   const tabRefs = useRef<Map<string, HTMLDivElement>>(new Map()); // 存储每个tab的ref
@@ -42,22 +42,17 @@ function TabBar(props: {
   });
 
   // 确保选中的tab在可视区域内
-  const scrollToSelectedTab = (data: { targetKey?: string } = {}) => {
-    const { targetKey = selected } = data;
+  const scrollToSelectedTab = () => {
     const transformMin = getTransformMin();
 
-    const selectedTabElement = tabRefs.current.get(targetKey);
+    const selectedTabElement = tabRefs.current.get(selected);
     if (!selectedTabElement || !wrapperRef.current) return;
 
     const wrapperRect = wrapperRef.current.getBoundingClientRect();
-    const tabListRect = tabListRef.current?.getBoundingClientRect();
     const tabRect = selectedTabElement.getBoundingClientRect();
 
     const wrapperWidth = wrapperRect.width ?? 0;
-    const tabListWidth = tabListRect.width ?? 0;
     const tabWidth = tabRect.width ?? 0;
-
-    if (!(wrapperWidth <= tabListWidth)) return;
 
     // 计算tab相对于容器的位置
     const tabLeft = tabRect.left - wrapperRect.left; // tab左边缘相对于容器的位置
@@ -97,21 +92,32 @@ function TabBar(props: {
 
   // 监听 tabbar 数量变化
   useEffect(() => {
-    if (tabbar.length !== prevTabbarLengthRef.current) {
-      if (tabbar.length > prevTabbarLengthRef.current) {
+    const preTabbar = prevTabbarRef.current;
+    const prevTabbarLength = preTabbar.length;
+
+    const preTabbarContent = preTabbar.map(item => item.label).join('');
+    const tabbarContent = tabbar.map(item => item.label).join('');
+
+    if (tabbar.length !== prevTabbarLength || preTabbarContent !== tabbarContent) {
+      if (tabbar.length > prevTabbarLength) {
         // 新增 tab，标记需要滚动到末尾
         scrollToEndRef.current = true;
       } else {
-        // 删除 tab，标记需要调整位置
+        // 删除 tab 或者内容变更，标记需要调整位置
         adjustPositionRef.current = true;
       }
-      prevTabbarLengthRef.current = tabbar.length;
+      prevTabbarRef.current = tabbar;
     }
-  }, [tabbar.length]);
+  }, [tabbar]);
+
+  // 选中的 tab 发生变化，调整位置
+  useEffect(() => {
+    scrollToSelectedTab();
+  }, [selected]);
 
   const onWrapResize: OnResize = () => {
     // 容器大小变化后，重新定位选中的tab
-    requestAnimationFrame(() => scrollToSelectedTab());
+    scrollToSelectedTab();
   };
 
   const onListResize: OnResize = () => {
@@ -122,20 +128,14 @@ function TabBar(props: {
       scrollToEndRef.current = false;
     }
 
-    // 删除 tab，调整位置
+    // 删除 tab 或者内容变更，调整位置
     if (adjustPositionRef.current) {
-      setTransform(prev => alignInRange(prev));
+      scrollToSelectedTab();
       adjustPositionRef.current = false;
     }
 
     // 通知父组件内容是否可以滚动
     onCanScroll?.(transformMin < 0);
-  };
-
-  const onSelectTab = (key: string) => {
-    onSelect(key);
-
-    requestAnimationFrame(() => scrollToSelectedTab({ targetKey: key }));
   };
 
   const onClose = (e: React.MouseEvent, key: string) => {
@@ -168,7 +168,7 @@ function TabBar(props: {
         [styles.selected]: selected === item.key,
         [styles.tabNode]: selected !== item.key,
       })}
-      onClick={() => onSelectTab(item.key)}
+      onClick={() => onSelect(item.key)}
     >
       <Flex className={cx('tab', styles.tab)} align="center">
         {item.label}

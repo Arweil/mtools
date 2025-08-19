@@ -116,7 +116,10 @@ const LayoutHermes: React.FC<LayoutProps> = props => {
           />
         </Sider>
         <Layout>
-          <Header style={{ backgroundColor: token.colorBgContainer }} className={headerExtraStyle}>
+          <Header
+            style={{ backgroundColor: token.colorBgContainer }}
+            className={headerExtraStyle(prefixCls)}
+          >
             {tabbarContent}
             {headerExtra && (
               <div

@@ -3,10 +3,20 @@ import type { ThemeColor } from '../../theme/type';
 import { mtPrefixCls } from '../../utils/config';
 import { css } from '../../utils/emotion';
 
-export const headerExtraStyle = css`
+export const headerExtraStyle = (prefixCls: string) => css`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  .${prefixCls}-${mtPrefixCls}-header-extra-wrap {
+    z-index: 1;
+    flex-shrink: 0;
+    height: 100%;
+
+    &.canScroll {
+      box-shadow: -2px 0px 4px -1px rgba(146, 149, 163, 0.18);
+    }
+  }
 `;
 
 const styles = (token: GlobalToken, prefixCls: string, tokenExt: Partial<ThemeColor>) => css`
@@ -103,15 +113,6 @@ const styles = (token: GlobalToken, prefixCls: string, tokenExt: Partial<ThemeCo
       display: none;
     }
   }
-
-  .${prefixCls}-${mtPrefixCls}-header-extra-wrap {
-    z-index: 1;
-    height: 100%;
-
-    &.canScroll {
-      box-shadow: -2px 0px 4px -1px rgba(146, 149, 163, 0.18);
-    }
-  }
 `;
 
 export default styles;
@@ -122,8 +123,6 @@ const wrap = css`
   position: relative;
   width: 100%;
   padding: 14px 0 10px;
-  background-color: #eef4ff;
-  background: #ffffff;
   border-radius: 16px 0px 0px 0px;
   overflow-x: auto;
   overflow-y: hidden;
