@@ -1,3 +1,6 @@
+## 1.5.6
+1. 修复了 hermes 主题下的顶部菜单问题；
+
 ## 1.5.5
 1. 修正了 LayoutExt menu 状态为受控的；
 2. 修正了 ConfigProviderExt 的 tokenExt 类型；
