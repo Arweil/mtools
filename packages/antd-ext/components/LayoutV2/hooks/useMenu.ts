@@ -1,4 +1,4 @@
-import type { ItemType, MenuDividerType, MenuItemType, SubMenuType } from 'antd/es/menu/interface';
+import type { ItemType, MenuDividerType, MenuItemType } from 'antd/es/menu/interface';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import useDebounceFn from '../../utils/useDebounceFn';
 import type { IBaseMenuInfo, LayoutProps, MenuType, SelectInfo, Tabbar } from '../types';
@@ -44,8 +44,28 @@ function findMenuInfo(key: string, menu?: MenuType): MenuType[number] {
   return undefined;
 }
 
-function isMenu(menu: ItemType): menu is MenuItemType | SubMenuType {
-  return 'key' in menu && 'label' in menu;
+/**
+ * 过滤菜单中的某一个属性
+ * @param menu
+ * @param key
+ * @returns
+ */
+function filterAttr(menu: MenuType | undefined, key: string | string[]): MenuType {
+  const filter = (subMenu: MenuType | undefined) => {
+    return subMenu?.map(item => {
+      if (Array.isArray(key)) {
+        key.forEach(k => {
+          if (item[k]) delete item[k];
+        });
+      } else {
+        if (item[key]) delete item[key];
+      }
+      if ('children' in item) item.children = filter(item.children);
+      return item;
+    });
+  };
+
+  return filter(menu);
 }
 
 /**
@@ -211,7 +231,8 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
     // 如果找不到默认打开第一个
     const navKey = (findKeyPath(selected, preprocessMenu)?.[0] ?? preprocessMenu[0]?.key) as string;
     // 是否需要一级导航
-    let newMenu = hasNavbar ? getMenu(preprocessMenu, navKey) : preprocessMenu;
+    const filterMenu = filterAttr(preprocessMenu, 'navigationMode');
+    let newMenu = hasNavbar ? getMenu(filterMenu, navKey) : filterMenu;
     // 左侧菜单分组
     newMenu = newMenu?.map(itm => ({
       ...itm,
@@ -465,7 +486,7 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
 
     return () => {
       if (innerHistory) {
-        unlisten();
+        unlisten?.();
       } else {
         window.removeEventListener('popstate', callback);
       }
