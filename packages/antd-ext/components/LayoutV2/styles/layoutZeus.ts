@@ -310,7 +310,7 @@ const selected = css`
   }
 `;
 
-const tabNode = css`
+const tabWrap = css`
   :hover {
     ${selected};
     z-index: 0;
@@ -335,6 +335,6 @@ const close = css`
   font-size: 10px;
 `;
 
-const tabbarStyle = { wrap, leftBtn, rightBtn, list, tab, tabNode, selected, close };
+const tabbarStyle = { wrap, leftBtn, rightBtn, list, tab, tabWrap, selected, close };
 
 export { tabbarStyle };

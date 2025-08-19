@@ -185,8 +185,9 @@ const selected = css`
   }
 `;
 
-const tabNode = css`
+const tabWrap = css`
   color: #646a73;
+  border-radius: 20px;
 
   :hover {
     ${selected};
@@ -212,7 +213,7 @@ const tabbarStyle = {
   rightBtn,
   list,
   tab,
-  tabNode,
+  tabWrap,
   selected,
   close,
 };

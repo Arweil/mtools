@@ -3,6 +3,7 @@ import { Flex } from 'antd';
 import type { OnResize } from 'rc-resize-observer';
 import ResizeObserver from 'rc-resize-observer';
 import React, { useEffect, useRef, useState } from 'react';
+import { usePrefixCls } from '../../utils';
 import { cx } from '../../utils/emotion';
 import useLatest from '../hooks/useLatest';
 import useMove from '../hooks/useMove';
@@ -29,6 +30,8 @@ function TabBar(props: {
   const tabListRef = useRef<HTMLDivElement>(null);
   const leftBtnRef = useRef<HTMLDivElement>(null);
   const rightBtnRef = useRef<HTMLDivElement>(null);
+
+  const { prefixCls, mtPrefixCls } = usePrefixCls();
 
   // 获取 transform 的极限值（向左极限，负值）
   const getTransformMin = () => {
@@ -164,13 +167,14 @@ function TabBar(props: {
         }
       }}
       aria-selected={selected === item.key}
-      className={cx({
-        [styles.selected]: selected === item.key,
-        [styles.tabNode]: selected !== item.key,
-      })}
+      className={cx(
+        selected === item.key
+          ? `${styles.selected} ${prefixCls}-${mtPrefixCls}-tab-selected`
+          : `${styles.tabWrap} ${prefixCls}-${mtPrefixCls}-tab-wrap`,
+      )}
       onClick={() => onSelect(item.key)}
     >
-      <Flex className={cx('tab', styles.tab)} align="center">
+      <Flex className={cx(`${prefixCls}-${mtPrefixCls}-tab`, styles.tab)} align="center">
         {item.label}
         {tabbar.length > 1 ? (
           <CloseOutlined
@@ -184,7 +188,10 @@ function TabBar(props: {
 
   return (
     <ResizeObserver onResize={onWrapResize}>
-      <div className={styles.wrap} ref={wrapperRef}>
+      <div
+        className={cx(styles.wrap, `${prefixCls}-${mtPrefixCls}-layout-tabbar`)}
+        ref={wrapperRef}
+      >
         <Flex
           className={styles.leftBtn}
           align="center"
