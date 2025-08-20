@@ -1,9 +1,8 @@
-import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { Space, TableExt, Typography } from '@m-tools/antd-ext';
-import { pager } from '../mock';
 import type { ColumnsTypeExt } from '@m-tools/antd-ext/TableExt/TableExt';
-import empty from 'antd/es/empty';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import type { IDataSource } from '../mock';
+import { pager } from '../mock';
 
 export default function TableExtBackEnd() {
   const [dataSource, setDataSource] = useState<IDataSource[]>([]);
@@ -20,7 +19,6 @@ export default function TableExtBackEnd() {
         return;
       }
 
-      console.log(res);
       setCurrent(res.result.current);
       setPageSize(res.result.size);
       setTotal(res.result.total);
@@ -83,7 +81,7 @@ export default function TableExtBackEnd() {
       columns={cols}
       dataSource={dataSource}
       scroll={scroll ? { x: 1000 } : {}}
-      emptyDesc={empty ? '自定义的为空文案' : undefined}
+      emptyDesc="自定义的为空文案"
       pagination={{
         current,
         pageSize,

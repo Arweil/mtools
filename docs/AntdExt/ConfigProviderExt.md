@@ -5,6 +5,9 @@ toc: menu
 
 # ConfigProviderExt
 
+## 示例
+<code src="../../packages/antd-ext/examples/ConfigProviderExt/index.tsx"></code>
+
 ## API
 在原有的属性上新增了如下属性：
 | 属性 | 说明 | 类型 | 默认值 | 版本 |

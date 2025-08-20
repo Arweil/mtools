@@ -1,10 +1,12 @@
 import type { GlobalToken } from 'antd';
 import { Empty, Skeleton, Table, Typography } from 'antd';
+import { useLocale } from 'antd/es/locale';
 import type { ColumnType, TablePaginationConfig, TableProps } from 'antd/es/table';
 import type { TooltipProps } from 'antd/es/tooltip';
 import type { SpinProps } from 'antd/lib/spin';
 import classNames from 'classnames';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import type { PaginationLocaleExt } from '../locale/interface';
 import { usePrefixCls } from '../utils';
 import { css } from '../utils/emotion';
 import { debounce } from '../utils/useDebounceFn';
@@ -95,11 +97,14 @@ export function SkeletonItem() {
 export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
   props: TableExtProps<RecordType>,
 ) {
+  const [localTable] = useLocale('Table');
+  const [localPagination] = useLocale('Pagination');
+
   const {
     columns,
     dataSource,
     tdTooltip,
-    emptyDesc = '暂无数据',
+    emptyDesc,
     loading,
     useSkeleton = false,
     useEmpty = false,
@@ -251,8 +256,13 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
   }, [cellEllipsisRows, columns, fetching, tdTooltip]);
 
   const EmptyText = useMemo(
-    () => <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={emptyDesc} />,
-    [emptyDesc],
+    () => (
+      <Empty
+        image={Empty.PRESENTED_IMAGE_SIMPLE}
+        description={emptyDesc || (localTable.emptyText as string)}
+      />
+    ),
+    [emptyDesc, localTable.emptyText],
   );
 
   const pager: TablePaginationConfig | false | undefined = useMemo(() => {
@@ -271,20 +281,26 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
     const total = (pagination && pagination.total) || (finDataSource && finDataSource.length) || 0;
 
     const firstPageMax =
-      (pagination && pagination.pageSizeOptions && Number(pagination.pageSizeOptions[0])) || 10;
+      (pagination && pagination.pageSizeOptions && Number(pagination.pageSizeOptions[0])) ||
+      (pagination && pagination.pageSize) ||
+      10;
 
     if (total > firstPageMax) {
       return {
         showQuickJumper: true,
         showSizeChanger: true,
         pageSizeOptions: [10, 20, 50, 100],
-        showTotal: () => `共${total}条数据`,
+        showTotal: (totalCount: number) => {
+          const template =
+            (localPagination as PaginationLocaleExt).showTotalTemplate || '共${total}条数据';
+          return template.replace('${total}', totalCount.toString());
+        },
         ...pagination,
       };
     }
 
     return false;
-  }, [pagination, finDataSource, hasData]);
+  }, [pagination, finDataSource, hasData, localPagination]);
 
   if (((finDataSource && finDataSource.length > 0) || !useSkeleton) && !useEmpty) {
     return (
@@ -315,7 +331,7 @@ export default function TableExt<RecordType extends { $$mock?: boolean } = any>(
         `${prefixCls}-${mtPrefixCls}-table-empty`,
       )}
     >
-      {emptyDesc}
+      {emptyDesc || (localTable.emptyText as string)}
     </div>
   );
 }

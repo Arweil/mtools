@@ -1,5 +1,6 @@
 import type { DrawerProps } from 'antd';
 import { Drawer, Space } from 'antd';
+import { useLocale } from 'antd/es/locale';
 import React from 'react';
 import ButtonExt from '../ButtonExt';
 import type { ButtonExtMixinProps } from '../ButtonExt/Mix';
@@ -19,11 +20,13 @@ interface _DrawerExtProps extends DrawerProps {
 export type DrawerExtProps = Omit<_DrawerExtProps, 'onClose'>;
 
 export default function DrawerExt(props: DrawerExtProps) {
+  const [localModal] = useLocale('Modal');
+
   const {
-    cancelText = '取消',
+    cancelText,
     cancelButtonProps,
     onCancel = () => undefined,
-    okText = '确定',
+    okText,
     okButtonProps,
     onOk = () => undefined,
     children,
@@ -40,10 +43,10 @@ export default function DrawerExt(props: DrawerExtProps) {
         <div style={{ textAlign: 'right', ...footerStyle }}>
           <Space size={8}>
             <ButtonExt isAsyncClick {...cancelButtonProps} onClick={onCancel}>
-              {cancelText}
+              {cancelText || localModal.cancelText}
             </ButtonExt>
             <ButtonExt isAsyncClick debounce type="primary" {...okButtonProps} onClick={onOk}>
-              {okText}
+              {okText || localModal.okText}
             </ButtonExt>
           </Space>
         </div>

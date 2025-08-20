@@ -1,5 +1,3 @@
-import en_US from 'antd/es/locale/en_US';
-import zh_CN from 'antd/es/locale/zh_CN';
 import ButtonExt, { BaseButtonExt } from './ButtonExt';
 import { BaseCascaderExt } from './CascaderExt';
 import ConfigProviderExt from './ConfigProviderExt';
@@ -18,6 +16,8 @@ import {
 } from './InputExt';
 import LayoutExt from './LayoutV2';
 import BaseLayoutExt from './LayoutV2/Layout/Hermes';
+import en_US from './locale/en_US';
+import zh_CN from './locale/zh_CN';
 import ModalExt from './ModalExt';
 import notificationExt from './Notification';
 import { BaseProInputNumber, ProInputNumber, ProInputNumberOutLine } from './ProInputNumber';
@@ -78,4 +78,4 @@ export {
 export const locale = {
   zh_CN,
   en_US,
-};
+} as const;
