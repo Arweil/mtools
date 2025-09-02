@@ -1,3 +1,6 @@
+## 1.5.8
+1. 新增了 TableExt 组件的 tdTooltip 属性，用于自定义表格单元格的 tooltip 样式；
+
 ## 1.5.7
 1. 抽屉（DrawerExt）和表格（TableExt）的多语言处理；
 

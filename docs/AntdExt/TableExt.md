@@ -13,6 +13,8 @@ toc: menu
 
 <code src="../../packages/antd-ext/examples/TableExt/columnsGroup"></code>
 
+<code src="../../packages/antd-ext/examples/TableExt/customTooltip"></code>
+
 ## 逻辑拓展
 在原有的Table基础上拓展了如下属性：
 | 属性 | 说明 | 类型 | 默认值 | 版本 |
@@ -21,6 +23,7 @@ toc: menu
 | emptyDesc | 没有数据展示的文案 | string | "没有数据" | 0.0.1-alpha.4 |
 | useEmpty | 没有数据始终显示“没有数据”的样式 | boolean | false | 0.6.4-alpha.0 |
 | cellEllipsisRows | 单元格最多展示的行数，超出的行数会用省略号（...）显示 | number | 1 | 0.8.3 |
+| tdTooltip | 单元格的tooltip | TooltipProps | - | 1.5.8 |
 
 在原有的列属性上拓展了如下属性：
 | 属性 | 说明 | 类型 | 默认值 | 版本 |
