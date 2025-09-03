@@ -1,3 +1,6 @@
+## 1.5.9
+1. 修复了 RangeNumberExt 组件的初始值问题；
+
 ## 1.5.8
 1. 新增了 TableExt 组件的 tdTooltip 属性，用于自定义表格单元格的 tooltip 样式；
 

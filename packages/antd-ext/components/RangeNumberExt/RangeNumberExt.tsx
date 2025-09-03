@@ -3,7 +3,7 @@ import type { InputNumberProps } from 'antd';
 import { InputNumber, Space } from 'antd';
 import { FormItemInputContext } from 'antd/es/form/context';
 import classNames from 'classnames';
-import React, { useCallback, useContext, useMemo, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { SwapRightOutlined } from '../icon';
 import { usePrefixCls } from '../utils';
 import { getRangeNumberStyle } from './style';
@@ -42,6 +42,13 @@ export default function RangeNumberExt(props: RangeNumberExtProps) {
 
   const { status: contextStatus } = useContext(FormItemInputContext);
 
+  // 同步外部value到内部状态
+  useEffect(() => {
+    if (value !== undefined) {
+      setVal(value);
+    }
+  }, [value]);
+
   const classname = useMemo(
     () =>
       classNames(
@@ -57,30 +64,22 @@ export default function RangeNumberExt(props: RangeNumberExtProps) {
 
   const onBeforeInputNumberChange = useCallback(
     (_val: ValueType | null) => {
-      if (!(value === undefined || value.length < 1 || isNoVal(value[0]))) {
-        setVal([value[0], val[1]]);
-      }
-
       const valCopy: RangeNumberVal = [...val];
       valCopy[0] = _val as number;
       setVal(valCopy);
       onChange && onChange(valCopy);
     },
-    [val, value, onChange],
+    [val, onChange],
   );
 
   const onAfterInputNumberChange = useCallback(
     (_val: ValueType | null) => {
-      if (!(value === undefined || value.length < 2 || isNoVal(value[1]))) {
-        setVal([val[0], value[1]]);
-      }
-
       const valCopy: RangeNumberVal = [...val];
       valCopy[1] = _val as number;
       setVal(valCopy);
       onChange && onChange(valCopy);
     },
-    [val, value, onChange],
+    [val, onChange],
   );
 
   const onBlur = useCallback(() => {
@@ -101,7 +100,7 @@ export default function RangeNumberExt(props: RangeNumberExtProps) {
           disabled={disabled}
           placeholder={placeholder && placeholder[0]}
           variant="borderless"
-          value={value !== undefined ? value[0] : val[0]}
+          value={val[0]}
           onChange={onBeforeInputNumberChange}
           onBlur={onBlur}
         />
@@ -113,7 +112,7 @@ export default function RangeNumberExt(props: RangeNumberExtProps) {
           disabled={disabled}
           placeholder={placeholder && placeholder[1]}
           variant="borderless"
-          value={value !== undefined ? value[1] : val[1]}
+          value={val[1]}
           onChange={onAfterInputNumberChange}
           onBlur={onBlur}
         />

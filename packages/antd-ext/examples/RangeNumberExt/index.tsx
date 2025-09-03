@@ -12,7 +12,7 @@ import {
   Row,
 } from '@m-tools/antd-ext';
 import type { FormLayout } from 'antd/es/form/Form';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 export default function App() {
   const [layout, setLayout] = useState<FormLayout>('horizontal');
@@ -32,6 +32,14 @@ export default function App() {
         : null,
     [layout],
   );
+
+  useEffect(() => {
+    form1.setFieldsValue({
+      form1: {
+        labelInsideValueB: [1],
+      },
+    });
+  }, [form1]);
 
   return (
     <ConfigProviderExt locale={locale.zh_CN} themeExt={theme}>
@@ -64,6 +72,11 @@ export default function App() {
         <Form
           form={form1}
           layout={layout === 'vertical' ? 'horizontal' : layout}
+          initialValues={{
+            form1: {
+              labelInsideValueA: [1, 20],
+            },
+          }}
           {...formItemLayoutA}
         >
           <Form.Item name={['form1', 'labelInsideValueA']}>
