@@ -59,10 +59,10 @@ export type NodeServiceConfig = {
   // 目前可以通过 window.$$_e 来获取环境，推荐使用此方法
   useCookieEnv?: boolean;
 
-  logger: {
+  logger?: {
     // default: 'console';
     category?: 'file' | 'console';
-    file: log4js.FileAppender; // 日志文件配置
+    file?: log4js.FileAppender; // 日志文件配置
   };
 
   gzip?: {
