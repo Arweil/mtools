@@ -8,7 +8,13 @@ const resolveApp = (relativePath: string) => path.resolve(appDirectory, relative
 
 export function getConfig(): NodeServiceConfig {
   const configPath = resolveApp('service.config.js');
-  const customConfig = fs.existsSync(configPath) ? require(configPath) : {};
+  const configPathCJS = resolveApp('service.config.cjs');
+  let customConfig: Partial<NodeServiceConfig> = {};
+  if (fs.existsSync(configPath)) {
+    customConfig = require(configPath);
+  } else if (fs.existsSync(configPathCJS)) {
+    customConfig = require(configPathCJS);
+  }
 
   return {
     // 针对不同的项目，有些项目是挂载在路由下，挂载在路由下的项目可以配置此属性，有些项目是挂载在域名下
@@ -29,7 +35,7 @@ export function getConfig(): NodeServiceConfig {
     port: '8080',
     apis: undefined,
     middlewares: undefined,
-    injectScript: undefined,
+    injectHtml: undefined,
     CSP: undefined,
     useCookieEnv: true,
     ...customConfig,
