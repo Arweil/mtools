@@ -1,0 +1,43 @@
+{
+  "name": "@m-tools/antd-i18n",
+  "version": "0.0.1",
+  "description": "",
+  "module": "es/index.js",
+  "types": "es/index.d.ts",
+  "scripts": {
+    "build": "father build"
+  },
+  "author": "MILK",
+  "license": "MIT",
+  "files": [
+    "es/*",
+    "package.json",
+    "README.md"
+  ],
+  "devDependencies": {
+    "@types/react": "16.8",
+    "@types/react-dom": "16.8",
+    "father": "^4.6.3",
+    "typescript": "^5.9.2"
+  },
+  "peerDependencies": {
+    "@m-tools/antd-ext": ">= 1.5.9",
+    "antd": ">= 5",
+    "react": ">= 16.8.0",
+    "react-dom": ">= 16.8.0",
+    "typescript": "^5"
+  },
+  "peerDependenciesMeta": {
+    "@m-tools/antd-ext": {
+      "optional": true
+    },
+    "antd": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "i18next": "^25.5.2",
+    "i18next-browser-languagedetector": "^8.2.0",
+    "react-i18next": "^15.7.3"
+  }
+}
