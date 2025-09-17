@@ -39,5 +39,8 @@
     "i18next": "^25.5.2",
     "i18next-browser-languagedetector": "^8.2.0",
     "react-i18next": "^15.7.3"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
