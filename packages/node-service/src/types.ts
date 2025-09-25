@@ -42,7 +42,7 @@ export type NodeServiceConfig = {
   DEPLOY_ENV: string;
 
   // 自定义node接口
-  apis?: (app: Express) => void;
+  apis?: (app: Express, log4js: log4js.Logger) => void;
 
   // 自定义中间件
   middlewares?: (app: Express) => void;

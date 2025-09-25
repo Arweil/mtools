@@ -2,6 +2,7 @@ import * as cheerio from 'cheerio';
 import type { Express } from 'express';
 import fs from 'fs';
 import path from 'path';
+import logger from './logger';
 import proxy from './proxy';
 import { appDirectory, getConfig, getEnv } from './utils';
 
@@ -14,7 +15,7 @@ export function router(app: Express) {
 
   // 自定义接口
   if (apis) {
-    apis(app);
+    apis(app, logger);
   }
 
   // 健康险检查
