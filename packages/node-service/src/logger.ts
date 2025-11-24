@@ -6,24 +6,14 @@ const { logger: loggerConfig } = getConfig();
 const initLogger = (params: { category?: 'file' | 'console'; file?: log4js.FileAppender }) => {
   const { category, file } = params;
   const { filename, ...fileRestProps } = file || {};
-  const config = {
+
+  const config: log4js.Configuration = {
     appenders: {
       console: { type: 'console' },
-      file: {
-        type: 'file',
-        maxLogSize: '100M',
-        backups: 10,
-        filename: filename ?? 'logs/app.log',
-        ...fileRestProps,
-      },
     },
     categories: {
       default: {
         appenders: ['console'],
-        level: 'debug',
-      },
-      file: {
-        appenders: ['console', 'file'],
         level: 'debug',
       },
       console: {
@@ -32,6 +22,22 @@ const initLogger = (params: { category?: 'file' | 'console'; file?: log4js.FileA
       },
     },
   };
+
+  // 只有在需要文件日志时才添加 file appender
+  if (category === 'file' || file) {
+    config.appenders.file = {
+      type: 'file',
+      maxLogSize: '100M',
+      backups: 10,
+      filename: filename ?? 'logs/app.log',
+      ...fileRestProps,
+    };
+
+    config.categories.file = {
+      appenders: ['console', 'file'],
+      level: 'debug',
+    };
+  }
 
   log4js.configure(config);
 
