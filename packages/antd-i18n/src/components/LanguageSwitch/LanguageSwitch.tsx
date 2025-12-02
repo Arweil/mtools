@@ -18,6 +18,7 @@ export default function LanguageSwitch(props: LanguageSwitchProps): JSX.Element 
       }))}
       value={v}
       onChange={onChange}
+      popupMatchSelectWidth={false}
     />
   );
 }
