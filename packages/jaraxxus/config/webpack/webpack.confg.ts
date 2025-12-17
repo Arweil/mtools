@@ -133,7 +133,7 @@ export default function (
       : undefined,
     optimization: {
       concatenateModules: bundleAnalyzerReport ? false : isEnvProduction,
-      minimize: false,
+      minimize: isEnvProduction,
       minimizer: [
         new TerserWebpackPlugin({
           // parallel: true,  // 启用并行压缩

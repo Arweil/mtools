@@ -1,6 +1,6 @@
 {
   "name": "jaraxxus",
-  "version": "5.0.0-alpha.0",
+  "version": "5.0.0-alpha.1",
   "bin": {
     "jaraxxus": "./dist/bin/jaraxxus.js"
   },
@@ -11,6 +11,11 @@
     "node": ">=18.20.0",
     "npm": ">=9.0.0"
   },
+  "files": [
+    "dist/*",
+    "package.json",
+    "README.md"
+  ],
   "scripts": {
     "start": "node bin/jaraxxus.js start",
     "build": "tsc",

@@ -1,3 +1,6 @@
+## v5.0.0-alpha.1
+1. 修复 build 后代码没有压缩混淆的问题
+
 ## v5.0.0-alpha.0
 1. webpack 4 升级到了 webpack 5
 
