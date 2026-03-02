@@ -1,5 +1,3 @@
-process.env.NODE_ENV = 'development';
-
 import chalk from 'chalk';
 import ora from 'ora';
 import webpack from 'webpack';
@@ -8,6 +6,8 @@ import { getJaraxxusConfig } from '../config';
 import webpackConfig from '../config/webpack/webpack.confg';
 
 async function start() {
+  process.env.NODE_ENV = 'development';
+
   const spinner = ora('compiling for development...');
 
   const config = getJaraxxusConfig();

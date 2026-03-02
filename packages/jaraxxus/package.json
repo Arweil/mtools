@@ -1,6 +1,6 @@
 {
   "name": "jaraxxus",
-  "version": "5.0.0-alpha.1",
+  "version": "5.0.0-alpha.2",
   "bin": {
     "jaraxxus": "./dist/bin/jaraxxus.js"
   },

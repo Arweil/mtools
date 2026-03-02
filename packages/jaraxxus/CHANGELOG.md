@@ -1,3 +1,6 @@
+## v5.0.0-alpha.2
+1. 修正 build 和 start 脚本中 NODE_ENV 环境变量的设置时机
+
 ## v5.0.0-alpha.1
 1. 修复 build 后代码没有压缩混淆的问题
 

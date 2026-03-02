@@ -1,5 +1,3 @@
-process.env.NODE_ENV = 'production';
-
 import chalk from 'chalk';
 import fs from 'fs-extra';
 import ora from 'ora';
@@ -18,6 +16,8 @@ const statsConfig = {
 } as const;
 
 async function build() {
+  process.env.NODE_ENV = 'production';
+
   const spinner = ora('building for production...');
   spinner.start();
 
