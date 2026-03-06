@@ -25,7 +25,7 @@ function DynamicComponent(props: KeepAliveHOCProps) {
         models,
         fetchingComp,
       }),
-    [],
+    []
   );
 
   return <D {...p} />;
@@ -115,7 +115,7 @@ const RegisterRouter = ({
 }: {
   app: IMalGanisApp;
   history: History<unknown>;
-}): JSX.Element => (
+}): React.JSX.Element => (
   <Router history={history}>
     <Switch>
       {window.__POWERED_BY_QIANKUN__ ? (

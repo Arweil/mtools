@@ -12,7 +12,7 @@ module.exports = {
       },
     },
   ],
-  injectHtml: $ => {
+  injectHtml: ($) => {
     const eleList = $('#ns-inject');
     if (eleList && eleList.length) {
       $(eleList[0]).after(`<script>window.a=1</script>`);

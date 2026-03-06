@@ -1,3 +1,8 @@
+interface Window {
+  __POWERED_BY_QIANKUN__?: string;
+  $$_e: number | undefined;
+}
+
 declare module '*.module.css' {
   const classes: { [key: string]: string };
   export default classes;

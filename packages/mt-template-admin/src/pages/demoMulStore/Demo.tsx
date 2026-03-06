@@ -3,7 +3,7 @@ import { observer } from 'malganis/mobx-react';
 import { RouteComponentProps } from 'malganis/router';
 import React from 'react';
 
-function Demo(props: { onClick: () => void }): JSX.Element {
+function Demo(props: { onClick: () => void }): React.JSX.Element {
   const { onClick } = props;
 
   return (

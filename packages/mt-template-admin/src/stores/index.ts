@@ -5,7 +5,4 @@
 
 import userStore from './UserStore';
 
-export {
-  // eslint-disable-next-line import/prefer-default-export
-  userStore,
-};
+export { userStore };

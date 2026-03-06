@@ -1,8 +1,0 @@
-node_modules/*
-server/*
-component/*
-dist/*
-service.config.js
-babel.config.js
-jaraxxus.config.js
-src/public-path.js

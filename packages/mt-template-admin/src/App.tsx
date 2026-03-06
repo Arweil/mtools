@@ -17,7 +17,7 @@ app.model(userStore);
 
 app.router(RegisterRouter);
 
-export default function App(): JSX.Element {
+export default function App(): React.JSX.Element {
   return (
     <AliveScope>
       <ConfigProviderExt locale={locale.zh_CN} themeExt="hermes">

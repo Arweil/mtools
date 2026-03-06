@@ -32,7 +32,7 @@ const api = {
       java: {
         // get请求示例
         javaApiGet: async function javaApiGet(
-          data: Partial<JavaRequestDTO>,
+          data: Partial<JavaRequestDTO>
         ): Promise<BaseApiResponse<Partial<JavaResponseDTO>>> {
           const res = await get<BaseApiResponse<Partial<JavaResponseDTO>>>({
             url: `${commonUrl}/path/of/java/javaApiGet`,
@@ -43,7 +43,7 @@ const api = {
         },
         // post请求示例
         javaApiPost: async function javaApiPost(
-          data: Partial<JavaRequestDTO>,
+          data: Partial<JavaRequestDTO>
         ): Promise<BaseApiResponse<Partial<JavaResponseDTO>>> {
           const res = await post<BaseApiResponse<Partial<JavaResponseDTO>>>({
             url: `${commonUrl}/path/of/java/javaApiPost`,
@@ -54,7 +54,7 @@ const api = {
         },
         // put请求示例
         javaApiPut: async function javaApiPut(
-          data: Partial<JavaRequestDTO>,
+          data: Partial<JavaRequestDTO>
         ): Promise<BaseApiResponse<Partial<JavaResponseDTO>>> {
           const res = await put<BaseApiResponse<Partial<JavaResponseDTO>>>({
             url: `${commonUrl}/path/of/java/javaApiPut`,
@@ -65,7 +65,7 @@ const api = {
         },
         // delete请求示例
         javaApiDele: async function javaApiDele(
-          data: Partial<JavaRequestDTO>,
+          data: Partial<JavaRequestDTO>
         ): Promise<BaseApiResponse<Partial<JavaResponseDTO>>> {
           const res = await dele<BaseApiResponse<Partial<JavaResponseDTO>>>({
             url: `${commonUrl}/path/of/java/javaApiDele`,
@@ -76,26 +76,26 @@ const api = {
         },
         // 分页请求 分页数据同级
         javaApiPagerPost1: async function javaApiPagerPost1(
-          data: Partial<JavaRequestDTO> & BasePaginationRequestOutsideParams,
+          data: Partial<JavaRequestDTO> & BasePaginationRequestOutsideParams
         ): Promise<BaseApiResponse<BasePaginationResponse<Partial<JavaResponseDTO>>>> {
           const res = await post<BaseApiResponse<BasePaginationResponse<Partial<JavaResponseDTO>>>>(
             {
               url: `${commonUrl}/path/of/java/javaApiPagerPost1`,
               data,
-            },
+            }
           );
 
           return res;
         },
         // 分页请求 分页数据在params中
         javaApiPagerPost2: async function javaApiPagerPost2(
-          data: BasePaginationRequest<Partial<JavaRequestDTO>>,
+          data: BasePaginationRequest<Partial<JavaRequestDTO>>
         ): Promise<BaseApiResponse<BasePaginationResponse<Partial<JavaResponseDTO>>>> {
           const res = await post<BaseApiResponse<BasePaginationResponse<Partial<JavaResponseDTO>>>>(
             {
               url: `${commonUrl}/path/of/java/javaApiPagerPost2`,
               data,
-            },
+            }
           );
 
           return res;

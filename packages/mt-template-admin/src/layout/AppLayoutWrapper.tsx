@@ -4,7 +4,7 @@ import { MobXProviderContext, observer } from 'malganis/mobx-react';
 import { useHistory } from 'malganis/router';
 import React, { useContext, useEffect } from 'react';
 
-export default observer((props: { children?: React.ReactNode }): JSX.Element => {
+export default observer((props: { children?: React.ReactNode }): React.JSX.Element => {
   const { children } = props;
   const history = useHistory();
 
@@ -12,7 +12,7 @@ export default observer((props: { children?: React.ReactNode }): JSX.Element => 
 
   const { UserStore } = store as { UserStore: UserStoreMbx };
 
-  const { userInfo, menu, layoutOpenKeys, layoutSelectedKeys } = UserStore;
+  const { userInfo, menu } = UserStore;
 
   useEffect(() => {
     try {
@@ -30,10 +30,6 @@ export default observer((props: { children?: React.ReactNode }): JSX.Element => 
     <AppLayout
       menu={menu || []}
       history={history}
-      openKeys={layoutOpenKeys}
-      selectedKeys={layoutSelectedKeys}
-      setOpenKeys={UserStore.setOpenKeys}
-      setSelectedKeys={UserStore.setSelectedKeys}
       setTitle={({ collapsed }) => (
         <div style={{ display: 'flex', height: '100%', alignItems: 'center' }}>
           <div
@@ -47,8 +43,6 @@ export default observer((props: { children?: React.ReactNode }): JSX.Element => 
           </div>
         </div>
       )}
-      onTabClick={() => undefined}
-      onTabRemove={() => undefined}
     >
       {children}
     </AppLayout>

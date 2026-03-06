@@ -1,6 +1,6 @@
 import { Result } from '@m-tools/antd-ext';
 import React from 'react';
 
-export default function Forbidden(): JSX.Element {
+export default function Forbidden(): React.JSX.Element {
   return <Result status="403" title="403" subTitle="抱歉，您没有访问此资源的权限" />;
 }
