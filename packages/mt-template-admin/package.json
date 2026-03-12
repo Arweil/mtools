@@ -50,7 +50,7 @@
     "eslint-plugin-jsx-a11y": "^6.10.0",
     "eslint-plugin-react": "^7.37.0",
     "eslint-plugin-react-hooks": "^5.0.0",
-    "jaraxxus": "^5.0.0-alpha.1",
+    "jaraxxus": "^5.0.0-alpha.2",
     "prettier": "^3.4.2",
     "rimraf": "^3.0.2",
     "tslib": "^2.3.1",
