@@ -36,9 +36,9 @@ import zhHKLocale from './locale/common/zh_HK.json';
 
 // 使用到的语言枚举
 export const EnumLanguage = {
-  ENGLISH: 'en-US',
-  CHINESE: 'zh-CN',
-  HONGKONG: 'zh-HK',
+  ENGLISH: 'en_US',
+  CHINESE: 'zh_CN',
+  HONGKONG: 'zh_HK',
 } as const;
 
 // 初始化 i18next
@@ -72,21 +72,44 @@ export const SelectLanguage = {
 
 // 实现路由语言包的按需加载以及语言切换
 export function RouteWithLocaleWrapper(props: {
-  module: string; // module 和路由绑定
+  module: string | string[]; // module 和路由绑定，支持单个或多个 module
   element: React.ReactNode;
 }): JSX.Element {
   const { module, element } = props;
 
   const { language } = useLanguage();
 
+  // 处理单个 module 的情况
+  if (typeof module === 'string') {
+    return (
+      <RouteWithLocale
+        modules={[module]}
+        element={element}
+        language={language}
+        localeFiles={[
+          async () =>
+            (await import(`@/locale/${module}/${language}.json`)) as {
+              default: Record<string, any>;
+            },
+        ]}
+      />
+    );
+  }
+
+  // 处理多个 module 的情况
+  const localeFiles = module.map(
+    mod => async () =>
+      (await import(`@/locale/${mod}/${language}.json`)) as {
+        default: Record<string, any>;
+      },
+  );
+
   return (
     <RouteWithLocale
-      module={module}
+      modules={module}
       element={element}
       language={language}
-      localeFile={async () =>
-        (await import(`@/locale/${module}/${language}.json`)) as { default: Record<string, any> }
-      }
+      localeFiles={localeFiles}
     />
   );
 }

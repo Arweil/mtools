@@ -52,3 +52,34 @@ export async function loadRouteLocale(params: {
     throw new Error(`Failed to load ${language} locale for module ${module}`);
   }
 }
+
+// 批量加载多个 module 的语言包
+export async function loadMultipleRouteLocales(params: {
+  localeFiles: (() => Promise<{ default: LocaleResource }>)[];
+  language: string;
+  modules: string[];
+}): Promise<void> {
+  const { localeFiles, language, modules } = params;
+
+  // 过滤出需要加载的 module（跳过已经加载的）
+  const modulesToLoad = modules.filter(module => !i18n.hasResourceBundle(language, module));
+  const localeFilesToLoad = modulesToLoad.map(module => {
+    const index = modules.indexOf(module);
+    return localeFiles[index];
+  });
+
+  if (modulesToLoad.length === 0) return;
+
+  try {
+    // 并行加载所有需要的语言包
+    const localeModules = await Promise.all(localeFilesToLoad.map(localeFile => localeFile()));
+
+    // 批量添加到 i18n 资源中
+    modulesToLoad.forEach((module, index) => {
+      const localeModule = localeModules[index] as { default: LocaleResource };
+      i18n.addResourceBundle(language, module, localeModule.default, true, true);
+    });
+  } catch (error) {
+    throw new Error(`Failed to load ${language} locale for modules ${modulesToLoad.join(', ')}`);
+  }
+}
