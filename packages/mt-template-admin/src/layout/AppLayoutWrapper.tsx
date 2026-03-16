@@ -31,16 +31,17 @@ export default observer((props: { children?: React.ReactNode }): React.JSX.Eleme
       menu={menu || []}
       history={history}
       setTitle={({ collapsed }) => (
-        <div style={{ display: 'flex', height: '100%', alignItems: 'center' }}>
-          <div
-            style={{
-              fontSize: 20,
-              textAlign: 'center',
-              flex: 1,
-            }}
-          >
-            {collapsed ? 'Demo' : 'Demo Application'}
-          </div>
+        <div
+          style={{
+            display: 'flex',
+            height: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: 20,
+            textWrap: 'nowrap',
+          }}
+        >
+          {collapsed ? 'Demo' : 'Demo Application'}
         </div>
       )}
     >
