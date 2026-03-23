@@ -30,15 +30,15 @@ import 'dayjs/locale/en';
 import 'dayjs/locale/zh-hk';
 
 // 引用初始加载的语言包
-import enLocale from './locale/common/en_US.json';
-import zhLocale from './locale/common/zh_CN.json';
-import zhHKLocale from './locale/common/zh_HK.json';
+import enLocale from './locale/common/en-US.json';
+import zhLocale from './locale/common/zh-CN.json';
+import zhHKLocale from './locale/common/zh-HK.json';
 
 // 使用到的语言枚举
 export const EnumLanguage = {
-  ENGLISH: 'en_US',
-  CHINESE: 'zh_CN',
-  HONGKONG: 'zh_HK',
+  ENGLISH: 'en-US',
+  CHINESE: 'zh-CN',
+  HONGKONG: 'zh-HK',
 } as const;
 
 // 初始化 i18next
