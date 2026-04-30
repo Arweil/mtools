@@ -52,16 +52,17 @@ function findMenuInfo(key: string, menu?: MenuType): MenuType[number] {
  */
 function filterAttr(menu: MenuType | undefined, key: string | string[]): MenuType {
   const filter = (subMenu: MenuType | undefined) => {
-    return subMenu?.map(item => {
+    return (subMenu || []).map(item => {
+      const newItem = { ...item };
       if (Array.isArray(key)) {
         key.forEach(k => {
-          if (item[k]) delete item[k];
+          if (k in newItem) delete newItem[k];
         });
       } else {
-        if (item[key]) delete item[key];
+        if (key in newItem) delete newItem[key];
       }
-      if ('children' in item) item.children = filter(item.children);
-      return item;
+      if ('children' in item) newItem.children = filter(item.children);
+      return newItem;
     });
   };
 

@@ -1,3 +1,6 @@
+## 1.5.10
+1. 修复了 LayoutV2 组件 navigationMode 配置不生效问题；
+
 ## 1.5.9
 1. 修复了 RangeNumberExt 组件的初始值问题；
 
