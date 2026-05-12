@@ -260,7 +260,9 @@ const tab = css`
   padding: 7px 16px;
   cursor: pointer;
   user-select: none;
+`;
 
+const tabDivider = css`
   &::after {
     position: absolute;
     top: 50%;
@@ -335,6 +337,6 @@ const close = css`
   font-size: 10px;
 `;
 
-const tabbarStyle = { wrap, leftBtn, rightBtn, list, tab, tabWrap, selected, close };
+const tabbarStyle = { wrap, leftBtn, rightBtn, list, tab, tabWrap, selected, close, tabDivider };
 
 export { tabbarStyle };

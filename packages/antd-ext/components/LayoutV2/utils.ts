@@ -20,7 +20,7 @@ function isMenu(menu: ItemType): menu is MenuItemType | SubMenuType {
  * @returns 处理后的菜单项数组
  */
 export function processZeusMenuLabels(
-  menuItems: ItemType[],
+  menuItems: ItemType[] | undefined,
   isCollapsed: boolean,
   isTopLevel: boolean = true,
 ): ItemType[] {

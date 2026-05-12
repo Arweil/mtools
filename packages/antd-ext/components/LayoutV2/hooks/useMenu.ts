@@ -22,9 +22,9 @@ function getNavbar(menu: MenuType): MenuItemType[] {
  * @param key
  * @returns
  */
-function getMenu(menu: MenuType, key: string): ItemType[] {
-  const info = menu.find(({ key: k }) => k === key);
-  return info && 'children' in info && info.children.length > 0 ? info.children : undefined;
+function getMenu(menu: ItemType[] | undefined, key: string): ItemType[] | undefined {
+  const info = menu?.find(({ key: k }) => k === key);
+  return info && 'children' in info && (info.children?.length || 0) > 0 ? info.children : undefined;
 }
 /**
  * 查找菜单信息
@@ -32,7 +32,7 @@ function getMenu(menu: MenuType, key: string): ItemType[] {
  * @param key
  * @returns
  */
-function findMenuInfo(key: string, menu?: MenuType): MenuType[number] {
+function findMenuInfo(key: string, menu?: MenuType): MenuType[number] | undefined {
   if (!menu) return undefined;
   for (const item of menu) {
     if (item.key === key) return item;
@@ -50,16 +50,16 @@ function findMenuInfo(key: string, menu?: MenuType): MenuType[number] {
  * @param key
  * @returns
  */
-function filterAttr(menu: MenuType | undefined, key: string | string[]): MenuType {
+function filterAttr(menu: MenuType | undefined, key: string | string[]): MenuType | undefined {
   const filter = (subMenu: MenuType | undefined) => {
-    return (subMenu || []).map(item => {
+    return subMenu?.map(item => {
       const newItem = { ...item };
       if (Array.isArray(key)) {
         key.forEach(k => {
-          if (k in newItem) delete newItem[k];
+          if (k in newItem) delete newItem[k as keyof typeof newItem];
         });
       } else {
-        if (key in newItem) delete newItem[key];
+        if (key in newItem) delete newItem[key as keyof typeof newItem];
       }
       if ('children' in item) newItem.children = filter(item.children);
       return newItem;
@@ -122,12 +122,12 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
   const [openKeys, setOpenKeys] = useMergeState<string[]>([], { value: originOpenKeys });
   const [selectedMenu, setSelectedMenu] = useMergeState<string[]>([], { value: selectedKeys });
   // tabbar(访问记录)
-  const originTabbar = useMemo<Tabbar[]>(
+  const originTabbar = useMemo<Tabbar[] | undefined>(
     () => tabs?.map(item => ({ key: `${item.code}`, label: item.label })),
     [tabs],
   );
   const [tabbar, setTabbar] = useMergeState<Tabbar[]>([], { value: originTabbar });
-  const [selectedTabbar, setSelectedTabbar] = useMergeState<string>(undefined, {
+  const [selectedTabbar, setSelectedTabbar] = useMergeState<string | undefined>(undefined, {
     value: tabActive ? `${tabActive}` : undefined,
   });
   // 选择逻辑是否在执行中，通常用于防止重复触发
@@ -146,13 +146,13 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
   const setOriginSelectedKeysMemo = useLatest(setOriginSelectedKeys);
 
   // 找到最相近的上下级关系菜单
-  const findClosestMenu = useLatest((path: string, subMenu?: MenuType): MenuType[number] => {
+  const findClosestMenu = useLatest((path: string, subMenu?: ItemType[]): ItemType | undefined => {
     const curPathSegments = path?.split('/').slice(1);
     let closestMenu = undefined;
     let maxMatchingSegments = 0;
 
     subMenu?.forEach(item => {
-      const pathSegments = (item.key as string).split('/').slice(1);
+      const pathSegments = (item?.key as string).split('/').slice(1);
 
       // 找到共有的最大层级
       let matchingSegments = 0;
@@ -180,7 +180,7 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
   });
 
   // 通过层级关系查找给定key的路径
-  const findMenuKeyPathMemo = useLatest((key: string, subMenu?: MenuType): string[] => {
+  const findMenuKeyPathMemo = useLatest((key: string, subMenu?: ItemType[]): string[] => {
     const info = findClosestMenu(key, subMenu);
     const currentKey = info?.key ? `${info.key}` : undefined;
 
@@ -196,10 +196,11 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
 
   // 从菜单树中查找给定key的路径
   const findKeyPathByMenu = useLatest((key: string): string[] => {
-    const path = [];
+    const path: string[] = [];
 
-    const findPath = (subMenu?: MenuType) => {
-      for (let i = 0; i < subMenu?.length; i++) {
+    const findPath = (subMenu?: MenuType): MenuType[number] | undefined => {
+      if (!subMenu?.length) return;
+      for (let i = 0; i < subMenu.length; i++) {
         const item = subMenu[i];
         if (item.key === key) {
           path.unshift(item.key as string);
@@ -221,7 +222,7 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
   });
 
   // 查找给定key的菜单信息，优先从菜单树中查找，找不到则找相近菜单
-  const findKeyPath = useLatest((key: string, subMenu?: MenuType) => {
+  const findKeyPath = useLatest((key: string, subMenu?: ItemType[]) => {
     const pathByMenu = findKeyPathByMenu(key);
     return pathByMenu.length ? pathByMenu : findMenuKeyPathMemo(key, subMenu);
   });
@@ -247,11 +248,11 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
   });
 
   // 查找第一个叶子菜单
-  const findLeafMenu = useLatest((subMenu: MenuType) => {
+  const findLeafMenu = useLatest((subMenu?: ItemType[]): ItemType | undefined => {
     if (!subMenu?.length) return undefined;
     const first = subMenu[0];
-    if ('children' in first) {
-      return findLeafMenu(first.children as MenuType);
+    if (first && 'children' in first) {
+      return findLeafMenu(first.children as ItemType[]);
     }
     return first;
   });
@@ -260,7 +261,7 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
   const onTabbarChangeMemo = useLatest((info?: string | { key?: string; label: string }) => {
     const { pathname, search } = location;
     // 如果传入的info是string类型，则直接使用，否则使用info.key，info.key为空则使用当前location
-    const selected = typeof info === 'string' ? info : info.key ?? `${pathname}${search}`;
+    const selected = typeof info === 'string' ? info : info?.key ?? `${pathname}${search}`;
     setTabbar(prev => {
       const index = prev.findIndex(item => item.key === selected);
       // 查找label信息
@@ -282,7 +283,7 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
   });
 
   // 侧边菜单展开
-  const onMenuOpenChangeMemo = useLatest((key: string, subMenu?: MenuType) => {
+  const onMenuOpenChangeMemo = useLatest((key: string, subMenu?: ItemType[]) => {
     const path = findKeyPath(key, subMenu);
     // 侧边菜单收齐时不触发open，否则悬浮菜单会突然抖动
     if (path.length && !collapsed) {
@@ -291,7 +292,7 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
   });
 
   // 侧边菜单选中
-  const onSelectedMenu = useLatest((info: SelectInfo | { key: string }, subMenu?: MenuType) => {
+  const onSelectedMenu = useLatest((info: SelectInfo | { key: string }, subMenu?: ItemType[]) => {
     selectLogicRunning.current = true;
     const { key } = info;
     // 1、选中菜单，需要查找最接近的菜单
@@ -388,7 +389,7 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
 
   // 添加tabbar
   const addTab = useCallback(
-    (info: string | { key: string; label: string }) => {
+    (info: string | { key?: string; label: string }) => {
       onTabbarChangeMemo(info);
     },
     [onTabbarChangeMemo],
@@ -427,8 +428,8 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
         // 默认打开第一个
         const first = findLeafMenu(newMenu);
         if (first) {
-          activeMenu(first.key);
-          addTab(first.key);
+          activeMenu(first.key as string);
+          addTab(first.key as string);
           onSelectMemo?.({ key: first.key });
         }
       }

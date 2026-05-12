@@ -1,3 +1,8 @@
+## 1.5.11
+1. 修复了 LayoutV2 组件 menu 配置存在 children 为空数组时，菜单渲染异常；
+2. 修复了 LayoutV2 组件的 ts 问题；
+3. dumi 包锁版本，避免更新后 doc 下页面的依赖包异常；
+
 ## 1.5.10
 1. 修复了 LayoutV2 组件 navigationMode 配置不生效问题；
 

@@ -13,7 +13,7 @@ const padding = 16;
 
 function TabBar(props: {
   tabbar: Tabbar[];
-  selected: string;
+  selected?: string;
   showScrollBtn?: boolean;
   styles: Record<string, string>;
   onSelect: (key: string) => void;
@@ -48,6 +48,7 @@ function TabBar(props: {
   const scrollToSelectedTab = () => {
     const transformMin = getTransformMin();
 
+    if (!selected) return;
     const selectedTabElement = tabRefs.current.get(selected);
     if (!selectedTabElement || !wrapperRef.current) return;
 
@@ -156,7 +157,7 @@ function TabBar(props: {
     return transform > getTransformMin();
   };
 
-  const tabNodes = tabbar.map(item => (
+  const tabNodes = tabbar.map((item, index) => (
     <div
       key={item.key}
       ref={el => {
@@ -174,7 +175,14 @@ function TabBar(props: {
       )}
       onClick={() => onSelect(item.key)}
     >
-      <Flex className={cx(`${prefixCls}-${mtPrefixCls}-tab`, styles.tab)} align="center">
+      <Flex
+        className={cx(
+          `${prefixCls}-${mtPrefixCls}-tab`,
+          styles.tab,
+          tabbar.length - 1 !== index ? styles.tabDivider : undefined,
+        )}
+        align="center"
+      >
         {item.label}
         {tabbar.length > 1 ? (
           <CloseOutlined

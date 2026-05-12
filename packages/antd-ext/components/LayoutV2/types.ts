@@ -9,9 +9,9 @@ export type NavigationMode = 'push' | 'open' | 'none';
 export type MenuType = ({
   navigationMode?: NavigationMode;
   children?: MenuType;
-} & MenuProps['items'][number])[];
+} & NonNullable<MenuProps['items']>[number])[];
 
-export type SelectInfo = Parameters<MenuProps['onSelect']>[number];
+export type SelectInfo = Parameters<NonNullable<MenuProps['onSelect']>>[number];
 export type Tabbar = { key: string; label: string };
 
 export type LayoutV2Type = React.FC<LayoutProps> & {

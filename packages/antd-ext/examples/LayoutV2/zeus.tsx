@@ -42,6 +42,18 @@ const menuData: LayoutV2Props['menu'] = [
         ],
       },
       {
+        key: '/first-level01/second-level03',
+        label: '二级菜单03',
+        icon: <IconFont type="icon-Promptbianpai" />,
+        children: [
+          {
+            key: '/first-level01/second-level03/third-level01',
+            label: '三级菜单01',
+            children: [],
+          },
+        ],
+      },
+      {
         key: 'http://www.baidu.com',
         label: 'window.open菜单',
         navigationMode: 'open',
