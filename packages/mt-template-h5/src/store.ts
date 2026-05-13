@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-export type TypeGlobalContext = {};
+export type TypeGlobalContext = object;
 
 const GlobalContext = createContext<TypeGlobalContext>({});
 

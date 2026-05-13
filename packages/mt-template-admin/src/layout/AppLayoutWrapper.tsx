@@ -4,7 +4,7 @@ import { MobXProviderContext, observer } from 'malganis/mobx-react';
 import { useHistory } from 'malganis/router';
 import React, { useContext, useEffect } from 'react';
 
-export default observer((props: { children?: React.ReactNode }): JSX.Element => {
+export default observer((props: { children?: React.ReactNode }): React.JSX.Element => {
   const { children } = props;
   const history = useHistory();
 
@@ -12,7 +12,7 @@ export default observer((props: { children?: React.ReactNode }): JSX.Element => 
 
   const { UserStore } = store as { UserStore: UserStoreMbx };
 
-  const { userInfo, menu, layoutOpenKeys, layoutSelectedKeys } = UserStore;
+  const { userInfo, menu } = UserStore;
 
   useEffect(() => {
     try {
@@ -30,25 +30,20 @@ export default observer((props: { children?: React.ReactNode }): JSX.Element => 
     <AppLayout
       menu={menu || []}
       history={history}
-      openKeys={layoutOpenKeys}
-      selectedKeys={layoutSelectedKeys}
-      setOpenKeys={UserStore.setOpenKeys}
-      setSelectedKeys={UserStore.setSelectedKeys}
       setTitle={({ collapsed }) => (
-        <div style={{ display: 'flex', height: '100%', alignItems: 'center' }}>
-          <div
-            style={{
-              fontSize: 20,
-              textAlign: 'center',
-              flex: 1,
-            }}
-          >
-            {collapsed ? 'Demo' : 'Demo Application'}
-          </div>
+        <div
+          style={{
+            display: 'flex',
+            height: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: 20,
+            textWrap: 'nowrap',
+          }}
+        >
+          {collapsed ? 'Demo' : 'Demo Application'}
         </div>
       )}
-      onTabClick={() => undefined}
-      onTabRemove={() => undefined}
     >
       {children}
     </AppLayout>

@@ -1,6 +1,6 @@
 import { DollarOutlined } from '@m-tools/antd-ext/es/icon';
 import { IBaseMenuInfo } from '@m-tools/antd-ext/es/LayoutExt/LayoutHermesExt';
-import { getFullPath, getSelectedMenu, simple2Tree } from '@m-tools/browser-utils';
+import { simple2Tree } from '@m-tools/browser-utils';
 import { action, makeAutoObservable, runInAction } from 'malganis/mobx';
 import React from 'react';
 
@@ -8,7 +8,6 @@ const mapIcon: { [key: string]: React.FunctionComponent } = {
   DollarOutlined,
 };
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IMenuInfo extends IBaseMenuInfo {
   code: string;
   id: number;
@@ -27,17 +26,8 @@ export class UserStore {
 
   mapBreadcrumb: { [path: string]: string } = {}; // 匹配面包屑导航
 
-  layoutOpenKeys: string[] = []; // 默认展开的菜单
-
-  layoutSelectedKeys: string[] = []; // 默认选择的菜单项
-
   constructor() {
-    makeAutoObservable(this, {
-      namespace: false,
-      getBaseInfo: action.bound,
-      setOpenKeys: action.bound,
-      setSelectedKeys: action.bound,
-    });
+    makeAutoObservable(this, { namespace: false, getBaseInfo: action.bound });
   }
 
   async login(): Promise<void> {
@@ -136,7 +126,7 @@ export class UserStore {
 
         const mapBreadcrumb: { [path: string]: string } = {};
         const menuKeys: string[] = [];
-        menus.forEach(item => {
+        menus.forEach((item) => {
           mapBreadcrumb[item.path] = item.nameZn;
           menuKeys.push(item.path);
         });
@@ -146,12 +136,8 @@ export class UserStore {
           ...mapBreadcrumb,
         };
 
-        this.layoutOpenKeys = getFullPath(window.location.pathname);
-
-        this.layoutSelectedKeys = [getSelectedMenu(window.location.pathname, menuKeys)];
-
         this.menu = simple2Tree<IMenuInfo>({
-          simpleData: menus.map(menuItem => ({
+          simpleData: menus.map((menuItem) => ({
             ...menuItem,
             url: menuItem.path,
             name: menuItem.nameZn,
@@ -162,14 +148,6 @@ export class UserStore {
     } catch (ex) {
       console.warn(ex);
     }
-  }
-
-  setOpenKeys(openKeys: string[]): void {
-    this.layoutOpenKeys = openKeys;
-  }
-
-  setSelectedKeys(selectedKeys: string[]): void {
-    this.layoutSelectedKeys = selectedKeys;
   }
 }
 

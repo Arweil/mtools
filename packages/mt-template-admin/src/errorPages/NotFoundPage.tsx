@@ -1,6 +1,6 @@
 import { Result } from '@m-tools/antd-ext';
 import React from 'react';
 
-export default function NotFoundPage(): JSX.Element {
+export default function NotFoundPage(): React.JSX.Element {
   return <Result status="404" title="404" subTitle="抱歉，您访问的资源不存在" />;
 }

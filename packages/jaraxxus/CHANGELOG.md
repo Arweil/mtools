@@ -1,3 +1,6 @@
+## v5.0.0-alpha.3
+1. css-module 名称格式统一使用下划线（[name]__[local]--[hash:base64:5]）
+
 ## v5.0.0-alpha.2
 1. 修正 build 和 start 脚本中 NODE_ENV 环境变量的设置时机
 

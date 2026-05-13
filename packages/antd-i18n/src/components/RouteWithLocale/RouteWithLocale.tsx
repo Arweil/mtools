@@ -1,29 +1,34 @@
 import type React from 'react';
 import { useEffect, useState } from 'react';
-import { loadRouteLocale } from '../../language';
+import { loadMultipleRouteLocales } from '../../language';
 import type { TypeLanguage } from '../../types';
 
 export interface RouteWithLocaleProps {
   language: TypeLanguage;
-  module: string;
+  modules: string[];
   element: React.ReactNode;
-  localeFile: () => Promise<{ default: Record<string, any> }>;
+  localeFiles: (() => Promise<{ default: Record<string, any> }>)[];
 }
 
 export default function RouteWithLocale(props: RouteWithLocaleProps): React.ReactNode {
   const [loaded, setLoaded] = useState(false);
-  const { module, element, language, localeFile } = props;
+  const { modules, element, language, localeFiles } = props;
 
   useEffect(() => {
     (async () => {
       try {
         setLoaded(false);
-        await loadRouteLocale({ module, language, localeFile });
+        // 批量加载所有 module 的语言包
+        await loadMultipleRouteLocales({
+          modules,
+          language,
+          localeFiles,
+        });
       } finally {
         setLoaded(true);
       }
-    })().catch(() => console.log('切换语言失败'));
-  }, [module, language, localeFile]);
+    })().catch(e => console.log('切换语言失败', e));
+  }, [modules, language, localeFiles]);
 
   return loaded ? element : 'Loading...';
 }

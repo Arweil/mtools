@@ -69,9 +69,9 @@ async function parseResponseData(response: Response) {
 // 请求处理函数
 function responseHandle<T extends BaseApiResponse>(response: Response) {
   return Promise.resolve(response)
-    .then(res => resposneStateHandler(res))
-    .then(res => parseResponseData(res))
-    .then(res => responseCodeHandler<T>(res));
+    .then((res) => resposneStateHandler(res))
+    .then((res) => parseResponseData(res))
+    .then((res) => responseCodeHandler<T>(res));
 }
 
 // post请求
@@ -90,8 +90,8 @@ export const post = <T extends BaseApiResponse>({
     },
     body: JSON.stringify(data),
   })
-    .then(response => responseHandle<T>(response))
-    .catch(ex => Promise.reject(ex));
+    .then((response) => responseHandle<T>(response))
+    .catch((ex) => Promise.reject(ex));
 
 // get请求
 export const get = <T extends BaseApiResponse>({
@@ -110,8 +110,8 @@ export const get = <T extends BaseApiResponse>({
       'Content-Type': 'application/json',
     },
   })
-    .then(response => responseHandle<T>(response))
-    .catch(ex => Promise.reject(ex));
+    .then((response) => responseHandle<T>(response))
+    .catch((ex) => Promise.reject(ex));
 };
 
 // put请求
@@ -130,8 +130,8 @@ export const put = <T extends BaseApiResponse>({
     },
     body: JSON.stringify(data),
   })
-    .then(response => responseHandle<T>(response))
-    .catch(ex => Promise.reject(ex));
+    .then((response) => responseHandle<T>(response))
+    .catch((ex) => Promise.reject(ex));
 
 // post请求
 export const dele = <T extends BaseApiResponse>({
@@ -149,17 +149,17 @@ export const dele = <T extends BaseApiResponse>({
     },
     body: JSON.stringify(data),
   })
-    .then(response => responseHandle<T>(response))
-    .catch(ex => Promise.reject(ex));
+    .then((response) => responseHandle<T>(response))
+    .catch((ex) => Promise.reject(ex));
 
 // fetch请求，处理Response
 export const fetchHandleResponse = <T extends BaseApiResponse>(
   url: string,
-  options: RequestInit,
+  options: RequestInit
 ): Promise<T> =>
   fetch(url, {
     credentials: 'same-origin',
     ...options,
   })
-    .then(response => responseHandle<T>(response))
-    .catch(ex => Promise.reject(ex));
+    .then((response) => responseHandle<T>(response))
+    .catch((ex) => Promise.reject(ex));

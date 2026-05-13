@@ -1,0 +1,8 @@
+node_modules
+dist
+build
+coverage
+.eslintcache
+*.min.js
+*.log
+.DS_Store

@@ -30,9 +30,9 @@ import 'dayjs/locale/en';
 import 'dayjs/locale/zh-hk';
 
 // 引用初始加载的语言包
-import enLocale from './locale/common/en_US.json';
-import zhLocale from './locale/common/zh_CN.json';
-import zhHKLocale from './locale/common/zh_HK.json';
+import enLocale from './locale/common/en-US.json';
+import zhLocale from './locale/common/zh-CN.json';
+import zhHKLocale from './locale/common/zh-HK.json';
 
 // 使用到的语言枚举
 export const EnumLanguage = {
@@ -72,21 +72,44 @@ export const SelectLanguage = {
 
 // 实现路由语言包的按需加载以及语言切换
 export function RouteWithLocaleWrapper(props: {
-  module: string; // module 和路由绑定
+  module: string | string[]; // module 和路由绑定，支持单个或多个 module
   element: React.ReactNode;
 }): JSX.Element {
   const { module, element } = props;
 
   const { language } = useLanguage();
 
+  // 处理单个 module 的情况
+  if (typeof module === 'string') {
+    return (
+      <RouteWithLocale
+        modules={[module]}
+        element={element}
+        language={language}
+        localeFiles={[
+          async () =>
+            (await import(`@/locale/${module}/${language}.json`)) as {
+              default: Record<string, any>;
+            },
+        ]}
+      />
+    );
+  }
+
+  // 处理多个 module 的情况
+  const localeFiles = module.map(
+    mod => async () =>
+      (await import(`@/locale/${mod}/${language}.json`)) as {
+        default: Record<string, any>;
+      },
+  );
+
   return (
     <RouteWithLocale
-      module={module}
+      modules={module}
       element={element}
       language={language}
-      localeFile={async () =>
-        (await import(`@/locale/${module}/${language}.json`)) as { default: Record<string, any> }
-      }
+      localeFiles={localeFiles}
     />
   );
 }

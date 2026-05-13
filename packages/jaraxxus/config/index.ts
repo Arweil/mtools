@@ -44,7 +44,7 @@ const jaraxxusConfig: JaraxxusConfig = {
   css: {
     extract: true,
     cssModules: false,
-    localIdentName: '[hash:base64]',
+    localIdentName: '[name]__[local]--[hash:base64:5]',
     lessModifyVars: {},
   },
 };
