@@ -7,15 +7,20 @@
   ],
   "license": "MIT",
   "author": "Milk",
-  "main": "index.js",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "build": "lerna run build",
-    "changelog": "lerna-changelog",
+    "build": "npm run build -ws",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "npm run build && changeset publish",
     "deploy:docs": "npm run site:build && gh-pages -d dist",
-    "prepare": "husky install && lerna bootstrap && dumi setup",
+    "prepare": "husky install && dumi setup",
     "site": "dumi dev",
     "site:build": "dumi build",
-    "test": "lerna run test"
+    "test": "npm run test -ws --if-present"
   },
   "lint-staged": {
     "*.{less,json,scss,css}": [
@@ -47,6 +52,7 @@
     "@babel/core": "^7.14.6",
     "@babel/preset-env": "^7.14.5",
     "@babel/preset-typescript": "^7.14.5",
+    "@changesets/cli": "^2.31.0",
     "@commitlint/config-conventional": "^17.6.3",
     "@types/jest": "^26.0.23",
     "@umijs/fabric": "^2.14.1",
@@ -56,8 +62,6 @@
     "gh-pages": "^5.0.0",
     "husky": "^8.0.3",
     "jest": "^27.0.4",
-    "lerna": "^4.0.0",
-    "lerna-changelog": "^2.1.0",
     "lint-staged": "^13.2.2",
     "prettier": "^2.8.8",
     "rollup": "^2.56.2",
