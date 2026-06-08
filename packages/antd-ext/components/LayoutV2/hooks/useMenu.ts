@@ -231,7 +231,7 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
   const onNavChangeMemo = useLatest((selected: string) => {
     if (!selected) return;
     // 如果找不到默认打开第一个
-    const navKey = (findKeyPath(selected, preprocessMenu)?.[0] ?? preprocessMenu[0]?.key) as string;
+    const navKey = findKeyPath(selected, preprocessMenu)?.[0] ?? preprocessMenu?.[0]?.key;
     // 是否需要一级导航
     const filterMenu = filterAttr(preprocessMenu, 'navigationMode');
     let newMenu = hasNavbar ? getMenu(filterMenu, navKey) : filterMenu;
