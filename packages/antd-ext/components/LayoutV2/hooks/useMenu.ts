@@ -93,7 +93,7 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
   } = data;
 
   // 预加工菜单，主要为了兼容老版本layout数据类型
-  const preprocessMenu = useMemo((): MenuType => {
+  const preprocessMenu = useMemo((): MenuType | undefined => {
     function recursive(menu?: MenuType | IBaseMenuInfo[]) {
       if (!menu || menu?.length === 0) return undefined;
       return menu.map(item => {
@@ -230,8 +230,14 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
   // 导航栏变化回调
   const onNavChangeMemo = useLatest((selected: string) => {
     if (!selected) return;
+    // 菜单为空时直接返回
+    if (!preprocessMenu?.length) return;
+
     // 如果找不到默认打开第一个
-    const navKey = (findKeyPath(selected, preprocessMenu)?.[0] ?? preprocessMenu[0]?.key) as string;
+    const navKey = findKeyPath(selected, preprocessMenu)?.[0] ?? preprocessMenu[0]?.key;
+    // navKey 不能为空，为空时直接返回
+    if (!navKey) return;
+
     // 是否需要一级导航
     const filterMenu = filterAttr(preprocessMenu, 'navigationMode');
     let newMenu = hasNavbar ? getMenu(filterMenu, navKey) : filterMenu;

@@ -1,3 +1,6 @@
+## 1.5.12
+1. 修复了 LayoutV2 组件 menu 为空导致报错的问题；
+
 ## 1.5.11
 1. 修复了 LayoutV2 组件 menu 配置存在 children 为空数组时，菜单渲染异常；
 2. 修复了 LayoutV2 组件的 ts 问题；
