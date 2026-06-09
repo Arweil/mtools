@@ -3,6 +3,7 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "declaration": true,
+    "skipLibCheck": true,
     "jsx": "react",
     "paths": {
       "@m-tools/antd-ext/es": [

@@ -1,4 +1,3 @@
-import type { CascaderProps } from 'antd';
 import { Cascader } from 'antd';
 import classNames from 'classnames';
 import React, { useMemo } from 'react';
@@ -9,18 +8,17 @@ const popup = css`
   min-height: 148px;
 `;
 
-export default function CascaderExt(props: CascaderProps) {
-  const { popupClassName, ...restProps } = props;
+export default function CascaderExt(props: React.ComponentProps<typeof Cascader>) {
   const formattedPopupClassName = useMemo(
-    () => classNames(popupClassName, popup),
-    [popupClassName],
+    () => classNames(props.popupClassName, popup),
+    [props.popupClassName],
   );
 
   return (
     <Cascader
+      {...props}
       notFoundContent={<NotFoundContent />}
       popupClassName={formattedPopupClassName}
-      {...restProps}
     />
   );
 }

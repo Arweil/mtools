@@ -10,7 +10,7 @@ import type { InputOutLineExtProps } from './InputOutLineExt';
 import InputOutLineExt from './InputOutLineExt';
 import { customStyleWithInputExt, customStyleWithInputOutLineExt } from './ThemeHermes';
 
-export interface InputExtMixinProps extends InputExtProps {
+export interface InputExtMixinProps extends Omit<InputExtProps, 'children'> {
   theme?: Theme;
 }
 
@@ -21,7 +21,7 @@ export interface InputExtHOCProps {
 function InputExtHOC(
   props: (
     | Omit<InputExtMixinProps, 'children'>
-    | SearchExtMixinProps
+    | Omit<SearchExtMixinProps, 'children'>
     | Omit<TextAreaExtMixinProps, 'children'>
   ) &
     InputExtHOCProps,
@@ -49,7 +49,7 @@ export function MixinInputExt(props: InputExtMixinProps) {
   );
 }
 
-export interface SearchExtMixinProps extends SearchProps {
+export interface SearchExtMixinProps extends Omit<SearchProps, 'children'> {
   theme?: Theme;
 }
 
@@ -61,7 +61,7 @@ MixinInputExt.Search = (props: SearchExtMixinProps) => {
   );
 };
 
-export interface TextAreaExtMixinProps extends TextAreaProps {
+export interface TextAreaExtMixinProps extends Omit<TextAreaProps, 'children'> {
   theme?: Theme;
 }
 
@@ -73,7 +73,7 @@ MixinInputExt.TextArea = (props: TextAreaExtMixinProps) => {
   );
 };
 
-export interface PasswordExtMixinProps extends PasswordProps {
+export interface PasswordExtMixinProps extends Omit<PasswordProps, 'children'> {
   theme?: Theme;
 }
 
@@ -85,7 +85,7 @@ MixinInputExt.Password = (props: PasswordExtMixinProps) => {
   );
 };
 
-export interface InputOutLineExtMixinProps extends InputOutLineExtProps {
+export interface InputOutLineExtMixinProps extends Omit<InputOutLineExtProps, 'children'> {
   theme?: Theme;
 }
 

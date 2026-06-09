@@ -67,7 +67,7 @@ export default function TreeExt(props: TreeExtProps) {
       };
       tdn.title = (
         <Row justify={'space-between'} align="middle">
-          {tdn.title}
+          {typeof tdn.title === 'function' ? tdn.title(tdn) : tdn.title}
           <Dropdown {...ddProps}>
             <ButtonExt
               className={prefixCls + '-more-btn'}

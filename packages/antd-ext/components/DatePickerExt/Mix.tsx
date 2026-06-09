@@ -20,7 +20,7 @@ import type {
   YearPicker,
 } from './type';
 
-export type MixinHOCProps = (DatePickerProps | RangePickerProps | QuarterPicker) & {
+export type MixinHOCProps = Omit<DatePickerProps | RangePickerProps | QuarterPicker, 'children'> & {
   theme?: Theme;
   popupClassName?: string | undefined;
   className?: string;
@@ -55,7 +55,7 @@ export function MixHOC(props: MixinHOCProps) {
   );
 }
 
-export type MixinDatePickerExtProps = DatePickerProps & {
+export type MixinDatePickerExtProps = Omit<DatePickerProps, 'children'> & {
   theme?: Theme;
 };
 
@@ -74,7 +74,7 @@ export default function MixinDatePicker(props: MixinDatePickerExtProps) {
   );
 }
 
-export type MixinRangePickerExtProps = RangePickerProps & {
+export type MixinRangePickerExtProps = Omit<RangePickerProps, 'children'> & {
   theme?: Theme;
 };
 
@@ -93,7 +93,7 @@ MixinDatePicker.RangePicker = (props: MixinRangePickerExtProps) => {
   );
 };
 
-export type MixinQuarterPickerExtProps = QuarterPicker & {
+export type MixinQuarterPickerExtProps = Omit<QuarterPicker, 'children'> & {
   theme?: Theme;
 };
 
@@ -112,7 +112,7 @@ MixinDatePicker.QuarterPicker = (props: MixinQuarterPickerExtProps) => {
   );
 };
 
-export type MixinYearPickerExtProps = YearPicker & {
+export type MixinYearPickerExtProps = Omit<YearPicker, 'children'> & {
   theme?: Theme;
 };
 
@@ -131,7 +131,7 @@ MixinDatePicker.YearPicker = (props: MixinYearPickerExtProps) => {
   );
 };
 
-export type MixinMonthPickerExtProps = MonthPickerProps & {
+export type MixinMonthPickerExtProps = Omit<MonthPickerProps, 'children'> & {
   theme?: Theme;
 };
 
@@ -150,7 +150,7 @@ MixinDatePicker.MonthPicker = (props: MixinMonthPickerExtProps) => {
   );
 };
 
-export type MixinWeekPickerExtProps = WeekPicker & {
+export type MixinWeekPickerExtProps = Omit<WeekPicker, 'children'> & {
   theme?: Theme;
 };
 
@@ -169,7 +169,7 @@ MixinDatePicker.WeekPicker = (props: MixinWeekPickerExtProps) => {
   );
 };
 
-export type MixinTimePickerExtProps = TimePicker & {
+export type MixinTimePickerExtProps = Omit<TimePicker, 'children'> & {
   theme?: Theme;
 };
 
@@ -188,7 +188,7 @@ MixinDatePicker.TimePicker = (props: MixinTimePickerExtProps) => {
   );
 };
 
-export type MixinDatePickerOutLineExtProps = DatePickerOutLineExtProps & {
+export type MixinDatePickerOutLineExtProps = Omit<DatePickerOutLineExtProps, 'children'> & {
   theme?: Theme;
 };
 
@@ -204,7 +204,7 @@ export function MixinDatePickerOutLine(props: MixinDatePickerOutLineExtProps) {
   );
 }
 
-export type MixinRangePickerOutLineExtProps = RangePickerOutLineExtProps & {
+export type MixinRangePickerOutLineExtProps = Omit<RangePickerOutLineExtProps, 'children'> & {
   theme?: Theme;
 };
 

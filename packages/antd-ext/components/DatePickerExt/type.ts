@@ -1,10 +1,10 @@
-import type {
-  RangePickerProps as BaseRangePickerProps,
-  PickerProps,
-  PickerLocale,
-  PickerTimeProps,
-} from 'antd/es/date-picker/generatePicker';
 import type { ButtonSize } from 'antd/es/button';
+import type {
+  GenericTimePickerProps,
+  PickerLocale,
+  PickerProps,
+  RangePickerProps as BaseRangePickerProps,
+} from 'antd/es/date-picker/generatePicker/interface';
 import type { Dayjs } from 'dayjs';
 
 export type DatePickerProps = PickerProps<Dayjs> & {
@@ -28,7 +28,7 @@ export type MonthPickerProps = Omit<
   'picker'
 >;
 export type QuarterPicker = Omit<
-  Omit<PickerTimeProps<Dayjs>, 'locale' | 'generateConfig' | 'hideHeader' | 'components'> & {
+  Omit<GenericTimePickerProps<Dayjs>, 'locale' | 'generateConfig' | 'hideHeader' | 'components'> & {
     locale?: PickerLocale | undefined;
     size?: ButtonSize;
     placement?: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' | undefined;
@@ -61,7 +61,7 @@ export type WeekPicker = Omit<
   'picker'
 >;
 export type TimePicker = Omit<
-  Omit<PickerTimeProps<Dayjs>, 'locale' | 'generateConfig' | 'hideHeader' | 'components'> & {
+  Omit<GenericTimePickerProps<Dayjs>, 'locale' | 'generateConfig' | 'hideHeader' | 'components'> & {
     locale?: PickerLocale | undefined;
     size?: ButtonSize;
     placement?: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight' | undefined;

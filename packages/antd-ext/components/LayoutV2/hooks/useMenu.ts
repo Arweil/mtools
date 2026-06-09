@@ -74,7 +74,26 @@ function filterAttr(menu: MenuType | undefined, key: string | string[]): MenuTyp
  * @param menu
  * @returns
  */
-function useMenu(data: LayoutProps, collapsed: boolean) {
+interface UseMenuReturn {
+  navbar: MenuItemType[] | undefined;
+  selectedNav: string[];
+  onSelectedNav: (info: { key: string }) => void;
+  activeNav: (key: string) => void;
+  menu: ItemType[] | undefined;
+  openKeys: string[];
+  selectedMenu: string[];
+  onSelectedMenu: (info: { key: string }, subMenu?: ItemType[]) => void;
+  onMenuOpenChange: (keys: string[]) => void;
+  activeMenu: (key: string) => void;
+  tabbar: Tabbar[];
+  selectedTabbar: string | undefined;
+  onSelectTarbar: (key: string) => void;
+  addTab: (info: string | { key?: string; label: string }) => void;
+  removeTab: (key?: string) => void;
+  setOpenKey: (key: string | ((keys: string[]) => string[])) => void;
+}
+
+function useMenu(data: LayoutProps, collapsed: boolean): UseMenuReturn {
   const {
     autoSelectFirstMenuOnNavbar,
     menu: originMenu,
@@ -237,17 +256,18 @@ function useMenu(data: LayoutProps, collapsed: boolean) {
     const navKey = findKeyPath(selected, preprocessMenu)?.[0] ?? preprocessMenu[0]?.key;
     // navKey 不能为空，为空时直接返回
     if (!navKey) return;
+    const navKeyStr = String(navKey);
 
     // 是否需要一级导航
     const filterMenu = filterAttr(preprocessMenu, 'navigationMode');
-    let newMenu = hasNavbar ? getMenu(filterMenu, navKey) : filterMenu;
+    let newMenu = hasNavbar ? getMenu(filterMenu, navKeyStr) : filterMenu;
     // 左侧菜单分组
     newMenu = newMenu?.map(itm => ({
       ...itm,
       type: needMenuGroup ? 'group' : 'item',
     })) as MenuType;
     // 选中项和当前选中项一致则不处理
-    if (navKey !== selectedNav[0]) setSelectedNav([navKey]);
+    if (navKeyStr !== selectedNav[0]) setSelectedNav([navKeyStr]);
     // 更新二级菜单信息
     if (newMenu !== menu) setMenu(newMenu);
     return newMenu;
