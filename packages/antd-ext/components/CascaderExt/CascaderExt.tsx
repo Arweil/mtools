@@ -9,16 +9,18 @@ const popup = css`
 `;
 
 export default function CascaderExt(props: React.ComponentProps<typeof Cascader>) {
+  const { popupClassName, ...restProps } = props;
+
   const formattedPopupClassName = useMemo(
-    () => classNames(props.popupClassName, popup),
-    [props.popupClassName],
+    () => classNames(popupClassName, popup),
+    [popupClassName],
   );
 
   return (
     <Cascader
-      {...props}
       notFoundContent={<NotFoundContent />}
       popupClassName={formattedPopupClassName}
+      {...restProps}
     />
   );
 }
