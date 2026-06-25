@@ -1,9 +1,29 @@
 {
   "name": "@m-tools/antd-i18n",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "",
   "module": "es/index.js",
   "types": "es/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "ext": [
+        "es/components/ConfigProviderExtWithI18n/index.d.ts"
+      ]
+    }
+  },
+  "exports": {
+    ".": {
+      "types": "./es/index.d.ts",
+      "import": "./es/index.js",
+      "default": "./es/index.js"
+    },
+    "./ext": {
+      "types": "./es/components/ConfigProviderExtWithI18n/index.d.ts",
+      "import": "./es/components/ConfigProviderExtWithI18n/index.js",
+      "default": "./es/components/ConfigProviderExtWithI18n/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "build": "father build"
   },
@@ -29,9 +49,6 @@
   },
   "peerDependenciesMeta": {
     "@m-tools/antd-ext": {
-      "optional": true
-    },
-    "antd": {
       "optional": true
     }
   },

@@ -10,7 +10,9 @@ export interface ConfigProviderWithI18nProps extends ConfigProviderExtProps {
   language: TypeLanguage;
 }
 
-export default function ConfigProviderExtWithI18n(props: ConfigProviderWithI18nProps): JSX.Element {
+export default function ConfigProviderExtWithI18n(
+  props: ConfigProviderWithI18nProps,
+): React.ReactElement {
   const { children, locale, ...rest } = props;
 
   return (
@@ -28,7 +30,7 @@ export function ConfigProviderExtWithI18nWrapper(
     },
     'locale'
   >,
-): JSX.Element {
+): React.ReactElement {
   const { languages, antdLocal } = props;
 
   const [language, setLanguage] = useState<TypeLanguage>(

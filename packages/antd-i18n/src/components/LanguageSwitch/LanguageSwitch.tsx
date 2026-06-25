@@ -8,7 +8,7 @@ export interface LanguageSwitchProps {
   onChange: (value: TypeLanguage) => void;
 }
 
-export default function LanguageSwitch(props: LanguageSwitchProps): JSX.Element {
+export default function LanguageSwitch(props: LanguageSwitchProps): React.ReactElement {
   const { value: v, languages, onChange } = props;
   return (
     <Select
