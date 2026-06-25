@@ -1,11 +1,19 @@
 # @m-tools/antd-i18n
 
+## 依赖说明
+
+主入口 `@m-tools/antd-i18n` **仅依赖 `antd >= 5`，不依赖 `@m-tools/antd-ext`**。
+
+> 本包仅提供 ESM 产物（`es/`），请在支持 ESM 的构建环境（Vite / webpack 5 / Node 12+ 等）中使用。
+
+如果你的项目使用的是 `@m-tools/antd-ext`，需要用到与之配套的 `ConfigProviderExtWithI18n`，请改用子路径入口 `@m-tools/antd-i18n/ext`（见下文 [入口组件](#apptsx-入口组件)）。
+
 ## 安装
 
 要求：
 
-- 项目使用了 antd >= 5 或者 @m-tools/antd-ext；
-- typescript >= 5
+- `antd >= 5`、`typescript >= 5`；
+- 仅当使用 `@m-tools/antd-i18n/ext` 时才需要额外安装 `@m-tools/antd-ext >= 1.5.9`。
 
 ```bash
 $ npm install @m-tools/antd-i18n --save
@@ -20,9 +28,9 @@ import React from 'react';
 import { init, RouteWithLocale, useLanguage } from '@m-tools/antd-i18n';
 
 // 引用 antd 组件库语言包
-import enUS from '@m-tools/antd-ext/node_modules/antd/lib/locale/en_US';
-import zhCN from '@m-tools/antd-ext/node_modules/antd/lib/locale/zh_CN';
-import zhHK from '@m-tools/antd-ext/node_modules/antd/lib/locale/zh_HK';
+import enUS from 'antd/es/locale/en_US';
+import zhCN from 'antd/es/locale/zh_CN';
+import zhHK from 'antd/es/locale/zh_HK';
 
 // 引用 dayjs 语言包
 import 'dayjs/locale/zh-cn';
@@ -117,11 +125,13 @@ export function RouteWithLocaleWrapper(props: {
 
 #### App.tsx 入口组件
 
-- 如果使用了 @m-tools/antd-ext 使用 ConfigProviderExtWithI18n
-- 如果使用了 antd 组件库使用 ConfigProviderWithI18n
+根据所用组件库选择对应的 ConfigProvider：
+
+- 使用 **antd** 组件库：从主入口引入 `ConfigProviderWithI18n`
+- 使用 **@m-tools/antd-ext**：从子路径入口引入 `ConfigProviderExtWithI18n`（需要项目已安装 `@m-tools/antd-ext`）
 
 ```tsx
-import { ConfigProviderExtWithI18n } from '@m-tools/antd-i18n';
+import { ConfigProviderExtWithI18n } from '@m-tools/antd-i18n/ext';
 import { Router, Route, RouteComponentProps } from 'react-router';
 import { RouteWithLocaleWrapper as RouteWithLocale } from '@/language';
 
@@ -131,7 +141,7 @@ function App() {
       <Router>
         <Route
           path="/home"
-          componentcomponent={(p: RouteComponentProps) => (
+          component={(p: RouteComponentProps) => (
             <RouteWithLocale
               module="home"
               element={
